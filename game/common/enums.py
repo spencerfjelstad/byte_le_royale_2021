@@ -11,7 +11,7 @@ class ObjectType:
     player = 2
     node = 3
 
-class NodeType:
+class LocationType:
     none = 0
     grass_lands = 1
     mount_vroom = 2
