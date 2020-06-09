@@ -20,7 +20,7 @@ class Node(GameObject):
         return data
 
     def from_json(self, data):
-        super.from_json(data),
+        super.from_json(data)
         self.node_type = data['node_type']
         self.city_name = data['city_name']
         self.connecting_cities = data['connecting_cities']
