@@ -4,12 +4,18 @@ class DebugLevel:
     controller = 2
     engine = 3
 
-
 class ObjectType:
     none = 0
     action = 1
     player = 2
     node = 3
+
+class ActionType:
+    none = 0
+    select_route = 1
+    choose_speed = 2
+    buy_gas = 3
+    upgrade = 4
 
 class LocationType:
     none = 0
