@@ -11,7 +11,7 @@ class Node(GameObject):
         self.city_name = name
         self.location_type = LocationType.none
         self.connections = list()
-        Map.cities.append(self)
+        Map.cities[self.city_name] = self
     
     def to_json(self):
         data = super().to_json()

@@ -9,6 +9,7 @@ class ObjectType:
     action = 1
     player = 2
     node = 3
+    truck = 4
 
 class ActionType:
     none = 0

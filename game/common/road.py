@@ -11,14 +11,14 @@ class Road(GameObject):
         self.road_type = RoadType.none
         self.city_1 = city1
         self.city_2 = city2
-        Map.roads.append(self)
+        Map.roads[self.road_name] = self
     
     def to_json(self):
         data = super().to_json()
         data['road_type'] = self.road_type
         data['road_name'] = self.road_name
-        data['city_1'] = self.city_1.city_name
-        data['city_2'] = self.city_2.city_name
+        data['city_1'] = self.city_1
+        data['city_2'] = self.city_2
         return data  
     
     def from_json(self,data):
