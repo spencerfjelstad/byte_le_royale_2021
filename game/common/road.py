@@ -25,8 +25,9 @@ class Road(GameObject):
         super().from_json(data)
         self.road_type = data['road_type']
         self.road_name = data['road_name']
-        self.city_1 = Map.getCityByName(data['city_1'])
-        self.city_2 = Map.getCityByName(data['city_2'])
+        self.city_1 = data['city_1']
+        self.city_2 = data['city_2']
+        Map.roads.append(self)
     
 
 

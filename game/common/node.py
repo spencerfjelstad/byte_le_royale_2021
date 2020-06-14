@@ -25,9 +25,10 @@ class Node(GameObject):
         self.location_type = data['location_type']
         self.city_name = data['city_name']
         self.connections = data['connections']
+        Map.cities.append(self)
 
     def Connect(self,cityToConnect, roadName):
-        road = Road(roadName,self,cityToConnect)
+        road = Road(roadName,self.city_name,cityToConnect.city_name)
         self.connections.append(road.road_name)
         return road
 

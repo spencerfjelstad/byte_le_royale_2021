@@ -11,6 +11,7 @@ def generate():
     b = Node("CityB")
     c = Node("CityC")
     d = Node("CityD")
+    
     start.Connect(a,"RA")
     start.Connect(b,"RB")
     start.Connect(c,"RC")
