@@ -17,4 +17,3 @@ def generateMap():
     start.Connect(d,"RD")
     a.Connect(b,"RE")
     d.Connect(c,"RF")
-    

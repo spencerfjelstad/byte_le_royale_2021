@@ -5,7 +5,7 @@ from game.common.map import Map
 
 class Node(GameObject):
 
-    def __init__(self, name="City"):
+    def __init__(self, name):
         super().__init__()
         self.object_type = ObjectType.node
         self.city_name = name
@@ -25,7 +25,7 @@ class Node(GameObject):
         self.location_type = data['location_type']
         self.city_name = data['city_name']
         self.connections = data['connections']
-        Map.cities.append(self)
+        Map.cities[self.city_name] = self
 
     def Connect(self,cityToConnect, roadName):
         road = Road(roadName,self.city_name,cityToConnect.city_name)

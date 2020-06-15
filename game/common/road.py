@@ -4,7 +4,7 @@ from game.common.map import Map
 import json
 
 class Road(GameObject):
-    def __init__(self, name="road" ,city1=None, city2=None):
+    def __init__(self, name ,city1=None, city2=None):
         super().__init__()
         self.object_type = ObjectType.node
         self.road_name = name
@@ -27,7 +27,7 @@ class Road(GameObject):
         self.road_name = data['road_name']
         self.city_1 = data['city_1']
         self.city_2 = data['city_2']
-        Map.roads.append(self)
+        Map.roads[road_name] = self
     
 
 

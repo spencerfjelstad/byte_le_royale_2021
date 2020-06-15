@@ -1,5 +1,5 @@
 class Map():
-    
+    #This needs work but oh well
     cities = dict()
     roads = dict()
 
@@ -11,6 +11,7 @@ class Map():
     def getCityByName(name):
         return cities[name]
     
+    # Spits out JSON
     @staticmethod
     def getData():
         data = dict()
