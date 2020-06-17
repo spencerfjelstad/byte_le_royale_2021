@@ -7,18 +7,21 @@ import game.config as config
 from game.utils.thread import CommunicationThread
 
 from game.controllers.controller import Controller
-
+from game.utils.CreateMap import *
+from game.common.truck import Truck
 
 class MasterController(Controller):
     def __init__(self):
         super().__init__()
         self.game_over = False
-
+        
         self.turn = None
         self.current_world_data = None
+        generateMap()
 
     # Receives all clients for the purpose of giving them the objects they will control
-    def give_clients_objects(self, clients):
+    def give_clients_objects(self, client):
+        client.truck = Truck("HUB")
         pass
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is

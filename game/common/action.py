@@ -9,6 +9,8 @@ class Action:
     def set_action(self, action):
         self._example_action = action
 
+    
+
     def to_json(self):
         data = dict()
 
@@ -26,3 +28,5 @@ class Action:
         outstring += f'Example Action: {self._example_action}\n'
 
         return outstring
+
+
