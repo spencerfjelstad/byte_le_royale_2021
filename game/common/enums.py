@@ -9,6 +9,7 @@ class ObjectType:
     action = 1
     player = 2
     node = 3
+    truck = 4
 
 class ActionType:
     none = 0
@@ -23,5 +24,11 @@ class LocationType:
     mount_vroom = 2
     mobave_desert = 3
     nord_dakotia = 4
-    loblantis = 5
+    lobslantis = 5
     tropical_cop_land = 6
+
+class RoadType:
+    none = 0
+    rural = 1
+    street = 2
+    highway = 3
