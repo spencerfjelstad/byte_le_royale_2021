@@ -4,7 +4,6 @@ class DebugLevel:
     controller = 2
     engine = 3
 
-
 class ObjectType:
     none = 0
     action = 1
@@ -34,4 +33,3 @@ class RoadType:
     freeway = 2
     switchback = 3
     
->>>>>>> Stashed changes
