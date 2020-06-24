@@ -3,6 +3,7 @@ from game.common.enums import *
 from game.common.road import *
 from game.common.map import Map
 
+# Probably need to add some extra stuff
 class Truck(GameObject):
 
     def __init__(self, node = None):

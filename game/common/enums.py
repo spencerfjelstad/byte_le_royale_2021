@@ -10,6 +10,7 @@ class ObjectType:
     player = 2
     node = 3
     truck = 4
+    contract = 5
 
 class ActionType:
     none = 0
