@@ -6,7 +6,7 @@ from game.common.enums import *
 
 
 class Player(GameObject):
-    def __init__(self, code=None, team_name=None, action=None):
+    def __init__(self, code=None, team_name=None, action=None, contracts=[]):
         super().__init__()
         self.object_type = ObjectType.player
         
@@ -15,6 +15,7 @@ class Player(GameObject):
         self.team_name = team_name
         self.code = code
         self.action = action
+        self.contracts = contracts
 
     def to_json(self):
         data = super().to_json()
@@ -23,6 +24,7 @@ class Player(GameObject):
         data['error'] = self.error
         data['team_name'] = self.team_name
         data['action'] = self.action.to_json() if self.action is not None else None
+        data['contracts'] = [c.to_json() for c in self.contracts]
 
         return data
 
@@ -34,10 +36,12 @@ class Player(GameObject):
         self.team_name = data['team_name']
         act = Action()
         self.action = act.from_json(data['action']) if data['action'] is not None else None
-
+        self.contracts = [Contract().from_json(c) for c in self.contracts]
+        
     def __str__(self):
         p = f"""ID: {self.id}
             Team name: {self.team_name}
             Action: {self.action}
+            Contracts: {self.contracts}
             """
         return p

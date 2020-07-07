@@ -7,6 +7,7 @@ import game.config as config
 from game.utils.thread import CommunicationThread
 
 from game.controllers.controller import Controller
+from game.controllers.contracts_controller import ContractController
 from game.utils.CreateMap import *
 from game.common.truck import Truck
 
@@ -14,10 +15,12 @@ class MasterController(Controller):
     def __init__(self):
         super().__init__()
         self.game_over = False
-        
+                
         self.turn = None
         self.current_world_data = None
         generateMap()
+
+        self.contract_controller = ContractController()
 
     # Receives all clients for the purpose of giving them the objects they will control
     def give_clients_objects(self, client):
@@ -41,18 +44,21 @@ class MasterController(Controller):
         self.current_world_data = world
 
     # Receive a specific client and send them what they get per turn. Also obfuscates necessary objects.
-    def client_turn_arguments(self, client, turn):
+    def client_turn_arguments(self, client, turn, player):
         actions = Action()
         client.action = actions
-
+        
         # Create deep copies of all objects sent to the player
         # Obfuscate data in objects that that player should not be able to see
-
-        args = (self.turn, actions, self.current_world_data)
+        
+        contractList = deepcopy(player.contracts)
+        contractList.obfuscate()
+        args = (self.turn, actions, self.current_world_data, contractList)
         return args
 
     # Perform the main logic that happens per turn
     def turn_logic(self, clients, turn):
+        self.contract_controller.handle_actions(client)
         pass
 
     # Return serialized version of game

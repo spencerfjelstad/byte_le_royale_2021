@@ -18,6 +18,8 @@ class ActionType:
     choose_speed = 2
     buy_gas = 3
     upgrade = 4
+    generate_contracts = 5
+    select_contract = 6
 
 class LocationType:
     none = 0

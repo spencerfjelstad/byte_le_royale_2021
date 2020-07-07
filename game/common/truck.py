@@ -10,8 +10,7 @@ class Truck(GameObject):
         super().__init__()
         self.object_type = ObjectType.truck
         self.current_node = node
-
-
+        
     def to_json(self):
         data = super().to_json()
         data['current_node'] = self.current_node
@@ -21,10 +20,3 @@ class Truck(GameObject):
     def from_json(self, data):
         super().from_json(data)
         self.current_node = data['current_node']
-
-
-
-
-    
-    
-   
