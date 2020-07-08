@@ -3,7 +3,6 @@ from game.utils.helpers import write_json_file
 from game.common.node import Node
 from game.common.map import Map
 
-@staticmethod
 def generateMap():
     start = Node("HUB")
     a = Node("CityA")

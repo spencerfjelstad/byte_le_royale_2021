@@ -32,3 +32,8 @@ class RoadType:
     rural = 1
     street = 2
     highway = 3
+
+class NodeType:
+    none = 0
+    city = 1
+    warehouse = 2
