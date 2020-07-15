@@ -4,9 +4,10 @@ from game.common.action import Action
 from game.common.game_object import GameObject
 from game.common.enums import *
 from game.common.contract import Contract
+from game.common.truck import Truck
 
 class Player(GameObject):
-    def __init__(self, code=None, team_name=None, action=None, contracts=[]):
+    def __init__(self, code=None, team_name=None, action=None, contracts=list(), truck=Truck("HUB"):
         super().__init__()
         self.object_type = ObjectType.player
         
@@ -15,6 +16,7 @@ class Player(GameObject):
         self.team_name = team_name
         self.code = code
         self.action = action
+        self.truck = truck
         self.contracts = contracts
 
     def to_json(self):
@@ -24,6 +26,7 @@ class Player(GameObject):
         data['error'] = self.error
         data['team_name'] = self.team_name
         data['action'] = self.action.to_json() if self.action is not None else None
+        data['truck'] = self.truck.to_json()
         data['contracts'] = [c.to_json() for c in self.contracts]
 
         return data
@@ -36,6 +39,7 @@ class Player(GameObject):
         self.team_name = data['team_name']
         act = Action()
         self.action = act.from_json(data['action']) if data['action'] is not None else None
+        self.truck = Truck.from_json(data['truck'])
         self.contracts = [Contract().from_json(c) for c in self.contracts]
         
     def __str__(self):

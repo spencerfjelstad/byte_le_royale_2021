@@ -25,7 +25,6 @@ class MasterController(Controller):
 
     # Receives all clients for the purpose of giving them the objects they will control
     def give_clients_objects(self, client):
-        # This seems dangerous...
         client.truck = Truck("HUB")
         pass
 

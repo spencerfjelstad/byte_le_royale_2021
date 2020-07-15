@@ -21,8 +21,8 @@ class GameStats:
     }
 
     road_speed = {
+        RoadType.switchback: 1,
         RoadType.street_road: 2,
         RoadType.highway: 3,
         RoadType.freeway: 4,
-        RoadType.switchback: 1,
     }

@@ -18,12 +18,17 @@ class Action:
     def set_action(self, action):
         self._example_action = action
     
+    def select_contract(self, contractIndex):
+        if 0 < int(contractIndex) < len(self.contract_list):
+            self.contract_list = self.contract_list.pop(contractIndex)
+            self._example_action = ActionType.select_contract
+    
     def to_json(self):
         data = dict()
 
         data['object_type'] = self.object_type
         data['example_action'] = self._example_action
-        data['contract_list'] = self.contract_list
+        data['contract_list'] = [c.to_json() for c in self.contract_list]
 
         return data
 

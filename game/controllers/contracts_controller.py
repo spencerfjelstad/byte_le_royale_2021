@@ -10,7 +10,6 @@ from game.common.node import Node
 from game.common.map import Map
 from game.common.contract import Contract
 from game.common.truck import Truck
-from game.common.player import Player
 
 
 class ContractController(Controller):
@@ -41,10 +40,11 @@ class ContractController(Controller):
         
         self.contract_list = contractList
 
-    def handle_actions(self, client, player):
+    def handle_actions(self, client):
         # Player is updated to conform to design guidelines in instruction book
-        player.action.contract_list = deepcopy(self.contract_list)
-        player.contracts = deepcopy(self.contract_list)
+        client.action.contract_list = deepcopy(self.contract_list)
+        client.contracts = deepcopy(self.contract_list)
         if client.action._example_action is ActionType.select_contract:
-            if 0 < int(client.contractID) < len(self.contract_list):
-                self.selected_contract = [self.contract_list.pop(int(client.contractID))]
+            self.contract_list = client.action.contract_list
+#            if 0 < int(client.contractID) < len(self.contract_list):
+#            self.selected_contract = [self.contract_list.pop(int(client.contractID))]
