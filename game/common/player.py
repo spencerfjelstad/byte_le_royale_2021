@@ -3,7 +3,7 @@ import uuid
 from game.common.action import Action
 from game.common.game_object import GameObject
 from game.common.enums import *
-
+from game.common.contract import Contract
 
 class Player(GameObject):
     def __init__(self, code=None, team_name=None, action=None, contracts=[]):

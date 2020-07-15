@@ -6,6 +6,8 @@ class UserClient:
     def __init__(self):
         self.debug_level = DebugLevel.client
         self.debug = True
+        self.truck = None 
+        self.contractID = 0
 
     def print(self, *args):
         if self.debug and Debug.level >= self.debug_level:
@@ -15,5 +17,5 @@ class UserClient:
     def team_name(self):
         return "No_Team_Name_Available"
 
-    def take_turn(self, turn, actions, world, contractList):
+    def take_turn(self, turn, actions, world):
         raise NotImplementedError("Implement this in subclass")

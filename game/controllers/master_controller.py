@@ -11,6 +11,7 @@ from game.controllers.contracts_controller import ContractController
 from game.utils.CreateMap import *
 from game.common.truck import Truck
 
+
 class MasterController(Controller):
     def __init__(self):
         super().__init__()
@@ -24,6 +25,7 @@ class MasterController(Controller):
 
     # Receives all clients for the purpose of giving them the objects they will control
     def give_clients_objects(self, client):
+        # This seems dangerous...
         client.truck = Truck("HUB")
         pass
 
@@ -40,8 +42,10 @@ class MasterController(Controller):
             self.turn += 1
 
     # Receives world data from the generated game log and is responsible for interpreting it
-    def interpret_current_turn_data(self, clients, world, turn):
+    def interpret_current_turn_data(self, client, world, turn):
         self.current_world_data = world
+        #if client.truck.current_node.city_name.lower().find('hub') != -1:
+        ContractController.generate_contracts(self, client)
 
     # Receive a specific client and send them what they get per turn. Also obfuscates necessary objects.
     def client_turn_arguments(self, client, turn, player):
@@ -50,14 +54,11 @@ class MasterController(Controller):
         
         # Create deep copies of all objects sent to the player
         # Obfuscate data in objects that that player should not be able to see
-        
-        contractList = deepcopy(player.contracts)
-        contractList.obfuscate()
-        args = (self.turn, actions, self.current_world_data, contractList)
+        args = (self.turn, actions, self.current_world_data)
         return args
 
     # Perform the main logic that happens per turn
-    def turn_logic(self, clients, turn):
+    def turn_logic(self, client, turn):
         self.contract_controller.handle_actions(client)
         pass
 
