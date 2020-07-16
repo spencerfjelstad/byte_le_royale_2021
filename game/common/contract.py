@@ -21,14 +21,14 @@ class Contract(GameObject):
     def to_json(self):
         data = super().to_json()
         data['name'] = self.name
-        data['region'] = self.region
+        data['location_type'] = self.location_type
         data['cities'] = self.cities
         return data  
     
     def from_json(self,data):
         super().from_json(data)
         self.name = data['name']
-        self.region = data['region']
+        self.location_type = data['location_type']
         self.cities = data['cities']
 
     # generates a random name, has no effect on gameplay other than lols
@@ -38,7 +38,13 @@ class Contract(GameObject):
         adjective = ["big ","small ","happy ","sad ","angry "]
         noun = ["lobsters","cd players", "power converers sourced from Tosche station"]
         return random.choice(verb) + random.choice(quantity) + "of " + random.choice(adjective) + random.choice(noun)
-        
+    
+    def equals(self, contract):
+        if self.name == contract.name and self.location_type == contract.location_type and self.cities == contract.cities:
+            return True
+        else:
+            return False
+
 
 
 

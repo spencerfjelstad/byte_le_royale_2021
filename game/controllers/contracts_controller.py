@@ -17,11 +17,7 @@ class ContractController(Controller):
     def __init__(self):
         super().__init__()
         self.contract_list = []
-        self.selected_contract = None
 
-    def get_contracts(self):
-        return self.contract_list
-    
     def generate_contracts(self, client):
         currMap = Map.getData()
         cityList = []
@@ -40,11 +36,13 @@ class ContractController(Controller):
         
         self.contract_list = contractList
 
+        return copy.deepcopy(self.contract_list)
+
     def handle_actions(self, client):
-        # Player is updated to conform to design guidelines in instruction book
-        client.action.contract_list = deepcopy(self.contract_list)
-        client.contracts = deepcopy(self.contract_list)
+        # If contract was selected verify it and store in Player
         if client.action._example_action is ActionType.select_contract:
-            self.contract_list = client.action.contract_list
-#            if 0 < int(client.contractID) < len(self.contract_list):
-#            self.selected_contract = [self.contract_list.pop(int(client.contractID))]
+            for c in self.contract_list:
+                if c.equals(client.action.contract_list):
+                    client.contracts = client.action._active_contract
+                    break
+

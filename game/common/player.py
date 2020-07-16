@@ -6,6 +6,7 @@ from game.common.enums import *
 from game.common.contract import Contract
 from game.common.truck import Truck
 
+
 class Player(GameObject):
     def __init__(self, code=None, team_name=None, action=None, contracts=list(), truck=Truck("HUB"):
         super().__init__()

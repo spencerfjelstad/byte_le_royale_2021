@@ -43,14 +43,13 @@ class MasterController(Controller):
     # Receives world data from the generated game log and is responsible for interpreting it
     def interpret_current_turn_data(self, client, world, turn):
         self.current_world_data = world
-        #if client.truck.current_node.city_name.lower().find('hub') != -1:
-        ContractController.generate_contracts(self, client)
 
     # Receive a specific client and send them what they get per turn. Also obfuscates necessary objects.
-    def client_turn_arguments(self, client, turn, player):
-        actions = Action()
+    def client_turn_arguments(self, client, turn):
+        actions = Action(self.contract_controller.generate_contracts(client))
+        actions._active_contract = client.contracts.pop()
         client.action = actions
-        
+       
         # Create deep copies of all objects sent to the player
         # Obfuscate data in objects that that player should not be able to see
         args = (self.turn, actions, self.current_world_data)

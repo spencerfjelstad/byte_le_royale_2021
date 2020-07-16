@@ -10,17 +10,27 @@ import random
 
 
 class Action:
-    def __init__(self):
+    def __init__(self, contractList=None):
         self.object_type = ObjectType.action
-        self.contract_list = []
         self._example_action = None
+        self.__contract_list = contractList
+        self._active_contract = None
 
     def set_action(self, action):
-        self._example_action = action
+        if self._example_action != ActionType.select_contract:
+            self._example_action = action
+
+    def get_city_contracts(self):
+        return self.__contract_list
     
+    def get_active_contract(self):
+        return self._active_contract
+    
+    # Action for easier access to updated value
     def select_contract(self, contractIndex):
-        if 0 < int(contractIndex) < len(self.contract_list):
-            self.contract_list = self.contract_list.pop(contractIndex)
+        # Passed by index to prevent tampering
+        if 0 < int(contractIndex) < len(self.__contract_list):
+            self.__contract_list = self.__contract_list.pop(contractIndex)
             self._example_action = ActionType.select_contract
     
     def to_json(self):
@@ -28,14 +38,14 @@ class Action:
 
         data['object_type'] = self.object_type
         data['example_action'] = self._example_action
-        data['contract_list'] = [c.to_json() for c in self.contract_list]
+        data['contract_list'] = [c.to_json() for c in self.__contract_list]
 
         return data
 
     def from_json(self, data):
         self.object_type = data['object_type']
         self._example_action = data['example_action']
-        self.contract_list = data['contract_list']
+        self.__contract_list = data['contract_list']
 
     def __str__(self):
         outstring = ''
