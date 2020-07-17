@@ -33,13 +33,16 @@ class Contract(GameObject):
 
     # generates a random name, has no effect on gameplay other than lols
     def generateName(self):
-        verb = ["Deliver ","Transport ","Drop off ","Ship "]
-        quantity = ["a lot ","several ","one ","a few "]
-        adjective = ["big ","small ","happy ","sad ","angry "]
-        noun = ["lobsters","cd players", "power converers sourced from Tosche station", "Skinner Burgers"]
-        if random.choice(noun) == "Skinner Burgers":
-            return random.choice(verb) + random.choice(quantity) + "of" + random.choice(adjective) + "Skinner Burgers"
-        return random.choice(verb) + random.choice(quantity) + "of " + random.choice(adjective) + random.choice(noun)
+        verb = ["Deliver ", "Transport ", "Drop off ", "Ship "]
+        quantity = ["a lot ", "several ", "one ", "a few "]
+        adjective = ["big ", "small ", "happy ", "sad ", "angry "]
+        noun = ["lobsters", "cd players", "power converers sourced from Tosche station", "Patented Skinner Burgers"]
+        # Literally making code worse for a joke
+        index = random.randrange(len(noun))
+        if index == 3:
+            return random.choice(verb) + random.choice(quantity) + "of" + noun[index]
+        else:
+            return random.choice(verb) + random.choice(quantity) + "of " + random.choice(adjective) + noun[index]
     
     def equals(self, contract):
         if self.name == contract.name and self.region == contract.region and self.cities == contract.cities:

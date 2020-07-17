@@ -43,6 +43,6 @@ class ContractController(Controller):
         if client.action._example_action is ActionType.select_contract:
             for c in self.contract_list:
                 if c.equals(client.action.contract_list):
-                    client.contracts = client.action._active_contract
+                    client.active_contract = client.action._active_contract
                     break
 
