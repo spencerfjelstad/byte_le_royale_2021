@@ -23,16 +23,16 @@ class ContractController(Controller):
         cityList = []
         hub = None
         for city in currMap['cities']:
-            if city.location_type == client.truck.current_node.location_type:
+            if city.region == client.truck.current_node.region:
                 cityList.append(city)
         for city in currMap['cities']:
             if city.city_name.lower().find('hub') != -1:
                 hub = city
 
         contractList = [
-                Contract(None, client.truck.current_node.location_type, [hub, random.choice(cityList)]),
-                Contract(None, client.truck.current_node.location_type, [hub, random.choice(cityList)]),
-                Contract(None, client.truck.current_node.location_type, [hub, random.choice(cityList)])]
+                Contract(None, client.truck.current_node.region, [hub, random.choice(cityList)]),
+                Contract(None, client.truck.current_node.region, [hub, random.choice(cityList)]),
+                Contract(None, client.truck.current_node.region, [hub, random.choice(cityList)])]
         
         self.contract_list = contractList
 

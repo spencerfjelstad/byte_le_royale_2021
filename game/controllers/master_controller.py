@@ -7,7 +7,7 @@ import game.config as config
 from game.utils.thread import CommunicationThread
 
 from game.controllers.controller import Controller
-from game.controllers.contracts_controller import ContractController
+from game.controllers.contract_controller import ContractController
 from game.utils.CreateMap import *
 from game.common.truck import Truck
 

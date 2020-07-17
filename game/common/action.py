@@ -6,9 +6,8 @@ from game.common.contract import Contract
 from game.common.truck import Truck
 from game.common.player import Player
 
-import random
 
-
+# Action modified for contracts to be private and generated during pre-tick
 class Action:
     def __init__(self, contractList=None):
         self.object_type = ObjectType.action

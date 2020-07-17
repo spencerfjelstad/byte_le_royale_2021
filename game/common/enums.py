@@ -18,10 +18,9 @@ class ActionType:
     choose_speed = 2
     buy_gas = 3
     upgrade = 4
-    generate_contracts = 5
-    select_contract = 6
+    select_contract = 5
 
-class LocationType:
+class Region:
     none = 0
     grass_lands = 1
     mount_vroom = 2
