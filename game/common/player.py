@@ -40,8 +40,10 @@ class Player(GameObject):
         self.team_name = data['team_name']
         act = Action()
         self.action = act.from_json(data['action']) if data['action'] is not None else None
-        self.truck = Truck.from_json(data['truck'])
-        self.active_contract = Contract.from_json(data['active_contract'])
+        truck = Truck()
+        self.truck = truck.from_json(data['truck'])
+        contract = Contract()
+        self.active_contract = contract.from_json(data['active_contract'])
         
     def __str__(self):
         p = f"""ID: {self.id}

@@ -2,6 +2,7 @@ from game.common.game_object import GameObject
 from game.common.enums import *
 from game.common.road import *
 from game.common.map import Map
+from game.common.node import Node
 
 # Probably need to add some extra stuff
 class Truck(GameObject):
@@ -19,4 +20,5 @@ class Truck(GameObject):
 
     def from_json(self, data):
         super().from_json(data)
-        self.current_node = data['current_node']
+        node = Node()
+        self.current_node = node.from_json(data['current_node'])

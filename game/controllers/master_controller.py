@@ -47,7 +47,7 @@ class MasterController(Controller):
     # Receive a specific client and send them what they get per turn. Also obfuscates necessary objects.
     def client_turn_arguments(self, client, turn):
         actions = Action(self.contract_controller.generate_contracts(client))
-        actions._active_contract = client.active_contract
+        actions._active_contract = copy.deepcopy(client.active_contract)
         client.action = actions
        
         # Create deep copies of all objects sent to the player
