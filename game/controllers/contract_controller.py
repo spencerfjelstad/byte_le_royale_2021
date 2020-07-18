@@ -17,7 +17,8 @@ class ContractController(Controller):
     def __init__(self):
         super().__init__()
         self.contract_list = []
-
+    
+    # Generate list of contracts, store for verification and return a copy
     def generate_contracts(self, client):
         currMap = Map.getData()
         cityList = []
@@ -38,10 +39,12 @@ class ContractController(Controller):
 
         return copy.deepcopy(self.contract_list)
 
+    # If contract was selected verify and store in Player
     def handle_actions(self, client):
-        # If contract was selected verify it and store in Player
         if client.action._example_action is ActionType.select_contract:
             for c in self.contract_list:
                 if c.equals(client.action.contract_list):
                     client.active_contract = client.action._active_contract
+                    self.contract_list.clear()
                     break
+

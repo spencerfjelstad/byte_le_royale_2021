@@ -8,6 +8,7 @@ from game.common.truck import Truck
 
 
 class Player(GameObject):
+    # truck initialized with placeholder
     def __init__(self, code=None, team_name=None, action=None, contract=None, truck=Truck("HUB"):
         super().__init__()
         self.object_type = ObjectType.player
