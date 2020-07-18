@@ -26,7 +26,8 @@ class Action:
     def select_contract(self, contractIndex):
         # Passed by index to prevent tampering
         if 0 < int(contractIndex) < len(self.__contract_list):
-            self.__contract_list = self.__contract_list.pop(contractIndex)
+            self._active_contract = self.__contract_list.pop(contractIndex)
+            self.__contract_list = None
             self._example_action = ActionType.select_contract
     
     def to_json(self):

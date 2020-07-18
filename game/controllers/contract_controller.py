@@ -45,4 +45,3 @@ class ContractController(Controller):
                 if c.equals(client.action.contract_list):
                     client.active_contract = client.action._active_contract
                     break
-
