@@ -6,7 +6,6 @@ class UserClient:
     def __init__(self):
         self.debug_level = DebugLevel.client
         self.debug = True
-#        self.contractID = 0
 
     def print(self, *args):
         if self.debug and Debug.level >= self.debug_level:
