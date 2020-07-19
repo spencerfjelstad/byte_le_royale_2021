@@ -43,8 +43,8 @@ class ContractController(Controller):
     def handle_actions(self, client):
         if client.action._example_action is ActionType.select_contract:
             for c in self.contract_list:
-                if c.equals(client.action.contract_list):
-                    client.active_contract = client.action._active_contract
+                if c.__eq__(client.action.get_active_contract()):
+                    client.active_contract = client.action.get_active_contract()
                     self.contract_list.clear()
                     break
 
