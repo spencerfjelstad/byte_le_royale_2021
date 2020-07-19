@@ -6,7 +6,7 @@ import json
 
 
 class Contract(GameObject):
-    def __init__(self, name=None ,region=None, cities=None):
+    def __init__(self, name=None, region=None, cities=None):
         super().__init__()
         self.object_type = ObjectType.contract
         
@@ -44,5 +44,5 @@ class Contract(GameObject):
         else:
             return random.choice(verb) + random.choice(quantity) + "of " + random.choice(adjective) + noun[index]
     
-    def equals(self, contract):
-        return self.name == contract.name and self.region == contract.region and self.cities == contract.cities
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.name == other.name and self.region == other.region and self.cities == other.cities
