@@ -27,7 +27,7 @@ class ContractController(Controller):
             if city.region == client.truck.current_node.region:
                 cityList.append(city)
         for city in currMap['cities']:
-            if city.city_name.lower().find('hub') != -1:
+            if 'hub' in city.city_name.lower():
                 hub = city
 
         contractList = [

@@ -45,11 +45,4 @@ class Contract(GameObject):
             return random.choice(verb) + random.choice(quantity) + "of " + random.choice(adjective) + noun[index]
     
     def equals(self, contract):
-        if self.name == contract.name and self.region == contract.region and self.cities == contract.cities:
-            return True
-        else:
-            return False
-
-
-
-
+        return self.name == contract.name and self.region == contract.region and self.cities == contract.cities
