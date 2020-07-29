@@ -41,10 +41,6 @@ class ContractController(Controller):
 
     # If contract was selected verify and store in Player
     def handle_actions(self, client):
-        if client.action._example_action is ActionType.select_contract:
-            for c in self.contract_list:
-                if c.__eq__(client.action.get_active_contract()):
-                    client.active_contract = client.action.get_active_contract()
-                    self.contract_list.clear()
-                    break
-
+        if client.action._chosen_action is ActionType.select_contract:
+            client.active_contract = self.contract_list.pop(client.truck.contract_index)
+            self.contract_list.clear()

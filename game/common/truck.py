@@ -11,6 +11,9 @@ class Truck(GameObject):
         super().__init__()
         self.object_type = ObjectType.truck
         self.current_node = node
+        self.contract_list = []
+        self.active_contract = None
+        self.contract_index = 0
         
     def to_json(self):
         data = super().to_json()
