@@ -8,9 +8,14 @@ class Action:
     def __init__(self):
         self.object_type = ObjectType.action
         self._chosen_action = None
+        self.contract_index = None
 
-    def set_action(self, action):
+    def set_action(self, action, contractIndex = None):
         self._chosen_action = action
+        if action = ActionType.select_contract:
+            self.contract_index = contractIndex
+        else:
+            self.contract_index = None
     
     def to_json(self):
         data = dict()
