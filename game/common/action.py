@@ -3,7 +3,6 @@ from game.common.enums import *
 from game.common.contract import Contract
 
 
-# Action modified for contracts to be private and generated during pre-tick
 class Action:
     def __init__(self):
         self.object_type = ObjectType.action

@@ -30,6 +30,7 @@ class ContractController(Controller):
             if 'hub' in city.city_name.lower():
                 hub = city
 
+        # Placeholder contract generation
         contractList = [
                 Contract(None, client.truck.current_node.region, [hub, random.choice(cityList)]),
                 Contract(None, client.truck.current_node.region, [hub, random.choice(cityList)]),

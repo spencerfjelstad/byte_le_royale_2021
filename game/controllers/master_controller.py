@@ -46,7 +46,8 @@ class MasterController(Controller):
 
     # Receive a specific client and send them what they get per turn. Also obfuscates necessary objects.
     def client_turn_arguments(self, client, turn):
-        # Instantiate action object with contracts available in city
+        # Add contracts available in city and current active contract to truck for access by client
+        actions = Action()
         client.truck.contract_list = self.contract_controller.generate_contracts(client))
         client.truck.active_contract = copy.deepcopy(client.active_contract)
         client.action = actions
