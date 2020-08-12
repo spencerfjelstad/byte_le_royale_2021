@@ -40,7 +40,7 @@ class ContractController(Controller):
 
         return copy.deepcopy(self.contract_list)
 
-    # If contract was selected verify and store in Player
+    # If contract was selected retrieve by index and store in Player, then clear the list
     def handle_actions(self, client):
         if client.action._chosen_action is ActionType.select_contract:
             client.active_contract = self.contract_list[int(client.action.contract_index)]
