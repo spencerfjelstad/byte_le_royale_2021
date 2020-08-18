@@ -19,10 +19,3 @@ class GameStats:
         Region.loblantis: .8,
         Region.tropical_cop_land: .9,
     }
-
-    road_speed = {
-        RoadType.switchback: 1,
-        RoadType.street_road: 2,
-        RoadType.highway: 3,
-        RoadType.freeway: 4,
-    }
