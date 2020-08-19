@@ -20,23 +20,23 @@ class ContractController(Controller):
     
     # Generate list of contracts, store for verification and return a copy
     def generate_contracts(self, client):
-        currMap = Map.getData()
-        cityList = []
+        curr_map = Map.getData()
+        city_list = []
         hub = None
-        for city in currMap['cities']:
+        for city in curr_map['cities']:
             if city.region == client.truck.current_node.region:
-                cityList.append(city)
-        for city in currMap['cities']:
+                city_list.append(city)
+        for city in curr_map['cities']:
             if 'hub' in city.city_name.lower():
                 hub = city
 
         # Placeholder contract generation
-        contractList = [
-                Contract(None, client.truck.current_node.region, [hub, random.choice(cityList)]),
-                Contract(None, client.truck.current_node.region, [hub, random.choice(cityList)]),
-                Contract(None, client.truck.current_node.region, [hub, random.choice(cityList)])]
+        contract_list = [
+                Contract(None, client.truck.current_node.region, [hub, random.choice(city_list)]),
+                Contract(None, client.truck.current_node.region, [hub, random.choice(city_list)]),
+                Contract(None, client.truck.current_node.region, [hub, random.choice(city_list)])]
         
-        self.contract_list = contractList
+        self.contract_list = contract_list
 
         return copy.deepcopy(self.contract_list)
 
