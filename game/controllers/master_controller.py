@@ -48,7 +48,8 @@ class MasterController(Controller):
     def client_turn_arguments(self, client, turn):
         # Add contracts available in city and current active contract to truck for access by client
         actions = Action()
-        client.truck.contract_list = self.contract_controller.generate_contracts(client))
+        self.contract_controller.generate_contracts()
+        client.truck.contract_list = copy.deepcopy(self.contract_controller.contract_list)
         client.truck.active_contract = copy.deepcopy(client.active_contract)
         client.action = actions
        

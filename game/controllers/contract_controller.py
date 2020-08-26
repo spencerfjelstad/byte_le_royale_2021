@@ -18,7 +18,7 @@ class ContractController(Controller):
         super().__init__()
         self.contract_list = []
     
-    # Generate list of contracts, store for verification and return a copy
+    # Generate list of contracts, store for verification
     def generate_contracts(self, client):
         curr_map = Map.getData()
         city_list = []
@@ -37,8 +37,6 @@ class ContractController(Controller):
                 Contract(None, client.truck.current_node.region, [hub, random.choice(city_list)])]
         
         self.contract_list = contract_list
-
-        return copy.deepcopy(self.contract_list)
 
     # If contract was selected retrieve by index and store in Player, then clear the list
     def handle_actions(self, client):
