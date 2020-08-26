@@ -11,7 +11,7 @@ class Action:
 
     def set_action(self, action, contractIndex = None):
         self._chosen_action = action
-        if action = ActionType.select_contract:
+        if action == ActionType.select_contract:
             self.contract_index = contractIndex
         else:
             self.contract_index = None
