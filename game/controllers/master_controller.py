@@ -7,17 +7,21 @@ import game.config as config
 from game.utils.thread import CommunicationThread
 
 from game.controllers.controller import Controller
+from game.controllers.contract_controller import ContractController
 from game.utils.CreateMap import *
 from game.common.truck import Truck
+
 
 class MasterController(Controller):
     def __init__(self):
         super().__init__()
         self.game_over = False
-        
+                
         self.turn = None
         self.current_world_data = None
         generateMap()
+
+        self.contract_controller = ContractController()
 
     # Receives all clients for the purpose of giving them the objects they will control
     def give_clients_objects(self, client):
@@ -37,22 +41,26 @@ class MasterController(Controller):
             self.turn += 1
 
     # Receives world data from the generated game log and is responsible for interpreting it
-    def interpret_current_turn_data(self, clients, world, turn):
+    def interpret_current_turn_data(self, client, world, turn):
         self.current_world_data = world
 
     # Receive a specific client and send them what they get per turn. Also obfuscates necessary objects.
     def client_turn_arguments(self, client, turn):
+        # Add contracts available in city and current active contract to truck for access by client
         actions = Action()
+        self.contract_controller.generate_contracts()
+        client.truck.contract_list = copy.deepcopy(self.contract_controller.contract_list)
+        client.truck.active_contract = copy.deepcopy(client.active_contract)
         client.action = actions
-
+       
         # Create deep copies of all objects sent to the player
         # Obfuscate data in objects that that player should not be able to see
-
         args = (self.turn, actions, self.current_world_data)
         return args
 
     # Perform the main logic that happens per turn
-    def turn_logic(self, clients, turn):
+    def turn_logic(self, client, turn):
+        self.contract_controller.handle_actions(client)
         pass
 
     # Return serialized version of game
