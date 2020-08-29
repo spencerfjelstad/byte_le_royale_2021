@@ -16,6 +16,10 @@ class MasterController(Controller):
     def __init__(self):
         super().__init__()
         self.game_over = False
+<<<<<<< HEAD
+=======
+                
+>>>>>>> 474c47093466497a55b2b42b88e71f4df54417ce
         self.turn = None
         self.time = 10000
         self.current_world_data = None
@@ -73,13 +77,11 @@ class MasterController(Controller):
         return data
 
     # Gather necessary data together in results file
-    def return_final_results(self, clients, turn):
+    def return_final_results(self, client, turn):
         data = dict()
 
-        data['players'] = list()
         # Determine results
-        for client in clients:
-            data['players'].append(client.to_json())
+        data['player'] = client.to_json()
 
         return data
     

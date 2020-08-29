@@ -47,5 +47,5 @@ class Tropical_Cop_Land(Node):
     def __init__(self):
         super().__init__()
         self.location_type = LocationType.tropical_cop_land
-        self.reward_modifier = GameStats.location_reward_modifier[self.location_type]
-        self.difficulty_modifier = GameStats.location_difficulty_modifier[self.location_type]
+        self.reward_modifier = GameStats.region_reward_modifier[self.location_type]
+        self.difficulty_modifier = GameStats.region_difficulty_modifier[self.location_type]
