@@ -16,8 +16,8 @@ class MasterController(Controller):
     def __init__(self):
         super().__init__()
         self.game_over = False
-                
         self.turn = None
+        self.time = 10000
         self.current_world_data = None
         generateMap()
 
@@ -82,3 +82,6 @@ class MasterController(Controller):
             data['players'].append(client.to_json())
 
         return data
+    
+    def subtract_time(self,time):
+        self.time -= abs(time)

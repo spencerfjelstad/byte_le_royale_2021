@@ -1,5 +1,4 @@
 import uuid
-
 from game.common.action import Action
 from game.common.game_object import GameObject
 from game.common.enums import *
@@ -12,7 +11,6 @@ class Player(GameObject):
     def __init__(self, code=None, team_name=None, action=None, contract=None, truck=Truck("HUB"):
         super().__init__()
         self.object_type = ObjectType.player
-        
         self.functional = True
         self.error = None
         self.team_name = team_name

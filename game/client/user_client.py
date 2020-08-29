@@ -4,6 +4,7 @@ from game.config import Debug
 
 class UserClient:
     def __init__(self):
+        self.truck = truck
         self.debug_level = DebugLevel.client
         self.debug = True
 

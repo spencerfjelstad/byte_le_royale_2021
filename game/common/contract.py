@@ -11,7 +11,7 @@ class Contract(GameObject):
         self.object_type = ObjectType.contract
         
         # if no name is supplied it will generate a random one
-        self.name = generateName() if not name else name
+        self.name = self.generateName() if not name else name
         # region is region enum
         self.region = region
         
