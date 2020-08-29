@@ -34,3 +34,12 @@ class Node(GameObject):
         road = Road(roadName,self.city_name,cityToConnect.city_name)
         self.connections.append(road.road_name)
         return road
+
+    def get_connection(self, road):
+        if road.city_1 == self.city_name:
+            city = road.city_2
+        else:
+            city = road.city_1
+        path = {'city': city, 'type': road.road_type}
+        
+        return path
