@@ -1,3 +1,5 @@
+from game.config import MAX_TICKS
+
 #This needs to be a game object desperately
 # STATIC METHODS BAAAAAAAAAAADDDDDDDDDDD
 class Map():
@@ -25,6 +27,11 @@ class Map():
         for d in Map.roads:
             c.append(Map.roads[d].to_json())
         data['roads'] = c
+
+        # Generates turns
+        for i in range(1, MAX_TICKS):
+            data[i] = dict()
+
         return data
 
 
