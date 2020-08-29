@@ -9,12 +9,12 @@ class Map():
     # This part is probs obsolete
     @staticmethod
     def getRoadByName(name):
-        return roads[name]
+        return Map.roads[name]
 
     # This part is probs obsolete
     @staticmethod
     def getCityByName(name):
-        return cities[name]
+        return Map.cities[name]
     
     @staticmethod
     def getData():

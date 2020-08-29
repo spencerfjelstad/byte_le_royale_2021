@@ -1,3 +1,4 @@
+import copy
 from copy import deepcopy
 
 from game.common.action import Action
@@ -48,7 +49,7 @@ class MasterController(Controller):
     def client_turn_arguments(self, client, turn):
         # Add contracts available in city and current active contract to truck for access by client
         actions = Action()
-        self.contract_controller.generate_contracts()
+        self.contract_controller.generate_contracts(client)
         client.truck.contract_list = copy.deepcopy(self.contract_controller.contract_list)
         client.truck.active_contract = copy.deepcopy(client.active_contract)
         client.action = actions
