@@ -1,38 +1,15 @@
-# class Map():
-    
-#     def __init__(self):
-#         self.cities = dict()
-#         self.roads = dict()
-
-
-#     def getRoadByName(self, name):
-#         return self.roads[name]
-
-#     def getCityByName(self, name):
-#         return self.cities[name]
-    
-#     def getData(self):
-#         data = dict()
-#         b=list()
-#         for a in self.cities:
-#             b.append(self.cities[a].to_json())
-#         data['cities'] = b
-#         c=list()
-#         for d in self.roads:
-#             c.append(self.roads[d].to_json())
-#         data['roads'] = c
-#         return data
-
-#Old version
+#This needs to be a game object desperately
+# STATIC METHODS BAAAAAAAAAAADDDDDDDDDDD
 class Map():
-    
     cities = dict()
     roads = dict()
 
+    # This part is probs obsolete
     @staticmethod
     def getRoadByName(name):
         return Map.roads[name]
 
+    # This part is probs obsolete
     @staticmethod
     def getCityByName(name):
         return Map.cities[name]
