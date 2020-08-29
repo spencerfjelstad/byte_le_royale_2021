@@ -4,6 +4,8 @@ from game.common.map import Map
 import json
 
 class Road(GameObject):
+    # name is the key for this edge, it must always be unique
+    # city1 and city2 are strings representing the keys of the connected cities
     def __init__(self, name ,city1=None, city2=None):
         super().__init__()
         self.object_type = ObjectType.node
@@ -11,6 +13,7 @@ class Road(GameObject):
         self.road_type = RoadType.none
         self.city_1 = city1
         self.city_2 = city2
+        # upon finishing up it adds itself to the graph. could add some errors if the key isn't unique
         Map.roads[self.road_name] = self
     
     def to_json(self):

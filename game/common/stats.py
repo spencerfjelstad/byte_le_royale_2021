@@ -1,21 +1,21 @@
-from game.common.enums import LocationType
+from game.common.enums import Region
 
 
 class GameStats:
-    location_reward_modifier = {
-        LocationType.grass_lands: .5,
-        LocationType.nord_dakotia: .6,
-        LocationType.mobave_desert: .7,
-        LocationType.mount_vroom: .8,
-        LocationType.loblantis: .8,
-        LocationType.tropical_cop_land: .9,
+    region_reward_modifier = {
+        Region.grass_lands: .5,
+        Region.nord_dakotia: .6,
+        Region.mobave_desert: .7,
+        Region.mount_vroom: .8,
+        Region.loblantis: .8,
+        Region.tropical_cop_land: .9,
     }
 
-    location_difficulty_modifier = {
-        LocationType.grass_lands: .5,
-        LocationType.nord_dakotia: .6,
-        LocationType.mobave_desert: .7,
-        LocationType.mount_vroom: .8,
-        LocationType.loblantis: .8,
-        LocationType.tropical_cop_land: .9,
+    region_difficulty_modifier = {
+        Region.grass_lands: .5,
+        Region.nord_dakotia: .6,
+        Region.mobave_desert: .7,
+        Region.mount_vroom: .8,
+        Region.loblantis: .8,
+        Region.tropical_cop_land: .9,
     }
