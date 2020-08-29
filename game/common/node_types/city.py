@@ -1,4 +1,4 @@
-from common.node import Node
+from game.common.node import Node
 from game.common.stats import GameStats
 from game.enums import *
 
