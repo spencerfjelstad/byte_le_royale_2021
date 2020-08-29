@@ -5,7 +5,6 @@ from game.common.map import Map
 
 # This method generates a map
 # STATIC METHOD BAAADDDD
-@staticmethod
 def generateMap():
     start = Node("HUB")
     a = Node("CityA")
