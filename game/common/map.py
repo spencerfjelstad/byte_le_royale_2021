@@ -1,15 +1,12 @@
-#This needs to be a game object desperately
-# STATIC METHODS BAAAAAAAAAAADDDDDDDDDDD
 class Map():
+    #This needs work but oh well
     cities = dict()
     roads = dict()
 
-    # This part is probs obsolete
     @staticmethod
     def getRoadByName(name):
         return roads[name]
 
-    # This part is probs obsolete
     @staticmethod
     def getCityByName(name):
         return cities[name]
