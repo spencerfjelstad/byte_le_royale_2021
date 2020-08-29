@@ -3,6 +3,8 @@ from game.utils.helpers import write_json_file
 from game.common.node import Node
 from game.common.map import Map
 from game.utils.CreateMap import *
+import random
+import sys
 
 def generate():
     print('Generating game map...')
@@ -14,4 +16,13 @@ def generate():
 
     # Write game map to file
     res = Map.getData()
+
+    # create a seed
+    #res["seed"] = random.randrange(sys.maxsize) 
+
+    # Generates turns
+    for i in range(1, MAX_TICKS):
+        res[i] = dict()
+        res[i]["seed"] = random.randint(1,sys.maxsize)
+    
     write_json_file(res, GAME_MAP_FILE)
