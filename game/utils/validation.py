@@ -14,7 +14,9 @@ def verify_code(filename):
     uses_open = False
 
     for line in contents:
-        line = re.split('[ ;]', line)
+        print(line)
+        line = re.split('[ ;()]', line)
+        print(line)
 
         while 'from' in line or 'import' in line or 'open' in line:
             # Check for illegal keywords
