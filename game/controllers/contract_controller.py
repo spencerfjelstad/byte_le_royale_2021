@@ -21,7 +21,6 @@ class ContractController(Controller):
     
     # Generate list of contracts, store for verification
     def generate_contracts(self, client):
-        curr_map = Map.getData()
         city_list = []
         hub = None
         for city in Map.cities:
