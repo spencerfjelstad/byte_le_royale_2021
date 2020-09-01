@@ -36,12 +36,14 @@ class Action:
 
         data['object_type'] = self.object_type
         data['chosen_action'] = self._chosen_action
+        data['destination'] = self.__destination
 
         return data
 
     def from_json(self, data):
         self.object_type = data['object_type']
         self._chosen_action = data['chosen_action']
+        self.__destination = data['destination']
 
     def __str__(self):
         outstring = ''
