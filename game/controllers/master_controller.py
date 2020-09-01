@@ -73,12 +73,10 @@ class MasterController(Controller):
         return data
 
     # Gather necessary data together in results file
-    def return_final_results(self, clients, turn):
+    def return_final_results(self, client, turn):
         data = dict()
 
-        data['players'] = list()
         # Determine results
-        for client in clients:
-            data['players'].append(client.to_json())
+        data['player'] = client.to_json()
 
         return data

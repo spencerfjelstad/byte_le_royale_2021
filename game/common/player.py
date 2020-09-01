@@ -9,7 +9,7 @@ from game.common.truck import Truck
 
 class Player(GameObject):
     # truck initialized with placeholder
-    def __init__(self, code=None, team_name=None, action=None, contract=None, truck=Truck("HUB"):
+    def __init__(self, code=None, team_name=None, action=None, contract=None, truck=Truck("HUB")):
         super().__init__()
         self.object_type = ObjectType.player
         
@@ -27,9 +27,9 @@ class Player(GameObject):
         data['functional'] = self.functional
         data['error'] = self.error
         data['team_name'] = self.team_name
-        data['action'] = self.action.to_json() if self.action is not None else None
+        data['action'] = self.action.to_json() if self.action is not None else dict()
         data['truck'] = self.truck.to_json()
-        data['active_contract'] = self.active_contract.to_json()
+        data['active_contract'] = self.active_contract.to_json() if self.active_contract is not None else dict()
 
         return data
 
