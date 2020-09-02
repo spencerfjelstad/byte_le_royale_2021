@@ -8,6 +8,7 @@ from game.utils.thread import CommunicationThread
 
 from game.controllers.controller import Controller
 from game.controllers.contract_controller import ContractController
+from game.controllers.movement_controller import MovementController
 from game.utils.CreateMap import *
 from game.common.truck import Truck
 
@@ -22,6 +23,7 @@ class MasterController(Controller):
         generateMap()
 
         self.contract_controller = ContractController()
+        self.movement_controller = MovementController()
 
     # Receives all clients for the purpose of giving them the objects they will control
     def give_clients_objects(self, client):
@@ -61,6 +63,7 @@ class MasterController(Controller):
     # Perform the main logic that happens per turn
     def turn_logic(self, client, turn):
         self.contract_controller.handle_actions(client)
+        self.movement_controller.move(client.truck, client.action.destination)
         pass
 
     # Return serialized version of game

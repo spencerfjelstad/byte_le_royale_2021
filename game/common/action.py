@@ -25,10 +25,6 @@ class Action:
             return
         if not isinstance(truck, ObjectType.truck):
             return
-        self.current_location = truck.current_node
-        for road in self.current_location.connections:
-            if road.city_2 == destination.city_name:
-                truck.current_node = destination
         self.__destination = destination
 
     def to_json(self):
