@@ -46,12 +46,13 @@ class MasterController(Controller):
     # Receives world data from the generated game log and is responsible for interpreting it
     def interpret_current_turn_data(self, client, world, turn):
         self.current_world_data = world
+        self.subtract_time(world["time_taken"])
 
     # Receive a specific client and send them what they get per turn. Also obfuscates necessary objects.
     def client_turn_arguments(self, client, turn):
         # Add contracts available in city and current active contract to truck for access by client
         actions = Action()
-        self.contract_controller.generate_contracts()
+        self.contract_controller.generate_contracts(client)
         client.truck.contract_list = copy.deepcopy(self.contract_controller.contract_list)
         client.truck.active_contract = copy.deepcopy(client.active_contract)
         client.action = actions
@@ -64,7 +65,7 @@ class MasterController(Controller):
     # Perform the main logic that happens per turn
     def turn_logic(self, client, turn):
         self.contract_controller.handle_actions(client)
-        self.movement_controller.move(client.truck, client.action.destination)
+        self.movement_controller.move(client.truck, client.action.destination, self.current_world_data)
         pass
 
     # Return serialized version of game
