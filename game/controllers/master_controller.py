@@ -16,10 +16,7 @@ class MasterController(Controller):
     def __init__(self):
         super().__init__()
         self.game_over = False
-<<<<<<< HEAD
-=======
                 
->>>>>>> 474c47093466497a55b2b42b88e71f4df54417ce
         self.turn = None
         self.time = 10000
         self.current_world_data = None

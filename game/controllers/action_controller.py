@@ -11,6 +11,8 @@ class ActionController(Controller):
     def update_destination(self, dest):
         self.Destination = dest
 
+    def calculate_road_distance(road_type):
+        return road_type
 
     def handle_movement(self, client):
         #Returns the road that connects the two roads, or None if not connected
