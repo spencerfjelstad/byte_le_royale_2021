@@ -14,7 +14,7 @@ class ObjectType:
 
 class ActionType:
     none = 0
-    select_route = 1
+    select_destination = 1
     choose_speed = 2
     buy_gas = 3
     upgrade = 4
