@@ -23,11 +23,11 @@ class ContractController(Controller):
     def generate_contracts(self, client):
         city_list = []
         hub = None
-        for city in Map.cities:
-            if Map.getCityByName(str(city)).region == Map.getCityByName(client.truck.current_node).region:
+        for city in Map.cities.values():
+            if city.region == Map.getCityByName(client.truck.current_node).region:
                 city_list.append(city)
-        for city in Map.cities:
-            if 'hub' in Map.getCityByName(city).city_name.lower():
+        for city in Map.cities.values():
+            if 'hub' in city.city_name.lower():
                 hub = city
 
         # Placeholder contract generation
