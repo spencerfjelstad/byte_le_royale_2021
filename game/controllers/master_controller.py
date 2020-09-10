@@ -11,6 +11,8 @@ from game.controllers.contract_controller import ContractController
 from game.utils.CreateMap import *
 from game.common.truck import Truck
 
+import random
+
 
 class MasterController(Controller):
     def __init__(self):
@@ -60,6 +62,7 @@ class MasterController(Controller):
 
     # Perform the main logic that happens per turn
     def turn_logic(self, client, turn):
+        random.seed(self.current_world_data["seed"])
         self.contract_controller.handle_actions(client)
         pass
 
