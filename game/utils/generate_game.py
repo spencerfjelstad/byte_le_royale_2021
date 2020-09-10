@@ -21,7 +21,7 @@ def generate():
     #res["seed"] = random.randrange(sys.maxsize) 
 
     # Generates turns
-    for i in range(1, MAX_TICKS):
+    for i in range(1, MAX_TICKS + 1):
         res[i] = dict()
         res[i]["seed"] = random.randint(1,sys.maxsize)
     
