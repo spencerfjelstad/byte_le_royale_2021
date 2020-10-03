@@ -22,7 +22,6 @@ class MasterController(Controller):
         self.game_over = False
                 
         self.turn = None
-        self.time = 10000
         self.current_world_data = None
         generateMap()
 
@@ -36,11 +35,11 @@ class MasterController(Controller):
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
     # the state of the world, returns the key that will give the appropriate world information
-    def game_loop_logic(self, start=1):
+    def game_loop_logic(self, start=1, client):
         self.turn = start
 
         # Basic loop from 1 to max turns
-        while self.time > 0:
+        while client.time > 0:
             # Wait until the next call to give the number
             yield str(self.turn)
             # Increment the turn counter by 1

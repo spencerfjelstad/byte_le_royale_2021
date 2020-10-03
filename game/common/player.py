@@ -18,6 +18,7 @@ class Player(GameObject):
         self.action = action
         self.truck = truck
         self.active_contract = contract
+        self.time = 10000
 
     def to_json(self):
         data = super().to_json()
@@ -25,29 +26,35 @@ class Player(GameObject):
         data['functional'] = self.functional
         data['error'] = self.error
         data['team_name'] = self.team_name
-        data['action'] = self.action.to_json() if self.action is not None else dict()
+        data['time'] = self.time
+        data['action'] = self.action.to_json(
+        ) if self.action is not None else dict()
         data['truck'] = self.truck.to_json()
-        data['active_contract'] = self.active_contract.to_json() if self.active_contract is not None else dict()
+        data['active_contract'] = self.active_contract.to_json(
+        ) if self.active_contract is not None else dict()
 
         return data
 
     def from_json(self, data):
         super().from_json(data)
-        
+
         self.functional = data['functional']
         self.error = data['error']
         self.team_name = data['team_name']
+        self.time = data['time']
         act = Action()
-        self.action = act.from_json(data['action']) if data['action'] is not None else None
+        self.action = act.from_json(
+            data['action']) if data['action'] is not None else None
         truck = Truck()
         self.truck = truck.from_json(data['truck'])
         contract = Contract()
         self.active_contract = contract.from_json(data['active_contract'])
-        
+
     def __str__(self):
         p = f"""ID: {self.id}
             Team name: {self.team_name}
             Action: {self.action}
             Contracts: {self.active_contract}
+            Time: {self.time}
             """
         return p
