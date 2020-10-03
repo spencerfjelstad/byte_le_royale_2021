@@ -67,7 +67,7 @@ class MasterController(Controller):
     def turn_logic(self, client, turn):
         random.seed(self.current_world_data["seed"])
         self.contract_controller.handle_actions(client)
-        self.movement_controller.move(client.truck, client.action.route, client.truck.speed)
+        self.movement_controller.move(client.truck, client.action.route)
         pass
 
     # Return serialized version of game

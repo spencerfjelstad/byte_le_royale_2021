@@ -7,7 +7,7 @@ class MovementController(Controller):
         super().__init__()
         self.current_location = None
 
-    def move(self, truck, road, speed):
+    def move(self, truck, road):
         self.current_location = truck.current_node
         time_taken = 0
         for route in self.current_location.connections:
