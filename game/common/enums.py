@@ -11,10 +11,11 @@ class ObjectType:
     node = 3
     truck = 4
     contract = 5
+    
 
 class ActionType:
     none = 0
-    select_destination = 1
+    select_route = 1
     choose_speed = 2
     buy_gas = 3
     upgrade = 4
@@ -39,3 +40,4 @@ class NodeType:
     none = 0
     city = 1
     warehouse = 2
+    road = 3

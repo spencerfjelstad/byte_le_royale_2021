@@ -6,13 +6,14 @@ import json
 class Road(GameObject):
     # name is the key for this edge, it must always be unique
     # city1 and city2 are strings representing the keys of the connected cities
-    def __init__(self, name ,city1=None, city2=None):
+    def __init__(self, name ,city1=None, city2=None, length=100):
         super().__init__()
         self.object_type = ObjectType.node
         self.road_name = name
         self.road_type = RoadType.none
         self.city_1 = city1
         self.city_2 = city2
+        self.length = length
         # upon finishing up it adds itself to the graph. could add some errors if the key isn't unique
         Map.roads[self.road_name] = self
     
@@ -30,7 +31,7 @@ class Road(GameObject):
         self.road_name = data['road_name']
         self.city_1 = data['city_1']
         self.city_2 = data['city_2']
-        Map.roads[road_name] = self
+        Map.roads[self.road_name] = self
     
 
 

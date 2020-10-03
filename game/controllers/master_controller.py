@@ -63,7 +63,7 @@ class MasterController(Controller):
     # Perform the main logic that happens per turn
     def turn_logic(self, client, turn):
         self.contract_controller.handle_actions(client)
-        self.movement_controller.move(client.truck, client.action.destination)
+        self.movement_controller.move(client.truck, client.action.route, client.truck.speed)
         pass
 
     # Return serialized version of game
