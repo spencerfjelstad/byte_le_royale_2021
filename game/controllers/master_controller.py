@@ -1,3 +1,4 @@
+import copy
 from copy import deepcopy
 
 from game.common.action import Action
@@ -11,6 +12,8 @@ from game.controllers.contract_controller import ContractController
 from game.controllers.movement_controller import MovementController
 from game.utils.CreateMap import *
 from game.common.truck import Truck
+
+import random
 
 
 class MasterController(Controller):
@@ -50,7 +53,7 @@ class MasterController(Controller):
     def client_turn_arguments(self, client, turn):
         # Add contracts available in city and current active contract to truck for access by client
         actions = Action()
-        self.contract_controller.generate_contracts()
+        self.contract_controller.generate_contracts(client)
         client.truck.contract_list = copy.deepcopy(self.contract_controller.contract_list)
         client.truck.active_contract = copy.deepcopy(client.active_contract)
         client.action = actions
@@ -62,6 +65,7 @@ class MasterController(Controller):
 
     # Perform the main logic that happens per turn
     def turn_logic(self, client, turn):
+        random.seed(self.current_world_data["seed"])
         self.contract_controller.handle_actions(client)
         self.movement_controller.move(client.truck, client.action.route, client.truck.speed)
         pass

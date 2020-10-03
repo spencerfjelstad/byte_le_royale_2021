@@ -10,6 +10,7 @@ from game.common.node import Node
 from game.common.map import Map
 from game.common.contract import Contract
 from game.common.truck import Truck
+from game.common.enums import *
 
 
 class ContractController(Controller):
@@ -20,21 +21,20 @@ class ContractController(Controller):
     
     # Generate list of contracts, store for verification
     def generate_contracts(self, client):
-        curr_map = Map.getData()
         city_list = []
         hub = None
-        for city in curr_map['cities']:
-            if city.region == client.truck.current_node.region:
+        for city in Map.cities.values():
+            if city.region == Map.getCityByName(client.truck.current_node).region:
                 city_list.append(city)
-        for city in curr_map['cities']:
+        for city in Map.cities.values():
             if 'hub' in city.city_name.lower():
                 hub = city
 
         # Placeholder contract generation
         contract_list = [
-                Contract(None, client.truck.current_node.region, [hub, random.choice(city_list)]),
-                Contract(None, client.truck.current_node.region, [hub, random.choice(city_list)]),
-                Contract(None, client.truck.current_node.region, [hub, random.choice(city_list)])]
+                Contract(None, Map.getCityByName(client.truck.current_node).region, [hub, random.choice(city_list)]),
+                Contract(None, Map.getCityByName(client.truck.current_node).region, [hub, random.choice(city_list)]),
+                Contract(None, Map.getCityByName(client.truck.current_node).region, [hub, random.choice(city_list)])]
         
         self.contract_list = contract_list
 
