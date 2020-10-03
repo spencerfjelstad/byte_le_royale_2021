@@ -13,6 +13,8 @@ class Truck(GameObject):
         self.current_node = node
         self.contract_list = []
         self.active_contract = None
+        self.money = 0
+        self.gas = 1
 
     def get_city_contracts(self):
         return self.contract_list
@@ -23,10 +25,13 @@ class Truck(GameObject):
     def to_json(self):
         data = super().to_json()
         data['current_node'] = self.current_node
-        
+        data['money'] = self.money
+        data['gas'] = self.gas
         return data
 
     def from_json(self, data):
         super().from_json(data)
         node = Node()
         self.current_node = node.from_json(data['current_node'])
+        self.money = data['money']
+        self.gas = data['gas']

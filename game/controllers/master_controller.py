@@ -40,7 +40,7 @@ class MasterController(Controller):
         self.turn = start
 
         # Basic loop from 1 to max turns
-        while True:
+        while self.time > 0:
             # Wait until the next call to give the number
             yield str(self.turn)
             # Increment the turn counter by 1

@@ -12,6 +12,7 @@ class Node(GameObject):
         self.city_name = name
         self.region = Region.none
         self.connections = list()
+        self.node_type = NodeType.none
         # registers this object to the graph with city_name as the key
         Map.cities[self.city_name] = self
     
@@ -20,6 +21,7 @@ class Node(GameObject):
         data['region'] = self.region
         data['city_name'] = self.city_name
         data['connections'] = self.connections
+        data['node_type'] = self.node_type
         return data
 
     def from_json(self, data):
@@ -27,6 +29,7 @@ class Node(GameObject):
         self.region = data['region']
         self.city_name = data['city_name']
         self.connections = data['connections']
+        self.node_type = data['node_type']
         Map.cities[self.city_name] = self
 
     # this method connects two cities together and generates a road object
