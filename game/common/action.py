@@ -20,10 +20,8 @@ class Action:
     def get_route(self):
         return self.__route
 
-    def set_route(self, truck, route):
+    def set_route(self, route):
         if not isinstance(route, ObjectType.node):
-            return
-        if not isinstance(truck, ObjectType.truck):
             return
         self.__route = route
 

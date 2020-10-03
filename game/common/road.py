@@ -6,7 +6,7 @@ import json
 class Road(GameObject):
     # name is the key for this edge, it must always be unique
     # city1 and city2 are strings representing the keys of the connected cities
-    def __init__(self, name ,city1=None, city2=None, length=100):
+    def __init__(self, name ,city1=None, city2=None, length=None):
         super().__init__()
         self.object_type = ObjectType.node
         self.road_name = name
