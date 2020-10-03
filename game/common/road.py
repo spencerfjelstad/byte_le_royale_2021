@@ -23,6 +23,7 @@ class Road(GameObject):
         data['road_name'] = self.road_name
         data['city_1'] = self.city_1
         data['city_2'] = self.city_2
+        data['length'] = self.length
         return data  
     
     def from_json(self,data):
@@ -31,6 +32,7 @@ class Road(GameObject):
         self.road_name = data['road_name']
         self.city_1 = data['city_1']
         self.city_2 = data['city_2']
+        self.length = data['length']
         Map.roads[self.road_name] = self
     
 

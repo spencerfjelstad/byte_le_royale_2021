@@ -11,16 +11,16 @@ class MovementController(Controller):
         
         #if truck in on a road
         if type(self.current_location) is NodeType.road:
-            #add speed to distance
+            current_road = self.current_location
+            road_length = current_road.length
+
             current_distance = truck.current_distance
             distance = current_distance + truck.speed
             truck.current_distance = distance
-            #compare distance to road length
-            current_road = self.current_location
-            road_length = current_road.length
             if truck.get_current_distance() > road_length or distance == road_length:
                 truck.current_node = current_road.city_2
                 truck.set_current_distance(0)
+
         #if truck is on city
         else:
             for route in self.current_location.connections:
