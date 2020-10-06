@@ -1,12 +1,13 @@
 from game.common.game_object import GameObject
 from game.common.enums import *
 from game.common.map import Map
+from game.common.stats import GameStats
 import json
 
 class Road(GameObject):
     # name is the key for this edge, it must always be unique
     # city1 and city2 are strings representing the keys of the connected cities
-    def __init__(self, name ,city1=None, city2=None, length=None):
+    def __init__(self, name ,city1=None, city2=None, length=GameStats.default_road_length):
         super().__init__()
         self.object_type = ObjectType.node
         self.road_name = name

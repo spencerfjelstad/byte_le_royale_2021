@@ -13,7 +13,7 @@ class Truck(GameObject):
         self.current_node = node
         self.contract_list = []
         self.active_contract = None
-        self.speed = 0
+        self.speed = 50
 
     def get_city_contracts(self):
         return self.contract_list
@@ -25,12 +25,13 @@ class Truck(GameObject):
         return self.speed
 
     def set_current_speed(self, speed):
+        if speed < 1:
+            speed = 1
         self.speed = speed
     
     def to_json(self):
         data = super().to_json()
         data['current_node'] = self.current_node
-        data['current_distance'] = self.current_distance
         data['speed'] = self.speed
         return data
 
@@ -38,5 +39,4 @@ class Truck(GameObject):
         super().from_json(data)
         node = Node()
         self.current_node = data['current_node']
-        self.current_distance = data['current_distance']
         self.speed = data['speed']
