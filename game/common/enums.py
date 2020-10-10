@@ -11,6 +11,7 @@ class ObjectType:
     node = 3
     truck = 4
     contract = 5
+    
 
 class ActionType:
     none = 0
@@ -39,3 +40,4 @@ class NodeType:
     none = 0
     city = 1
     warehouse = 2
+    road = 3

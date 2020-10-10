@@ -2,6 +2,8 @@ from game.common.enums import Region
 
 
 class GameStats:
+    default_road_length = 100
+
     region_reward_modifier = {
         Region.grass_lands: .5,
         Region.nord_dakotia: .6,
