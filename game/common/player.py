@@ -4,6 +4,7 @@ from game.common.game_object import GameObject
 from game.common.enums import *
 from game.common.contract import Contract
 from game.common.truck import Truck
+from game.common.stats import GameStats
 
 
 class Player(GameObject):
@@ -18,7 +19,8 @@ class Player(GameObject):
         self.action = action
         self.truck = truck
         self.active_contract = contract
-        self.time = 10000
+        self.time = GameStats.game_max_time
+        self.money = GameStats.player_starting_money
 
     def to_json(self):
         data = super().to_json()
@@ -27,12 +29,10 @@ class Player(GameObject):
         data['error'] = self.error
         data['team_name'] = self.team_name
         data['time'] = self.time
-        data['action'] = self.action.to_json(
-        ) if self.action is not None else dict()
+        data['action'] = self.action.to_json() if self.action is not None else dict()
         data['truck'] = self.truck.to_json()
-        data['active_contract'] = self.active_contract.to_json(
-        ) if self.active_contract is not None else dict()
-
+        data['money'] = self.money
+        data['active_contract'] = self.active_contract.to_json() if self.active_contract is not None else dict()
         return data
 
     def from_json(self, data):
@@ -43,10 +43,10 @@ class Player(GameObject):
         self.team_name = data['team_name']
         self.time = data['time']
         act = Action()
-        self.action = act.from_json(
-            data['action']) if data['action'] is not None else None
+        self.action = act.from_json(data['action']) if data['action'] is not None else None
         truck = Truck()
         self.truck = truck.from_json(data['truck'])
+        self.money = data['money']
         contract = Contract()
         self.active_contract = contract.from_json(data['active_contract'])
 
@@ -56,5 +56,6 @@ class Player(GameObject):
             Action: {self.action}
             Contracts: {self.active_contract}
             Time: {self.time}
+            Money: {self.money}
             """
         return p

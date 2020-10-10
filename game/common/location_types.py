@@ -8,7 +8,7 @@ class Grass_Lands(Node):
         super().__init__()
         self.location_type = LocationType.grass_lands
         self.reward_modifier = GameStats.region_reward_modifier[self.location_type]
-        self.difficulty_modifier = GameStats.region_reward_modifier[self.location_type]
+        self.difficulty_modifier = GameStats.region_difficulty_modifier[self.location_type]
 
 
 class Nord_Dakotia(Node):
