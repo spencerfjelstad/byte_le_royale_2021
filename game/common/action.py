@@ -8,7 +8,7 @@ class Action:
         self.object_type = ObjectType.action
         self._chosen_action = None
         self.contract_index = None
-        self.__destination = None
+        self.__route = None
 
     def set_action(self, action, contractIndex = None):
         self._chosen_action = action
@@ -17,29 +17,27 @@ class Action:
         else:
             self.contract_index = None
     
-    def get_destination(self):
-        return self.__destination
+    def get_route(self):
+        return self.__route
 
-    def set_destination (self, truck, destination):
-        if not isinstance(destination, ObjectType.node):
+    def set_route(self, route):
+        if not isinstance(route, ObjectType.node):
             return
-        if not isinstance(truck, ObjectType.truck):
-            return
-        self.__destination = destination
+        self.__route = route
 
     def to_json(self):
         data = dict()
 
         data['object_type'] = self.object_type
         data['chosen_action'] = self._chosen_action
-        data['destination'] = self.__destination
+        data['destination'] = self.__route
 
         return data
 
     def from_json(self, data):
         self.object_type = data['object_type']
         self._chosen_action = data['chosen_action']
-        self.__destination = data['destination']
+        self.__route = data['destination']
 
     def __str__(self):
         outstring = ''

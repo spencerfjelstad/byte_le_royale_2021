@@ -1,19 +1,17 @@
-from game.controllers.singleton_controller import Controller
-
+from game.controllers.controller import Controller
+from game.common.enums import NodeType
+from game.common.player import Player
 class MovementController(Controller):
 
     def __init__(self):
         super().__init__()
         self.current_location = None
 
-    def calculate_time_taken(self, distance, speed):
-        return distance / speed
-
-
-    def move(self, truck, destination, world_data):
-        self.current_location = truck.current_node
-        for road in self.current_location.connections:
-            if road.city_2 == destination.city_name:
-                truck.current_node = destination
-                data["time_taken"] += self.calculate_time_taken(road.distance, truck.speed)    
-        return destination
+    def move(self, player, road):
+        self.current_location = player.truck.current_node
+        time_taken = 0
+        for route in self.current_location.connections:
+            if route is road:
+                player.truck.current_node = route.city_2
+                time_taken = road.length / player.truck.get_current_speed()
+        player.time -= time_taken
