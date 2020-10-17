@@ -14,7 +14,7 @@ class Road(GameObject):
         self.road_type = RoadType.none
         self.city_1 = city1
         self.city_2 = city2
-        self.length = length
+        self.length = length * GameStats.road_type_length_modifier
         # upon finishing up it adds itself to the graph. could add some errors if the key isn't unique
         Map.roads[self.road_name] = self
     

@@ -23,7 +23,7 @@ class GameStats:
         Region.tropical_cop_land: .9,
     }
 
-    road_length_modifier = {
+    road_type_length_modifier = {
         RoadType.mountain_road: 1,
         RoadType.forest_road: 1,
         RoadType.tundra_road: 1.5,
@@ -31,5 +31,4 @@ class GameStats:
         RoadType.highway: 2,
         RoadType.interstate: 2
     }
-
 
