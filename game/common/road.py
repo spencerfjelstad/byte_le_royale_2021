@@ -22,6 +22,7 @@ class Road(GameObject):
         data = super().to_json()
         data['road_type'] = self.road_type
         data['road_name'] = self.road_name
+        data['road_distance'] = self.road_distance
         data['city_1'] = self.city_1
         data['city_2'] = self.city_2
         data['length'] = self.length
@@ -31,6 +32,7 @@ class Road(GameObject):
         super().from_json(data)
         self.road_type = data['road_type']
         self.road_name = data['road_name']
+        self.road_distance = data['road_distance']
         self.city_1 = data['city_1']
         self.city_2 = data['city_2']
         self.length = data['length']

@@ -10,6 +10,7 @@ from game.utils.thread import CommunicationThread
 from game.controllers.controller import Controller
 from game.controllers.contract_controller import ContractController
 from game.controllers.movement_controller import MovementController
+from game.controllers.buy_controller import buyController
 from game.utils.CreateMap import *
 from game.common.truck import Truck
 
@@ -27,6 +28,7 @@ class MasterController(Controller):
 
         self.contract_controller = ContractController()
         self.movement_controller = MovementController()
+        self.buy_controller = buyController()
 
     # Receives all clients for the purpose of giving them the objects they will control
     def give_clients_objects(self, client):
@@ -35,11 +37,11 @@ class MasterController(Controller):
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
     # the state of the world, returns the key that will give the appropriate world information
-    def game_loop_logic(self, start=1):
+    def game_loop_logic(self, start=1, client):
         self.turn = start
 
         # Basic loop from 1 to max turns
-        while True:
+        while client.time > 0:
             # Wait until the next call to give the number
             yield str(self.turn)
             # Increment the turn counter by 1
@@ -48,6 +50,7 @@ class MasterController(Controller):
     # Receives world data from the generated game log and is responsible for interpreting it
     def interpret_current_turn_data(self, client, world, turn):
         self.current_world_data = world
+        self.subtract_time(world["time_taken"])
 
     # Receive a specific client and send them what they get per turn. Also obfuscates necessary objects.
     def client_turn_arguments(self, client, turn):
@@ -67,7 +70,7 @@ class MasterController(Controller):
     def turn_logic(self, client, turn):
         random.seed(self.current_world_data["seed"])
         self.contract_controller.handle_actions(client)
-        self.movement_controller.move(client.truck, client.action.route)
+        self.movement_controller.move(client, client.action.route)
         pass
 
     # Return serialized version of game
@@ -87,3 +90,6 @@ class MasterController(Controller):
         data['player'] = client.to_json()
 
         return data
+    
+    def subtract_time(self,time):
+        self.time -= abs(time)

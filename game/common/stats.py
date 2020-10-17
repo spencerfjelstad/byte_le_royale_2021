@@ -32,3 +32,10 @@ class GameStats:
         RoadType.interstate: 2
     }
 
+    game_max_time = 10000
+
+    player_starting_money = 1000
+
+    truck_starting_gas = 1
+
+    truck_starting_max_gas = 1
