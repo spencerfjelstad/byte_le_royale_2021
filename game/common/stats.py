@@ -9,7 +9,7 @@ class GameStats:
         Region.nord_dakotia: .6,
         Region.mobave_desert: .7,
         Region.mount_vroom: .8,
-        Region.loblantis: .8,
+        Region.lobslantis: .8,
         Region.tropical_cop_land: .9,
     }
 
@@ -18,6 +18,14 @@ class GameStats:
         Region.nord_dakotia: .6,
         Region.mobave_desert: .7,
         Region.mount_vroom: .8,
-        Region.loblantis: .8,
+        Region.lobslantis: .8,
         Region.tropical_cop_land: .9,
     }
+
+    game_max_time = 10000
+
+    player_starting_money = 1000
+
+    truck_starting_gas = 1
+
+    truck_starting_max_gas = 1
