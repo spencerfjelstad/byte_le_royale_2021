@@ -39,7 +39,7 @@ class RoadType:
     city_road = 5
     interstate = 6
 
-class DisasterType:
+class EventType:
     none = 0
     rock_slide = 1
     icy_road = 2
