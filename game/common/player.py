@@ -21,6 +21,7 @@ class Player(GameObject):
         self.active_contract = contract
         self.time = GameStats.game_max_time
         self.money = GameStats.player_starting_money
+        self.available_contracts = list()
 
     def to_json(self):
         data = super().to_json()

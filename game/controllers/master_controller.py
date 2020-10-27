@@ -8,11 +8,9 @@ import game.config as config
 from game.utils.thread import CommunicationThread
 
 from game.controllers.controller import Controller
-from game.controllers.contract_controller import ContractController
-from game.controllers.movement_controller import MovementController
-from game.controllers.buy_controller import buyController
 from game.utils.CreateMap import *
 from game.common.truck import Truck
+from game.utils.contract_utils import *
 
 import random
 
@@ -26,9 +24,7 @@ class MasterController(Controller):
         self.current_world_data = None
         generateMap()
 
-        self.contract_controller = ContractController()
-        self.movement_controller = MovementController()
-        self.buy_controller = buyController()
+        self.action_controller = ActionController()
 
     # Receives all clients for the purpose of giving them the objects they will control
     def give_clients_objects(self, client):
@@ -56,8 +52,12 @@ class MasterController(Controller):
     def client_turn_arguments(self, client, turn):
         # Add contracts available in city and current active contract to truck for access by client
         actions = Action()
-        self.contract_controller.generate_contracts(client)
-        client.truck.contract_list = copy.deepcopy(self.contract_controller.contract_list)
+
+        
+        contract_list = contract_utils.generate_contracts(client)
+        action_controller.contract_list = contract_list
+        
+        client.truck.contract_list = copy.deepcopy(contract_list)
         client.truck.active_contract = copy.deepcopy(client.active_contract)
         client.action = actions
        
@@ -69,8 +69,8 @@ class MasterController(Controller):
     # Perform the main logic that happens per turn
     def turn_logic(self, client, turn):
         random.seed(self.current_world_data["seed"])
-        self.contract_controller.handle_actions(client)
-        self.movement_controller.move(client, client.action.route)
+
+        self.action_controller.handle_actions(client)
         pass
 
     # Return serialized version of game

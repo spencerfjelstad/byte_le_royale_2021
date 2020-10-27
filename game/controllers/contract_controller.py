@@ -36,7 +36,7 @@ class ContractController(Controller):
                 Contract(None, Map.getCityByName(client.truck.current_node).region, [hub, random.choice(city_list)]),
                 Contract(None, Map.getCityByName(client.truck.current_node).region, [hub, random.choice(city_list)])]
         
-        self.contract_list = contract_list
+        return contract_list
 
     # If contract was selected retrieve by index and store in Player, then clear the list
     def handle_actions(self, client):
