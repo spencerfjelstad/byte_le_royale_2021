@@ -7,15 +7,12 @@ class Action:
     def __init__(self):
         self.object_type = ObjectType.action
         self._chosen_action = None
-        self.contract_index = None
+        self.action_parameter = None
         self.__route = None
 
-    def set_action(self, action, contractIndex = None):
+    def set_action(self, action, action_parameter = None):
         self._chosen_action = action
-        if action == ActionType.select_contract:
-            self.contract_index = contractIndex
-        else:
-            self.contract_index = None
+        self.action_parameter = action_parameter
     
     def get_route(self):
         return self.__route
