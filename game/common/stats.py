@@ -31,12 +31,12 @@ class GameStats:
     }
 
     possible_event_types = {
-        RoadType.mountain_road: {EventType.rock_slide, EventType.animal_in_road, EventType.icy_road, EventType.police},
-        RoadType.forest_road: {EventType.animal_in_road, EventType.police, EventType.rock_slide, EventType.icy_road},
-        RoadType.tundra_road: {EventType.icy_road, EventType.police, EventType.rock_slide},
-        RoadType.city_road: {EventType.bandits, EventType.police, EventType.traffic},
-        RoadType.highway: {EventType.police, EventType.traffic},
-        RoadType.interstate: {EventType.traffic, EventType.police}
+        RoadType.mountain_road: [EventType.rock_slide, EventType.animal_in_road, EventType.icy_road, EventType.police],
+        RoadType.forest_road: [EventType.animal_in_road, EventType.police, EventType.rock_slide, EventType.icy_road],
+        RoadType.tundra_road: [EventType.icy_road, EventType.police, EventType.rock_slide],
+        RoadType.city_road: [EventType.bandits, EventType.police, EventType.traffic],
+        RoadType.highway: [EventType.police, EventType.traffic],
+        RoadType.interstate: [EventType.traffic, EventType.police]
     }
 
     event_type_damage = {
