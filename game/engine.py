@@ -42,7 +42,6 @@ class Engine:
                                            bar_format=TQDM_BAR_FORMAT,
                                            unit=TQDM_UNITS,
                                            file=f):
-            print(f"key: {self.current_world_key}")
             self.pre_tick()
             self.tick()
             self.post_tick()
@@ -156,7 +155,6 @@ class Engine:
 
         # Retrieve current world info
         if str(self.current_world_key) not in self.world:
-            #print(f"key pretick: {self.current_world_key}")
             raise KeyError('Given generated world key does not exist inside the world.')
         current_world = self.world[str(self.current_world_key)]
 
