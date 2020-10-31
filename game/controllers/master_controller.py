@@ -48,8 +48,6 @@ class MasterController(Controller):
     # Receives world data from the generated game log and is responsible for interpreting it
     def interpret_current_turn_data(self, client, world, turn):
         self.current_world_data = world
-        #print(world.keys)
-        #client.time -= world["time_taken"]
 
     # Receive a specific client and send them what they get per turn. Also obfuscates necessary objects.
     def client_turn_arguments(self, client, turn):
@@ -70,13 +68,11 @@ class MasterController(Controller):
         #Truck obfuscation
         truckCopy = copy.deepcopy(client.truck)
         truckCopy.obfuscate()
-        truckCopy.current_node
         for contract in truckCopy.contract_list:
             contract.obfuscate()
 
         #Time copy to be given to player
         timeCopy = copy.deepcopy(client.time)
-        timeCopy
         
         # Obfuscate data in objects that that player should not be able to see
         args = (self.turn, actions, self.current_world_data, truckCopy, timeCopy)
