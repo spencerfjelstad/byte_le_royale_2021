@@ -10,4 +10,5 @@ def determine_if_connected(cityOne, cityTwo):
         if(road.city1 is cityTwo or road.city2 is cityTwo):
             return road
     return None
+    
 

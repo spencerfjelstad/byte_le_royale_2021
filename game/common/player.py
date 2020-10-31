@@ -21,6 +21,7 @@ class Player(GameObject):
         self.active_contract = contract
         self.time = GameStats.game_max_time
         self.money = GameStats.player_starting_money
+        self.available_contracts = list()
 
     def to_json(self):
         data = super().to_json()
@@ -43,12 +44,18 @@ class Player(GameObject):
         self.team_name = data['team_name']
         self.time = data['time']
         act = Action()
-        self.action = act.from_json(data['action']) if data['action'] is not None else None
+        act.from_json(data['action']) if data['action'] is not None else None 
+        self.action = act
+
         truck = Truck()
-        self.truck = truck.from_json(data['truck'])
+        truck.from_json(data['truck'])
+        self.truck = truck
+        
         self.money = data['money']
+        
         contract = Contract()
-        self.active_contract = contract.from_json(data['active_contract'])
+        contract.from_json(data['active_contract'])
+        self.active_contract = contract
 
     def __str__(self):
         p = f"""ID: {self.id}
