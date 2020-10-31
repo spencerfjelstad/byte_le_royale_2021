@@ -85,6 +85,7 @@ class Engine:
 
             # Import client's code
             im = importlib.import_module(f'{filename}', CLIENT_DIRECTORY)
+            print(im)
 
             # Attempt creation of the client object
             obj = None
@@ -93,6 +94,7 @@ class Engine:
             except Exception:
                 player.functional = False
                 player.error = traceback.format_exc()
+                print(player.error)
 
             player.code = obj
 

@@ -5,7 +5,6 @@ import copy
 
 class UserClient:
     def __init__(self):
-        self.truck = copy.deepcopy(truck)
         self.debug_level = DebugLevel.client
         self.debug = True
 
