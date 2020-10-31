@@ -93,7 +93,6 @@ class Engine:
             except Exception:
                 player.functional = False
                 player.error = traceback.format_exc()
-                print(player.error)
 
             player.code = obj
 

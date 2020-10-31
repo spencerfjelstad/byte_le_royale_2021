@@ -8,10 +8,6 @@ import game.config as config
 from game.utils.thread import CommunicationThread
 
 from game.controllers.controller import Controller
-#from game.controllers.contract_controller import ContractController
-from game.controllers.movement_controller import MovementController
-from game.controllers.buy_controller import buyController
-from game.controllers.action_controller import ActionController
 from game.utils.CreateMap import *
 from game.common.truck import Truck
 from game.utils.contract_utils import generate_contracts
