@@ -12,7 +12,7 @@ from game.common.truck import Truck
 from game.common.enums import *
 
 # Generate list of contracts, store for verification
-def generate_contracts(self, client):
+def generate_contracts(client):
     city_list = []
     hub = None
     for city in Map.cities.values():
