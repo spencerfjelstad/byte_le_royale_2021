@@ -42,6 +42,7 @@ class Engine:
                                            bar_format=TQDM_BAR_FORMAT,
                                            unit=TQDM_UNITS,
                                            file=f):
+            print(f"key: {self.current_world_key}")
             self.pre_tick()
             self.tick()
             self.post_tick()
@@ -151,10 +152,13 @@ class Engine:
         # Increment the tick
         self.tick_number += 1
 
+        
+
         # Retrieve current world info
-        if self.current_world_key not in self.world:
+        if str(self.current_world_key) not in self.world:
+            #print(f"key pretick: {self.current_world_key}")
             raise KeyError('Given generated world key does not exist inside the world.')
-        current_world = self.world[self.current_world_key]
+        current_world = self.world[str(self.current_world_key)]
 
         # Send current world information to master controller for purposes
         if SET_NUMBER_OF_CLIENTS_START == 1:

@@ -8,6 +8,7 @@ import game.config as config
 from game.utils.thread import CommunicationThread
 
 from game.controllers.controller import Controller
+from game.controllers.action_controller import ActionController
 from game.utils.CreateMap import *
 from game.common.truck import Truck
 from game.utils.contract_utils import *
@@ -33,15 +34,17 @@ class MasterController(Controller):
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
     # the state of the world, returns the key that will give the appropriate world information
-    def game_loop_logic(self, start=1, client):
+    def game_loop_logic(self, start=1):
         self.turn = start
 
         # Basic loop from 1 to max turns
-        while client.time > 0:
+        while True:
             # Wait until the next call to give the number
-            yield str(self.turn)
+            yield self.turn
             # Increment the turn counter by 1
             self.turn += 1
+            if self.turn > config.MAX_TICKS:
+                    break
 
     # Receives world data from the generated game log and is responsible for interpreting it
     def interpret_current_turn_data(self, client, world, turn):
@@ -52,18 +55,31 @@ class MasterController(Controller):
     def client_turn_arguments(self, client, turn):
         # Add contracts available in city and current active contract to truck for access by client
         actions = Action()
-
         
         contract_list = contract_utils.generate_contracts(client)
-        action_controller.contract_list = contract_list
-        
+        self.action_controller.contract_list = contract_list
+
         client.truck.contract_list = copy.deepcopy(contract_list)
         client.truck.active_contract = copy.deepcopy(client.active_contract)
         client.action = actions
-       
+
+
+
         # Create deep copies of all objects sent to the player
+
+        #Truck obfuscation
+        truckCopy = copy.deepcopy(client.truck)
+        truckCopy.obfuscate()
+        truckCopy.current_node.obfuscate()
+        for contract in truckCopy.contract_list:
+            contract.obfuscate()
+
+        #Time copy to be given to player
+        timeCopy = copy.deepcopy(client.time)
+        timeCopy.obfuscate()
+        
         # Obfuscate data in objects that that player should not be able to see
-        args = (self.turn, actions, self.current_world_data)
+        args = (self.turn, actions, self.current_world_data, truckCopy, timeCopy)
         return args
 
     # Perform the main logic that happens per turn
@@ -71,7 +87,10 @@ class MasterController(Controller):
         random.seed(self.current_world_data["seed"])
 
         self.action_controller.handle_actions(client)
-        pass
+
+        if client.time <= 0:
+            self.print("Game is ending because time has run out.")
+            self.game_over = True
 
     # Return serialized version of game
     def create_turn_log(self, clients, turn):
@@ -91,5 +110,7 @@ class MasterController(Controller):
 
         return data
     
+
+    ##ERROR. Should be a util in the utils folder
     def subtract_time(self,time):
         self.time -= abs(time)
