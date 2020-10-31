@@ -6,7 +6,7 @@ from game.common.enums import *
 from game.common.player import Player
 import game.config as config
 from game.utils.thread import CommunicationThread
-
+from game.controllers.action_controller import ActionController
 from game.controllers.controller import Controller
 from game.utils.CreateMap import *
 from game.common.truck import Truck
