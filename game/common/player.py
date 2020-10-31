@@ -43,7 +43,6 @@ class Player(GameObject):
         self.error = data['error']
         self.team_name = data['team_name']
         self.time = data['time']
-
         act = Action()
         act.from_json(data['action']) if data['action'] is not None else None 
         self.action = act

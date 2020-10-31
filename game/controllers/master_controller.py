@@ -6,12 +6,11 @@ from game.common.enums import *
 from game.common.player import Player
 import game.config as config
 from game.utils.thread import CommunicationThread
-
-from game.controllers.controller import Controller
 from game.controllers.action_controller import ActionController
+from game.controllers.controller import Controller
 from game.utils.CreateMap import *
 from game.common.truck import Truck
-from game.utils.contract_utils import *
+from game.utils.contract_utils import generate_contracts
 
 import random
 
@@ -49,14 +48,13 @@ class MasterController(Controller):
     # Receives world data from the generated game log and is responsible for interpreting it
     def interpret_current_turn_data(self, client, world, turn):
         self.current_world_data = world
-        self.subtract_time(world["time_taken"])
 
     # Receive a specific client and send them what they get per turn. Also obfuscates necessary objects.
     def client_turn_arguments(self, client, turn):
         # Add contracts available in city and current active contract to truck for access by client
         actions = Action()
         
-        contract_list = contract_utils.generate_contracts(client)
+        contract_list = generate_contracts(client)
         self.action_controller.contract_list = contract_list
 
         client.truck.contract_list = copy.deepcopy(contract_list)
@@ -70,13 +68,11 @@ class MasterController(Controller):
         #Truck obfuscation
         truckCopy = copy.deepcopy(client.truck)
         truckCopy.obfuscate()
-        truckCopy.current_node.obfuscate()
         for contract in truckCopy.contract_list:
             contract.obfuscate()
 
         #Time copy to be given to player
         timeCopy = copy.deepcopy(client.time)
-        timeCopy.obfuscate()
         
         # Obfuscate data in objects that that player should not be able to see
         args = (self.turn, actions, self.current_world_data, truckCopy, timeCopy)
@@ -110,7 +106,3 @@ class MasterController(Controller):
 
         return data
     
-
-    ##ERROR. Should be a util in the utils folder
-    def subtract_time(self,time):
-        self.time -= abs(time)
