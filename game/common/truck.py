@@ -17,6 +17,7 @@ class Truck(GameObject):
         self.gas = GameStats.truck_starting_gas
         self.max_gas = GameStats.truck_starting_max_gas
         self.speed = 50
+        self.health = GameStats.truck_starting_health 
 
     def get_city_contracts(self):
         return self.contract_list
