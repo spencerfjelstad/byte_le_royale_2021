@@ -85,7 +85,6 @@ class Engine:
 
             # Import client's code
             im = importlib.import_module(f'{filename}', CLIENT_DIRECTORY)
-            print(im)
 
             # Attempt creation of the client object
             obj = None
