@@ -17,6 +17,7 @@ class Truck(GameObject):
         self.gas = GameStats.truck_starting_gas
         self.max_gas = GameStats.truck_starting_max_gas
         self.speed = 50
+        self.health = GameStats.truck_starting_health 
 
     def get_city_contracts(self):
         return self.contract_list
@@ -34,7 +35,8 @@ class Truck(GameObject):
     
     def to_json(self):
         data = super().to_json()
-        data['current_node'] = self.current_node
+        node = self.current_node.to_json()
+        data['current_node'] = node
         data['gas'] = self.gas
         data['max_gas'] = self.max_gas
         data['speed'] = self.speed
