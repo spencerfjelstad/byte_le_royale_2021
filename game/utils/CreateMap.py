@@ -2,6 +2,7 @@ from game.config import *
 from game.utils.helpers import write_json_file
 from game.common.node import Node
 from game.common.map import Map
+from game.common.enums import Region
 
 # This method generates a map
 # STATIC METHOD BAAADDDD
