@@ -39,6 +39,12 @@ class GameStats:
         RoadType.interstate: [EventType.traffic, EventType.police]
     }
 
+    event_weights = {
+        4:[4,3,2,1],
+        3:[3,2,1],
+        2:[2,1]
+    }
+
     event_type_damage = {
         EventType.animal_in_road: 10,
         EventType.bandits: 20,
