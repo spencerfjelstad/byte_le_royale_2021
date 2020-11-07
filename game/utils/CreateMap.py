@@ -6,7 +6,8 @@ from game.common.map import Map
 # This method generates a map
 # STATIC METHOD BAAADDDD
 def generateMap():
-    start = Node("HUB")
+    start_node = Node("HUB")
+    start_node.region = Region.nord_dakotia
 #    a = Node("CityA")
 #    b = Node("CityB")
 #    c = Node("CityC")
