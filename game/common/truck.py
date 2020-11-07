@@ -3,6 +3,7 @@ from game.common.enums import *
 from game.common.road import *
 from game.common.map import Map
 from game.common.node import Node
+from game.common.trUpgrades.police_scanner import police_scanner
 from game.common.stats import GameStats
 
 # Probably need to add some extra stuff
@@ -16,6 +17,7 @@ class Truck(GameObject):
         self.active_contract = None
         self.gas = GameStats.truck_starting_gas
         self.max_gas = GameStats.truck_starting_max_gas
+        self.police_scanner = police_scanner()
         self.speed = 50
 
     def get_city_contracts(self):

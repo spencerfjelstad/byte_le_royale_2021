@@ -22,6 +22,22 @@ class GameStats:
         Region.tropical_cop_land: .9,
     }
 
+    # cost in doollaridoos to upgrade a police scanner
+    scanner_upgrade_cost = {
+        ScannerLevel.level_zero: 0,
+        ScannerLevel.level_one: 300,
+        ScannerLevel.level_two: 900,
+        ScannerLevel.level_three: 2000
+    }
+
+    # error range provided by each scanner
+    sensor_ranges = {
+        ScannerLevel.level_zero: 100,
+        ScannerLevel.level_one: 50,
+        ScannerLevel.level_two: 20,
+        ScannerLevel.level_three: 1
+    }
+
     game_max_time = 10000
 
     player_starting_money = 1000

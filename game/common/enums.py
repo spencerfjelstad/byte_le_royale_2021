@@ -11,6 +11,7 @@ class ObjectType:
     node = 3
     truck = 4
     contract = 5
+    scanner = 6
     
 
 class ActionType:
@@ -41,3 +42,13 @@ class NodeType:
     city = 1
     warehouse = 2
     road = 3
+
+class EventType:
+    city_upgrade = 0
+    scanner_upgrade = 1
+
+class ScannerLevel:
+    level_zero = 0
+    level_one = 1
+    level_two = 2
+    level_three = 3
