@@ -22,15 +22,13 @@ class ActionController(Controller):
         if(player_action == ActionType.buy_gas):
             raise NotImplementedError("ActionType buy_gas hasn't been implemented yet")
 
-        elif(player_action == ActionType.choose_speed):
-            raise NotImplementedError("ActionType choose_speed hasn't been implemented yet")
-
         elif(player_action == ActionType.select_contract):
             #Checks if contract_list is empty. If so, we have a problem
             if(len(self.contract_list) == 0): raise ValueError("Contract list cannot be empty")
 
             #Selects the contract given in the player.action.contract_index
             self.select_contract(player)
+            
         elif(player_action == ActionType.select_route):
             #Moves the player to the node given in the action_parameter
             self.move(player, player_action.action_parameter)
