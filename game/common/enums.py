@@ -11,16 +11,15 @@ class ObjectType:
     node = 3
     truck = 4
     contract = 5
-    scanner = 6
+    policeScanner = 6
     
 
 class ActionType:
     none = 0
     select_route = 1
-    choose_speed = 2
-    buy_gas = 3
-    upgrade = 4
-    select_contract = 5
+    buy_gas = 2
+    upgrade = 3
+    select_contract = 4
 
 class Region:
     none = 0

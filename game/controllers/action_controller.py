@@ -1,13 +1,15 @@
+from game.utils.helpers import getNextLevel
+from game.utils import helpers
 from game.common.stats import GameStats
 from game.common.player import Player
 from game.controllers.controller import Controller
 from game.config import *
-from game.common.enums import *
+from game.common.enums import *  
 
 from collections import deque
+from game.common.TrUpgrades.police_scanner import PoliceScanner
 import math
 import random
-
 
 class ActionController(Controller):
     def __init__(self):
@@ -23,10 +25,6 @@ class ActionController(Controller):
             raise NotImplementedError(
                 "ActionType buy_gas hasn't been implemented yet")
 
-        elif(player_action == ActionType.choose_speed):
-            raise NotImplementedError(
-                "ActionType choose_speed hasn't been implemented yet")
-
         elif(player_action == ActionType.select_contract):
             # Checks if contract_list is empty. If so, we have a problem
             if(len(self.contract_list) == 0): raise ValueError(
@@ -34,6 +32,7 @@ class ActionController(Controller):
 
             # Selects the contract given in the player.action.contract_index
             self.select_contract(player)
+            
         elif(player_action == ActionType.select_route):
             # Moves the player to the node given in the action_parameter
             self.move(player, player_action.action_parameter)
@@ -70,21 +69,25 @@ class ActionController(Controller):
                 player.truck.money = 0
                 player.truck.money += maxPercent
 
-    def upgrade_level(self, player, obj):
+    def upgrade_level(self, player, objEnum):
         # Validate input
-        if not isinstance(player, Player):
-            self.print("The player argument is not a Player object.")
-            return
-        if isinstance(obj, police_scanner):
-            scn = player.truck.police_scanner
-            if scn.level is not Scanner_Level[3] and GameStats.scanner_upgrade_cost[scn.level + 1] < player.money:
-                scn.level = scn.level + 1
-                player.money -=  GameStats.scanner_upgrade_cost[scn.level + 1]
+        try:
+            if not isinstance(player, Player):
+                self.print("The player argument is not a Player object.")
+                return
+            if objEnum is ObjectType.policeScanner:
+                scn = player.truck.police_scanner
+                nxtLev = scn.level + 1
+                if scn.level is not ScannerLevel.level_three and GameStats.scanner_upgrade_cost[nxtLev] < player.money:
+                    player.money -=  GameStats.scanner_upgrade_cost[nxtLev]
+                    player.truck.police_scanner.level = nxtLev
+                else:
+                    self.print("Not enough money or at max level")
             else:
-                self.print("Not enough money or at max level")
-        else:
-            self.print("The object argument is not a valid upgradable object.")
-            return
+                self.print("The object argument is not a valid upgradable object.")
+                return
+        except Exception as e:
+            self.print(e)
 
     # End of Action Methods --------------------------------------------------
     

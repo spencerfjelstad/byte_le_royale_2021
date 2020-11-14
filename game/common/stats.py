@@ -1,4 +1,4 @@
-from game.common.enums import Region
+from game.common.enums import Region, ScannerLevel
 
 
 class GameStats:
