@@ -1,5 +1,4 @@
 from game.common.enums import *
-from game.common.truck import Truck
 
 class GameStats:
     default_road_length = 100
@@ -41,18 +40,12 @@ class GameStats:
     }
 
     event_weights = {
-        RoadType.mountain_road:[40 - Truck.event_type_bonus[EventType.rock_slide], 30 - Truck.event_type_bonus[EventType.animal_in_road],\
-            20 - Truck.event_type_bonus[EventType.icy_road], 10 - Truck.event_type_bonus[EventType.police], 0 + Truck.total_mountain_bonuses],
-        RoadType.forest_road:[40 - Truck.event_type_bonus[EventType.animal_in_road], 30 - Truck.event_type_bonus[EventType.police],\
-            20 - Truck.event_type_bonus[EventType.rock_slide], 10 - Truck.event_type_bonus[EventType.icy_road], 0 + Truck.total_forest_bonuses],
-        RoadType.tundra_road:[50 - Truck.event_type_bonus[EventType.icy_road], 33 - Truck.event_type_bonus[EventType.police],\
-            17 - Truck.event_type_bonus[EventType.rock_slide], 0 + Truck.total_tundra_bonuses],
-        RoadType.city_road:[50 - Truck.event_type_bonus[EventType.bandits], 33 - Truck.event_type_bonus[EventType.police],\
-            17 - Truck.event_type_bonus[EventType.traffic], 0 + Truck.total_city_bonuses],
-        RoadType.highway:[67 - Truck.event_type_bonus[EventType.police], 33 - Truck.event_type_bonus[EventType.traffic],\
-            0 + Truck.total_highway_bonuses],
-        RoadType.interstate:[67 - Truck.event_type_bonus[EventType.traffic], 33 - Truck.event_type_bonus[EventType.police],\
-            0 + Truck.total_interstate_bonuses]
+        RoadType.mountain_road:[40, 30, 20, 10, 0],
+        RoadType.forest_road:[40, 30, 20, 10, 0],
+        RoadType.tundra_road:[50, 33, 17, 0],
+        RoadType.city_road:[50, 33, 17, 0],
+        RoadType.highway:[67, 33, 0],
+        RoadType.interstate:[67, 33, 0]
     }
 
     event_type_damage = {
