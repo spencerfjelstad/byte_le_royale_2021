@@ -19,6 +19,7 @@ class ActionType:
     buy_gas = 2
     upgrade = 3
     select_contract = 4
+    choose_speed = 5
 
 class Region:
     none = 0
