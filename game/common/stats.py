@@ -75,6 +75,8 @@ class GameStats:
         EventType.none: 0
     }
 
+    base_event_probability = [25, 75]
+
     game_max_time = 10000
 
     player_starting_money = 1000
