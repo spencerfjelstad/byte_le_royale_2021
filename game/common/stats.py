@@ -40,11 +40,18 @@ class GameStats:
     }
 
     event_weights = {
+        #Order for corresponding event type listed above list
+        #Mountain order: rock slide, animal in road, icy road, police, none
         RoadType.mountain_road:[40, 30, 20, 10, 0],
+        #Forest order: animal in road, police, rock slide, icy road, none
         RoadType.forest_road:[40, 30, 20, 10, 0],
+        #Tundra order: icy road, police, rock slide, none
         RoadType.tundra_road:[50, 33, 17, 0],
+        #City order: bandits, police, traffic, none
         RoadType.city_road:[50, 33, 17, 0],
+        #Highway order: police, traffic, none
         RoadType.highway:[67, 33, 0],
+        #Interstate order: traffic, police, none
         RoadType.interstate:[67, 33, 0]
     }
 
