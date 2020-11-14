@@ -4,9 +4,7 @@ import random
 
 def trigger_event(road, player):
     # Picks random event type from those possible on given road
-    possible_event_type_count = len(GameStats.possible_event_types[road.road_type])
-    chosen_event_type = EventType.none
-    chosen_event_type = random.choices(GameStats.possible_event_types[road.road_type], weights=GameStats.event_weights[possible_event_type_count], k=1)
+    chosen_event_type = random.choices(GameStats.possible_event_types[road.road_type], weights=GameStats.event_weights[road.road_type], k=1)
     
     # Deal damage based on event
     player.truck.health -= GameStats.event_type_damage[chosen_event_type]

@@ -1,4 +1,5 @@
 from game.common.enums import *
+from game.common.truck import Truck
 
 class GameStats:
     default_road_length = 100
@@ -31,18 +32,27 @@ class GameStats:
     }
 
     possible_event_types = {
-        RoadType.mountain_road: [EventType.rock_slide, EventType.animal_in_road, EventType.icy_road, EventType.police],
-        RoadType.forest_road: [EventType.animal_in_road, EventType.police, EventType.rock_slide, EventType.icy_road],
-        RoadType.tundra_road: [EventType.icy_road, EventType.police, EventType.rock_slide],
-        RoadType.city_road: [EventType.bandits, EventType.police, EventType.traffic],
-        RoadType.highway: [EventType.police, EventType.traffic],
-        RoadType.interstate: [EventType.traffic, EventType.police]
+        RoadType.mountain_road: [EventType.rock_slide, EventType.animal_in_road, EventType.icy_road, EventType.police, EventType.none],
+        RoadType.forest_road: [EventType.animal_in_road, EventType.police, EventType.rock_slide, EventType.icy_road, EventType.none],
+        RoadType.tundra_road: [EventType.icy_road, EventType.police, EventType.rock_slide, EventType.none],
+        RoadType.city_road: [EventType.bandits, EventType.police, EventType.traffic, EventType.none],
+        RoadType.highway: [EventType.police, EventType.traffic, EventType.none],
+        RoadType.interstate: [EventType.traffic, EventType.police, EventType.none]
     }
 
     event_weights = {
-        4:[4,3,2,1],
-        3:[3,2,1],
-        2:[2,1]
+        RoadType.mountain_road:[40 - Truck.event_type_bonus[EventType.rock_slide], 30 - Truck.event_type_bonus[EventType.animal_in_road],\
+            20 - Truck.event_type_bonus[EventType.icy_road], 10 - Truck.event_type_bonus[EventType.police], 0 + Truck.total_mountain_bonuses],
+        RoadType.forest_road:[40 - Truck.event_type_bonus[EventType.animal_in_road], 30 - Truck.event_type_bonus[EventType.police],\
+            20 - Truck.event_type_bonus[EventType.rock_slide], 10 - Truck.event_type_bonus[EventType.icy_road], 0 + Truck.total_forest_bonuses],
+        RoadType.tundra_road:[50 - Truck.event_type_bonus[EventType.icy_road], 33 - Truck.event_type_bonus[EventType.police],\
+            17 - Truck.event_type_bonus[EventType.rock_slide], 0 + Truck.total_tundra_bonuses],
+        RoadType.city_road:[50 - Truck.event_type_bonus[EventType.bandits], 33 - Truck.event_type_bonus[EventType.police],\
+            17 - Truck.event_type_bonus[EventType.traffic], 0 + Truck.total_city_bonuses],
+        RoadType.highway:[67 - Truck.event_type_bonus[EventType.police], 33 - Truck.event_type_bonus[EventType.traffic],\
+            0 + Truck.total_highway_bonuses],
+        RoadType.interstate:[67 - Truck.event_type_bonus[EventType.traffic], 33 - Truck.event_type_bonus[EventType.police],\
+            0 + Truck.total_interstate_bonuses]
     }
 
     event_type_damage = {
@@ -51,7 +61,8 @@ class GameStats:
         EventType.icy_road: 5,
         EventType.police: 5,
         EventType.rock_slide: 5,
-        EventType.traffic: 5  
+        EventType.traffic: 5,
+        EventType.none: 0 
     }
 
     event_type_time = {
@@ -60,7 +71,8 @@ class GameStats:
         EventType.icy_road: 10,
         EventType.police: 20,
         EventType.rock_slide: 10,
-        EventType.traffic: 20
+        EventType.traffic: 20,
+        EventType.none: 0
     }
 
     game_max_time = 10000
