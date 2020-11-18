@@ -9,8 +9,10 @@ class ObjectType:
     action = 1
     player = 2
     node = 3
-    truck = 4
-    contract = 5
+    road = 4
+    truck = 5
+    contract = 6
+    game_map = 7
     
 
 class ActionType:
@@ -35,8 +37,3 @@ class RoadType:
     street = 2
     highway = 3
 
-class NodeType:
-    none = 0
-    city = 1
-    warehouse = 2
-    road = 3
