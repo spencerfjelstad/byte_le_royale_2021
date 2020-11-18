@@ -28,7 +28,9 @@ class MasterController(Controller):
 
     # Receives all clients for the purpose of giving them the objects they will control
     def give_clients_objects(self, client):
-        client.truck = Truck("HUB")
+        start_node = Node('Start Node')
+        start_node.region = Region.nord_dakotia
+        client.truck = Truck(start_node)
         pass
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
@@ -86,6 +88,9 @@ class MasterController(Controller):
 
         if client.time <= 0:
             self.print("Game is ending because time has run out.")
+            self.game_over = True
+        if client.truck.health <= 0:
+            self.print("Game is ending because health has run out.")
             self.game_over = True
 
     # Return serialized version of game

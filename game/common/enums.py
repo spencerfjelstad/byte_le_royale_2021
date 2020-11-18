@@ -32,9 +32,21 @@ class Region:
 
 class RoadType:
     none = 0
-    rural = 1
-    street = 2
-    highway = 3
+    mountain_road = 1
+    forest_road = 2
+    tundra_road = 3
+    highway = 4
+    city_road = 5
+    interstate = 6
+
+class EventType:
+    none = 0
+    rock_slide = 1
+    icy_road = 2
+    animal_in_road = 3
+    bandits = 4
+    police = 5
+    traffic = 6
 
 class NodeType:
     none = 0
