@@ -89,6 +89,9 @@ class MasterController(Controller):
         if client.time <= 0:
             self.print("Game is ending because time has run out.")
             self.game_over = True
+        if client.truck.health <= 0:
+            self.print("Game is ending because health has run out.")
+            self.game_over = True
 
     # Return serialized version of game
     def create_turn_log(self, clients, turn):
