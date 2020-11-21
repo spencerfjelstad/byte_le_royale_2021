@@ -17,19 +17,19 @@ class TestUpgradeTank(unittest.TestCase): # Your test class is a subclass of uni
         self.actionCont = ActionController()
     
     def test_upgrade_one_level(self): # Test methods should always start with the word 'test'
-        self.myPlayer.truck.gas_tank.level = 0
+        self.myPlayer.truck.body.level = 0
         self.myPlayer.money = 10000
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.tank)
-        self.assertEqual(self.myPlayer.truck.gas_tank.level, TankLevel.level_one)
+        self.assertEqual(self.myPlayer.truck.body.level, TankLevel.level_one)
     
     def test_upgrade_two_level(self):
-        self.myPlayer.truck.gas_tank.level = 0
+        self.myPlayer.truck.body.level = 0
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.tank)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.tank)
-        self.assertEqual(self.myPlayer.truck.gas_tank.level, TankLevel.level_two)
+        self.assertEqual(self.myPlayer.truck.body.level, TankLevel.level_two)
 
     def test_upgrade_beyond_allowable(self):
-        self.myPlayer.truck.gas_tank.level = 0
+        self.myPlayer.truck.body.level = 0
         self.myPlayer.money = 100000
         expectedCash = self.myPlayer.money - helpers.addTogetherDictValues(stats.GameStats.gas_upgrade_cost)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.tank)
@@ -37,14 +37,14 @@ class TestUpgradeTank(unittest.TestCase): # Your test class is a subclass of uni
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.tank)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.tank)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.tank)
-        self.assertEqual(self.myPlayer.truck.gas_tank.level, TankLevel.level_three)
+        self.assertEqual(self.myPlayer.truck.body.level, TankLevel.level_three)
         self.assertEqual(self.myPlayer.money, expectedCash)
 
     def test_no_money(self):
-        self.myPlayer.truck.gas_tank.level = 0
+        self.myPlayer.truck.body.level = 0
         self.myPlayer.money = 10
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.tank)
-        self.assertEqual(self.myPlayer.truck.gas_tank.level, TankLevel.level_zero)
+        self.assertEqual(self.myPlayer.truck.body.level, TankLevel.level_zero)
         self.assertEqual(self.myPlayer.money, 10)
 
 

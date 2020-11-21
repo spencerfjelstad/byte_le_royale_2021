@@ -19,18 +19,18 @@ class TestUpgradeScanner(unittest.TestCase): # Your test class is a subclass of 
         self.actionCont = ActionController()
     
     def test_upgrade_one_level(self): # Test methods should always start with the word 'test'
-        self.myPlayer.truck.police_scanner.level = 0
+        self.myPlayer.truck.addons.level = 0
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
-        self.assertEqual(self.myPlayer.truck.police_scanner.level, ScannerLevel.level_one)
+        self.assertEqual(self.myPlayer.truck.addons.level, ScannerLevel.level_one)
     
     def test_upgrade_two_level(self):
-        self.myPlayer.truck.police_scanner.level = 0
+        self.myPlayer.truck.addons.level = 0
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
-        self.assertEqual(self.myPlayer.truck.police_scanner.level, ScannerLevel.level_two)
+        self.assertEqual(self.myPlayer.truck.addons.level, ScannerLevel.level_two)
 
     def test_upgrade_beyond_allowable(self):
-        self.myPlayer.truck.police_scanner.level = 0
+        self.myPlayer.truck.addons.level = 0
         self.myPlayer.money = 10000
         expectedCash = 10000 - helpers.addTogetherDictValues(stats.GameStats.scanner_upgrade_cost)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
@@ -38,14 +38,14 @@ class TestUpgradeScanner(unittest.TestCase): # Your test class is a subclass of 
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
-        self.assertEqual(self.myPlayer.truck.police_scanner.level, ScannerLevel.level_three)
+        self.assertEqual(self.myPlayer.truck.addons.level, ScannerLevel.level_three)
         self.assertEqual(self.myPlayer.money, expectedCash)
 
     def test_no_money(self):
-        self.myPlayer.truck.police_scanner.level = 0
+        self.myPlayer.truck.addons.level = 0
         self.myPlayer.money = 10
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
-        self.assertEqual(self.myPlayer.truck.police_scanner.level, ScannerLevel.level_zero)
+        self.assertEqual(self.myPlayer.truck.addons.level, ScannerLevel.level_zero)
         self.assertEqual(self.myPlayer.money, 10)
 
 

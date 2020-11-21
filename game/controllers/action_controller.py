@@ -1,3 +1,5 @@
+from game.common.TrUpgrades.tank import Tank
+from game.common.TrUpgrades.police_scanner import PoliceScanner
 from game.common.truck import Truck
 from game.utils.helpers import getNextLevel
 from game.utils import helpers
@@ -75,21 +77,29 @@ class ActionController(Controller):
                 self.print("The player argument is not a Player object.")
                 return
             if objEnum is ObjectType.policeScanner:
-                scn = player.truck.police_scanner
-                nxtLev = scn.level + 1
-                if scn.level is not ScannerLevel.level_three and GameStats.scanner_upgrade_cost[nxtLev] <= player.money:
-                    player.money -=  GameStats.scanner_upgrade_cost[nxtLev]
-                    player.truck.police_scanner.level = nxtLev
+                if (not isinstance(player.truck.addons, PoliceScanner())) and GameStats.scanner_upgrade_cost[0] <= player.money:
+                    player.addons = PoliceScanner()
+                    player.money -=  GameStats.scanner_upgrade_cost[0]
                 else:
-                    self.print("Not enough money or at max level for police scanner")
+                    scn = player.truck.police_scanner
+                    nxtLev = scn.level + 1
+                    if scn.level is not ScannerLevel.level_three and GameStats.scanner_upgrade_cost[nxtLev] <= player.money:
+                        player.money -=  GameStats.scanner_upgrade_cost[nxtLev]
+                        player.truck.addons.level = nxtLev
+                    else:
+                        self.print("Not enough money or at max level for police scanner")
             if objEnum is ObjectType.tank:
-                tnk = player.truck.gas_tank
-                nxtLev = tnk.level + 1
-                if tnk.level is not TankLevel.level_three and GameStats.gas_upgrade_cost[nxtLev] <= player.money:
-                    player.money -=  GameStats.gas_upgrade_cost[nxtLev]
-                    player.truck.gas_tank.level = nxtLev
+                if (not isinstance(player.truck.body, Tank())) and GameStats.gas_upgrade_cost[0] <= player.money:
+                    player.addons = Tank()
+                    player.money -=  GameStats.scanner_upgrade_cost[0]
                 else:
-                    self.print("Not enough money or at max level for gas tank")
+                    tnk = player.truck.body
+                    nxtLev = tnk.level + 1
+                    if tnk.level is not TankLevel.level_three and GameStats.gas_upgrade_cost[nxtLev] <= player.money:
+                        player.money -=  GameStats.gas_upgrade_cost[nxtLev]
+                        player.truck.gas_tank.level = nxtLev
+                    else:
+                        self.print("Not enough money or at max level for gas tank")
             if objEnum is ObjectType.tires:
                 tireLev = player.truck.tires
                 if type in TireType.__dict__.values() and type is not tireLev and GameStats.tire_switch_cost <= player.money:

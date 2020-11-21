@@ -16,8 +16,8 @@ class Truck(GameObject):
         self.current_node = node
         self.contract_list = []
         self.active_contract = None
-        self.gas_tank = Tank()
-        self.police_scanner = PoliceScanner()
+        self.body = Tank()
+        self.addons = PoliceScanner()
         self.tires = TireType.tire_normal
         self.speed = 50
 
