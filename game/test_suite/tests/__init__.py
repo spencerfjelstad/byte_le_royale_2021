@@ -2,9 +2,13 @@
 # Simply import the class from your file, and then add that class to the '__all__' array.
 
 from game.test_suite.tests.test_example import TestExample
-from game.test_suite.tests.test_upgrade import TestUpgrade
+from game.test_suite.tests.test_upgrade_scanner import TestUpgradeScanner
+from game.test_suite.tests.test_upgrade_tires import TestUpgradeTires
+from game.test_suite.tests.test_upgrade_tank import TestUpgradeTank
+
 
 __all__ = [
-    'TestExample',
-    'TestUpgrade'
+    'TestUpgradeScanner',
+    'TestUpgradeTires',
+    'TestUpgradeTank'
 ]

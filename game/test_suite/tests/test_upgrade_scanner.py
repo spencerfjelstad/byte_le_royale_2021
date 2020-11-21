@@ -11,7 +11,7 @@ from game.controllers.action_controller import ActionController
 from game.common.enums import *
 
 
-class TestUpgrade(unittest.TestCase): # Your test class is a subclass of unittest.Testcase, this is important
+class TestUpgradeScanner(unittest.TestCase): # Your test class is a subclass of unittest.Testcase, this is important
 
     def setUp(self): # This method is used to set up anything you wish to test prior to every test method below.
         self.myPlayer = Player(12,"Sean")

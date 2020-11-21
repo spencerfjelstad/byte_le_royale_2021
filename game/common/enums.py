@@ -12,6 +12,8 @@ class ObjectType:
     truck = 4
     contract = 5
     policeScanner = 6
+    tank = 7
+    tires = 8
     
 
 class ActionType:
@@ -51,3 +53,14 @@ class ScannerLevel:
     level_one = 1
     level_two = 2
     level_three = 3
+
+class TankLevel:
+    level_zero = 0
+    level_one = 1
+    level_two = 2
+    level_three = 3
+
+class TireType:
+    tire_normal = 0
+    tire_econ = 1
+    tire_sticky = 2

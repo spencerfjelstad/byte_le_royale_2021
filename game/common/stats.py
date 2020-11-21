@@ -1,4 +1,4 @@
-from game.common.enums import Region, ScannerLevel
+from game.common.enums import Region, ScannerLevel, TankLevel, TireType
 
 
 class GameStats:
@@ -30,13 +30,42 @@ class GameStats:
         ScannerLevel.level_three: 2000
     }
 
-    # error range provided by each scanner
-    sensor_ranges = {
+        # error range provided by each scanner
+    scanner_ranges = {
         ScannerLevel.level_zero: 100,
         ScannerLevel.level_one: 50,
         ScannerLevel.level_two: 20,
         ScannerLevel.level_three: 1
     }
+
+
+    gas_upgrade_cost = {
+        TankLevel.level_zero: 0,
+        TankLevel.level_one: 300,
+        TankLevel.level_two: 900,
+        TankLevel.level_three: 2000
+    }
+
+    gas_max_level = {
+        TankLevel.level_zero: 0,
+        TankLevel.level_one: 300,
+        TankLevel.level_two: 900,
+        TankLevel.level_three: 2000
+    }
+
+    tire_traction = {
+        TireType.tire_econ: .5,
+        TireType.tire_normal: 1,
+        TireType.tire_sticky: 1.5
+    }
+
+    tire_fuel_efficiancy = {
+        TireType.tire_econ: 1.5,
+        TireType.tire_normal: 1,
+        TireType.tire_sticky: .5
+    }
+
+    tire_switch_cost = 300
 
     game_max_time = 10000
 

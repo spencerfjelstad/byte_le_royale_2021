@@ -4,6 +4,7 @@ from game.common.road import *
 from game.common.map import Map
 from game.common.node import Node
 from game.common.TrUpgrades.police_scanner import PoliceScanner
+from game.common.TrUpgrades.tank import Tank
 from game.common.stats import GameStats
 
 # Probably need to add some extra stuff
@@ -15,9 +16,9 @@ class Truck(GameObject):
         self.current_node = node
         self.contract_list = []
         self.active_contract = None
-        self.gas = GameStats.truck_starting_gas
-        self.max_gas = GameStats.truck_starting_max_gas
+        self.gas_tank = Tank()
         self.police_scanner = PoliceScanner()
+        self.tires = TireType.tire_normal
         self.speed = 50
 
     def get_city_contracts(self):
