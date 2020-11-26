@@ -2,7 +2,7 @@ from game.common.game_object import GameObject
 from game.common.enums import *
 from game.common.node import Node
 
-class GameMap(GameObject):
+class Game_Map(GameObject):
 
     # This will be a singly-linked list
     # Sort-of. Kinda. Python is weird about it

@@ -14,7 +14,6 @@ class Road(GameObject):
         self.length = length
 
     
-    
     def to_json(self):
         data = super().to_json()
         data['road_type'] = self.road_type
