@@ -21,6 +21,7 @@ class ActionType:
     buy_gas = 2
     upgrade = 3
     select_contract = 4
+    choose_speed = 5
 
 class Region:
     none = 0
@@ -33,7 +34,19 @@ class Region:
 
 class RoadType:
     none = 0
-    rural = 1
-    street = 2
-    highway = 3
+    mountain_road = 1
+    forest_road = 2
+    tundra_road = 3
+    highway = 4
+    city_road = 5
+    interstate = 6
+
+class EventType:
+    none = 0
+    rock_slide = 1
+    icy_road = 2
+    animal_in_road = 3
+    bandits = 4
+    police = 5
+    traffic = 6
 

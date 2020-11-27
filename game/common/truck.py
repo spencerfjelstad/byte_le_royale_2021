@@ -17,6 +17,8 @@ class Truck(GameObject):
         self.gas = GameStats.truck_starting_gas
         self.max_gas = GameStats.truck_starting_max_gas
         self.speed = 50
+        self.health = GameStats.truck_starting_health
+        
 
     def get_city_contracts(self):
         return self.contract_list
@@ -32,12 +34,34 @@ class Truck(GameObject):
             speed = 1
         self.speed = speed
     
+    event_type_bonus = {
+        EventType.police: 0,
+        EventType.animal_in_road: 0,
+        EventType.bandits: 0,
+        EventType.icy_road: 0,
+        EventType.rock_slide: 0,
+        EventType.traffic: 0
+        }
+   
+    total_mountain_bonuses = event_type_bonus[EventType.police] + event_type_bonus[EventType.animal_in_road]\
+        + event_type_bonus[EventType.icy_road] + event_type_bonus[EventType.rock_slide]
+    total_forest_bonuses = event_type_bonus[EventType.police] + event_type_bonus[EventType.animal_in_road]\
+        + event_type_bonus[EventType.icy_road] + event_type_bonus[EventType.rock_slide]
+    total_tundra_bonuses = event_type_bonus[EventType.police]\
+        + event_type_bonus[EventType.icy_road] + event_type_bonus[EventType.rock_slide]
+    total_city_bonuses = event_type_bonus[EventType.police] + event_type_bonus[EventType.bandits]\
+        + event_type_bonus[EventType.traffic]
+    total_highway_bonuses = event_type_bonus[EventType.police] + event_type_bonus[EventType.traffic]
+    total_interstate_bonuses = event_type_bonus[EventType.police] + event_type_bonus[EventType.traffic]
+
     def to_json(self):
         data = super().to_json()
-        data['current_node'] = self.current_node
+        node = self.current_node.to_json()
+        data['current_node'] = node
         data['gas'] = self.gas
         data['max_gas'] = self.max_gas
         data['speed'] = self.speed
+        data['event_type_bonus'] = self.event_type_bonus
         return data
 
     def from_json(self, data):
@@ -47,3 +71,4 @@ class Truck(GameObject):
         self.max_gas = data['max_gas']
         self.current_node = data['current_node']
         self.speed = data['speed']
+        self.event_type_bonus = data['event_type_bonus']
