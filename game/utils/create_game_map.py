@@ -12,12 +12,12 @@ def create_game_map(node_count, length):
     av_road_length = node_count / length
     road_deviation = GameStats.road_length_maximum_deviation
 
-    for i in range(0, node_count):
+    for i in range(node_count, 0, -1):
         roads = []
         for j in range(random.randint(2,3)):
             roads.append(Road("Route "+str(i)+"-"+str(j),
-            None, av_road_length + random.randint(road_deviation, -1 * road_deviation)))
-        temp_node = Node(str(i), roads, g_map.head)
+            None, av_road_length + random.randint(-1 * road_deviation, road_deviation)))
+        temp_node = Node(str(i), roads, None)
         g_map.insert_node(temp_node)
     
     return g_map
