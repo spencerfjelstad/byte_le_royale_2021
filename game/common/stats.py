@@ -1,4 +1,4 @@
-from game.common.enums import Region, ScannerLevel, TankLevel, TireType
+from game.common.enums import Region, ScannerLevel, TankLevel, TireType, ObjectType
 
 
 class GameStats:
@@ -64,6 +64,19 @@ class GameStats:
         TireType.tire_normal: 1,
         TireType.tire_sticky: .5
     }
+
+    body_objects = [
+        ObjectType.tank,
+        ObjectType.headlights,
+        ObjectType.sentryGun
+    ]
+
+    addonObjects = [
+        ObjectType.policeScanner,
+        ObjectType.rabbitFoot,
+        ObjectType.GPS
+    ]
+
 
     tire_switch_cost = 300
 

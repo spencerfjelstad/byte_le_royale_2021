@@ -14,6 +14,10 @@ class ObjectType:
     policeScanner = 6
     tank = 7
     tires = 8
+    headlights = 9
+    sentryGun = 10
+    rabbitFoot = 11
+    GPS = 12
     
 
 class ActionType:

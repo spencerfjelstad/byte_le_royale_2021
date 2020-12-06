@@ -7,10 +7,11 @@ from game.common.stats import GameStats
 from game.common.player import Player
 from game.controllers.controller import Controller
 from game.config import *
-from game.common.enums import *  
+from game.common.enums import *
 from collections import deque
 import math
 import random
+
 
 class ActionController(Controller):
     def __init__(self):
@@ -18,7 +19,7 @@ class ActionController(Controller):
 
         self.contract_list = list()
 
-    def handle_actions(self, player, obj = None):
+    def handle_actions(self, player, obj=None):
         player_action = player.action
 
         # Call the appropriate method for this action
@@ -28,21 +29,22 @@ class ActionController(Controller):
 
         elif(player_action == ActionType.select_contract):
             # Checks if contract_list is empty. If so, we have a problem
-            if(len(self.contract_list) == 0): raise ValueError(
-                "Contract list cannot be empty")
+            if(len(self.contract_list) == 0):
+                raise ValueError(
+                    "Contract list cannot be empty")
 
             # Selects the contract given in the player.action.contract_index
             self.select_contract(player)
-            
+
         elif(player_action == ActionType.select_route):
             # Moves the player to the node given in the action_parameter
             self.move(player, player_action.action_parameter)
 
         elif(player_action == ActionType.upgrade):
             self.upgrade_level(self, player, obj)
-        
 
     # Action Methods ---------------------------------------------------------
+
     def move(self, player, road):
         self.current_location = player.truck.current_node
         time_taken = 0
@@ -70,48 +72,66 @@ class ActionController(Controller):
                 player.truck.money = 0
                 player.truck.money += maxPercent
 
-    def upgrade_level(self, player, objEnum, type = 1):
+    def upgrade_body(self, player, objEnum, typ):
+        if objEnum is ObjectType.tank:
+            if (not isinstance(player.truck.body, Tank)) and GameStats.gas_upgrade_cost[0] <= player.money:
+                player.truck.body = Tank()
+                player.money -= GameStats.scanner_upgrade_cost[0]
+            else:
+                tnk = player.truck.body
+                nxtLev = tnk.level + 1
+                if tnk.level is not TankLevel.level_three and GameStats.gas_upgrade_cost[nxtLev] <= player.money:
+                    player.money -= GameStats.gas_upgrade_cost[nxtLev]
+                    player.truck.body.level = nxtLev
+                else:
+                    self.print("Not enough money or at max level for gas tank")
+
+    def upgrade_addons(self, player, objEnum, typ):
+        if objEnum is ObjectType.policeScanner:
+            if (not isinstance(player.truck.addons, PoliceScanner)) and GameStats.scanner_upgrade_cost[0] <= player.money:
+                player.truck.addons = PoliceScanner()
+                player.money -= GameStats.scanner_upgrade_cost[0]
+            else:
+                scn = player.truck.addons
+                nxtLev = scn.level + 1
+                if scn.level is not ScannerLevel.level_three and GameStats.scanner_upgrade_cost[nxtLev] <= player.money:
+                    player.money -= GameStats.scanner_upgrade_cost[nxtLev]
+                    player.truck.addons.level = nxtLev
+                else:
+                    self.print(
+                        "Not enough money or at max level for police scanner")
+
+    def upgrade_tires(self, player, objEnum, typ):
+        tireLev = player.truck.tires
+        if typ in TireType.__dict__.values() and typ is not tireLev and GameStats.tire_switch_cost <= player.money:
+            player.truck.tires = typ
+            player.money -= GameStats.tire_switch_cost
+        else:
+            self.print(
+                "Either type is not in the enumeration, tiretype is already set to the type requested, or not enough money")
+
+    def upgrade_level(self, player, objEnum, typ=1):
         # Validate input
         try:
             if not isinstance(player, Player):
                 self.print("The player argument is not a Player object.")
                 return
-            if objEnum is ObjectType.policeScanner:
-                if (not isinstance(player.truck.addons, PoliceScanner())) and GameStats.scanner_upgrade_cost[0] <= player.money:
-                    player.addons = PoliceScanner()
-                    player.money -=  GameStats.scanner_upgrade_cost[0]
-                else:
-                    scn = player.truck.police_scanner
-                    nxtLev = scn.level + 1
-                    if scn.level is not ScannerLevel.level_three and GameStats.scanner_upgrade_cost[nxtLev] <= player.money:
-                        player.money -=  GameStats.scanner_upgrade_cost[nxtLev]
-                        player.truck.addons.level = nxtLev
-                    else:
-                        self.print("Not enough money or at max level for police scanner")
-            if objEnum is ObjectType.tank:
-                if (not isinstance(player.truck.body, Tank())) and GameStats.gas_upgrade_cost[0] <= player.money:
-                    player.addons = Tank()
-                    player.money -=  GameStats.scanner_upgrade_cost[0]
-                else:
-                    tnk = player.truck.body
-                    nxtLev = tnk.level + 1
-                    if tnk.level is not TankLevel.level_three and GameStats.gas_upgrade_cost[nxtLev] <= player.money:
-                        player.money -=  GameStats.gas_upgrade_cost[nxtLev]
-                        player.truck.gas_tank.level = nxtLev
-                    else:
-                        self.print("Not enough money or at max level for gas tank")
+
+            if objEnum in GameStats.addonObjects:
+                self.upgrade_addons(player, objEnum, typ)
+                
+            if objEnum in GameStats.body_objects:
+                # Pass on to another method for
+                self.upgrade_body(player, objEnum, typ)
+
             if objEnum is ObjectType.tires:
-                tireLev = player.truck.tires
-                if type in TireType.__dict__.values() and type is not tireLev and GameStats.tire_switch_cost <= player.money:
-                    player.truck.tires = type
-                    player.money -= GameStats.tire_switch_cost
-                else:
-                    self.print("Either type is not in the enumeration, tiretype is already set to the type requested, or not enough money")
+                self.upgrade_tires(player, objEnum, typ)
+
             else:
-                self.print("The object argument is not a valid upgradable object.")
+                self.print(
+                    "The object argument is not a valid upgradable object.")
                 return
         except Exception as e:
             self.print(e)
 
     # End of Action Methods --------------------------------------------------
-    
