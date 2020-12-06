@@ -65,17 +65,21 @@ class GameStats:
         TireType.tire_sticky: .5
     }
 
+    #objects that can occupy the body slot
     body_objects = [
         ObjectType.tank,
         ObjectType.headlights,
         ObjectType.sentryGun
     ]
 
+    #objects that can occupy the addon slot
     addonObjects = [
         ObjectType.policeScanner,
         ObjectType.rabbitFoot,
         ObjectType.GPS
     ]
+
+    #Tire types are in the enums. Not sure why I did that lol.
 
 
     tire_switch_cost = 300

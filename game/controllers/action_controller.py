@@ -74,10 +74,12 @@ class ActionController(Controller):
 
     def upgrade_body(self, player, objEnum, typ):
         if objEnum is ObjectType.tank:
+            #If the player doesn't currently have a tank and they have enough money for the base tank, give them a tank!
             if (not isinstance(player.truck.body, Tank)) and GameStats.gas_upgrade_cost[0] <= player.money:
                 player.truck.body = Tank()
                 player.money -= GameStats.scanner_upgrade_cost[0]
             else:
+                #otherwise, upgrade their current tank
                 tnk = player.truck.body
                 nxtLev = tnk.level + 1
                 if tnk.level is not TankLevel.level_three and GameStats.gas_upgrade_cost[nxtLev] <= player.money:
@@ -88,10 +90,12 @@ class ActionController(Controller):
 
     def upgrade_addons(self, player, objEnum, typ):
         if objEnum is ObjectType.policeScanner:
+            #If the player doesn't currently have a scanner and they have enough money for the base scanner, give them a scanner!
             if (not isinstance(player.truck.addons, PoliceScanner)) and GameStats.scanner_upgrade_cost[0] <= player.money:
                 player.truck.addons = PoliceScanner()
                 player.money -= GameStats.scanner_upgrade_cost[0]
             else:
+                #otherwise, upgrade their current scanner
                 scn = player.truck.addons
                 nxtLev = scn.level + 1
                 if scn.level is not ScannerLevel.level_three and GameStats.scanner_upgrade_cost[nxtLev] <= player.money:
@@ -111,19 +115,23 @@ class ActionController(Controller):
                 "Either type is not in the enumeration, tiretype is already set to the type requested, or not enough money")
 
     def upgrade_level(self, player, objEnum, typ=1):
-        # Validate input
+        """
+        Handles upgrading various object for the truck.
+        """
         try:
             if not isinstance(player, Player):
                 self.print("The player argument is not a Player object.")
                 return
 
+            #If the objects enum is an addon type, pass off to addon upgrade method
             if objEnum in GameStats.addonObjects:
                 self.upgrade_addons(player, objEnum, typ)
-                
+
+            #If the objects enum is a body type, pass off to body upgrade method
             if objEnum in GameStats.body_objects:
-                # Pass on to another method for
                 self.upgrade_body(player, objEnum, typ)
 
+            #The upgrade logic for tires is much simpler, but I have decided to modularize it for the sake of consistancy
             if objEnum is ObjectType.tires:
                 self.upgrade_tires(player, objEnum, typ)
 
