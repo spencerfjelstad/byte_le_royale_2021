@@ -82,3 +82,15 @@ class SentryGunLevel:
     level_one = 1
     level_two = 2
     level_three = 3
+
+class RabbitFootLevel:
+    level_zero = 0
+    level_one = 1
+    level_two = 2
+    level_three = 3
+
+class GPSLevel:
+    level_zero = 0
+    level_one = 1
+    level_two = 2
+    level_three = 3

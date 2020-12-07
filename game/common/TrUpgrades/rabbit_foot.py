@@ -3,21 +3,20 @@ from game.common.enums import *
 from game.common.stats import *
 
 
-class SentryGun(baseUpgradeObject):
+class RabbitFoot(baseUpgradeObject):
     def __init__(self):
-        super().__init__(ObjectType.sentryGun,SentryGunLevel.level_zero)
-        self.MissleLauncher = False
+        super().__init__(ObjectType.rabbitFoot, RabbitFootLevel.level_zero)
+        self.onTheMirror = False
 
     def to_json(self):
         data = super().to_json()
-        data['missleLauncher'] = self.MissleLauncher
+        data['onTheMirror'] = self.onTheMirror
         return data
 
     def from_json(self, data):
         super().from_json(data)
-        self.MissleLauncher = data['missleLauncher']
+        self.scanner_results = data['onTheMirror']
 
     def __str__(self):
-        p = super.__str__
-        p += f"""missle Launcher on?: {self.missleLauncher}"""
+        p = f"""On the Mirror?: {self.onTheMirror}"""
         return p

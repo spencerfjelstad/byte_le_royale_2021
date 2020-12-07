@@ -3,21 +3,17 @@ from game.common.enums import *
 from game.common.stats import *
 
 
-class PoliceScanner(baseUpgradeObject):
+class GPS(baseUpgradeObject):
     def __init__(self):
-        super().__init__(ObjectType.policeScanner, ScannerLevel.level_zero)
-        self.scanner_results = None
+        super().__init__(ObjectType.GPS, GPSLevel.level_zero)
 
     def to_json(self):
         data = super().to_json()
-        data['scanner_results'] = self.sensor_results
         return data
 
     def from_json(self, data):
         super().from_json(data)
-        self.scanner_results = data['scanner_results']
 
     def __str__(self):
         p = super.__str__
-        p += f"""Scanner Results: {self.scanner_results}"""
         return p

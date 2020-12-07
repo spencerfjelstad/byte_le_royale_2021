@@ -54,10 +54,10 @@ class TestUpgradesentryGun(unittest.TestCase):
 
     def test_no_money(self):
         self.myPlayer.truck.body.level = 0
-        self.myPlayer.money = 10
-        self.actionCont.upgrade_level(self.myPlayer, ObjectType.tank)
+        self.myPlayer.money = 1
+        self.actionCont.upgrade_level(self.myPlayer, ObjectType.sentryGun)
         self.assertEqual(self.myPlayer.truck.body.level, SentryGunLevel.level_zero)
-        self.assertEqual(self.myPlayer.money, 10)
+        self.assertEqual(self.myPlayer.money, 1)
 
     # This is just the very basics of how to set up a test file
     # For more info: https://docs.python.org/3/library/unittest.html
