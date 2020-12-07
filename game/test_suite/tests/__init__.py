@@ -4,10 +4,14 @@
 from game.test_suite.tests.test_upgrade_scanner import TestUpgradeScanner
 from game.test_suite.tests.test_upgrade_tires import TestUpgradeTires
 from game.test_suite.tests.test_upgrade_tank import TestUpgradeTank
+from game.test_suite.tests.test_upgrade_headlights import TestUpgradeHeadlights
+from game.test_suite.tests.test_upgrade_gun import TestUpgradesentryGun
 
 
 __all__ = [
     'TestUpgradeScanner',
     'TestUpgradeTires',
-    'TestUpgradeTank'
+    'TestUpgradeTank', 
+    'TestUpgradeHeadlights',
+    'TestUpgradesentryGun'
 ]

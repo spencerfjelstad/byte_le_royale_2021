@@ -1,4 +1,4 @@
-from game.common.enums import Region, ScannerLevel, TankLevel, TireType, ObjectType
+from game.common.enums import Region, ScannerLevel, TankLevel, TireType, ObjectType, HeadlightLevel, SentryGunLevel
 
 
 class GameStats:
@@ -22,6 +22,22 @@ class GameStats:
         Region.tropical_cop_land: .9,
     }
 
+    # objects that can occupy the body slot
+    body_objects = [
+        ObjectType.tank,
+        ObjectType.headlights,
+        ObjectType.sentryGun
+    ]
+
+    # objects that can occupy the addon slot
+    addonObjects = [
+        ObjectType.policeScanner,
+        ObjectType.rabbitFoot,
+        ObjectType.GPS
+    ]
+
+    # Tire types are in the enums. Not sure why I did that lol.
+
     # cost in doollaridoos to upgrade a police scanner
     scanner_upgrade_cost = {
         ScannerLevel.level_zero: 0,
@@ -30,7 +46,7 @@ class GameStats:
         ScannerLevel.level_three: 2000
     }
 
-        # error range provided by each scanner
+    # error range provided by each scanner
     scanner_ranges = {
         ScannerLevel.level_zero: 100,
         ScannerLevel.level_one: 50,
@@ -38,16 +54,15 @@ class GameStats:
         ScannerLevel.level_three: 1
     }
 
-
     gas_upgrade_cost = {
-        TankLevel.level_zero: 0,
+        TankLevel.level_zero: 10,
         TankLevel.level_one: 300,
         TankLevel.level_two: 900,
         TankLevel.level_three: 2000
     }
 
     gas_max_level = {
-        TankLevel.level_zero: 0,
+        TankLevel.level_zero: 10,
         TankLevel.level_one: 300,
         TankLevel.level_two: 900,
         TankLevel.level_three: 2000
@@ -65,22 +80,33 @@ class GameStats:
         TireType.tire_sticky: .5
     }
 
-    #objects that can occupy the body slot
-    body_objects = [
-        ObjectType.tank,
-        ObjectType.headlights,
-        ObjectType.sentryGun
-    ]
+    headlight_upgrade_cost = {
+        HeadlightLevel.level_zero: 10,
+        HeadlightLevel.level_one: 50,
+        HeadlightLevel.level_two: 100,
+        HeadlightLevel.level_three: 300
+    }
 
-    #objects that can occupy the addon slot
-    addonObjects = [
-        ObjectType.policeScanner,
-        ObjectType.rabbitFoot,
-        ObjectType.GPS
-    ]
+    headlight_effectiveness = {
+        HeadlightLevel.level_zero: .1,
+        HeadlightLevel.level_one: .3,
+        HeadlightLevel.level_two: .7,
+        HeadlightLevel.level_three: .9
+    }
 
-    #Tire types are in the enums. Not sure why I did that lol.
+    sentry_upgrade_cost = {
+        SentryGunLevel.level_zero: 10,
+        SentryGunLevel.level_one: 50,
+        SentryGunLevel.level_two: 100,
+        SentryGunLevel.level_three: 300
+    }
 
+    sentry_DPM = {
+        SentryGunLevel.level_zero: 100,
+        SentryGunLevel.level_one: 1000,
+        SentryGunLevel.level_two: 10000,
+        SentryGunLevel.level_three: 300000
+    }
 
     tire_switch_cost = 300
 

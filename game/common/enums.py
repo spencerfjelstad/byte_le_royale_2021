@@ -68,3 +68,17 @@ class TireType:
     tire_normal = 0
     tire_econ = 1
     tire_sticky = 2
+
+
+class HeadlightLevel:
+    level_zero = 0
+    level_one = 1
+    level_two = 2
+    level_three = 3
+
+
+class SentryGunLevel:
+    level_zero = 0
+    level_one = 1
+    level_two = 2
+    level_three = 3

@@ -1,5 +1,7 @@
 from game.common.TrUpgrades.tank import Tank
 from game.common.TrUpgrades.police_scanner import PoliceScanner
+from game.common.TrUpgrades.headlights import HeadLights
+from game.common.TrUpgrades.sentry_gun import SentryGun
 from game.common.truck import Truck
 from game.utils.helpers import getNextLevel
 from game.utils import helpers
@@ -77,7 +79,7 @@ class ActionController(Controller):
             #If the player doesn't currently have a tank and they have enough money for the base tank, give them a tank!
             if (not isinstance(player.truck.body, Tank)) and GameStats.gas_upgrade_cost[0] <= player.money:
                 player.truck.body = Tank()
-                player.money -= GameStats.scanner_upgrade_cost[0]
+                player.money -= GameStats.gas_upgrade_cost[0]
             else:
                 #otherwise, upgrade their current tank
                 tnk = player.truck.body
@@ -87,6 +89,33 @@ class ActionController(Controller):
                     player.truck.body.level = nxtLev
                 else:
                     self.print("Not enough money or at max level for gas tank")
+        if objEnum is ObjectType.headlights:
+            if (not isinstance(player.truck.body, HeadLights)) and GameStats.headlight_upgrade_cost[0] <= player.money:
+                player.truck.body = HeadLights()
+                player.money -= GameStats.headlight_upgrade_cost[0]
+            else:
+                #otherwise, upgrade their current headlights
+                lgt = player.truck.body
+                nxtLev = lgt.level + 1
+                if lgt.level is not HeadlightLevel.level_three and GameStats.headlight_upgrade_cost[nxtLev] <= player.money:
+                    player.money -= GameStats.headlight_upgrade_cost[nxtLev]
+                    player.truck.body.level = nxtLev
+                else:
+                    self.print("Not enough money or at max level for gas tank")
+        if objEnum is ObjectType.sentryGun:
+            if (not isinstance(player.truck.body, SentryGun)) and GameStats.sentry_upgrade_cost[0] <= player.money:
+                player.truck.body = SentryGun()
+                player.money -= GameStats.sentry_upgrade_cost[0]
+            else:
+                #otherwise, upgrade their current sentry gun
+                gn = player.truck.body
+                nxtLev = gn.level + 1
+                if gn.level is not SentryGunLevel.level_three and GameStats.sentry_upgrade_cost[nxtLev] <= player.money:
+                    player.money -= GameStats.sentry_upgrade_cost[nxtLev]
+                    player.truck.body.level = nxtLev
+                else:
+                    self.print("Not enough money or at max level for gas tank")
+
 
     def upgrade_addons(self, player, objEnum, typ):
         if objEnum is ObjectType.policeScanner:
