@@ -11,7 +11,7 @@ def generate():
     if not os.path.exists(GAME_MAP_DIR):
         os.mkdir(GAME_MAP_DIR)
 
-    res = []
+    res = {}
 
     # Generates random seeds for turns
     for i in range(1, MAX_TICKS + 1):

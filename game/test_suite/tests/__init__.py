@@ -5,6 +5,6 @@ from game.test_suite.tests.test_example import TestExample
 from game.test_suite.tests.test_game_map_creation import TestGameMapCreation
 
 __all__ = [
-    'TestExample'
+    'TestExample',
     'TestGameMapCreation'
 ]
