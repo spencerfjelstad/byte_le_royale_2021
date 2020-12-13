@@ -1,14 +1,14 @@
 import copy
 from copy import deepcopy
 
+import game.config as config
 from game.common.action import Action
 from game.common.enums import *
 from game.common.player import Player
-import game.config as config
+from game.common.node import Node
 from game.utils.thread import CommunicationThread
 from game.controllers.action_controller import ActionController
 from game.controllers.controller import Controller
-from game.utils.CreateMap import *
 from game.common.truck import Truck
 from game.utils.contract_utils import generate_contracts
 
@@ -22,7 +22,6 @@ class MasterController(Controller):
                 
         self.turn = None
         self.current_world_data = None
-        generateMap()
 
         self.action_controller = ActionController()
 

@@ -1,7 +1,6 @@
 from game.common.game_object import GameObject
 from game.common.enums import *
 from game.common.road import *
-from game.common.map import Map
 from game.common.node import Node
 from game.common.stats import GameStats
 
@@ -66,7 +65,6 @@ class Truck(GameObject):
 
     def from_json(self, data):
         super().from_json(data)
-        node = Node()
         self.gas = data['gas']
         self.max_gas = data['max_gas']
         self.current_node = data['current_node']
