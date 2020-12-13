@@ -1,4 +1,4 @@
-from game.common.enums import Region, ScannerLevel, TankLevel, TireType, ObjectType, HeadlightLevel, SentryGunLevel
+from game.common.enums import Region, ScannerLevel, TankLevel, TireType, ObjectType, HeadlightLevel, SentryGunLevel, RabbitFootLevel, GPSLevel
 
 
 class GameStats:
@@ -106,6 +106,34 @@ class GameStats:
         SentryGunLevel.level_one: 1000,
         SentryGunLevel.level_two: 10000,
         SentryGunLevel.level_three: 300000
+    }
+
+    rabbit_foot_upgrade_cost = {
+        RabbitFootLevel.level_zero: 10,
+        RabbitFootLevel.level_one: 20,
+        RabbitFootLevel.level_two: 40,
+        RabbitFootLevel.level_three: 80
+    }
+
+    rabbit_foot_luck_level = {
+        RabbitFootLevel.level_zero: .1,
+        RabbitFootLevel.level_one: .2,
+        RabbitFootLevel.level_two: .25,
+        RabbitFootLevel.level_three: .27
+    }
+
+    GPS_upgrade_cost = {
+        GPSLevel.level_zero: 100,
+        GPSLevel.level_one: 200,
+        GPSLevel.level_two: 700,
+        GPSLevel.level_three: 1400
+    }
+
+    GPS_accuracy = {
+        GPSLevel.level_zero: .33,
+        GPSLevel.level_one: .5,
+        GPSLevel.level_two: .58,
+        GPSLevel.level_three: .65
     }
 
     tire_switch_cost = 300

@@ -2,6 +2,8 @@ from game.common.TrUpgrades.tank import Tank
 from game.common.TrUpgrades.police_scanner import PoliceScanner
 from game.common.TrUpgrades.headlights import HeadLights
 from game.common.TrUpgrades.sentry_gun import SentryGun
+from game.common.TrUpgrades.rabbit_foot import RabbitFoot
+from game.common.TrUpgrades.gps import GPS
 from game.common.truck import Truck
 from game.utils.helpers import getNextLevel
 from game.utils import helpers
@@ -81,7 +83,7 @@ class ActionController(Controller):
                 player.truck.body = Tank()
                 player.money -= GameStats.tank_upgrade_cost[0]
             else:
-                #otherwise, upgrade their current tank
+                # otherwise, upgrade their current tank
                 tnk = player.truck.body
                 nxtLev = tnk.level + 1
                 if tnk.level is not TankLevel.level_three and GameStats.tank_upgrade_cost[nxtLev] <= player.money:
@@ -94,37 +96,38 @@ class ActionController(Controller):
                 player.truck.body = HeadLights()
                 player.money -= GameStats.headlight_upgrade_cost[0]
             else:
-                #otherwise, upgrade their current headlights
+                # otherwise, upgrade their current headlights
                 lgt = player.truck.body
                 nxtLev = lgt.level + 1
                 if lgt.level is not HeadlightLevel.level_three and GameStats.headlight_upgrade_cost[nxtLev] <= player.money:
                     player.money -= GameStats.headlight_upgrade_cost[nxtLev]
                     player.truck.body.level = nxtLev
                 else:
-                    self.print("Not enough money or at max level for gas tank")
+                    self.print(
+                        "Not enough money or at max level for headlights")
         if objEnum is ObjectType.sentryGun:
             if (not isinstance(player.truck.body, SentryGun)) and GameStats.sentry_upgrade_cost[0] <= player.money:
                 player.truck.body = SentryGun()
                 player.money -= GameStats.sentry_upgrade_cost[0]
             else:
-                #otherwise, upgrade their current sentry gun
+                # otherwise, upgrade their current sentry gun
                 gn = player.truck.body
                 nxtLev = gn.level + 1
                 if gn.level is not SentryGunLevel.level_three and GameStats.sentry_upgrade_cost[nxtLev] <= player.money:
                     player.money -= GameStats.sentry_upgrade_cost[nxtLev]
                     player.truck.body.level = nxtLev
                 else:
-                    self.print("Not enough money or at max level for gas tank")
-
+                    self.print(
+                        "Not enough money or at max level for sentry gun")
 
     def upgrade_addons(self, player, objEnum, typ):
         if objEnum is ObjectType.policeScanner:
-            #If the player doesn't currently have a scanner and they have enough money for the base scanner, give them a scanner!
+            # If the player doesn't currently have a scanner and they have enough money for the base scanner, give them a scanner!
             if (not isinstance(player.truck.addons, PoliceScanner)) and GameStats.scanner_upgrade_cost[0] <= player.money:
                 player.truck.addons = PoliceScanner()
                 player.money -= GameStats.scanner_upgrade_cost[0]
             else:
-                #otherwise, upgrade their current scanner
+                # otherwise, upgrade their current scanner
                 scn = player.truck.addons
                 nxtLev = scn.level + 1
                 if scn.level is not ScannerLevel.level_three and GameStats.scanner_upgrade_cost[nxtLev] <= player.money:
@@ -133,6 +136,36 @@ class ActionController(Controller):
                 else:
                     self.print(
                         "Not enough money or at max level for police scanner")
+        if objEnum is ObjectType.rabbitFoot:
+            # If the player doesn't currently have a scanner and they have enough money for the base scanner, give them a scanner!
+            if (not isinstance(player.truck.addons, RabbitFoot)) and GameStats.rabbit_foot_upgrade_cost[0] <= player.money:
+                player.truck.addons = RabbitFoot()
+                player.money -= GameStats.rabbit_foot_upgrade_cost[0]
+            else:
+                # otherwise, upgrade their current scanner
+                ft = player.truck.addons
+                nxtLev = ft.level + 1
+                if ft.level is not RabbitFootLevel.level_three and GameStats.rabbit_foot_upgrade_cost[nxtLev] <= player.money:
+                    player.money -= GameStats.rabbit_foot_upgrade_cost[nxtLev]
+                    player.truck.addons.level = nxtLev
+                else:
+                    self.print(
+                        "Not enough money or at max level for rabbit foot")
+        if objEnum is ObjectType.GPS:
+            # If the player doesn't currently have a scanner and they have enough money for the base scanner, give them a scanner!
+            if (not isinstance(player.truck.addons, GPS)) and GameStats.GPS_upgrade_cost[0] <= player.money:
+                player.truck.addons = GPS()
+                player.money -= GameStats.GPS_upgrade_cost[0]
+            else:
+                # otherwise, upgrade their current scanner
+                gp = player.truck.addons
+                nxtLev = gp.level + 1
+                if gp.level is not GPSLevel.level_three and GameStats.GPS_upgrade_cost[nxtLev] <= player.money:
+                    player.money -= GameStats.GPS_upgrade_cost[nxtLev]
+                    player.truck.addons.level = nxtLev
+                else:
+                    self.print(
+                        "Not enough money or at max level for GPS")
 
     def upgrade_tires(self, player, objEnum, typ):
         tireLev = player.truck.tires
@@ -152,16 +185,16 @@ class ActionController(Controller):
                 self.print("The player argument is not a Player object.")
                 return
 
-            #If the objects enum is an addon type, pass off to addon upgrade method
-            if objEnum in GameStats.addonObjects:
+            # If the objects enum is an addon type, pass off to addon upgrade method
+            elif objEnum in GameStats.addonObjects:
                 self.upgrade_addons(player, objEnum, typ)
 
-            #If the objects enum is a body type, pass off to body upgrade method
-            if objEnum in GameStats.body_objects:
+            # If the objects enum is a body type, pass off to body upgrade method
+            elif objEnum in GameStats.body_objects:
                 self.upgrade_body(player, objEnum, typ)
 
-            #The upgrade logic for tires is much simpler, but I have decided to modularize it for the sake of consistancy
-            if objEnum is ObjectType.tires:
+            # The upgrade logic for tires is much simpler, but I have decided to modularize it for the sake of consistancy
+            elif objEnum is ObjectType.tires:
                 self.upgrade_tires(player, objEnum, typ)
 
             else:
