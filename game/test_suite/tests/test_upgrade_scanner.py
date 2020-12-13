@@ -11,43 +11,61 @@ from game.controllers.action_controller import ActionController
 from game.common.enums import *
 
 
-class TestUpgradeScanner(unittest.TestCase): # Your test class is a subclass of unittest.Testcase, this is important
+# Your test class is a subclass of unittest.Testcase, this is important
+class TestUpgradeScanner(unittest.TestCase):
 
-    def setUp(self): # This method is used to set up anything you wish to test prior to every test method below.
-        self.myPlayer = Player(12,"Sean")
+    # This method is used to set up anything you wish to test prior to every test method below.
+    def setUp(self):
+        self.myPlayer = Player(12, "Sean")
         self.myPlayer.money = 1000000
         self.actionCont = ActionController()
-    
-    def test_upgrade_one_level(self): # Test methods should always start with the word 'test'
+
+    # Test methods should always start with the word 'test'
+    def test_upgrade_one_level(self):
         self.myPlayer.truck.addons.level = 0
+        self.myPlayer.money = 10000
+        expectedCash = 10000 - stats.GameStats.scanner_upgrade_cost[1]
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
-        self.assertEqual(self.myPlayer.truck.addons.level, ScannerLevel.level_one)
-    
+        self.assertEqual(self.myPlayer.truck.addons.level,
+                         ScannerLevel.level_one)
+        self.assertEqual(expectedCash, self.myPlayer.money)
+        self.assertTrue(isinstance(self.myPlayer.truck.addons, PoliceScanner))
+
     def test_upgrade_two_level(self):
         self.myPlayer.truck.addons.level = 0
+        self.myPlayer.money = 10000
+        expectedCash = 10000 - \
+            stats.GameStats.scanner_upgrade_cost[1] - \
+            stats.GameStats.scanner_upgrade_cost[2]
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
-        self.assertEqual(self.myPlayer.truck.addons.level, ScannerLevel.level_two)
+        self.assertEqual(self.myPlayer.truck.addons.level,
+                         ScannerLevel.level_two)
+        self.assertEqual(expectedCash, self.myPlayer.money)
+        self.assertTrue(isinstance(self.myPlayer.truck.addons, PoliceScanner))
 
     def test_upgrade_beyond_allowable(self):
         self.myPlayer.truck.addons.level = 0
         self.myPlayer.money = 10000
-        expectedCash = 10000 - helpers.addTogetherDictValues(stats.GameStats.scanner_upgrade_cost)
+        expectedCash = 10000 - \
+            helpers.addTogetherDictValues(stats.GameStats.scanner_upgrade_cost)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
-        self.assertEqual(self.myPlayer.truck.addons.level, ScannerLevel.level_three)
+        self.assertEqual(self.myPlayer.truck.addons.level,
+                         ScannerLevel.level_three)
         self.assertEqual(self.myPlayer.money, expectedCash)
+        self.assertTrue(isinstance(self.myPlayer.truck.addons, PoliceScanner))
 
     def test_no_money(self):
         self.myPlayer.truck.addons.level = 0
         self.myPlayer.money = 10
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
-        self.assertEqual(self.myPlayer.truck.addons.level, ScannerLevel.level_zero)
+        self.assertEqual(self.myPlayer.truck.addons.level,
+                         ScannerLevel.level_zero)
         self.assertEqual(self.myPlayer.money, 10)
-
 
     # This is just the very basics of how to set up a test file
     # For more info: https://docs.python.org/3/library/unittest.html

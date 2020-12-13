@@ -21,13 +21,16 @@ class TestUpgradeTires(unittest.TestCase): # Your test class is a subclass of un
     def test_upgrade_sticky(self):
         self.myPlayer.truck.tires = TireType.tire_normal
         self.myPlayer.money = 10000
+        expectedCash = 10000 - stats.GameStats.tire_switch_cost
         #breakpoint()
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.tires, TireType.tire_sticky)
         self.assertEqual(self.myPlayer.truck.tires, TireType.tire_sticky)
+        self.assertEqual(expectedCash, self.myPlayer.money)
 
     def test_upgrade_econ(self):
         self.myPlayer.truck.tires = TireType.tire_normal
         self.myPlayer.money = 10000
+        expectedCash = 10000 - stats.GameStats.tire_switch_cost
         #breakpoint()
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.tires, TireType.tire_econ)
         self.assertEqual(self.myPlayer.truck.tires, TireType.tire_econ)
@@ -35,17 +38,19 @@ class TestUpgradeTires(unittest.TestCase): # Your test class is a subclass of un
     def test_upgrade_normal(self):
         self.myPlayer.truck.tires = TireType.tire_sticky
         self.myPlayer.money = 10000
+        expectedCash = 10000 - stats.GameStats.tire_switch_cost
         #breakpoint()
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.tires, TireType.tire_normal)
         self.assertEqual(self.myPlayer.truck.tires, TireType.tire_normal)
     
     
     def test_same_type(self):
+        self.myPlayer.money = 10000
+        expectedCash = 10000
         self.myPlayer.truck.tires = TireType.tire_normal
-        self.myPlayer.money = GameStats.tire_switch_cost
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.tires, TireType.tire_normal)
         self.assertEqual(self.myPlayer.truck.tires, TireType.tire_normal)
-        self.assertEqual(self.myPlayer.money, GameStats.tire_switch_cost)
+        self.assertEqual(self.myPlayer.money, expectedCash)
 
     def test_upgrade_beyond_allowable(self):
         self.myPlayer.truck.tires = TireType.tire_normal

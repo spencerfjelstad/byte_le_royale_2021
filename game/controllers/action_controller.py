@@ -77,15 +77,15 @@ class ActionController(Controller):
     def upgrade_body(self, player, objEnum, typ):
         if objEnum is ObjectType.tank:
             #If the player doesn't currently have a tank and they have enough money for the base tank, give them a tank!
-            if (not isinstance(player.truck.body, Tank)) and GameStats.gas_upgrade_cost[0] <= player.money:
+            if (not isinstance(player.truck.body, Tank)) and GameStats.tank_upgrade_cost[0] <= player.money:
                 player.truck.body = Tank()
-                player.money -= GameStats.gas_upgrade_cost[0]
+                player.money -= GameStats.tank_upgrade_cost[0]
             else:
                 #otherwise, upgrade their current tank
                 tnk = player.truck.body
                 nxtLev = tnk.level + 1
-                if tnk.level is not TankLevel.level_three and GameStats.gas_upgrade_cost[nxtLev] <= player.money:
-                    player.money -= GameStats.gas_upgrade_cost[nxtLev]
+                if tnk.level is not TankLevel.level_three and GameStats.tank_upgrade_cost[nxtLev] <= player.money:
+                    player.money -= GameStats.tank_upgrade_cost[nxtLev]
                     player.truck.body.level = nxtLev
                 else:
                     self.print("Not enough money or at max level for gas tank")

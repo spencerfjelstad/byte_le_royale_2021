@@ -54,7 +54,7 @@ class GameStats:
         ScannerLevel.level_three: 1
     }
 
-    gas_upgrade_cost = {
+    tank_upgrade_cost = {
         TankLevel.level_zero: 10,
         TankLevel.level_one: 300,
         TankLevel.level_two: 900,
