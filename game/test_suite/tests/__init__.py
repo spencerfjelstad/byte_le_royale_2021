@@ -8,6 +8,8 @@ from game.test_suite.tests.test_upgrade_headlights import TestUpgradeHeadlights
 from game.test_suite.tests.test_upgrade_gun import TestUpgradesentryGun
 from game.test_suite.tests.test_upgrade_rabbit_foot import TestUpgradeRabbitFoot
 from game.test_suite.tests.test_upgrade_gps import TestUpgradeGPS
+from game.test_suite.tests.test_example import TestExample
+from game.test_suite.tests.test_game_map_creation import TestGameMapCreation
 
 
 
@@ -19,5 +21,5 @@ __all__ = [
     'TestUpgradeHeadlights',
     'TestUpgradesentryGun',
     'TestUpgradeRabbitFoot',
-    'TestUpgradeGPS'
-]
+    'TestUpgradeGPS',
+    'TestGameMapCreation'

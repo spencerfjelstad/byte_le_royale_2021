@@ -1,6 +1,5 @@
 from game.common.game_object import GameObject
 from game.common.enums import *
-from game.common.map import Map
 import random
 import json
 
