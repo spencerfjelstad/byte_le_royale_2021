@@ -44,9 +44,9 @@ class ActionController(Controller):
     def move(self, player, road):
         self.current_location = player.truck.current_node
         time_taken = 0
-        for route in self.current_location.connections:
-            if route is road:
-                player.truck.current_node = route.city_2
+        for route in self.current_location.roads:
+            if route is road: #May need to be redone
+                player.truck.current_node = self.current_location.next_node
                 time_taken = road.length / player.truck.get_current_speed()
         player.time -= time_taken
 
