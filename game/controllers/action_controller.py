@@ -2,6 +2,7 @@ from game.common.stats import GameStats
 from game.common.player import Player
 from game.controllers.controller import Controller
 from game.config import *
+from game.controllers import event_controller
 
 from collections import deque
 import math
@@ -47,6 +48,7 @@ class ActionController(Controller):
         for route in self.current_location.roads:
             if route is road: #May need to be redone
                 player.truck.current_node = self.current_location.next_node
+                event_controller.trigger_event(road, player, player.truck)
                 time_taken = road.length / player.truck.get_current_speed()
         player.time -= time_taken
 
