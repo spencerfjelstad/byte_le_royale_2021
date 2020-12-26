@@ -69,7 +69,7 @@ class ActionController(Controller):
 
     def buy_gas(self, player):
         gasPrice = round(random.uniform(1, 5), 2)  # gas price per percent
-        if(player.truck.current_node.node_type is NodeType.city and player.truck.money > 0):
+        if(player.truck.money > 0):
             percentRemain = player.truck.max_gas - round(player.truck.gas, 2)
             maxPercent = round((player.truck.money / gasPrice) / 100, 2)
             if(percentRemain < maxPercent):
