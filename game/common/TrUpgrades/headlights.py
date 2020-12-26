@@ -1,9 +1,9 @@
-from game.common.TrUpgrades.baseUpgradeObject import baseUpgradeObject
+from game.common.TrUpgrades.baseUpgradeObject import BaseUpgradeObject
 from game.common.enums import *
 from game.common.stats import *
 
 
-class HeadLights(baseUpgradeObject):
+class HeadLights(BaseUpgradeObject):
     def __init__(self):
         super().__init__(ObjectType.headlights, HeadlightLevel.level_zero)
         self.highbeams = False

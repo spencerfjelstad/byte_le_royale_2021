@@ -24,7 +24,6 @@ class TestUpgradeTank(unittest.TestCase):
         self.myPlayer.truck.body.level = 0
         self.myPlayer.money = 10000
         expectedCash = 10000 - stats.GameStats.tank_upgrade_cost[1]
-        breakpoint()
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.tank)
         self.assertEqual(self.myPlayer.truck.body.level, TankLevel.level_one)
         self.assertEqual(expectedCash, self.myPlayer.money)

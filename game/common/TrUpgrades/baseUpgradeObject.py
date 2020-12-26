@@ -3,7 +3,7 @@ from game.common.enums import *
 from game.common.stats import *
 
 
-class baseUpgradeObject(GameObject):
+class BaseUpgradeObject(GameObject):
     def __init__(self, objType, lev):
         super().__init__()
         self.object_type = objType

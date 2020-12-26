@@ -1,9 +1,9 @@
-from game.common.TrUpgrades.baseUpgradeObject import baseUpgradeObject
+from game.common.TrUpgrades.baseUpgradeObject import BaseUpgradeObject
 from game.common.enums import *
 from game.common.stats import *
 
 
-class PoliceScanner(baseUpgradeObject):
+class PoliceScanner(BaseUpgradeObject):
     def __init__(self):
         super().__init__(ObjectType.policeScanner, ScannerLevel.level_zero)
         self.scanner_results = None

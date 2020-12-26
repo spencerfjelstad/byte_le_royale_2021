@@ -1,9 +1,9 @@
-from game.common.TrUpgrades.baseUpgradeObject import baseUpgradeObject
+from game.common.TrUpgrades.baseUpgradeObject import BaseUpgradeObject
 from game.common.enums import *
 from game.common.stats import *
 
 
-class Tank(baseUpgradeObject):
+class Tank(BaseUpgradeObject):
     def __init__(self):
         super().__init__(ObjectType.tank, TankLevel.level_zero)
         self.current_gas = GameStats.gas_max_level[self.level]

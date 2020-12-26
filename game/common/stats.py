@@ -75,7 +75,7 @@ class GameStats:
         TireType.tire_sticky: 1.5
     }
 
-    tire_fuel_efficiancy = {
+    tire_fuel_efficiency = {
         TireType.tire_econ: 1.5,
         TireType.tire_normal: 1,
         TireType.tire_sticky: .5
