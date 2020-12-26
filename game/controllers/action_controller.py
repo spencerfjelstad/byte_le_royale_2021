@@ -20,10 +20,11 @@ class ActionController(Controller):
 
         #Call the appropriate method for this action
         if(player_action == ActionType.buy_gas):
-            raise NotImplementedError("ActionType buy_gas hasn't been implemented yet")
+            self.buy_gas(player)
 
         elif(player_action == ActionType.choose_speed):
-            raise NotImplementedError("ActionType choose_speed hasn't been implemented yet")
+            #This is an ActionType because the user client cannot directly influence truck values. 
+            player.truck.set_current_speed(player.action_parameter)
 
         elif(player_action == ActionType.select_contract):
             #Checks if contract_list is empty. If so, we have a problem
@@ -31,12 +32,13 @@ class ActionController(Controller):
 
             #Selects the contract given in the player.action.contract_index
             self.select_contract(player)
+            
         elif(player_action == ActionType.select_route):
             #Moves the player to the node given in the action_parameter
             self.move(player, player_action.action_parameter)
 
         elif(player_action == ActionType.upgrade):
-            self.buy_gas(player)
+            raise NotImplementedError("ActionType upgrade hasn't been implemented yet")        
 
     # Action Methods ---------------------------------------------------------
     def move(self, player, road):

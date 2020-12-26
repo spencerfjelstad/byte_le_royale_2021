@@ -9,17 +9,19 @@ class ObjectType:
     action = 1
     player = 2
     node = 3
-    truck = 4
-    contract = 5
+    road = 4
+    truck = 5
+    contract = 6
+    game_map = 7
     
 
 class ActionType:
     none = 0
     select_route = 1
-    choose_speed = 2
-    buy_gas = 3
-    upgrade = 4
-    select_contract = 5
+    buy_gas = 2
+    upgrade = 3
+    select_contract = 4
+    choose_speed = 5
 
 class Region:
     none = 0
@@ -48,8 +50,3 @@ class EventType:
     police = 5
     traffic = 6
 
-class NodeType:
-    none = 0
-    city = 1
-    warehouse = 2
-    road = 3
