@@ -7,7 +7,8 @@ import unittest
 from game.common.player import Player
 from game.controllers.action_controller import ActionController
 from game.common.enums import *
-from game.common.TrUpgrades.tank import Tank
+from game.common.TrUpgrades.BodyObjects.tank import Tank
+from game.common.TrUpgrades.BodyObjects.headlights import HeadLights
 
 
 # Your test class is a subclass of unittest.Testcase, this is important
@@ -58,6 +59,24 @@ class TestUpgradeTank(unittest.TestCase):
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.tank)
         self.assertEqual(self.myPlayer.truck.body.level, TankLevel.level_zero)
         self.assertEqual(self.myPlayer.money, 1)
+
+    def test_not_tank(self):
+        self.myPlayer.truck.body = HeadLights()
+        self.myPlayer.money = 1
+        self.assertEqual(self.myPlayer.truck.body.current_gas, stats.GameStats.gas_max_level[TankLevel.level_zero])
+        self.assertEqual(self.myPlayer.truck.body.max_gas, stats.GameStats.gas_max_level[TankLevel.level_zero])
+        self.assertEqual(self.myPlayer.money, 1)
+
+    def test_not_tank_upgrade(self):
+        self.myPlayer.truck.body = HeadLights()
+        self.myPlayer.money = 10000
+        expectedCash = 10000 - stats.GameStats.headlight_upgrade_cost[1]
+        self.actionCont.upgrade_level(self.myPlayer, ObjectType.headlights)
+        self.assertEqual(self.myPlayer.truck.body.level, HeadlightLevel.level_one)
+        self.assertEqual(self.myPlayer.truck.body.current_gas, stats.GameStats.gas_max_level[TankLevel.level_zero])
+        self.assertEqual(self.myPlayer.truck.body.max_gas, stats.GameStats.gas_max_level[TankLevel.level_zero])
+        self.assertEqual(self.myPlayer.money, expectedCash)
+    
 
     # This is just the very basics of how to set up a test file
     # For more info: https://docs.python.org/3/library/unittest.html

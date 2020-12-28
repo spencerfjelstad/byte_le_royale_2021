@@ -1,6 +1,4 @@
 from game.common.game_object import GameObject
-from game.common.enums import *
-from game.common.stats import *
 
 
 class BaseUpgradeObject(GameObject):

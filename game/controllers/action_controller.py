@@ -1,11 +1,10 @@
-from game.common.TrUpgrades.tank import Tank
+from game.common.TrUpgrades.BodyObjects.tank import Tank
 from game.common.TrUpgrades.police_scanner import PoliceScanner
-from game.common.TrUpgrades.headlights import HeadLights
-from game.common.TrUpgrades.sentry_gun import SentryGun
+from game.common.TrUpgrades.BodyObjects.headlights import HeadLights
+from game.common.TrUpgrades.BodyObjects.sentry_gun import SentryGun
 from game.common.TrUpgrades.rabbit_foot import RabbitFoot
 from game.common.TrUpgrades.gps import GPS
 from game.common.truck import Truck
-from game.utils.helpers import getNextLevel
 from game.utils import helpers
 from game.common.stats import GameStats
 from game.common.player import Player
@@ -63,8 +62,7 @@ class ActionController(Controller):
 
     # Retrieve by index and store in Player, then clear the list
     def select_contract(self, player):
-        player.active_contract = self.contract_list[int(
-            player.action.contract_index)]
+        player.active_contract = self.contract_list[int(player.action.contract_index)]
         self.contract_list.clear()
 
     def buy_gas(self, player):

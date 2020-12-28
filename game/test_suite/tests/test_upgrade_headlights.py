@@ -7,7 +7,7 @@ import unittest
 from game.common.player import Player
 from game.controllers.action_controller import ActionController
 from game.common.enums import *
-from game.common.TrUpgrades.headlights import HeadLights
+from game.common.TrUpgrades.BodyObjects.headlights import HeadLights
 
 
 # Your test class is a subclass of unittest.Testcase, this is important

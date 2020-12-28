@@ -1,9 +1,9 @@
-from game.common.TrUpgrades.baseUpgradeObject import BaseUpgradeObject
+from game.common.TrUpgrades.BodyObjects.baseBodyObject import BaseBodyObject
 from game.common.enums import *
 from game.common.stats import *
 
 
-class SentryGun(BaseUpgradeObject):
+class SentryGun(BaseBodyObject):
     def __init__(self):
         super().__init__(ObjectType.sentryGun,SentryGunLevel.level_zero)
         self.MissileLauncher = False

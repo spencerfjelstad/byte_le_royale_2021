@@ -1,5 +1,6 @@
 from game.common.enums import *
 
+
 class GameStats:
     default_road_length = 100
 

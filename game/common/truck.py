@@ -3,7 +3,7 @@ from game.common.enums import *
 from game.common.road import *
 from game.common.node import Node
 from game.common.TrUpgrades.police_scanner import PoliceScanner
-from game.common.TrUpgrades.tank import Tank
+from game.common.TrUpgrades.BodyObjects.tank import Tank
 from game.common.stats import GameStats
 
 # Probably need to add some extra stuff

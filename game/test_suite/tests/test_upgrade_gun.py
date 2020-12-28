@@ -7,7 +7,7 @@ import unittest
 from game.common.player import Player
 from game.controllers.action_controller import ActionController
 from game.common.enums import *
-from game.common.TrUpgrades.sentry_gun import SentryGun
+from game.common.TrUpgrades.BodyObjects.sentry_gun import SentryGun
 
 
 # Your test class is a subclass of unittest.Testcase, this is important

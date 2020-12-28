@@ -13,7 +13,6 @@ class ObjectType:
     truck = 5
     contract = 6
     game_map = 7
-    truck = 8
     contract = 9
     policeScanner = 10
     tank = 11
