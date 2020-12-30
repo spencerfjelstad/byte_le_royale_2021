@@ -5,7 +5,7 @@ import json
 
 
 class Contract(GameObject):
-    def __init__(self, name=None, region=None, cities=None):
+    def __init__(self, name=None, region=None, game_map=None, reward=None):
         super().__init__()
         self.object_type = ObjectType.contract
         
@@ -14,21 +14,24 @@ class Contract(GameObject):
         # region is region enum
         self.region = region
         
-        # cities is a list of strings representing the keys for the nodes within the graph
-        self.cities = cities
+        # Contract holds the game map
+        self.game_map = game_map
+        self.reward = reward
     
     def to_json(self):
         data = super().to_json()
         data['name'] = self.name
         data['region'] = self.region
-        data['cities'] = self.cities
+        data['game_map'] = self.game_map.to_json()
+        data['reward'] = self.reward
         return data
     
     def from_json(self,data):
         super().from_json(data)
         self.name = data['name']
         self.region = data['region']
-        self.cities = data['cities']
+        self.game_map = data['game_map']
+        self.reward = data['reward']
 
     # generates a random name, has no effect on gameplay other than lols
     def generateName(self):
@@ -45,3 +48,11 @@ class Contract(GameObject):
     
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.name == other.name and self.region == other.region and self.cities == other.cities
+
+    def __str__(self):
+        p = f"""Name: {self.name}
+            Region: {self.region}
+            Reward: {self.reward}
+            Map: {str(self.game_map.to_list())}
+            """
+        return p

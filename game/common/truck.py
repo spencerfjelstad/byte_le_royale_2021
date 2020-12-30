@@ -3,6 +3,7 @@ from game.common.enums import *
 from game.common.road import *
 from game.common.node import Node
 from game.common.stats import GameStats
+from game.common.contract import Contract
 
 # Probably need to add some extra stuff
 class Truck(GameObject):
@@ -57,14 +58,21 @@ class Truck(GameObject):
         data = super().to_json()
         node = self.current_node.to_json()
         data['current_node'] = node
+        data['contract_list'] = {contract.name: contract.to_json() for contract in self.contract_list}
         data['gas'] = self.gas
         data['max_gas'] = self.max_gas
         data['speed'] = self.speed
         data['event_type_bonus'] = self.event_type_bonus
+        data['health'] = self.health
         return data
 
     def from_json(self, data):
         super().from_json(data)
+        node = Node('temp')
+        self.current_node = node.from_json(data['current_node'])
+        temp = Contract()
+        for contract in data['contract_list'].values():
+            self.contract_list.append(temp.from_json(contract))
         self.gas = data['gas']
         self.max_gas = data['max_gas']
         self.current_node = data['current_node']

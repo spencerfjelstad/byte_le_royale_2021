@@ -62,7 +62,7 @@ class Player(GameObject):
         p = f"""ID: {self.id}
             Team name: {self.team_name}
             Action: {self.action}
-            Contracts: {self.active_contract}
+            Contracts: {str(self.active_contract)}
             Time: {self.time}
             Money: {self.money}
             """
