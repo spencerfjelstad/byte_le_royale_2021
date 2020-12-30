@@ -51,6 +51,10 @@ class ActionController(Controller):
         player.time -= time_taken
 
     # Retrieve by index and store in Player, then clear the list
+    def complete_contract(self,player):
+        if player.active_contract.game_map.to_list()[-1] == player.active_contract.game_map.current_node:
+            player.money += player.active_contract.reward
+
     def select_contract(self, player):
         player.active_contract = self.contract_list[int(player.action.contract_index)]
         self.contract_list.clear()
@@ -68,4 +72,3 @@ class ActionController(Controller):
                 player.truck.money += maxPercent
 
     # End of Action Methods --------------------------------------------------
-    

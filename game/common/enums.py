@@ -49,13 +49,3 @@ class EventType:
     bandits = 4
     police = 5
     traffic = 6
-
-class ContractNodeCount:
-    short = 5
-    medium = 11
-    hard = 18
-
-class ContractRewards:
-    easy = 200
-    medium = 500
-    hard = 1100

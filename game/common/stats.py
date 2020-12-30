@@ -88,3 +88,15 @@ class GameStats:
     truck_starting_max_gas = 1
 
     truck_starting_health = 50
+
+    contract_node_count = {
+        'short': 5,
+        'medium': 11,
+        'long': 18
+    }
+
+    contract_rewards = {
+        'easy': 200,
+        'medium': 500,
+        'hard': 1100
+    }

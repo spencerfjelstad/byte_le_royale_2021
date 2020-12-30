@@ -2,6 +2,7 @@ from game.common.game_object import GameObject
 from game.common.enums import *
 import random
 import json
+from game.common.stats import GameStats
 
 
 class Contract(GameObject):
@@ -16,7 +17,7 @@ class Contract(GameObject):
         
         # Contract holds the game map
         self.game_map = game_map
-        self.reward = reward
+        self.reward = reward * GameStats.region_reward_modifier[region]
     
     def to_json(self):
         data = super().to_json()
@@ -38,7 +39,7 @@ class Contract(GameObject):
         verb = ["Deliver ", "Transport ", "Drop off ", "Ship "]
         quantity = ["a lot ", "several ", "one ", "a few "]
         adjective = ["big ", "small ", "happy ", "sad ", "angry "]
-        noun = ["lobsters", "cd players", "power converers sourced from Tosche station", "Patented Skinner Burgers"]
+        noun = ["lobsters", "cd players", "power converters sourced from Tosche station", "Patented Skinner Burgers"]
         # Literally making code worse for a joke
         index = random.randrange(len(noun))
         if index == 3:
