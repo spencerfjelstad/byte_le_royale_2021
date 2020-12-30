@@ -58,18 +58,21 @@ class Truck(GameObject):
 
     def to_json(self):
         data = super().to_json()
-        node = self.current_node.to_json()
+        node = self.current_node
         data['current_node'] = node
-        data['gas'] = self.gas
-        data['max_gas'] = self.max_gas
         data['speed'] = self.speed
+        data['health'] = self.health
         data['event_type_bonus'] = self.event_type_bonus
+        data['body'] = self.body.to_json()
+        data['addons'] = self.addons.to_json()
+        data['tires'] = self.tires
         return data
 
     def from_json(self, data):
         super().from_json(data)
-        self.gas = data['gas']
-        self.max_gas = data['max_gas']
         self.current_node = data['current_node']
         self.speed = data['speed']
         self.event_type_bonus = data['event_type_bonus']
+        self.body = data['body']
+        self.addons = data['addons']
+        self.tires = data['tires']

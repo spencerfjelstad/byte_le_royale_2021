@@ -38,7 +38,6 @@ class Player(GameObject):
 
     def from_json(self, data):
         super().from_json(data)
-
         self.functional = data['functional']
         self.error = data['error']
         self.team_name = data['team_name']
@@ -46,13 +45,10 @@ class Player(GameObject):
         act = Action()
         act.from_json(data['action']) if data['action'] is not None else None 
         self.action = act
-
         truck = Truck()
         truck.from_json(data['truck'])
         self.truck = truck
-        
         self.money = data['money']
-        
         contract = Contract()
         contract.from_json(data['active_contract'])
         self.active_contract = contract

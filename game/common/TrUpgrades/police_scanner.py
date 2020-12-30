@@ -10,7 +10,7 @@ class PoliceScanner(BaseUpgradeObject):
 
     def to_json(self):
         data = super().to_json()
-        data['scanner_results'] = self.sensor_results
+        data['scanner_results'] = self.scanner_results
         return data
 
     def from_json(self, data):
