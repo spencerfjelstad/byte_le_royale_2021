@@ -43,7 +43,7 @@ class Contract(GameObject):
         # Literally making code worse for a joke
         index = random.randrange(len(noun))
         if index == 3:
-            return random.choice(verb) + random.choice(quantity) + "of" + noun[index]
+            return random.choice(verb) + random.choice(quantity) + "of " + noun[index]
         else:
             return random.choice(verb) + random.choice(quantity) + "of " + random.choice(adjective) + noun[index]
     

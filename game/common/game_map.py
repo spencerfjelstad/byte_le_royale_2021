@@ -41,11 +41,7 @@ class Game_Map(GameObject):
         return i
 
     def to_list(self):
-        curr_node = self.head
-        node_list = []
-        while curr_node is not None:
-            node_list.append(curr_node)
-            curr_node = curr_node.next_node
+        node_list = self.head.to_list()
         return node_list
 
     def to_json(self):
@@ -53,17 +49,10 @@ class Game_Map(GameObject):
 
         data['head'] = self.head.to_json()
         data['current_node'] = self.current_node.to_json()
-        node_list = self.to_list()
-        data['map'] = {node.city_name: node.to_json() for node in node_list}
         return data
     
     def from_json(self, data):
         super().from_json(data)
-
-        iter_node = Node('iterative')
-        for node in reversed(data['map'].values()):
-            temp = iter_node.from_json(node)
-            self.insert_node(temp)
 
         current_node = Node('current_node')
         current_node.from_json(data['current_node'])

@@ -4,12 +4,13 @@ from game.common.game_object import GameObject
 from game.common.enums import *
 from game.common.contract import Contract
 from game.common.truck import Truck
+from game.common.node import Node
 from game.common.stats import GameStats
 
 
 class Player(GameObject):
     # truck initialized with placeholder
-    def __init__(self, code=None, team_name=None, action=None, contract=None, truck=Truck("HUB")):
+    def __init__(self, code=None, team_name=None, action=None, contract=None, truck=Truck("HUB"), node=None):
         super().__init__()
         self.object_type = ObjectType.player
         self.functional = True
@@ -22,6 +23,7 @@ class Player(GameObject):
         self.time = GameStats.game_max_time
         self.money = GameStats.player_starting_money
         self.available_contracts = list()
+        self.current_node = node
 
     def to_json(self):
         data = super().to_json()
@@ -34,6 +36,7 @@ class Player(GameObject):
         data['truck'] = self.truck.to_json()
         data['money'] = self.money
         data['active_contract'] = self.active_contract.to_json() if self.active_contract is not None else dict()
+        data['current_node'] = self.current_node.to_json()
         return data
 
     def from_json(self, data):
@@ -57,6 +60,9 @@ class Player(GameObject):
         contract = Contract()
         contract.from_json(data['active_contract'])
         self.active_contract = contract
+
+        temp = Node('temp')
+        self.current_node = temp.from_json(data['current_node'])
 
     def __str__(self):
         p = f"""ID: {self.id}

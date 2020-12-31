@@ -10,6 +10,12 @@ from game.common.region import *
 
 from game.utils.create_game_map import create_game_map
 
+def check_contract_completion(client):
+    if client.active_contract.game_map.to_list()[-1] == client.active_contract.game_map.current_node:
+        client.money += client.active_contract.reward
+        client.active_contract = None
+        client.truck.active_contract
+
 # Generate list of contracts, store for verification
 def generate_contracts(client):
     # Placeholder for now, will need balancing/changes in future

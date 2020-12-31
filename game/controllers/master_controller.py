@@ -10,7 +10,7 @@ from game.utils.thread import CommunicationThread
 from game.controllers.action_controller import ActionController
 from game.controllers.controller import Controller
 from game.common.truck import Truck
-from game.utils.contract_utils import generate_contracts
+from game.utils.contract_utils import generate_contracts, check_contract_completion
 
 import random
 
@@ -54,7 +54,7 @@ class MasterController(Controller):
     def client_turn_arguments(self, client, turn):
         # Add contracts available in city and current active contract to truck for access by client
         actions = Action()
-        
+        check_contract_completion(client)
         contract_list = generate_contracts(client)
         self.action_controller.contract_list = contract_list
 
