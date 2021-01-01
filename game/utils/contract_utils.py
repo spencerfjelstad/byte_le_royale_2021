@@ -11,10 +11,10 @@ from game.common.region import *
 from game.utils.create_game_map import create_game_map
 
 def check_contract_completion(client):
-    if client.active_contract.game_map.to_list()[-1] == client.active_contract.game_map.current_node:
-        client.money += client.active_contract.reward
-        client.active_contract = None
-        client.truck.active_contract
+    if client.truck.active_contract is not None:
+        if client.truck.active_contract.game_map.to_list()[-1] == client.truck.active_contract.game_map.current_node:
+            client.money += client.truck.active_contract.reward
+            client.truck.active_contract = None
 
 # Generate list of contracts, store for verification
 def generate_contracts(client):
@@ -31,7 +31,6 @@ def generate_contracts(client):
     hard_map = create_game_map(GameStats.contract_node_count['long'],
             GameStats.default_road_length-GameStats.road_length_maximum_deviation)
 
-    # Currently region is random, not sure what to do with it
     easy_contract = Contract(None, random.choice(region_list), easy_map,
             GameStats.contract_rewards['easy'])
     medium_contract = Contract(None, random.choice(region_list), medium_map,

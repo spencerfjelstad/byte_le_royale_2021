@@ -17,9 +17,9 @@ class ActionController(Controller):
 
     def handle_actions(self, player):
         player_action = player.action
-        # Without a contract truck has no node to move to, intercept and force a selection
-        if player.active_contract is None and player_action != ActionType.select_contract:
-            player.active_contract = random.choice(self.contract_list)
+        # Without a contract truck has no node to move to, ensure a contract is always active
+        if player.truck.active_contract is None and player_action != ActionType.select_contract:
+            player.truck.active_contract = random.choice(self.contract_list)
         else:
             #Call the appropriate method for this action
             if(player_action == ActionType.buy_gas):
@@ -55,10 +55,8 @@ class ActionController(Controller):
 
     # Retrieve by index and store in Player, then clear the list
     def select_contract(self, player):
-        player.active_contract = self.contract_list[int(player.action.contract_index)]
-        player.truck.active_contract = copy.deepcopy(player.active_contract)
-        player.current_node = player.active_contract.game_map.current_node
-        player.truck.current_node = copy.deepcopy(player.current_node)
+        player.truck.active_contract = self.contract_list[int(player.action.contract_index)]
+        player.truck.current_node = player.truck.active_contract.game_map.current_node
         self.contract_list.clear()
 
     def buy_gas(self, player):

@@ -56,7 +56,7 @@ class Truck(GameObject):
 
     def to_json(self):
         data = super().to_json()
-        node = self.current_node.to_json()
+        node = self.current_node.to_json() if self.current_node is not None else None
         data['current_node'] = node
         data['contract_list'] = {contract.name: contract.to_json() for contract in self.contract_list}
         data['gas'] = self.gas

@@ -29,7 +29,7 @@ class MasterController(Controller):
     def give_clients_objects(self, client):
         start_node = Node('Start Node')
         start_node.region = Region.nord_dakotia
-        client.truck = Truck(start_node)
+        client.truck = Truck()
         pass
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
@@ -59,7 +59,6 @@ class MasterController(Controller):
         self.action_controller.contract_list = contract_list
 
         client.truck.contract_list = copy.deepcopy(contract_list)
-        client.truck.active_contract = copy.deepcopy(client.active_contract)
         client.action = actions
 
 

@@ -53,7 +53,8 @@ class Game_Map(GameObject):
     
     def from_json(self, data):
         super().from_json(data)
-
-        current_node = Node('current_node')
-        current_node.from_json(data['current_node'])
-        self.current_node = current_node
+        temp_node = Node('temp')
+        temp_node.from_json(data['head'])
+        self.head = temp_node
+        temp_node.from_json(data['current_node'])
+        self.current_node = temp_node

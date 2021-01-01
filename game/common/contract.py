@@ -3,6 +3,7 @@ from game.common.enums import *
 import random
 import json
 from game.common.stats import GameStats
+from game.common.game_map import Game_Map
 
 
 class Contract(GameObject):
@@ -15,7 +16,6 @@ class Contract(GameObject):
         # region is region enum
         self.region = region
         
-        # Contract holds the game map
         self.game_map = game_map
         self.reward = reward * GameStats.region_reward_modifier[region]
     
@@ -31,7 +31,8 @@ class Contract(GameObject):
         super().from_json(data)
         self.name = data['name']
         self.region = data['region']
-        self.game_map = data['game_map']
+        json_map = Game_Map()
+        self.game_map = json_map.from_json(data['game_map'])
         self.reward = data['reward']
 
     # generates a random name, has no effect on gameplay other than lols
