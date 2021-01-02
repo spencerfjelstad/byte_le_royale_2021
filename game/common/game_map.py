@@ -46,11 +46,10 @@ class Game_Map(GameObject):
 
     def to_json(self):
         data = super().to_json()
-
         data['head'] = self.head.to_json()
         data['current_node'] = self.current_node.to_json()
         return data
-    
+
     def from_json(self, data):
         super().from_json(data)
         temp_node = Node('temp')

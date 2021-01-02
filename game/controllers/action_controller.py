@@ -6,7 +6,6 @@ from game.config import *
 from collections import deque
 import math
 import random
-import copy
 
 class ActionController(Controller):
     def __init__(self):
