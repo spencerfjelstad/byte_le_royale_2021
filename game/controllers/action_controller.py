@@ -48,6 +48,8 @@ class ActionController(Controller):
             if route is road: #May need to be redone
                 player.truck.current_node = self.current_location.next_node
                 time_taken = road.length / player.truck.get_current_speed()
+        gas_used = (road.length/GameStats.truck_starting_mpg)/(GameStats.truck_starting_max_gas*100)
+        player.truck.gas -= gas_used
         player.time -= time_taken
 
     # Retrieve by index and store in Player, then clear the list
