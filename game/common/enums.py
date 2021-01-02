@@ -13,7 +13,6 @@ class ObjectType:
     truck = 5
     contract = 6
     game_map = 7
-    
 
 class ActionType:
     none = 0

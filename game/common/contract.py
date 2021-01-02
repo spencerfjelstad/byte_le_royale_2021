@@ -10,14 +10,13 @@ class Contract(GameObject):
     def __init__(self, name=None, region=None, game_map=None, reward=None):
         super().__init__()
         self.object_type = ObjectType.contract
-        
         # if no name is supplied it will generate a random one
         self.name = self.generateName() if not name else name
         # region is region enum
         self.region = region
-        
         self.game_map = game_map
-        self.reward = reward * GameStats.region_reward_modifier[region]
+        self.reward = reward * GameStats.region_reward_modifier[region]\
+            if reward is not None and region is not None else 0
     
     def to_json(self):
         data = super().to_json()

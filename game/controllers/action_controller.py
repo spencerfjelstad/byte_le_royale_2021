@@ -14,7 +14,6 @@ class ActionController(Controller):
 
         self.contract_list = list()
 
-
     def handle_actions(self, player):
         player_action = player.action
         # Without a contract truck has no node to move to, ensure a contract is always active

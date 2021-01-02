@@ -18,7 +18,6 @@ class Truck(GameObject):
         self.max_gas = GameStats.truck_starting_max_gas
         self.speed = 50
         self.health = GameStats.truck_starting_health
-        
 
     def get_city_contracts(self):
         return self.contract_list
@@ -33,7 +32,7 @@ class Truck(GameObject):
         if speed < 1:
             speed = 1
         self.speed = speed
-    
+
     event_type_bonus = {
         EventType.police: 0,
         EventType.animal_in_road: 0,
@@ -59,6 +58,7 @@ class Truck(GameObject):
         node = self.current_node.to_json() if self.current_node is not None else None
         data['current_node'] = node
         data['contract_list'] = {contract.name: contract.to_json() for contract in self.contract_list}
+        data['active_contract'] = self.active_contract.to_json() if self.active_contract is not None else None
         data['gas'] = self.gas
         data['max_gas'] = self.max_gas
         data['speed'] = self.speed
@@ -73,8 +73,23 @@ class Truck(GameObject):
         temp = Contract()
         for contract in data['contract_list'].values():
             self.contract_list.append(temp.from_json(contract))
+        self.active_contract = temp.from_json(data['active_contract'])
         self.gas = data['gas']
         self.max_gas = data['max_gas']
         self.current_node = data['current_node']
         self.speed = data['speed']
         self.event_type_bonus = data['event_type_bonus']
+
+    def __str__(self):
+        contracts_string = []
+        for contract in self.contract_list:
+            contracts_string.append(str(contract))
+        p = f"""Current Node: {self.current_node.city_name}
+            Contract List: {str(contracts_string)}
+            Contract: {str(self.active_contract)}
+            Gas: {self.gas}
+            Max Gas: {self.max_gas}
+            Speed: {self.speed}
+            Health: {self.health}
+            """
+        return p

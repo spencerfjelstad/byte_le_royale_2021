@@ -27,8 +27,6 @@ class MasterController(Controller):
 
     # Receives all clients for the purpose of giving them the objects they will control
     def give_clients_objects(self, client):
-        start_node = Node('Start Node')
-        start_node.region = Region.nord_dakotia
         client.truck = Truck()
         pass
 
