@@ -14,7 +14,7 @@ class Node(GameObject):
     def to_json(self):
         data = super().to_json()
         data['city_name'] = self.city_name
-        data['roads'] = {road.name: road.to_json() for road in self.roads}
+        data['roads'] = {road.road_name: road.to_json() for road in self.roads}
         data['next_node'] = self.next_node.to_json() if self.next_node is not None else None
         return data
 
