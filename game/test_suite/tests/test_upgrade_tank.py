@@ -1,6 +1,7 @@
 # This is a quick example test file to show you the basics.
 # Always remember to add the proper details to the __init__.py file in the 'tests' folder
 # to insure your tests are run.
+from game.common.TrUpgrades.police_scanner import PoliceScanner
 from game.common import stats
 from game.utils import helpers
 import unittest
@@ -40,6 +41,7 @@ class TestUpgradeTank(unittest.TestCase):
         self.assertTrue(isinstance(self.myPlayer.truck.body, Tank))
 
     def test_upgrade_beyond_allowable(self):
+        self.myPlayer.truck.body = PoliceScanner()
         self.myPlayer.truck.body.level = 0
         self.myPlayer.money = 100000
         expectedCash = self.myPlayer.money - \
@@ -70,7 +72,7 @@ class TestUpgradeTank(unittest.TestCase):
     def test_not_tank_upgrade(self):
         self.myPlayer.truck.body = HeadLights()
         self.myPlayer.money = 10000
-        expectedCash = 10000 - stats.GameStats.headlight_upgrade_cost[1]
+        expectedCash = 10000 -  stats.GameStats.costs_and_effectiveness[ObjectType.headlights]['cost'][1]
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.headlights)
         self.assertEqual(self.myPlayer.truck.body.level, HeadlightLevel.level_one)
         self.assertEqual(self.myPlayer.truck.body.current_gas, stats.GameStats.costs_and_effectiveness[ObjectType.tank]['effectiveness'][0] * stats.GameStats.truck_starting_gas)

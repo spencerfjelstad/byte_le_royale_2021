@@ -84,42 +84,42 @@ class ActionController(Controller):
     def upgrade_body(self, player, objEnum, typ):
         if objEnum is ObjectType.tank:
             #If the player doesn't currently have a tank and they have enough money for the base tank, give them a tank!
-            if (not isinstance(player.truck.body, Tank)) and GameStats.tank_upgrade_cost[0] <= player.money:
+            if (not isinstance(player.truck.body, Tank)) and  GameStats.costs_and_effectiveness[ObjectType.tank]['cost'][0] <= player.money:
                 player.truck.body = Tank()
-                player.money -= GameStats.tank_upgrade_cost[0]
+                player.money -= GameStats.costs_and_effectiveness[ObjectType.tank]['cost'][0]
             else:
                 # otherwise, upgrade their current tank
                 tnk = player.truck.body
                 nxtLev = tnk.level + 1
-                if tnk.level is not TankLevel.level_three and GameStats.tank_upgrade_cost[nxtLev] <= player.money:
-                    player.money -= GameStats.tank_upgrade_cost[nxtLev]
+                if tnk.level is not TankLevel.level_three and GameStats.costs_and_effectiveness[ObjectType.tank]['cost'][nxtLev] <= player.money:
+                    player.money -= GameStats.costs_and_effectiveness[ObjectType.tank]['cost'][nxtLev]
                     player.truck.body.level = nxtLev
                 else:
                     self.print("Not enough money or at max level for gas tank")
         if objEnum is ObjectType.headlights:
-            if (not isinstance(player.truck.body, HeadLights)) and GameStats.headlight_upgrade_cost[0] <= player.money:
+            if (not isinstance(player.truck.body, HeadLights)) and GameStats.costs_and_effectiveness[ObjectType.headlights]['cost'][0] <= player.money:
                 player.truck.body = HeadLights()
-                player.money -= GameStats.headlight_upgrade_cost[0]
+                player.money -= GameStats.costs_and_effectiveness[ObjectType.headlights]['cost'][0]
             else:
                 # otherwise, upgrade their current headlights
                 lgt = player.truck.body
                 nxtLev = lgt.level + 1
-                if lgt.level is not HeadlightLevel.level_three and GameStats.headlight_upgrade_cost[nxtLev] <= player.money:
-                    player.money -= GameStats.headlight_upgrade_cost[nxtLev]
+                if lgt.level is not HeadlightLevel.level_three and  GameStats.costs_and_effectiveness[ObjectType.headlights]['cost'][nxtLev] <= player.money:
+                    player.money -=  GameStats.costs_and_effectiveness[ObjectType.headlights]['cost'][nxtLev]
                     player.truck.body.level = nxtLev
                 else:
                     self.print(
                         "Not enough money or at max level for headlights")
         if objEnum is ObjectType.sentryGun:
-            if (not isinstance(player.truck.body, SentryGun)) and GameStats.sentry_upgrade_cost[0] <= player.money:
+            if (not isinstance(player.truck.body, SentryGun)) and  GameStats.costs_and_effectiveness[ObjectType.sentryGun]['cost'][0] <= player.money:
                 player.truck.body = SentryGun()
-                player.money -= GameStats.sentry_upgrade_cost[0]
+                player.money -= GameStats.costs_and_effectiveness[ObjectType.sentryGun]['cost'][0]
             else:
                 # otherwise, upgrade their current sentry gun
                 gn = player.truck.body
                 nxtLev = gn.level + 1
-                if gn.level is not SentryGunLevel.level_three and GameStats.sentry_upgrade_cost[nxtLev] <= player.money:
-                    player.money -= GameStats.sentry_upgrade_cost[nxtLev]
+                if gn.level is not SentryGunLevel.level_three and GameStats.costs_and_effectiveness[ObjectType.sentryGun]['cost'][nxtLev] <= player.money:
+                    player.money -= GameStats.costs_and_effectiveness[ObjectType.sentryGun]['cost'][nxtLev]
                     player.truck.body.level = nxtLev
                 else:
                     self.print(
@@ -128,45 +128,45 @@ class ActionController(Controller):
     def upgrade_addons(self, player, objEnum, typ):
         if objEnum is ObjectType.policeScanner:
             # If the player doesn't currently have a scanner and they have enough money for the base scanner, give them a scanner!
-            if (not isinstance(player.truck.addons, PoliceScanner)) and GameStats.scanner_upgrade_cost[0] <= player.money:
+            if (not isinstance(player.truck.addons, PoliceScanner)) and GameStats.costs_and_effectiveness[ObjectType.policeScanner]['cost'][0] <= player.money:
                 player.truck.addons = PoliceScanner()
-                player.money -= GameStats.scanner_upgrade_cost[0]
+                player.money -= GameStats.costs_and_effectiveness[ObjectType.policeScanner]['cost'][0]
             else:
                 # otherwise, upgrade their current scanner
                 scn = player.truck.addons
                 nxtLev = scn.level + 1
-                if scn.level is not ScannerLevel.level_three and GameStats.scanner_upgrade_cost[nxtLev] <= player.money:
-                    player.money -= GameStats.scanner_upgrade_cost[nxtLev]
+                if scn.level is not ScannerLevel.level_three and GameStats.costs_and_effectiveness[ObjectType.policeScanner]['cost'][nxtLev] <= player.money:
+                    player.money -= GameStats.costs_and_effectiveness[ObjectType.policeScanner]['cost'][nxtLev]
                     player.truck.addons.level = nxtLev
                 else:
                     self.print(
                         "Not enough money or at max level for police scanner")
         if objEnum is ObjectType.rabbitFoot:
-            # If the player doesn't currently have a scanner and they have enough money for the base scanner, give them a scanner!
-            if (not isinstance(player.truck.addons, RabbitFoot)) and GameStats.rabbit_foot_upgrade_cost[0] <= player.money:
+            # If the player doesn't currently have a scanner and they have enough money for the base rabbit foot, give them a foot!
+            if (not isinstance(player.truck.addons, RabbitFoot)) and GameStats.costs_and_effectiveness[ObjectType.rabbitFoot]['cost'][0] <= player.money:
                 player.truck.addons = RabbitFoot()
-                player.money -= GameStats.rabbit_foot_upgrade_cost[0]
+                player.money -= GameStats.costs_and_effectiveness[ObjectType.rabbitFoot]['cost'][0]
             else:
                 # otherwise, upgrade their current scanner
                 ft = player.truck.addons
                 nxtLev = ft.level + 1
-                if ft.level is not RabbitFootLevel.level_three and GameStats.rabbit_foot_upgrade_cost[nxtLev] <= player.money:
-                    player.money -= GameStats.rabbit_foot_upgrade_cost[nxtLev]
+                if ft.level is not RabbitFootLevel.level_three and GameStats.costs_and_effectiveness[ObjectType.rabbitFoot]['cost'][nxtLev] <= player.money:
+                    player.money -= GameStats.costs_and_effectiveness[ObjectType.rabbitFoot]['cost'][nxtLev]
                     player.truck.addons.level = nxtLev
                 else:
                     self.print(
                         "Not enough money or at max level for rabbit foot")
         if objEnum is ObjectType.GPS:
             # If the player doesn't currently have a scanner and they have enough money for the base scanner, give them a scanner!
-            if (not isinstance(player.truck.addons, GPS)) and GameStats.GPS_upgrade_cost[0] <= player.money:
+            if (not isinstance(player.truck.addons, GPS)) and GameStats.costs_and_effectiveness[ObjectType.GPS]['cost'][0] <= player.money:
                 player.truck.addons = GPS()
-                player.money -= GameStats.GPS_upgrade_cost[0]
+                player.money -= GameStats.costs_and_effectiveness[ObjectType.GPS]['cost'][0]
             else:
                 # otherwise, upgrade their current scanner
                 gp = player.truck.addons
                 nxtLev = gp.level + 1
-                if gp.level is not GPSLevel.level_three and GameStats.GPS_upgrade_cost[nxtLev] <= player.money:
-                    player.money -= GameStats.GPS_upgrade_cost[nxtLev]
+                if gp.level is not GPSLevel.level_three and GameStats.costs_and_effectiveness[ObjectType.GPS]['cost'][nxtLev] <= player.money:
+                    player.money -= GameStats.costs_and_effectiveness[ObjectType.GPS]['cost'][nxtLev]
                     player.truck.addons.level = nxtLev
                 else:
                     self.print(
