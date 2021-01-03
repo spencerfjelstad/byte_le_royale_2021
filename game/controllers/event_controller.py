@@ -23,7 +23,7 @@ class EventController(Controller):
     def event_chance(self, road, player,truck):
         happens = random.choices([True, False], weights=GameStats.base_event_probability, k=1)[0]
         if happens:
-            trigger_event(road,player, truck)
+            self.trigger_event(road,player, truck)
 
     def handle_actions(self, client):
         return

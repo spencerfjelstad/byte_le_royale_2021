@@ -14,14 +14,16 @@ class Node(GameObject):
     def to_json(self):
         data = super().to_json()
         data['city_name'] = self.city_name
-        data['roads'] = self.roads
+        data['roads'] = {road.name: road.to_json() for road in self.roads}
         data['next_node'] = self.next_node.to_json() if self.next_node is not None else None
         return data
 
     def from_json(self, data):
         super().from_json(data)
         self.city_name = data['city_name']
-        self.roads = data['roads']
+        temp = Road('temp')
+        for road in data['roads'].values():
+            self.roads.append(temp.from_json(road))
 
         # Recursively reconstruct linked list
         node_data = data['next_node']
