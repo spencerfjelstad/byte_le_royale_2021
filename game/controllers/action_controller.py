@@ -30,7 +30,7 @@ class ActionController(Controller):
             self.buy_gas(player)
 
         elif(player_action == ActionType.choose_speed):
-            #This is an ActionType because the user client cannot directly influence truck values. 
+            # This is an ActionType because the user client cannot directly influence truck values.
             player.truck.set_current_speed(player.action_parameter)
 
         elif(player_action == ActionType.select_contract):
@@ -63,7 +63,8 @@ class ActionController(Controller):
     # Retrieve by index and store in Player, then clear the list
     def select_contract(self, player):
         if len(self.contract_list) < int(player.action.contract_index):
-            player.active_contract = self.contract_list[int(player.action.contract_index)]
+            player.active_contract = self.contract_list[int(
+                player.action.contract_index)]
             self.contract_list.clear()
         else:
             self.print("Contract list index was out of bounds")

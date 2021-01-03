@@ -22,8 +22,6 @@ class ObjectType:
     rabbitFoot = 15
     GPS = 16
 
-    
-
 class ActionType:
     none = 0
     select_route = 1
