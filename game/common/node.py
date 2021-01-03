@@ -13,14 +13,14 @@ class Node(GameObject):
         self.next_node = next_node
     
     def to_json(self):
-        breakpoint()
         data = super().to_json()
         data['city_name'] = self.city_name
         data['roads'] = self.roads
+        data['next_node'] = self.next_node
         return data
 
     def from_json(self, data):
-        breakpoint()
         super().from_json(data)
         self.city_name = data['city_name']
         self.roads = data['roads']
+        self.next_node = data['next_node']

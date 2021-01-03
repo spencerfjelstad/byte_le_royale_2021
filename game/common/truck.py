@@ -71,6 +71,7 @@ class Truck(GameObject):
         super().from_json(data)
         self.current_node = data['current_node']
         self.speed = data['speed']
+        self.health = data['health']
         self.event_type_bonus = data['event_type_bonus']
         self.body = data['body']
         self.addons = data['addons']
