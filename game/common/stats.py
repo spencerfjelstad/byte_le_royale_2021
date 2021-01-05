@@ -203,4 +203,6 @@ class GameStats:
 
     truck_starting_max_gas = 1
 
+    truck_starting_mpg = 8
+    
     truck_starting_health = 50
