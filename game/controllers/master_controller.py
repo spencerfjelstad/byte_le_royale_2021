@@ -1,14 +1,14 @@
 import copy
 from copy import deepcopy
 
+import game.config as config
 from game.common.action import Action
 from game.common.enums import *
 from game.common.player import Player
-import game.config as config
+from game.common.node import Node
 from game.utils.thread import CommunicationThread
 from game.controllers.action_controller import ActionController
 from game.controllers.controller import Controller
-from game.utils.CreateMap import *
 from game.common.truck import Truck
 from game.utils.contract_utils import generate_contracts
 
@@ -22,13 +22,14 @@ class MasterController(Controller):
                 
         self.turn = None
         self.current_world_data = None
-        generateMap()
 
         self.action_controller = ActionController()
 
     # Receives all clients for the purpose of giving them the objects they will control
     def give_clients_objects(self, client):
-        client.truck = Truck("HUB")
+        start_node = Node('Start Node')
+        start_node.region = Region.nord_dakotia
+        client.truck = Truck(start_node)
         pass
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
@@ -86,6 +87,9 @@ class MasterController(Controller):
 
         if client.time <= 0:
             self.print("Game is ending because time has run out.")
+            self.game_over = True
+        if client.truck.health <= 0:
+            self.print("Game is ending because health has run out.")
             self.game_over = True
 
     # Return serialized version of game
