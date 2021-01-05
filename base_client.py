@@ -15,11 +15,18 @@ class Client(UserClient):
         return 'Team Name'
 
     # This is where your AI will decide what to do
-    def take_turn(self, turn, actions, world, truckCopy, timeCopy):
+    def take_turn(self, turn, actions, world, truck, time):
         """
         This is where your AI will decide what to do.
         :param turn:        The current turn of the game.
         :param actions:     This is the actions object that you will add effort allocations or decrees to.
         :param world:       Generic world information
         """
+        print(truck.current_node.city_name)
+        
+        actions.set_action(ActionType.select_contract, truck.contract_list[0])
+        # actions.set_action(ActionType.select_route, truck.current_node.roads[0])
+        
+
+        
         pass

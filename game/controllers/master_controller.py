@@ -11,6 +11,7 @@ from game.controllers.action_controller import ActionController
 from game.controllers.controller import Controller
 from game.common.truck import Truck
 from game.utils.contract_utils import generate_contracts
+from game.utils.create_game_map import create_game_map
 
 import random
 
@@ -30,6 +31,8 @@ class MasterController(Controller):
         start_node = Node('Start Node')
         start_node.region = Region.nord_dakotia
         client.truck = Truck(start_node)
+
+        # client.truck = Truck(create_game_map(5, 50))
         pass
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
