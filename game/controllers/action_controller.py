@@ -48,10 +48,6 @@ class ActionController(Controller):
                 #Moves the player to the node given in the action_parameter
                 self.move(player, player_action.action_parameter)
 
-            elif(player_action == ActionType.select_route):
-                # Moves the player to the node given in the action_parameter
-                self.move(player, player_action.action_parameter)
-
             elif(player_action == ActionType.upgrade):
                 self.upgrade_level(self, player, obj)
 
