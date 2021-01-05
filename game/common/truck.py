@@ -2,6 +2,8 @@ from game.common.game_object import GameObject
 from game.common.enums import *
 from game.common.road import *
 from game.common.node import Node
+from game.common.TrUpgrades.police_scanner import PoliceScanner
+from game.common.TrUpgrades.BodyObjects.tank import Tank
 from game.common.stats import GameStats
 from game.common.contract import Contract
 
@@ -14,8 +16,9 @@ class Truck(GameObject):
         self.current_node = node
         self.contract_list = []
         self.active_contract = None
-        self.gas = GameStats.truck_starting_gas
-        self.max_gas = GameStats.truck_starting_max_gas
+        self.body = Tank()
+        self.addons = PoliceScanner()
+        self.tires = TireType.tire_normal
         self.speed = 50
         self.health = GameStats.truck_starting_health
 
@@ -59,11 +62,12 @@ class Truck(GameObject):
         data['current_node'] = node
         data['contract_list'] = {contract.name: contract.to_json() for contract in self.contract_list}
         data['active_contract'] = self.active_contract.to_json() if self.active_contract is not None else None
-        data['gas'] = self.gas
-        data['max_gas'] = self.max_gas
         data['speed'] = self.speed
-        data['event_type_bonus'] = self.event_type_bonus
         data['health'] = self.health
+        data['event_type_bonus'] = self.event_type_bonus
+        data['body'] = self.body.to_json()
+        data['addons'] = self.addons.to_json()
+        data['tires'] = self.tires
         return data
 
     def from_json(self, data):
@@ -74,11 +78,13 @@ class Truck(GameObject):
         for contract in data['contract_list'].values():
             self.contract_list.append(temp.from_json(contract))
         self.active_contract = temp.from_json(data['active_contract'])
-        self.gas = data['gas']
-        self.max_gas = data['max_gas']
         self.current_node = data['current_node']
         self.speed = data['speed']
+        self.health = data['health']
         self.event_type_bonus = data['event_type_bonus']
+        self.body = data['body']
+        self.addons = data['addons']
+        self.tires = data['tires']
 
     def __str__(self):
         contracts_string = []
