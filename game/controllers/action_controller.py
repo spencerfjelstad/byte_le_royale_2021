@@ -9,6 +9,7 @@ from game.utils import helpers
 from game.common.stats import GameStats
 from game.common.player import Player
 from game.controllers.controller import Controller
+from game.controllers.event_controller import EventController
 from game.config import *
 from game.common.enums import *
 
