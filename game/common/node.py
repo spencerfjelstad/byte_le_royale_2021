@@ -12,7 +12,6 @@ class Node(GameObject):
         self.roads = []
         self.next_node = next_node
     
-        
     def to_json(self):
         data = super().to_json()
         data['city_name'] = self.city_name
@@ -24,3 +23,4 @@ class Node(GameObject):
         super().from_json(data)
         self.city_name = data['city_name']
         self.roads = data['roads']
+        self.next_node = data['next_node']

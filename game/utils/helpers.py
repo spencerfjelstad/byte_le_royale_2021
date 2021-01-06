@@ -1,3 +1,4 @@
+from game.common import enums
 import json
 from game.common.node import Node
 
@@ -10,5 +11,13 @@ def determine_if_connected(cityOne, cityTwo):
         if(road.city1 is cityTwo or road.city2 is cityTwo):
             return road
     return None
+
+def addTogetherDictValues(dict):
+    sum = 0
+    for val in dict:
+        sum += dict[val]
+    return sum
+
+
     
 
