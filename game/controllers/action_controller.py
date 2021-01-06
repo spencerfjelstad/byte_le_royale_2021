@@ -9,6 +9,7 @@ from game.utils import helpers
 from game.common.stats import GameStats
 from game.common.player import Player
 from game.controllers.controller import Controller
+from game.controllers.event_controller import EventController
 from game.config import *
 from game.common.enums import *
 
@@ -22,6 +23,7 @@ class ActionController(Controller):
         super().__init__()
 
         self.contract_list = list()
+        self.event_controller = EventController()
 
     def handle_actions(self, player, obj=None):
         player_action = player.action
@@ -31,7 +33,7 @@ class ActionController(Controller):
             self.buy_gas(player)
 
         elif(player_action == ActionType.choose_speed):
-            #This is an ActionType because the user client cannot directly influence truck values. 
+            # This is an ActionType because the user client cannot directly influence truck values.
             player.truck.set_current_speed(player.action_parameter)
 
         elif(player_action == ActionType.select_contract):
@@ -55,19 +57,23 @@ class ActionController(Controller):
     def move(self, player, road):
         self.current_location = player.truck.current_node
         time_taken = 0
+        fuel_efficiency = GameStats.costs_and_effectiveness[ObjectType.tires]['fuel_efficiency'][player.truck.tires]
+        if(isinstance(player.truck.addons, RabbitFoot)):
+            luck = 1 - GameStats.costs_and_effectiveness[ObjectType.rabbitFoot]['effectiveness'][player.truck.addons.level]
         for route in self.current_location.roads:
             if route is road: #May need to be redone
                 player.truck.current_node = self.current_location.next_node
-                event_controller.trigger_event(road, player, player.truck)
-                time_taken = road.length / player.truck.get_current_speed()
-        gas_used = (road.length/GameStats.truck_starting_mpg)/(GameStats.truck_starting_max_gas*100)
+                self.event_controller.trigger_event(road, player, player.truck)
+                time_taken = (road.length / player.truck.get_current_speed()) * luck
+        gas_used = (road.length/(GameStats.truck_starting_mpg * fuel_efficiency))/(GameStats.truck_starting_max_gas*100)
         player.truck.gas -= gas_used
         player.time -= time_taken
 
     # Retrieve by index and store in Player, then clear the list
     def select_contract(self, player):
         if len(self.contract_list) < int(player.action.contract_index):
-            player.active_contract = self.contract_list[int(player.action.contract_index)]
+            player.active_contract = self.contract_list[int(
+                player.action.contract_index)]
             self.contract_list.clear()
         else:
             self.print("Contract list index was out of bounds")

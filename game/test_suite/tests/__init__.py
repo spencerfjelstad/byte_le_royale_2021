@@ -11,6 +11,7 @@ from game.test_suite.tests.test_upgrade_gps import TestUpgradeGPS
 from game.test_suite.tests.test_example import TestExample
 from game.test_suite.tests.test_game_map_creation import TestGameMapCreation
 from game.test_suite.tests.test_json import TestJSON
+from game.test_suite.tests.test_action_controller import TestActionController
 
 
 
@@ -24,5 +25,6 @@ __all__ = [
     'TestUpgradeRabbitFoot',
     'TestUpgradeGPS',
     'TestGameMapCreation',
-    'TestJSON'
+    'TestActionController'
+    #'TestJSON'
 ]
