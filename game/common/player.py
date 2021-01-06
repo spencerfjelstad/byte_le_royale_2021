@@ -9,7 +9,7 @@ from game.common.stats import GameStats
 
 class Player(GameObject):
     # truck initialized with placeholder
-    def __init__(self, code=None, team_name=None, action=None, truck=Truck("HUB")):
+    def __init__(self, code=None, team_name=None, action=None, truck=Truck()):
         super().__init__()
         self.object_type = ObjectType.player
         self.functional = True

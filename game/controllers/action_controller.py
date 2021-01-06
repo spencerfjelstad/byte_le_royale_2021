@@ -28,6 +28,7 @@ class ActionController(Controller):
         # Without a contract truck has no node to move to, ensure a contract is always active
         if player.truck.active_contract is None and player_action != ActionType.select_contract:
             player.truck.active_contract = random.choice(self.contract_list)
+            player.truck.current_node = player.truck.active_contract.game_map.current_node
         else:
             #Call the appropriate method for this action
             if(player_action == ActionType.buy_gas):
@@ -58,6 +59,8 @@ class ActionController(Controller):
         for route in self.current_location.roads:
             if route is road: #May need to be redone
                 player.truck.current_node = self.current_location.next_node
+                # Don't care about return value, just updating so contract and player sync
+                player.truck.active_contract.game_map.get_next_node()
                 event_controller.trigger_event(road, player, player.truck)
                 time_taken = road.length / player.truck.get_current_speed()
         gas_used = (road.length/GameStats.truck_starting_mpg)/(GameStats.truck_starting_max_gas*100)
