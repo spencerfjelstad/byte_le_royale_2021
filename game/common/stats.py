@@ -193,6 +193,36 @@ class GameStats:
         EventType.none: 0
     }
 
+    headlights_negates = {
+        EventType.animal_in_road: (0, 1),
+        EventType.traffic: (0, 20),
+        EventType.police: (1, 20)
+        EventType.rock_slide: (2, 9)
+    }
+
+    sentry_gun_negates = {
+        EventType.bandits: (0, 2),
+        EventType.police: (0, 2),
+        EventType.animal_in_road: (0, 2)
+    }
+
+    gps_negates = {
+        EventType.bandits: (0,0),
+        EventType.traffic: (0, 10),
+        EventType.rock_slide: (0, 5),
+        EventType.police: (0,0)
+    }
+
+    police_scanner_negates = {
+        EventType.police: (0,0),
+        EventType.bandits: (0,0),
+        EventType.rock_slide: (2, 6)
+    }
+
+    rabbit_foot_negates = {
+        
+    }
+
     base_event_probability = [25, 75]
 
     game_max_time = 10000

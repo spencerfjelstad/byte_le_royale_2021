@@ -19,3 +19,6 @@ def event_chance(road, player,truck):
     if happens:
         trigger_event(road,player, truck)
 
+def negation(truck, chosen_event_type):
+    res = {'HealthMod' : 1, 'DamageMod': 1}
+
