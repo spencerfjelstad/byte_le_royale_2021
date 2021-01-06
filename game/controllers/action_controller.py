@@ -20,7 +20,7 @@ import random
 class ActionController(Controller):
     def __init__(self):
         super().__init__()
-
+        self.event_controller = EventController()
         self.contract_list = list()
 
     def handle_actions(self, player, obj=None):
@@ -61,7 +61,7 @@ class ActionController(Controller):
                 player.truck.current_node = self.current_location.next_node
                 # Don't care about return value, just updating so contract and player sync
                 player.truck.active_contract.game_map.get_next_node()
-                event_controller.trigger_event(road, player, player.truck)
+                self.event_controller.trigger_event(road, player, player.truck)
                 time_taken = road.length / player.truck.get_current_speed()
         gas_used = (road.length/GameStats.truck_starting_mpg)/(GameStats.truck_starting_max_gas*100)
         player.truck.gas -= gas_used
