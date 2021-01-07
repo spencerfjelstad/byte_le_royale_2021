@@ -208,9 +208,9 @@ class GameStats:
     truck_starting_health = 50
 
     contract_node_count = {
-        'short': 5,
-        'medium': 11,
-        'long': 18
+        'short': 8,
+        'medium': 14,
+        'long': 21
     }
 
     contract_rewards = {

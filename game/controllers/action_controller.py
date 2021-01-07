@@ -27,19 +27,9 @@ class ActionController(Controller):
     def handle_actions(self, player, obj=None):
         player_action = player.action
         # Without a contract truck has no node to move to, ensure a contract is always active
-        if player.truck.active_contract is None and player_action != ActionType.select_contract:
-            player.truck.active_contract = random.choice(self.contract_list)
-            player.truck.current_node = player.truck.active_contract.game_map.current_node
-        else:
+        if player.truck.active_contract is not None or player_action == ActionType.select_contract:
             #Call the appropriate method for this action
-            if(player_action == ActionType.buy_gas):
-                self.buy_gas(player)
-
-            elif(player_action == ActionType.choose_speed):
-                #This is an ActionType because the user client cannot directly influence truck values. 
-                player.truck.set_current_speed(player.action_parameter)
-
-            elif(player_action == ActionType.select_contract):
+            if(player_action == ActionType.select_contract):
                 #Checks if contract_list is empty. If so, we have a problem
                 if(len(self.contract_list) == 0): raise ValueError("Contract list cannot be empty")
 
@@ -50,8 +40,19 @@ class ActionController(Controller):
                 #Moves the player to the node given in the action_parameter
                 self.move(player, player_action.action_parameter)
 
+        else:
+            if(player_action == ActionType.buy_gas):
+                self.buy_gas(player)
+
             elif(player_action == ActionType.upgrade):
                 self.upgrade_level(self, player, obj)
+
+            elif(player_action == ActionType.choose_speed):
+                #This is an ActionType because the user client cannot directly influence truck values. 
+                player.truck.set_current_speed(player.action_parameter)
+
+            else:
+                self.print("Action aborted: no active contract!")
 
     # Action Methods ---------------------------------------------------------
     def move(self, player, road):

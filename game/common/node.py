@@ -8,7 +8,7 @@ class Node(GameObject):
         super().__init__()
         self.object_type = ObjectType.node
         self.city_name = name
-        self.roads = []
+        self.roads = roads
         self.next_node = next_node
     
     def to_json(self):
