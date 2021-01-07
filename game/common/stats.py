@@ -253,8 +253,26 @@ class GameStats:
             EventType.police,
             EventType.rock_slide,
             EventType.traffic
-        ]
+        ],
 
+        TireType.tire_sticky: [
+            EventType.animal_in_road,
+            EventType.icy_road,
+            EventType.police,
+            EventType.rock_slide,
+        ],
+        TireType.tire_normal: [
+            EventType.animal_in_road,
+            EventType.icy_road,
+            EventType.police,
+            EventType.rock_slide,
+        ],
+        TireType.tire_econ: [
+            EventType.animal_in_road,
+            EventType.icy_road,
+            EventType.police,
+            EventType.rock_slide,
+        ]
     }
 
     base_event_probability = [25, 75]
@@ -266,6 +284,8 @@ class GameStats:
     truck_starting_gas = 1
 
     truck_starting_max_gas = 1
+
+    truck_starting_mpg = 8
 
     tire_switch_cost = 300
 

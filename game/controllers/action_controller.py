@@ -9,8 +9,10 @@ from game.utils import helpers
 from game.common.stats import GameStats
 from game.common.player import Player
 from game.controllers.controller import Controller
+from game.controllers.event_controller import EventController
 from game.config import *
 from game.common.enums import *
+
 from collections import deque
 import math
 import random
@@ -21,6 +23,7 @@ class ActionController(Controller):
         super().__init__()
 
         self.contract_list = list()
+        self.event_controller = EventController()
 
     def handle_actions(self, player, obj=None):
         player_action = player.action
@@ -54,10 +57,16 @@ class ActionController(Controller):
     def move(self, player, road):
         self.current_location = player.truck.current_node
         time_taken = 0
-        for route in self.current_location.connections:
-            if route is road:
-                player.truck.current_node = route.city_2
-                time_taken = road.length / player.truck.get_current_speed()
+        fuel_efficiency = GameStats.costs_and_effectiveness[ObjectType.tires]['fuel_efficiency'][player.truck.tires]
+        if(isinstance(player.truck.addons, RabbitFoot)):
+            luck = 1 - GameStats.costs_and_effectiveness[ObjectType.rabbitFoot]['effectiveness'][player.truck.addons.level]
+        for route in self.current_location.roads:
+            if route is road: #May need to be redone
+                player.truck.current_node = self.current_location.next_node
+                self.event_controller.trigger_event(road, player, player.truck)
+                time_taken = (road.length / player.truck.get_current_speed()) * luck
+        gas_used = (road.length/(GameStats.truck_starting_mpg * fuel_efficiency))/(GameStats.truck_starting_max_gas*100)
+        player.truck.gas -= gas_used
         player.time -= time_taken
 
     # Retrieve by index and store in Player, then clear the list

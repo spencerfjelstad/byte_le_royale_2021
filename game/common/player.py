@@ -4,12 +4,13 @@ from game.common.game_object import GameObject
 from game.common.enums import *
 from game.common.contract import Contract
 from game.common.truck import Truck
+from game.common.node import Node
 from game.common.stats import GameStats
 
 
 class Player(GameObject):
     # truck initialized with placeholder
-    def __init__(self, code=None, team_name=None, action=None, contract=None, truck=Truck("HUB")):
+    def __init__(self, code=None, team_name=None, action=None, contract=None, truck=Truck(Node("HUB"))):
         super().__init__()
         self.object_type = ObjectType.player
         self.functional = True
