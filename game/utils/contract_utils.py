@@ -23,13 +23,13 @@ def generate_contracts(client):
             Region.mount_vroom, Region.lobslantis, Region.tropical_cop_land]
 
     easy_map = create_game_map(GameStats.contract_node_count['short'],
-            GameStats.default_road_length)
+            GameStats.default_road_length * GameStats.contract_node_count['short'])
 
     medium_map = create_game_map(GameStats.contract_node_count['medium'],
-            GameStats.default_road_length)
+            GameStats.default_road_length * GameStats.contract_node_count['medium'])
 
     hard_map = create_game_map(GameStats.contract_node_count['long'],
-            GameStats.default_road_length)
+            GameStats.default_road_length * GameStats.contract_node_count['long'])
 
     easy_contract = Contract(None, random.choice(region_list), easy_map,
             GameStats.contract_rewards['easy'])

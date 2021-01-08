@@ -207,6 +207,8 @@ class GameStats:
     
     truck_starting_health = 50
 
+    road_length_variance = .2
+
     contract_node_count = {
         'short': 8,
         'medium': 14,
