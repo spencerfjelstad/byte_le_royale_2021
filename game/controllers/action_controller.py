@@ -57,6 +57,7 @@ class ActionController(Controller):
     def move(self, player, road):
         self.current_location = player.truck.current_node
         time_taken = 0
+        luck = 1
         fuel_efficiency = GameStats.costs_and_effectiveness[ObjectType.tires]['fuel_efficiency'][player.truck.tires]
         if(isinstance(player.truck.addons, RabbitFoot)):
             luck = 1 - GameStats.costs_and_effectiveness[ObjectType.rabbitFoot]['effectiveness'][player.truck.addons.level]
@@ -65,9 +66,9 @@ class ActionController(Controller):
                 player.truck.current_node = self.current_location.next_node
                 self.event_controller.trigger_event(road, player, player.truck)
                 time_taken = (road.length / player.truck.get_current_speed()) * luck
-        gas_used = (road.length/(GameStats.truck_starting_mpg * fuel_efficiency))/(GameStats.truck_starting_max_gas*100)
-        player.truck.gas -= gas_used
-        player.time -= time_taken
+                gas_used = (road.length/(GameStats.truck_starting_mpg * fuel_efficiency))/(GameStats.truck_starting_max_gas*100)
+                player.truck.body.current_gas -= gas_used
+                player.time -= time_taken
 
     # Retrieve by index and store in Player, then clear the list
     def select_contract(self, player):

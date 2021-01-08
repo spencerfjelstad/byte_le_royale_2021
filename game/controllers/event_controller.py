@@ -18,9 +18,9 @@ class EventController(Controller):
         mods = self.negation(truck, chosen_event_type)
 
         # Deal damage based on event
-        player.truck.health -= GameStats.event_type_damage[chosen_event_type] * (1 - mods[0])
+        player.truck.health -= GameStats.event_type_damage[chosen_event_type] * (1 - mods['HealthMod'])
         # Reduce remaining time based on event
-        player.time -= GameStats.event_type_time[chosen_event_type] * (1 - mods[1])
+        player.time -= GameStats.event_type_time[chosen_event_type] * (1 - mods['DamageMod'])
 
     def event_chance(self, road, player, truck):
         happens = random.choices(

@@ -8,7 +8,7 @@ from game.common.player import Player
 from game.common.node import Node
 from game.common.node import Road
 from game.controllers.action_controller import ActionController
-from game.common.enums import EventType, RoadType
+from game.common.enums import EventType, RoadType, ObjectType, TireType
 from game.common.TrUpgrades.gps import GPS
 
 
@@ -25,11 +25,32 @@ class TestActionController(unittest.TestCase):
 
     # Test methods should always start with the word 'test'
     def test_valid_move(self):
-        self.actionCont.move(self.myPlayer, self.myPlayer.truck.current_node.roads[0] )
+        nextNode = self.myPlayer.truck.current_node.next_node
+        startGas = self.myPlayer.truck.body.current_gas
+        self.actionCont.move(self.myPlayer, self.myPlayer.truck.current_node.roads[0])
+        self.assertEqual(nextNode, self.myPlayer.truck.current_node)
+        self.assertGreater(startGas, self.myPlayer.truck.body.current_gas)
+
+    def test_invalid_move(self):
+        nextNode = self.myPlayer.truck.current_node.next_node
+        startGas = self.myPlayer.truck.body.current_gas
+        rd = Road('TheWrongWay',RoadType.city_road, 10000)
+        self.actionCont.move(self.myPlayer, rd)
+        self.assertNotEqual(nextNode, self.myPlayer.truck.current_node)
+        self.assertEqual(startGas, self.myPlayer.truck.body.current_gas)
 
     def test_event_controller(self):
-        self.actionCont.event_controller.negation(self.myPlayer.truck, EventType.icy_road)
+        neg = stats.GameStats.costs_and_effectiveness[ObjectType.tires]['effectiveness'][self.myPlayer.truck.tires]
+        actneg = self.actionCont.event_controller.negation(self.myPlayer.truck, EventType.icy_road)
+        self.assertAlmostEqual(neg, actneg["DamageMod"])
+        self.assertAlmostEqual(neg, actneg["HealthMod"])
 
+    def test_event_controller_upgrade(self):
+        self.myPlayer.truck.tires = TireType.tire_sticky
+        neg = stats.GameStats.costs_and_effectiveness[ObjectType.tires]['effectiveness'][self.myPlayer.truck.tires]
+        actneg = self.actionCont.event_controller.negation(self.myPlayer.truck, EventType.icy_road)
+        self.assertAlmostEqual(neg, actneg['DamageMod'])
+        self.assertAlmostEqual(neg, actneg['HealthMod'])
         
 
  
