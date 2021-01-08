@@ -24,7 +24,7 @@ class TestUpgradeScanner(unittest.TestCase):
     def test_upgrade_one_level(self):
         self.myPlayer.truck.addons.level = 0
         self.myPlayer.money = 10000
-        expectedCash = 10000 - stats.GameStats.scanner_upgrade_cost[1]
+        expectedCash = 10000 - stats.GameStats.costs_and_effectiveness[ObjectType.policeScanner]['cost'][1]
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
         self.assertEqual(self.myPlayer.truck.addons.level,
                          ScannerLevel.level_one)
@@ -35,8 +35,8 @@ class TestUpgradeScanner(unittest.TestCase):
         self.myPlayer.truck.addons.level = 0
         self.myPlayer.money = 10000
         expectedCash = 10000 - \
-            stats.GameStats.scanner_upgrade_cost[1] - \
-            stats.GameStats.scanner_upgrade_cost[2]
+            stats.GameStats.costs_and_effectiveness[ObjectType.policeScanner]['cost'][1] - \
+             stats.GameStats.costs_and_effectiveness[ObjectType.policeScanner]['cost'][2]
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
         self.assertEqual(self.myPlayer.truck.addons.level,
@@ -48,7 +48,7 @@ class TestUpgradeScanner(unittest.TestCase):
         self.myPlayer.truck.addons.level = 0
         self.myPlayer.money = 10000
         expectedCash = 10000 - \
-            helpers.addTogetherDictValues(stats.GameStats.scanner_upgrade_cost)
+            helpers.addTogetherDictValues( stats.GameStats.costs_and_effectiveness[ObjectType.policeScanner]['cost'])
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
