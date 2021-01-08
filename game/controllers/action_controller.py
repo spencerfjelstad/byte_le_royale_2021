@@ -9,6 +9,7 @@ from game.utils import helpers
 from game.common.stats import GameStats
 from game.common.player import Player
 from game.controllers.controller import Controller
+from game.controllers.event_controller import EventController
 from game.config import *
 from game.common.enums import *
 
@@ -20,45 +21,49 @@ import random
 class ActionController(Controller):
     def __init__(self):
         super().__init__()
-
+        self.event_controller = EventController()
         self.contract_list = list()
 
     def handle_actions(self, player, obj=None):
         player_action = player.action
+        # Without a contract truck has no node to move to, ensure a contract is always active
+        if player.truck.active_contract is not None or player_action == ActionType.select_contract:
+            #Call the appropriate method for this action
+            if(player_action == ActionType.select_contract):
+                #Checks if contract_list is empty. If so, we have a problem
+                if(len(self.contract_list) == 0): raise ValueError("Contract list cannot be empty")
 
-        # Call the appropriate method for this action
-        if(player_action == ActionType.buy_gas):
-            self.buy_gas(player)
+                #Selects the contract given in the player.action.contract_index
+                self.select_contract(player)
+                
+            elif(player_action == ActionType.select_route):
+                #Moves the player to the node given in the action_parameter
+                self.move(player, player_action.action_parameter)
 
-        elif(player_action == ActionType.choose_speed):
-            #This is an ActionType because the user client cannot directly influence truck values. 
-            player.truck.set_current_speed(player.action_parameter)
+        else:
+            if(player_action == ActionType.buy_gas):
+                self.buy_gas(player)
 
-        elif(player_action == ActionType.select_contract):
-            # Checks if contract_list is empty. If so, we have a problem
-            if(len(self.contract_list) == 0):
-                raise ValueError(
-                    "Contract list cannot be empty")
+            elif(player_action == ActionType.upgrade):
+                self.upgrade_level(self, player, obj)
 
-            # Selects the contract given in the player.action.contract_index
-            self.select_contract(player)
+            elif(player_action == ActionType.choose_speed):
+                #This is an ActionType because the user client cannot directly influence truck values. 
+                player.truck.set_current_speed(player.action_parameter)
 
-        elif(player_action == ActionType.select_route):
-            # Moves the player to the node given in the action_parameter
-            self.move(player, player_action.action_parameter)
-
-        elif(player_action == ActionType.upgrade):
-            self.upgrade_level(self, player, obj)
+            else:
+                self.print("Action aborted: no active contract!")
 
     # Action Methods ---------------------------------------------------------
-
     def move(self, player, road):
         self.current_location = player.truck.current_node
         time_taken = 0
         for route in self.current_location.roads:
             if route is road: #May need to be redone
                 player.truck.current_node = self.current_location.next_node
-                event_controller.trigger_event(road, player, player.truck)
+                # Don't care about return value, just updating so contract and player sync
+                player.truck.active_contract.game_map.get_next_node()
+                self.event_controller.trigger_event(road, player, player.truck)
                 time_taken = road.length / player.truck.get_current_speed()
         gas_used = (road.length/GameStats.truck_starting_mpg)/(GameStats.truck_starting_max_gas*100)
         player.truck.gas -= gas_used
@@ -67,7 +72,8 @@ class ActionController(Controller):
     # Retrieve by index and store in Player, then clear the list
     def select_contract(self, player):
         if len(self.contract_list) < int(player.action.contract_index):
-            player.active_contract = self.contract_list[int(player.action.contract_index)]
+            player.truck.active_contract = self.contract_list[int(player.action.contract_index)]
+            player.truck.current_node = player.truck.active_contract.game_map.current_node
             self.contract_list.clear()
         else:
             self.print("Contract list index was out of bounds")
