@@ -32,7 +32,6 @@ class Player(GameObject):
         data['action'] = self.action.to_json() if self.action is not None else dict()
         data['truck'] = self.truck.to_json()
         data['money'] = self.money
-        data['active_contract'] = self.active_contract.to_json()
         return data
 
     def from_json(self, data):
@@ -48,9 +47,6 @@ class Player(GameObject):
         truck.from_json(data['truck'])
         self.truck = truck
         self.money = data['money']
-        contract = Contract()
-        contract.from_json(data['active_contract'])
-        self.active_contract = contract
 
     def __str__(self):
         p = f"""ID: {self.id}

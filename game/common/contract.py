@@ -31,7 +31,8 @@ class Contract(GameObject):
         self.name = data['name']
         self.region = data['region']
         json_map = Game_Map()
-        self.game_map = json_map.from_json(data['game_map'])
+        json_map.from_json(data['game_map'])
+        self.game_map = json_map
         self.reward = data['reward']
 
     # generates a random name, has no effect on gameplay other than lols

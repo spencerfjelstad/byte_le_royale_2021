@@ -58,14 +58,10 @@ class Truck(GameObject):
 
     def to_json(self):
         data = super().to_json()
-<<<<<<< HEAD
-        data['current_node'] = self.current_node.to_json()
-=======
         node = self.current_node.to_json() if self.current_node is not None else None
         data['current_node'] = node
         data['contract_list'] = {contract.name: contract.to_json() for contract in self.contract_list}
         data['active_contract'] = self.active_contract.to_json() if self.active_contract is not None else None
->>>>>>> f346ae434ff14b310ac48b62292000359d84b789
         data['speed'] = self.speed
         data['health'] = self.health
         data['event_type_bonus'] = self.event_type_bonus
@@ -76,15 +72,12 @@ class Truck(GameObject):
 
     def from_json(self, data):
         super().from_json(data)
-<<<<<<< HEAD
-=======
         node = Node('temp')
         self.current_node = node.from_json(data['current_node'])
         temp = Contract()
         for contract in data['contract_list'].values():
             self.contract_list.append(temp.from_json(contract))
         self.active_contract = temp.from_json(data['active_contract'])
->>>>>>> f346ae434ff14b310ac48b62292000359d84b789
         self.current_node = data['current_node']
         self.speed = data['speed']
         self.health = data['health']
@@ -92,8 +85,6 @@ class Truck(GameObject):
         self.body = data['body']
         self.addons = data['addons']
         self.tires = data['tires']
-<<<<<<< HEAD
-=======
 
     def __str__(self):
         contracts_string = []
@@ -102,10 +93,9 @@ class Truck(GameObject):
         p = f"""Current Node: {self.current_node.city_name}
             Contract List: {str(contracts_string)}
             Contract: {str(self.active_contract)}
-            Gas: {self.gas}
-            Max Gas: {self.max_gas}
+            Gas: {self.body.current_gas}
+            Max Gas: {self.body.max_gas}
             Speed: {self.speed}
             Health: {self.health}
             """
         return p
->>>>>>> f346ae434ff14b310ac48b62292000359d84b789
