@@ -10,7 +10,7 @@ def create_game_map(node_count, length):
     g_map = Game_Map(end_node)
     
     av_road_length = length / node_count
-    road_deviation = int(av_road_length * .3)
+    road_deviation = int(av_road_length * .2)
 
     for i in range(node_count, 0, -1):
         roads = []
