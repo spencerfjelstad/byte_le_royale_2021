@@ -38,6 +38,7 @@ class GameStats:
         ObjectType.GPS
     ]
 
+<<<<<<< HEAD
     tireObjects = [
         TireType.tire_econ,
         TireType.tire_normal,
@@ -163,6 +164,109 @@ class GameStats:
         }
     }
 
+=======
+    # Tire types are in the enums. Not sure why I did that lol.
+
+    # cost in doollaridoos to upgrade a police scanner
+    scanner_upgrade_cost = {
+        ScannerLevel.level_zero: 0,
+        ScannerLevel.level_one: 300,
+        ScannerLevel.level_two: 900,
+        ScannerLevel.level_three: 2000
+    }
+
+    # error range provided by each scanner
+    scanner_ranges = {
+        ScannerLevel.level_zero: 100,
+        ScannerLevel.level_one: 50,
+        ScannerLevel.level_two: 20,
+        ScannerLevel.level_three: 1
+    }
+
+    tank_upgrade_cost = {
+        TankLevel.level_zero: 10,
+        TankLevel.level_one: 300,
+        TankLevel.level_two: 900,
+        TankLevel.level_three: 2000
+    }
+
+    gas_max_level = {
+        TankLevel.level_zero: 10,
+        TankLevel.level_one: 300,
+        TankLevel.level_two: 900,
+        TankLevel.level_three: 2000
+    }
+
+    tire_traction = {
+        TireType.tire_econ: .5,
+        TireType.tire_normal: 1,
+        TireType.tire_sticky: 1.5
+    }
+
+    tire_fuel_efficiency = {
+        TireType.tire_econ: 1.5,
+        TireType.tire_normal: 1,
+        TireType.tire_sticky: .5
+    }
+
+    headlight_upgrade_cost = {
+        HeadlightLevel.level_zero: 10,
+        HeadlightLevel.level_one: 50,
+        HeadlightLevel.level_two: 100,
+        HeadlightLevel.level_three: 300
+    }
+
+    headlight_effectiveness = {
+        HeadlightLevel.level_zero: .1,
+        HeadlightLevel.level_one: .3,
+        HeadlightLevel.level_two: .7,
+        HeadlightLevel.level_three: .9
+    }
+
+    sentry_upgrade_cost = {
+        SentryGunLevel.level_zero: 10,
+        SentryGunLevel.level_one: 50,
+        SentryGunLevel.level_two: 100,
+        SentryGunLevel.level_three: 300
+    }
+
+    sentry_DPM = {
+        SentryGunLevel.level_zero: 100,
+        SentryGunLevel.level_one: 1000,
+        SentryGunLevel.level_two: 10000,
+        SentryGunLevel.level_three: 300000
+    }
+
+    rabbit_foot_upgrade_cost = {
+        RabbitFootLevel.level_zero: 10,
+        RabbitFootLevel.level_one: 20,
+        RabbitFootLevel.level_two: 40,
+        RabbitFootLevel.level_three: 80
+    }
+
+    rabbit_foot_luck_level = {
+        RabbitFootLevel.level_zero: .1,
+        RabbitFootLevel.level_one: .2,
+        RabbitFootLevel.level_two: .25,
+        RabbitFootLevel.level_three: .27
+    }
+
+    GPS_upgrade_cost = {
+        GPSLevel.level_zero: 100,
+        GPSLevel.level_one: 200,
+        GPSLevel.level_two: 700,
+        GPSLevel.level_three: 1400
+    }
+
+    GPS_accuracy = {
+        GPSLevel.level_zero: .33,
+        GPSLevel.level_one: .5,
+        GPSLevel.level_two: .58,
+        GPSLevel.level_three: .65
+    }
+
+    tire_switch_cost = 300
+>>>>>>> f346ae434ff14b310ac48b62292000359d84b789
     road_type_length_modifier = {
         RoadType.mountain_road: 1,
         RoadType.forest_road: 1,
@@ -294,3 +398,17 @@ class GameStats:
     tire_switch_cost = 300
 
     truck_starting_health = 50
+
+    road_length_variance = .2
+
+    contract_node_count = {
+        'short': 8,
+        'medium': 14,
+        'long': 21
+    }
+
+    contract_rewards = {
+        'easy': 200,
+        'medium': 500,
+        'hard': 1100
+    }

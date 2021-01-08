@@ -24,7 +24,11 @@ class TestUpgradeScanner(unittest.TestCase):
     def test_upgrade_one_level(self):
         self.myPlayer.truck.addons.level = 0
         self.myPlayer.money = 10000
+<<<<<<< HEAD
         expectedCash = 10000 - stats.GameStats.costs_and_effectiveness[ObjectType.policeScanner]['cost'][1]
+=======
+        expectedCash = 10000 - stats.GameStats.scanner_upgrade_cost[1]
+>>>>>>> f346ae434ff14b310ac48b62292000359d84b789
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
         self.assertEqual(self.myPlayer.truck.addons.level,
                          ScannerLevel.level_one)
@@ -35,8 +39,13 @@ class TestUpgradeScanner(unittest.TestCase):
         self.myPlayer.truck.addons.level = 0
         self.myPlayer.money = 10000
         expectedCash = 10000 - \
+<<<<<<< HEAD
             stats.GameStats.costs_and_effectiveness[ObjectType.policeScanner]['cost'][1] - \
              stats.GameStats.costs_and_effectiveness[ObjectType.policeScanner]['cost'][2]
+=======
+            stats.GameStats.scanner_upgrade_cost[1] - \
+            stats.GameStats.scanner_upgrade_cost[2]
+>>>>>>> f346ae434ff14b310ac48b62292000359d84b789
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
         self.assertEqual(self.myPlayer.truck.addons.level,
@@ -48,7 +57,11 @@ class TestUpgradeScanner(unittest.TestCase):
         self.myPlayer.truck.addons.level = 0
         self.myPlayer.money = 10000
         expectedCash = 10000 - \
+<<<<<<< HEAD
             helpers.addTogetherDictValues( stats.GameStats.costs_and_effectiveness[ObjectType.policeScanner]['cost'])
+=======
+            helpers.addTogetherDictValues(stats.GameStats.scanner_upgrade_cost)
+>>>>>>> f346ae434ff14b310ac48b62292000359d84b789
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.policeScanner)

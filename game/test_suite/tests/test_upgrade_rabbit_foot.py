@@ -23,7 +23,11 @@ class TestUpgradeRabbitFoot(unittest.TestCase):
     def test_upgrade_one_level(self):
         self.myPlayer.truck.addons.level = 0
         self.myPlayer.money = 10000
+<<<<<<< HEAD
         expectedCash = 10000 - stats.GameStats.costs_and_effectiveness[ObjectType.rabbitFoot]['cost'][1]
+=======
+        expectedCash = 10000 - stats.GameStats.rabbit_foot_upgrade_cost[1]
+>>>>>>> f346ae434ff14b310ac48b62292000359d84b789
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.rabbitFoot)
         self.assertEqual(self.myPlayer.truck.addons.level,RabbitFootLevel.level_one)
         self.assertEqual(expectedCash, self.myPlayer.money)
@@ -32,7 +36,11 @@ class TestUpgradeRabbitFoot(unittest.TestCase):
     def test_upgrade_two_level(self):
         self.myPlayer.truck.addons.level = 0
         self.myPlayer.money = 10000
+<<<<<<< HEAD
         expectedCash = 10000 - stats.GameStats.costs_and_effectiveness[ObjectType.rabbitFoot]['cost'][1] - stats.GameStats.costs_and_effectiveness[ObjectType.rabbitFoot]['cost'][2]
+=======
+        expectedCash = 10000 - stats.GameStats.rabbit_foot_upgrade_cost[1] - stats.GameStats.rabbit_foot_upgrade_cost[2]
+>>>>>>> f346ae434ff14b310ac48b62292000359d84b789
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.rabbitFoot)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.rabbitFoot)
         self.assertEqual(self.myPlayer.truck.addons.level, RabbitFootLevel.level_two)
@@ -42,7 +50,11 @@ class TestUpgradeRabbitFoot(unittest.TestCase):
     def test_upgrade_beyond_allowable(self):
         self.myPlayer.truck.addons.level = 0
         self.myPlayer.money = 100000
+<<<<<<< HEAD
         expectedCash = self.myPlayer.money - helpers.addTogetherDictValues(stats.GameStats.costs_and_effectiveness[ObjectType.rabbitFoot]['cost'])
+=======
+        expectedCash = self.myPlayer.money - helpers.addTogetherDictValues(stats.GameStats.rabbit_foot_upgrade_cost)
+>>>>>>> f346ae434ff14b310ac48b62292000359d84b789
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.rabbitFoot)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.rabbitFoot)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.rabbitFoot)

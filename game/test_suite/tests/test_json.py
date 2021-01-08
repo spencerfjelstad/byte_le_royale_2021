@@ -8,7 +8,10 @@ from game.common.player import Player
 from game.controllers.action_controller import ActionController
 from game.common.enums import *
 from game.common.TrUpgrades.gps import GPS
+<<<<<<< HEAD
 import copy
+=======
+>>>>>>> f346ae434ff14b310ac48b62292000359d84b789
 
 
 # Your test class is a subclass of unittest.Testcase, this is important
@@ -21,6 +24,7 @@ class TestJSON(unittest.TestCase):
         self.actionCont = ActionController()
 
     # Test methods should always start with the word 'test'
+<<<<<<< HEAD
     def test_to_and_back(self):
         breakpoint()
         bruh = copy.deepcopy(self.myPlayer.truck)
@@ -29,6 +33,10 @@ class TestJSON(unittest.TestCase):
         trk.truck.from_json(tojsn)
         self.assertEqual(bruh.to_json(), trk.truck.to_json())
 
+=======
+    def test_upgrade_one_level(self):
+        print(self.myPlayer.truck.to_json())
+>>>>>>> f346ae434ff14b310ac48b62292000359d84b789
 
  
 

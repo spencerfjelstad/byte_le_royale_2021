@@ -10,7 +10,7 @@ from game.common.stats import GameStats
 
 class Player(GameObject):
     # truck initialized with placeholder
-    def __init__(self, code=None, team_name=None, action=None, contract=None, truck=Truck(Node("HUB"))):
+    def __init__(self, code=None, team_name=None, action=None, truck=Truck()):
         super().__init__()
         self.object_type = ObjectType.player
         self.functional = True
@@ -19,10 +19,8 @@ class Player(GameObject):
         self.code = code
         self.action = action
         self.truck = truck
-        self.active_contract = contract
         self.time = GameStats.game_max_time
         self.money = GameStats.player_starting_money
-        self.available_contracts = list()
 
     def to_json(self):
         data = super().to_json()
@@ -34,7 +32,7 @@ class Player(GameObject):
         data['action'] = self.action.to_json() if self.action is not None else dict()
         data['truck'] = self.truck.to_json()
         data['money'] = self.money
-        data['active_contract'] = self.active_contract.to_json() if self.active_contract is not None else dict()
+        data['active_contract'] = self.active_contract.to_json()
         return data
 
     def from_json(self, data):
@@ -58,7 +56,6 @@ class Player(GameObject):
         p = f"""ID: {self.id}
             Team name: {self.team_name}
             Action: {self.action}
-            Contracts: {self.active_contract}
             Time: {self.time}
             Money: {self.money}
             """
