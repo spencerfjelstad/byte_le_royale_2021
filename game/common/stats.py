@@ -85,8 +85,8 @@ class GameStats:
 
             "effectiveness": {
                 TireType.tire_econ: .5,
-                TireType.tire_normal: 1,
-                TireType.tire_sticky: 1.5
+                TireType.tire_normal: .6,
+                TireType.tire_sticky: .8
             },
 
             "fuel_efficiency": {
@@ -238,6 +238,10 @@ class GameStats:
             EventType.traffic,
             EventType.rock_slide,
             EventType.police
+        ],
+
+        ObjectType.tank: [
+
         ],
 
         ObjectType.policeScanner: [

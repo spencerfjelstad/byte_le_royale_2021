@@ -8,7 +8,7 @@ from game.common.player import Player
 from game.common.node import Node
 from game.common.node import Road
 from game.controllers.action_controller import ActionController
-from game.common.enums import *
+from game.common.enums import EventType, RoadType
 from game.common.TrUpgrades.gps import GPS
 
 
@@ -25,8 +25,11 @@ class TestActionController(unittest.TestCase):
 
     # Test methods should always start with the word 'test'
     def test_valid_move(self):
-        breakpoint()
         self.actionCont.move(self.myPlayer, self.myPlayer.truck.current_node.roads[0] )
+
+    def test_event_controller(self):
+        self.actionCont.event_controller.negation(self.myPlayer.truck, EventType.icy_road)
+
         
 
  
