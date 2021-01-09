@@ -25,10 +25,11 @@ class ActionController(Controller):
         self.contract_list = list()
 
     def handle_actions(self, player, obj=None):
-        player_action = player.action
+        player_action = player.action._chosen_action
         # Without a contract truck has no node to move to, ensure a contract is always active
         if player.truck.active_contract is not None or player_action == ActionType.select_contract:
             #Call the appropriate method for this action
+            
             if(player_action == ActionType.select_contract):
                 #Checks if contract_list is empty. If so, we have a problem
                 if(len(self.contract_list) == 0): raise ValueError("Contract list cannot be empty")
