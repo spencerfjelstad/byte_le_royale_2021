@@ -42,19 +42,18 @@ class ActionController(Controller):
                 #self.move(player, player_action.action.action_parameter)
                 self.move(player)
 
+        if(player_action == ActionType.buy_gas):
+            self.buy_gas(player)
+
+        elif(player_action == ActionType.upgrade):
+            self.upgrade_level(self, player, obj)
+
+        elif(player_action == ActionType.choose_speed):
+            #This is an ActionType because the user client cannot directly influence truck values. 
+            player.truck.set_current_speed(player.action_parameter)
+
         else:
-            if(player_action == ActionType.buy_gas):
-                self.buy_gas(player)
-
-            elif(player_action == ActionType.upgrade):
-                self.upgrade_level(self, player, obj)
-
-            elif(player_action == ActionType.choose_speed):
-                #This is an ActionType because the user client cannot directly influence truck values. 
-                player.truck.set_current_speed(player.action_parameter)
-
-            else:
-                self.print("Action aborted: no active contract!")
+            self.print("Action aborted: no active contract!")
 
     # Action Methods ---------------------------------------------------------
     def move(self, player):
@@ -67,9 +66,8 @@ class ActionController(Controller):
         if(isinstance(player.truck.addons, RabbitFoot)):
             luck = 1 - GameStats.costs_and_effectiveness[ObjectType.rabbitFoot]['effectiveness'][player.truck.addons.level]
 
-        breakpoint()
         for route in self.current_location.roads:
-            if route is road: #May need to be redone
+            if route.is_equal(road): #May need to be redone
                 player.truck.current_node = self.current_location.next_node
                 self.event_controller.trigger_event(road, player, player.truck)
                 time_taken = (road.length / player.truck.get_current_speed()) * luck
@@ -87,15 +85,15 @@ class ActionController(Controller):
 
     def buy_gas(self, player):
         gasPrice = round(random.uniform(1, 5), 2)  # gas price per percent
-        if(player.truck.money > 0):
-            percentRemain = player.truck.max_gas - round(player.truck.gas, 2)
-            maxPercent = round((player.truck.money / gasPrice) / 100, 2)
+        if(player.money > 0):
+            percentRemain = player.truck.body.max_gas - round(player.truck.body.current_gas, 2)
+            maxPercent = round((player.money / gasPrice) / 100, 2)
             if(percentRemain < maxPercent):
-                player.truck.money -= percentRemain * gasPrice
-                player.truck.gas = player.truck.max_gas
+                player.money -= percentRemain * gasPrice
+                player.truck.body.current_gas = player.truck.body.max_gas
             else:
-                player.truck.money = 0
-                player.truck.money += maxPercent
+                player.money = 0
+                player.money += maxPercent
 
     def upgrade_body(self, player, objEnum, typ):
         if objEnum is ObjectType.tank:
