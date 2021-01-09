@@ -72,12 +72,9 @@ class ActionController(Controller):
 
     # Retrieve by index and store in Player, then clear the list
     def select_contract(self, player):
-        if len(self.contract_list) < int(player.action.contract_index):
-            player.truck.active_contract = self.contract_list[int(player.action.contract_index)]
-            player.truck.current_node = player.truck.active_contract.game_map.current_node
-            self.contract_list.clear()
-        else:
-            self.print("Contract list index was out of bounds")
+        player.truck.active_contract = self.contract_list[int(player.action.action_parameter)]
+        player.truck.current_node = player.truck.active_contract.game_map.current_node
+        self.contract_list.clear()
 
     def buy_gas(self, player):
         gasPrice = round(random.uniform(1, 5), 2)  # gas price per percent
