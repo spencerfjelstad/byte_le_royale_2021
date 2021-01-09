@@ -206,3 +206,17 @@ class GameStats:
     truck_starting_mpg = 8
     
     truck_starting_health = 50
+
+    road_length_variance = .2
+
+    contract_node_count = {
+        'short': 8,
+        'medium': 14,
+        'long': 21
+    }
+
+    contract_rewards = {
+        'easy': 200,
+        'medium': 500,
+        'hard': 1100
+    }
