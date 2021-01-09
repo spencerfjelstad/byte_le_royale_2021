@@ -23,7 +23,6 @@ class ActionController(Controller):
         super().__init__()
         self.event_controller = EventController()
         self.contract_list = list()
-        self.event_controller = EventController()
 
     def handle_actions(self, player, obj=None):
         player_action = player.action

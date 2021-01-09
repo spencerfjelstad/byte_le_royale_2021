@@ -82,7 +82,7 @@ class MasterController(Controller):
         random.seed(self.current_world_data["seed"])
 
         self.action_controller.handle_actions(client)
-        client.time -= 10
+        #client.time -= 10
         if client.time <= 0:
             self.print("Game is ending because time has run out.")
             self.game_over = True
