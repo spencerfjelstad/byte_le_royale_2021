@@ -6,7 +6,7 @@ from game.common.stats import *
 class Tank(BaseBodyObject):
     def __init__(self):
         super().__init__(ObjectType.tank, TankLevel.level_zero)
-        self.current_gas = GameStats.gas_max_level[self.level]
+        self.current_gas = GameStats.costs_and_effectiveness[ObjectType.tank]['effectiveness'][self.level] * GameStats.truck_starting_gas
 
     def to_json(self):
         data = super().to_json()
