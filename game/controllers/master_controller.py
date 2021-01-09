@@ -99,7 +99,7 @@ class MasterController(Controller):
         data['time'] = clients.time
         data['truck'] = clients.truck.to_json()
         data['money'] = clients.money
-        data['active_contract'] = clients.active_contract
+        #data['active_contract'] = clients.active_contract
 
         return data
 
