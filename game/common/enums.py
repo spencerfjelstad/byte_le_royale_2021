@@ -101,5 +101,3 @@ class GPSLevel:
     level_one = 1
     level_two = 2
     level_three = 3
-
-

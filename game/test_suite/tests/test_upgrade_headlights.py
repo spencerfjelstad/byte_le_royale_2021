@@ -23,7 +23,7 @@ class TestUpgradeHeadlights(unittest.TestCase):
     def test_upgrade_one_level(self):
         self.myPlayer.truck.body.level = 0
         self.myPlayer.money = 10000
-        expectedCash = 10000 - stats.GameStats.headlight_upgrade_cost[1]
+        expectedCash = 10000 - stats.GameStats.costs_and_effectiveness[ObjectType.headlights]['cost'][1]
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.headlights)
         self.assertEqual(self.myPlayer.truck.body.level,HeadlightLevel.level_one)
         self.assertEqual(expectedCash, self.myPlayer.money)
@@ -32,7 +32,7 @@ class TestUpgradeHeadlights(unittest.TestCase):
     def test_upgrade_two_level(self):
         self.myPlayer.truck.body.level = 0
         self.myPlayer.money = 10000
-        expectedCash = 10000 - stats.GameStats.headlight_upgrade_cost[1] - stats.GameStats.headlight_upgrade_cost[2]
+        expectedCash = 10000 - stats.GameStats.costs_and_effectiveness[ObjectType.headlights]['cost'][1] - stats.GameStats.costs_and_effectiveness[ObjectType.headlights]['cost'][2]
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.headlights)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.headlights)
         self.assertEqual(self.myPlayer.truck.body.level, HeadlightLevel.level_two)
@@ -42,7 +42,7 @@ class TestUpgradeHeadlights(unittest.TestCase):
     def test_upgrade_beyond_allowable(self):
         self.myPlayer.truck.body.level = 0
         self.myPlayer.money = 100000
-        expectedCash = self.myPlayer.money - helpers.addTogetherDictValues(stats.GameStats.headlight_upgrade_cost)
+        expectedCash = self.myPlayer.money - helpers.addTogetherDictValues(stats.GameStats.costs_and_effectiveness[ObjectType.headlights]['cost'])
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.headlights)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.headlights)
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.headlights)

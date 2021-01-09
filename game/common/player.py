@@ -4,6 +4,7 @@ from game.common.game_object import GameObject
 from game.common.enums import *
 from game.common.contract import Contract
 from game.common.truck import Truck
+from game.common.node import Node
 from game.common.stats import GameStats
 
 
