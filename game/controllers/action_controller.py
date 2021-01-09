@@ -39,7 +39,8 @@ class ActionController(Controller):
                 
             elif(player_action == ActionType.select_route):
                 #Moves the player to the node given in the action_parameter
-                self.move(player, player_action.action_parameter)
+                #self.move(player, player_action.action.action_parameter)
+                self.move(player)
 
         else:
             if(player_action == ActionType.buy_gas):
@@ -56,7 +57,9 @@ class ActionController(Controller):
                 self.print("Action aborted: no active contract!")
 
     # Action Methods ---------------------------------------------------------
-    def move(self, player, road):
+    def move(self, player):
+        road = player.action.action_parameter
+
         self.current_location = player.truck.current_node
         time_taken = 0
         for route in self.current_location.roads:

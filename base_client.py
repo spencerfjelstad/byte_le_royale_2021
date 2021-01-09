@@ -24,11 +24,11 @@ class Client(UserClient):
         """
         # print(truck.current_node.city_name)
         
-        print(truck.active_contract.__str__())
+        # print(truck.active_contract.__str__())
         
         if(truck.active_contract == None):
             # Select contract
-            #print("Selecting contract " + truck.contract_list[0].__str__())
+            # print("Selecting contract " + truck.contract_list[0].__str__())
             actions.set_action(ActionType.select_contract, 0)
         elif(truck.current_node.roads[0] != None):
             # Move to next node
