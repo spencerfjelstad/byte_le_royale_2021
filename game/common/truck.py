@@ -93,8 +93,8 @@ class Truck(GameObject):
         p = f"""Current Node: {self.current_node.city_name}
             Contract List: {str(contracts_string)}
             Contract: {str(self.active_contract)}
-            Gas: {self.gas}
-            Max Gas: {self.max_gas}
+            Gas: {self.body.current_gas}
+            Max Gas: {self.body.max_gas}
             Speed: {self.speed}
             Health: {self.health}
             """

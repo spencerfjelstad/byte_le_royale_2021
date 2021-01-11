@@ -41,6 +41,7 @@ class MasterController(Controller):
             yield self.turn
             # Increment the turn counter by 1
             self.turn += 1
+
             if self.turn > config.MAX_TICKS:
                     break
 
@@ -81,20 +82,27 @@ class MasterController(Controller):
         random.seed(self.current_world_data["seed"])
 
         self.action_controller.handle_actions(client)
-
+        #client.time -= 10
         if client.time <= 0:
-            self.print("Game is ending because time has run out.")
+            print("Game is ending because time has run out.")
             self.game_over = True
         if client.truck.health <= 0:
-            self.print("Game is ending because health has run out.")
+            print("Game is ending because health has run out.")
             self.game_over = True
+        if client.truck.body.current_gas <= 0:
+            print("Game is ending because gas has run out.")
+            self.game_over = True
+        
 
     # Return serialized version of game
     def create_turn_log(self, clients, turn):
         data = dict()
-
         # Add things that should be thrown into the turn logs here
-        data['temp'] = None
+        data['Team Name'] = clients.team_name
+        data['time'] = clients.time
+        data['truck'] = clients.truck.to_json()
+        data['money'] = clients.money
+        #data['active_contract'] = clients.active_contract
 
         return data
 

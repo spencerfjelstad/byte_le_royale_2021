@@ -25,3 +25,7 @@ class Road(GameObject):
         self.road_type = data['road_type']
         self.road_name = data['road_name']
         self.length = data['length']
+
+    def is_equal(self, other):
+        return  (isinstance(other, self.__class__) and self.road_name == other.road_name and self.road_type == other.road_type 
+            and self.length == other.length)
