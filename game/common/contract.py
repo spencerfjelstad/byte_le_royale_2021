@@ -55,9 +55,6 @@ class Contract(GameObject):
             return random.choice(verb) + random.choice(quantity) + "of " + noun[index]
         else:
             return random.choice(verb) + random.choice(quantity) + "of " + random.choice(adjective) + noun[index]
-    
-    def __eq__(self, other):
-        return isinstance(other, self.__class__) and self.name == other.name and self.region == other.region and self.cities == other.cities
 
     def __str__(self):
         p = f"""Name: {self.name}
