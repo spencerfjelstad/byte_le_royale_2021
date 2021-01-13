@@ -20,7 +20,6 @@ class Player(GameObject):
         self.action = action
         self.truck = truck
         self.time = GameStats.game_max_time
-        self.money = GameStats.player_starting_money
 
     def to_json(self):
         data = super().to_json()
@@ -31,7 +30,6 @@ class Player(GameObject):
         data['time'] = self.time
         data['action'] = self.action.to_json() if self.action is not None else dict()
         data['truck'] = self.truck.to_json()
-        data['money'] = self.money
         return data
 
     def from_json(self, data):
@@ -46,13 +44,11 @@ class Player(GameObject):
         truck = Truck()
         truck.from_json(data['truck'])
         self.truck = truck
-        self.money = data['money']
 
     def __str__(self):
         p = f"""ID: {self.id}
             Team name: {self.team_name}
             Action: {self.action}
             Time: {self.time}
-            Money: {self.money}
             """
         return p

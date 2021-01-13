@@ -23,7 +23,8 @@ class Node(GameObject):
         self.city_name = data['city_name']
         temp = Road('temp')
         for road in data['roads'].values():
-            self.roads.append(temp.from_json(road))
+            temp.from_json(road)
+            self.roads.append(temp)
 
         # Recursively reconstruct linked list
         node_data = data['next_node']
