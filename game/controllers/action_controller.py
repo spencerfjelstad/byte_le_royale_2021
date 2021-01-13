@@ -67,7 +67,7 @@ class ActionController(Controller):
             luck = 1 - GameStats.costs_and_effectiveness[ObjectType.rabbitFoot]['effectiveness'][player.truck.addons.level]
 
         for route in self.current_location.roads:
-            if route.is_equal(road): #May need to be redone
+            if route == road: #May need to be redone
                 player.truck.current_node = self.current_location.next_node
                 self.event_controller.trigger_event(road, player, player.truck)
                 time_taken = (road.length / player.truck.get_current_speed()) * luck

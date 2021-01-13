@@ -40,3 +40,7 @@ class Node(GameObject):
             node_list.append(curr_node)
             curr_node = curr_node.next_node
         return node_list
+    
+    def __eq__(self, other):
+        return (isinstance(other, self.__class__) and self.city_name == other.city_name
+                and self.roads == other.roads and self.next_node == other.next_node)
