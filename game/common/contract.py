@@ -7,7 +7,7 @@ from game.common.game_map import Game_Map
 
 
 class Contract(GameObject):
-    def __init__(self, name=None, region=None, game_map=None, money_reward=None,\
+    def __init__(self, name=None, region=None, game_map=None, money_reward=None,
             renown_reward=None, deadline=None):
         super().__init__()
         self.object_type = ObjectType.contract
@@ -16,10 +16,10 @@ class Contract(GameObject):
         # region is region enum
         self.region = region
         self.game_map = game_map
-        self.money_reward = int(money_reward * GameStats.region_reward_modifier[region])\
-            if money_reward is not None and region is not None else 0
-        self.renown_reward = int(renown_reward * GameStats.region_reward_modifier[region])\
-                if renown_reward is not None and region is not None else 0
+        self.money_reward = (int(money_reward * GameStats.region_reward_modifier[region])
+                if money_reward is not None and region is not None else 0)
+        self.renown_reward = (int(renown_reward * GameStats.region_reward_modifier[region])
+                if renown_reward is not None and region is not None else 0)
         self.deadline = deadline
     
     def to_json(self):
