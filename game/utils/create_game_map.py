@@ -16,7 +16,7 @@ def create_game_map(node_count, length):
         roads = []
         for j in range(random.randint(2,3)):
             roads.append(Road("Route "+str(i)+"-"+str(j),
-            random.randint(0, 6), av_road_length + random.randint(-1 * road_deviation, road_deviation)))
+            random.randint(1, 6), av_road_length + random.randint(-1 * road_deviation, road_deviation)))
         temp_node = Node(str(i), roads, None)
         g_map.insert_node(temp_node)
     

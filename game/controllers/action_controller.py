@@ -26,10 +26,11 @@ class ActionController(Controller):
         self.contract_list = list()
 
     def handle_actions(self, player, obj=None):
-        player_action = player.action
+        player_action = player.action._chosen_action
         # Without a contract truck has no node to move to, ensure a contract is always active
         if player.truck.active_contract is not None or player_action == ActionType.select_contract:
             #Call the appropriate method for this action
+            
             if(player_action == ActionType.select_contract):
                 #Checks if contract_list is empty. If so, we have a problem
                 if(len(self.contract_list) == 0): raise ValueError("Contract list cannot be empty")
@@ -39,33 +40,35 @@ class ActionController(Controller):
                 
             elif(player_action == ActionType.select_route):
                 #Moves the player to the node given in the action_parameter
-                self.move(player, player_action.action_parameter)
+                #self.move(player, player_action.action.action_parameter)
+                self.move(player)
+
+        if(player_action == ActionType.buy_gas):
+            self.buy_gas(player)
+
+        elif(player_action == ActionType.upgrade):
+            self.upgrade_level(self, player, obj)
+
+        elif(player_action == ActionType.choose_speed):
+            #This is an ActionType because the user client cannot directly influence truck values. 
+            player.truck.set_current_speed(player.action_parameter)
 
         else:
-            if(player_action == ActionType.buy_gas):
-                self.buy_gas(player)
-
-            elif(player_action == ActionType.upgrade):
-                self.upgrade_level(self, player, obj)
-
-            elif(player_action == ActionType.choose_speed):
-                #This is an ActionType because the user client cannot directly influence truck values. 
-                player.truck.set_current_speed(player.action_parameter)
-
-            else:
-                self.print("Action aborted: no active contract!")
+            self.print("Action aborted: no active contract!")
 
     # Action Methods ---------------------------------------------------------
+    def move(self, player):
+        road = player.action.action_parameter
 
-    def move(self, player, road):
         self.current_location = player.truck.current_node
         time_taken = 0
         luck = 1
         fuel_efficiency = GameStats.costs_and_effectiveness[ObjectType.tires]['fuel_efficiency'][player.truck.tires]
         if(isinstance(player.truck.addons, RabbitFoot)):
             luck = 1 - GameStats.costs_and_effectiveness[ObjectType.rabbitFoot]['effectiveness'][player.truck.addons.level]
+
         for route in self.current_location.roads:
-            if route is road: #May need to be redone
+            if route.is_equal(road): #May need to be redone
                 player.truck.current_node = self.current_location.next_node
                 self.event_controller.trigger_event(road, player, player.truck)
                 time_taken = (road.length / player.truck.get_current_speed()) * luck
@@ -77,24 +80,21 @@ class ActionController(Controller):
 
     # Retrieve by index and store in Player, then clear the list
     def select_contract(self, player):
-        if len(self.contract_list) < int(player.action.contract_index):
-            player.truck.active_contract = self.contract_list[int(player.action.contract_index)]
-            player.truck.current_node = player.truck.active_contract.game_map.current_node
-            self.contract_list.clear()
-        else:
-            self.print("Contract list index was out of bounds")
+        player.truck.active_contract = self.contract_list[int(player.action.action_parameter)]
+        player.truck.current_node = player.truck.active_contract.game_map.current_node
+        self.contract_list.clear()
 
     def buy_gas(self, player):
         gasPrice = round(random.uniform(1, 5), 2)  # gas price per percent
-        if(player.truck.money > 0):
-            percentRemain = player.truck.max_gas - round(player.truck.gas, 2)
-            maxPercent = round((player.truck.money / gasPrice) / 100, 2)
+        if(player.money > 0):
+            percentRemain = player.truck.body.max_gas - round(player.truck.body.current_gas, 2)
+            maxPercent = round((player.money / gasPrice) / 100, 2)
             if(percentRemain < maxPercent):
-                player.truck.money -= percentRemain * gasPrice
-                player.truck.gas = player.truck.max_gas
+                player.money -= percentRemain * gasPrice
+                player.truck.body.current_gas = player.truck.body.max_gas
             else:
-                player.truck.money = 0
-                player.truck.money += maxPercent
+                player.money = 0
+                player.money += maxPercent
 
     def upgrade_body(self, player, objEnum, typ):
         if objEnum is ObjectType.tank:
