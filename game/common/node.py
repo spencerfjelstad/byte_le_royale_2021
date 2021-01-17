@@ -1,39 +1,46 @@
 from game.common.game_object import GameObject
 from game.common.enums import *
 from game.common.road import *
-from game.common.map import Map
 
 class Node(GameObject):
     
-    #Name is the key for this node in the graph it must be unique 
-    def __init__(self, name):
+    def __init__(self, name, roads=[], next_node=None):
         super().__init__()
         self.object_type = ObjectType.node
         self.city_name = name
-        self.region = Region.none
-        self.connections = list()
-        self.node_type = NodeType.none
-        # registers this object to the graph with city_name as the key
-        Map.cities[self.city_name] = self
+        self.roads = roads
+        self.next_node = next_node
     
     def to_json(self):
         data = super().to_json()
-        data['region'] = self.region
         data['city_name'] = self.city_name
-        data['connections'] = self.connections
-        data['node_type'] = self.node_type
+        data['roads'] = {road.road_name: road.to_json() for road in self.roads}
+        data['next_node'] = self.next_node.to_json() if self.next_node is not None else None
         return data
 
     def from_json(self, data):
         super().from_json(data)
-        self.region = data['region']
         self.city_name = data['city_name']
-        self.connections = data['connections']
-        self.node_type = data['node_type']
-        Map.cities[self.city_name] = self
+        temp = Road('temp')
+        for road in data['roads'].values():
+            temp.from_json(road)
+            self.roads.append(temp)
 
-    # this method connects two cities together and generates a road object
-    def Connect(self, cityToConnect, roadName):
-        road = Road(roadName,self.city_name,cityToConnect.city_name)
-        self.connections.append(road.road_name)
-        return road
+        # Recursively reconstruct linked list
+        node_data = data['next_node']
+        if node_data is not None:
+            temp_node = Node('temp')
+            temp_node.from_json(node_data)
+            self.next_node = temp_node
+
+    def to_list(self):
+        curr_node = self
+        node_list = []
+        while curr_node is not None:
+            node_list.append(curr_node)
+            curr_node = curr_node.next_node
+        return node_list
+    
+    def __eq__(self, other):
+        return (isinstance(other, self.__class__) and self.city_name == other.city_name
+                and self.roads == other.roads and self.next_node == other.next_node)

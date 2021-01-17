@@ -9,16 +9,17 @@ class ObjectType:
     action = 1
     player = 2
     node = 3
-    truck = 4
-    contract = 5
-    policeScanner = 6
-    tank = 7
-    tires = 8
-    headlights = 9
-    sentryGun = 10
-    rabbitFoot = 11
-    GPS = 12
-    
+    road = 4
+    truck = 5
+    contract = 6
+    game_map = 7
+    policeScanner = 8
+    tank = 9
+    tires = 10
+    headlights = 11
+    sentryGun = 12
+    rabbitFoot = 13
+    GPS = 14
 
 class ActionType:
     none = 0
@@ -26,6 +27,7 @@ class ActionType:
     buy_gas = 2
     upgrade = 3
     select_contract = 4
+    choose_speed = 5
 
 class Region:
     none = 0
@@ -38,19 +40,24 @@ class Region:
 
 class RoadType:
     none = 0
-    rural = 1
-    street = 2
-    highway = 3
+    mountain_road = 1
+    forest_road = 2
+    tundra_road = 3
+    highway = 4
+    city_road = 5
+    interstate = 6
 
-class NodeType:
+class EventType:
     none = 0
     city = 1
     warehouse = 2
     road = 3
-
-class EventType:
-    city_upgrade = 0
-    scanner_upgrade = 1
+    rock_slide = 4
+    icy_road = 5
+    animal_in_road = 6
+    bandits = 7
+    police = 8
+    traffic = 9
 
 class ScannerLevel:
     level_zero = 0

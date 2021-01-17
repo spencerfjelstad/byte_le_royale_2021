@@ -1,9 +1,9 @@
-from game.common.TrUpgrades.baseUpgradeObject import baseUpgradeObject
+from game.common.TrUpgrades.baseUpgradeObject import BaseUpgradeObject
 from game.common.enums import *
 from game.common.stats import *
 
 
-class GPS(baseUpgradeObject):
+class GPS(BaseUpgradeObject):
     def __init__(self):
         super().__init__(ObjectType.GPS, GPSLevel.level_zero)
 
