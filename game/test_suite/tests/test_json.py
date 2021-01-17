@@ -17,7 +17,7 @@ class TestJSON(unittest.TestCase):
     # This method is used to set up anything you wish to test prior to every test method below.
     def setUp(self):
         self.myPlayer = Player(12, "Sean")
-        self.myPlayer.money = 10000
+        self.myPlayer.truck.money = 10000
         self.actionCont = ActionController()
 
     # Test methods should always start with the word 'test'
