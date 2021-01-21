@@ -283,7 +283,7 @@ class GameStats:
 
     game_max_time = 10000
 
-    player_starting_money = 1000
+    player_starting_money = 10000
 
     truck_starting_gas = 1
 
@@ -293,7 +293,7 @@ class GameStats:
 
     tire_switch_cost = 300
 
-    truck_starting_health = 50
+    truck_starting_health = 500
 
     road_length_variance = .2
 

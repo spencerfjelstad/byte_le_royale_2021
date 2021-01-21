@@ -6,6 +6,51 @@ class Client(UserClient):
     # Variables and info you want to save between turns go here
     def __init__(self):
         super().__init__()
+        self.costs_and_effectiveness = {
+            ObjectType.policeScanner: {
+                ScannerLevel.level_zero: 0,
+                ScannerLevel.level_one: 300,
+                ScannerLevel.level_two: 900,
+                ScannerLevel.level_three: 2000
+
+            },
+
+            ObjectType.tank: {
+                TankLevel.level_zero: 10,
+                TankLevel.level_one: 300,
+                TankLevel.level_two: 900,
+                TankLevel.level_three: 2000
+
+            },
+
+            ObjectType.headlights: {
+                HeadlightLevel.level_zero: 10,
+                HeadlightLevel.level_one: 50,
+                HeadlightLevel.level_two: 100,
+                HeadlightLevel.level_three: 300
+            },
+
+            ObjectType.sentryGun: {
+                SentryGunLevel.level_zero: 10,
+                SentryGunLevel.level_one: 50,
+                SentryGunLevel.level_two: 100,
+                SentryGunLevel.level_three: 300
+            },
+
+            ObjectType.rabbitFoot: {
+                RabbitFootLevel.level_zero: 10,
+                RabbitFootLevel.level_one: 20,
+                RabbitFootLevel.level_two: 40,
+                RabbitFootLevel.level_three: 80
+            },
+
+            ObjectType.GPS: {
+                GPSLevel.level_zero: 100,
+                GPSLevel.level_one: 200,
+                GPSLevel.level_two: 700,
+                GPSLevel.level_three: 1400
+            }
+        }
 
     def team_name(self):
         """
@@ -22,7 +67,7 @@ class Client(UserClient):
         :param actions:     This is the actions object that you will add effort allocations or decrees to.
         :param world:       Generic world information
         """
-        
+
         if(truck.active_contract is None):
             # Select contract
             actions.set_action(ActionType.select_contract, 0)
@@ -31,8 +76,10 @@ class Client(UserClient):
             actions.set_action(ActionType.buy_gas)
         elif(truck.current_node.roads[0] is not None):
             # Move to next node
-            actions.set_action(ActionType.select_route, truck.current_node.roads[0])
-        
+            actions.set_action(ActionType.select_route,
+                               truck.current_node.roads[0])
 
-        
+        if self.costs_and_effectiveness[ObjectType.tank][truck.body.level] < truck.money * 1.1 and truck.body.level <= 3:
+            actions.set_action(ActionType.upgrade, ObjectType.tank)
+
         pass

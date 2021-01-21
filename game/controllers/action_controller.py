@@ -24,6 +24,7 @@ class ActionController(Controller):
         self.contract_list = list()
 
     def handle_actions(self, player, obj=None):
+        breakpoint()
         player_action = player.action._chosen_action
         # Without a contract truck has no node to move to, ensure a contract is always active
         if player.truck.active_contract is not None or player_action == ActionType.select_contract:
@@ -40,12 +41,11 @@ class ActionController(Controller):
                 #Moves the player to the node given in the action_parameter
                 #self.move(player, player_action.action.action_parameter)
                 self.move(player)
-
         if(player_action == ActionType.buy_gas):
             self.buy_gas(player)
-
         elif(player_action == ActionType.upgrade):
-            self.upgrade_level(self, player, obj)
+
+            self.upgrade_level(player, obj)
 
         elif(player_action == ActionType.choose_speed):
             #This is an ActionType because the user client cannot directly influence truck values. 
