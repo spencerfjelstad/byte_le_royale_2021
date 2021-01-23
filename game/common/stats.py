@@ -283,7 +283,7 @@ class GameStats:
 
     game_max_time = 10000
 
-    player_starting_money = 10000
+    player_starting_money = 1000
 
     truck_starting_gas = 1
 
@@ -296,6 +296,14 @@ class GameStats:
     truck_starting_health = 500
 
     road_length_variance = .2
+
+    minimum_health_price = 10
+
+    maximum_health_price = 30
+
+    minimum_gas_price = 1
+
+    maximum_gas_price = 5
 
     contract_node_count = {
         'short': 8,

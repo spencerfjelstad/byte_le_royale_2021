@@ -8,7 +8,7 @@ from game.common.player import Player
 from game.common.node import Node
 from game.common.node import Road
 from game.controllers.action_controller import ActionController
-from game.common.enums import EventType, RoadType, ObjectType, TireType
+from game.common.enums import ActionType, EventType, RoadType, ObjectType, TireType
 from game.common.TrUpgrades.BodyObjects.sentry_gun import SentryGun
 
 
@@ -24,8 +24,7 @@ class TestActionController(unittest.TestCase):
 
     # Test methods should always start with the word 'test'
     #def test_valid_move(self):
-        #breakpoint()
-        # self.myPlayer.active_contract_index = 0
+        # self.myPlayer.active_action_parameter = 0
         # self.actionCont.select_contract(self.myPlayer)
         # nextNode = self.myPlayer.truck.current_node.next_node
         # startGas = self.myPlayer.truck.body.current_gas
@@ -46,6 +45,15 @@ class TestActionController(unittest.TestCase):
         actneg = self.actionCont.event_controller.negation(self.myPlayer.truck, EventType.icy_road)
         self.assertAlmostEqual(neg, actneg["DamageMod"])
         self.assertAlmostEqual(neg, actneg["HealthMod"])
+    
+    def test_heal(self):
+        startHealth = 1
+        self.myPlayer.truck.money = 100000
+        startMoney = self.myPlayer.truck.money
+        self.myPlayer.truck.health = startHealth
+        self.actionCont.heal(self.myPlayer)
+        self.assertLess(startHealth, self.myPlayer.truck.health)
+        self.assertLess(self.myPlayer.truck.money, startMoney)
 
     def test_event_controller_tires_upgrade(self):
         self.myPlayer.truck.tires = TireType.tire_sticky

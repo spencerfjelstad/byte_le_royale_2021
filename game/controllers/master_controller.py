@@ -102,9 +102,10 @@ class MasterController(Controller):
         # Add things that should be thrown into the turn logs here
         data['Team Name'] = clients.team_name
         data['time'] = clients.time
-        data['truck'] = clients.truck.to_json()
+        #data['truck'] = clients.truck.to_json()
         data['money'] = clients.truck.money
         data['renown'] = clients.truck.renown
+        data['gas'] = clients.truck.body.current_gas
         #data['active_contract'] = clients.active_contract
 
         return data

@@ -70,16 +70,22 @@ class Client(UserClient):
 
         if(truck.active_contract is None):
             # Select contract
+            print("Select Contract")
             actions.set_action(ActionType.select_contract, 0)
-        elif(truck.body.current_gas < .2):
+        elif(truck.body.current_gas < .2 and truck.money > 100):
             # Buy gas
+            print("Buy Gas")
             actions.set_action(ActionType.buy_gas)
+        elif truck.health < 30:
+            print("Heal")
+            actions.set_action(ActionType.heal)
+        elif self.costs_and_effectiveness[ObjectType.tank][truck.body.level +1] * 1.1 < truck.money and truck.body.level < 3:
+            actions.set_action(ActionType.upgrade, ObjectType.tank)
+            print(("Upgrade current level {} money {}, predicted ammount: {}".format(truck.body.level,truck.money,self.costs_and_effectiveness[ObjectType.tank][truck.body.level] * 1.1)))
         elif(truck.current_node.roads[0] is not None):
             # Move to next node
+            print("Move")
             actions.set_action(ActionType.select_route,
                                truck.current_node.roads[0])
-
-        if self.costs_and_effectiveness[ObjectType.tank][truck.body.level] < truck.money * 1.1 and truck.body.level <= 3:
-            actions.set_action(ActionType.upgrade, ObjectType.tank)
 
         pass
