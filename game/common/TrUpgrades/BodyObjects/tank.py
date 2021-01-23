@@ -18,6 +18,7 @@ class Tank(BaseBodyObject):
         self.current_gas = data['current_gas']
 
     def __str__(self):
-        p = super.__str__
-        p += f"""Current Gas Level: {self.current_gas}"""
+        p = f"""Current Gas Level: {self.current_gas}
+            Max Gas: {self.max_gas}
+            """
         return p

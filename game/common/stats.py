@@ -304,7 +304,20 @@ class GameStats:
     }
 
     contract_rewards = {
-        'easy': 200,
-        'medium': 500,
-        'hard': 1100
+        'money': {
+            'easy': 200,
+            'medium': 500,
+            'hard': 1100
+        },
+        'renown': {
+            'easy': 1,
+            'medium': 3,
+            'hard': 7
+        }
+    }
+
+    contract_deadline = {
+        'short': 30,
+        'medium': 35,
+        'long': 54
     }
