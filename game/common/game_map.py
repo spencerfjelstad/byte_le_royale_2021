@@ -57,3 +57,7 @@ class Game_Map(GameObject):
         self.head = temp_node
         temp_node.from_json(data['current_node'])
         self.current_node = temp_node
+
+    def __eq__(self, other):
+        return (isinstance(other, self.__class__) and self.head == other.head
+                and self.current_node == other.head)
