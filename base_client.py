@@ -67,7 +67,6 @@ class Client(UserClient):
         :param actions:     This is the actions object that you will add effort allocations or decrees to.
         :param world:       Generic world information
         """
-
         if(truck.active_contract is None):
             # Select contract
             print("Select Contract")

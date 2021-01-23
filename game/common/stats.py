@@ -84,9 +84,9 @@ class GameStats:
         ObjectType.tires: {
 
             "effectiveness": {
-                TireType.tire_econ: .5,
-                TireType.tire_normal: .6,
-                TireType.tire_sticky: .8
+                TireType.tire_econ: .05,
+                TireType.tire_normal: .15,
+                TireType.tire_sticky: .23
             },
 
             "fuel_efficiency": {

@@ -17,15 +17,5 @@ class TestGameMapCreation(unittest.TestCase):
             for j in curr.roads:
                self.assertTrue(80 <= j.length <= 120)
 
-    # def test_map_names(self):
-    #     self.assertEqual(self.test_map.current_node.city_name, "1")
-    #     last = None
-    #     temp = True
-    #     while temp != False:
-    #         temp = self.test_map.get_next_node()
-    #         if temp != False:
-    #             last = temp
-    #     self.assertEqual(last.city_name, "end")
-
 if __name__ == '__main__':
     unittest.main

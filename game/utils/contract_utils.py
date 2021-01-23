@@ -15,7 +15,6 @@ def check_contract_completion(client):
         # May want to impose a penalty for failed contract
         if client.truck.active_contract.deadline > client.time:
             client.truck.active_contract = None
-            # probably unnecessary
             client.truck.current_node.next_node = None
         elif client.truck.active_contract.game_map.to_list()[-1] == client.truck.active_contract.game_map.current_node:
             client.truck.money += client.truck.active_contract.money_reward
