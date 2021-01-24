@@ -325,7 +325,7 @@ class GameStats:
     }
 
     contract_deadline = {
-        'short': 30,
-        'medium': 35,
-        'long': 54
+        'short': 300000,
+        'medium': 3500,
+        'long': 5400
     }

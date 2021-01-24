@@ -19,7 +19,7 @@ class MasterController(Controller):
     def __init__(self):
         super().__init__()
         self.game_over = False
-                
+
         self.turn = None
         self.current_world_data = None
 
@@ -74,7 +74,7 @@ class MasterController(Controller):
 
         #Time copy to be given to player
         timeCopy = copy.deepcopy(client.time)
-        
+
         # Obfuscate data in objects that that player should not be able to see
         args = (self.turn, actions, self.current_world_data, truckCopy, timeCopy)
         return args
@@ -94,7 +94,7 @@ class MasterController(Controller):
         if client.truck.body.current_gas <= 0:
             print("Game is ending because gas has run out.")
             self.game_over = True
-        
+
 
     # Return serialized version of game
     def create_turn_log(self, clients, turn):
@@ -102,10 +102,12 @@ class MasterController(Controller):
         # Add things that should be thrown into the turn logs here
         data['Team Name'] = clients.team_name
         data['time'] = clients.time
-        #data['truck'] = clients.truck.to_json()
-        data['money'] = clients.truck.money
-        data['renown'] = clients.truck.renown
-        data['gas'] = clients.truck.body.current_gas
+        data['truck'] = clients.truck.to_json()
+
+        # data['action'] = clients.action.to_json()
+        # data['money'] = clients.truck.money
+        # data['renown'] = clients.truck.renown
+        # data['body'] = clients.truck.body.to_json()
         #data['active_contract'] = clients.active_contract
 
         return data
@@ -118,4 +120,4 @@ class MasterController(Controller):
         data['player'] = client.to_json()
 
         return data
-    
+

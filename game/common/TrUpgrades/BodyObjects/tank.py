@@ -8,6 +8,9 @@ class Tank(BaseBodyObject):
         super().__init__(ObjectType.tank, TankLevel.level_zero)
         self.max_gas = GameStats.costs_and_effectiveness[ObjectType.tank]['effectiveness'][self.level] * GameStats.truck_starting_gas
 
+    def update(self):
+        self.max_gas = GameStats.costs_and_effectiveness[ObjectType.tank]['effectiveness'][self.level] * GameStats.truck_starting_gas
+
     def to_json(self):
         data = super().to_json()
         data['max_gas'] = self.max_gas

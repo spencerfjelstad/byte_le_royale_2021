@@ -85,7 +85,7 @@ class ActionController(Controller):
             self.print("Contract list index was out of bounds")
 
     def buy_gas(self, player):
-        gasPrice = round(random.uniform(GameStats.minimum_gas_price, GameStats.maximum_gas_price), 2)  # gas price per percent
+        gasPrice = player.truck.current_node.gas_price
         if(player.truck.money > 0):
             percentRemain = player.truck.body.max_gas - round(player.truck.body.current_gas, 2)
             maxPercent = round((player.truck.money / gasPrice) / 100, 2)
@@ -97,7 +97,7 @@ class ActionController(Controller):
                 player.truck.money += maxPercent
 
     def heal(self, player):
-        healPrice = round(random.uniform(GameStats.minimum_health_price, GameStats.maximum_health_price), 2)  # Health price per percent
+        healPrice = player.truck.current_node.repair_price
         if(player.truck.money > 0):
             percentRemain = round(player.truck.health, 2) / GameStats.truck_starting_health  
             maxPercent = round((player.truck.money / healPrice) / 100, 2)
@@ -220,10 +220,12 @@ class ActionController(Controller):
             # If the objects enum is an addon type, pass off to addon upgrade method
             elif objEnum in GameStats.addonObjects:
                 self.upgrade_addons(player, objEnum, typ)
+                player.truck.addons.update()
 
             # If the objects enum is a body type, pass off to body upgrade method
             elif objEnum in GameStats.body_objects:
                 self.upgrade_body(player, objEnum, typ)
+                player.truck.body.update()
 
             # The upgrade logic for tires is much simpler, but I have decided to modularize it for the sake of consistancy
             elif objEnum is ObjectType.tires:

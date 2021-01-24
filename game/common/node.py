@@ -1,6 +1,7 @@
 from game.common.game_object import GameObject
 from game.common.enums import *
 from game.common.road import *
+import random
 
 class Node(GameObject):
     
@@ -10,10 +11,14 @@ class Node(GameObject):
         self.city_name = name
         self.roads = roads
         self.next_node = next_node
+        self.gas_price = round(random.uniform(GameStats.minimum_gas_price, GameStats.maximum_gas_price), 2)  # gas price per percent
+        self.repair_price = round(random.uniform(GameStats.minimum_health_price, GameStats.maximum_health_price), 2)  # Health price per percent
     
     def to_json(self):
         data = super().to_json()
         data['city_name'] = self.city_name
+        data['gas_price'] = self.gas_price
+        data['repair_price'] = self.repair_price
         data['roads'] = {road.road_name: road.to_json() for road in self.roads}
         data['next_node'] = self.next_node.to_json() if self.next_node is not None else None
         return data

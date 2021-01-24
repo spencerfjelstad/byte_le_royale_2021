@@ -93,7 +93,7 @@ class Truck(GameObject):
         self.renown = data['renown']
         self.event_type_bonus = data['event_type_bonus']
         if data['body']['object_type'] == ObjectType.headlights:
-            headlights = Headlights()
+            headlights = HeadLights()
             headlights.from_json(data['body'])
             self.body = headlights
         elif data['body']['object_type'] == ObjectType.sentryGun:
