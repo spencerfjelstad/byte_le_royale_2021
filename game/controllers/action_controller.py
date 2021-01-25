@@ -77,7 +77,7 @@ class ActionController(Controller):
 
     # Retrieve by index and store in Player, then clear the list
     def select_contract(self, player):
-        if len(self.contract_list) > int(player.action.action_parameter):
+        if len(self.contract_list) > int(player.action.action_parameter) or int(player.action.action_parameter) < 0:
             player.truck.active_contract = self.contract_list[int(player.action.action_parameter)]
             player.truck.current_node = player.truck.active_contract.game_map.current_node
             self.contract_list.clear()

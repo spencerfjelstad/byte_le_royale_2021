@@ -37,7 +37,7 @@ class Contract(GameObject):
         self.name = data['name']
         self.region = data['region']
         json_map = Game_Map()
-        #json_map.from_json(data['game_map'])
+        json_map.from_json(data['game_map'])
         self.game_map = json_map
         self.money_reward = data['money_reward']
         self.renown_reward = data['renown_reward']
