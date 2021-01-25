@@ -85,26 +85,36 @@ class ActionController(Controller):
             self.print("Contract list index was out of bounds")
 
     def buy_gas(self, player):
+        #Gas price is tied to node
         gasPrice = player.truck.current_node.gas_price
         if(player.truck.money > 0):
-            percentRemain = player.truck.body.max_gas - round(player.truck.body.current_gas, 2)
+            #Calculate what percent empty is the gas tank
+            percentGone = (1 - (round(player.truck.body.current_gas, 2) / player.truck.body.max_gas))
+            #Calculate the percentage the player could potentially buy
             maxPercent = round((player.truck.money / gasPrice) / 100, 2)
-            if(percentRemain < maxPercent):
-                player.truck.money -= percentRemain * gasPrice
+            if(percentGone < maxPercent):
+                #If they can afford to fill up all the way, fill em up
+                player.truck.money -= (percentGone * 100) * gasPrice
                 player.truck.body.current_gas = player.truck.body.max_gas
             else:
+                #Otherwise, give them the max percentage they can buy
                 player.truck.money = 0
-                player.truck.money += maxPercent
+                player.truck.money += (maxPercent * player.truck.body.max_gas)
 
     def heal(self, player):
         healPrice = player.truck.current_node.repair_price
         if(player.truck.money > 0):
-            percentRemain = round(player.truck.health, 2) / GameStats.truck_starting_health  
+            #Calculate what percent repair is missing
+            percentRemain = 1 - (round(player.truck.health, 2) / GameStats.truck_starting_health)
+            #Calculate what percent repair they can afford
             maxPercent = round((player.truck.money / healPrice) / 100, 2)
             if(percentRemain < maxPercent):
-                player.truck.money -= (1 - percentRemain) * healPrice
+                #If they can afford it, repair the truck all the way
+                breakpoint()
+                player.truck.money -= (percentRemain * 100) * healPrice
                 player.truck.health = GameStats.truck_starting_health
             else:
+                #Otherwise, do the maximum repairs
                 player.truck.money = 0
                 player.truck.health += maxPercent
 

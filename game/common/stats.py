@@ -283,7 +283,7 @@ class GameStats:
 
     game_max_time = 10000
 
-    player_starting_money = 1000
+    player_starting_money = 4000
 
     truck_starting_gas = 1
 
