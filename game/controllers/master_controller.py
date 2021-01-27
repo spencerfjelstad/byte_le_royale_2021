@@ -28,6 +28,8 @@ class MasterController(Controller):
     # Receives all clients for the purpose of giving them the objects they will control
     def give_clients_objects(self, client):
         client.truck = Truck()
+        node = Node('Start Node')
+        client.truck.current_node = node
         pass
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
@@ -101,7 +103,8 @@ class MasterController(Controller):
         data['Team Name'] = clients.team_name
         data['time'] = clients.time
         data['truck'] = clients.truck.to_json()
-        data['money'] = clients.money
+        data['money'] = clients.truck.money
+        data['renown'] = clients.truck.renown
         #data['active_contract'] = clients.active_contract
 
         return data

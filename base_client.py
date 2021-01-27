@@ -23,13 +23,13 @@ class Client(UserClient):
         :param world:       Generic world information
         """
         
-        if(truck.active_contract == None):
+        if(truck.active_contract is None):
             # Select contract
             actions.set_action(ActionType.select_contract, 0)
         elif(truck.body.current_gas < .2):
             # Buy gas
             actions.set_action(ActionType.buy_gas)
-        elif(truck.current_node.roads[0] != None):
+        elif(truck.current_node.roads[0] is not None):
             # Move to next node
             actions.set_action(ActionType.select_route, truck.current_node.roads[0])
         
