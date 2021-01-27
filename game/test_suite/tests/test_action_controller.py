@@ -51,6 +51,7 @@ class TestActionController(unittest.TestCase):
         self.myPlayer.truck.money = 100000
         startMoney = self.myPlayer.truck.money
         self.myPlayer.truck.health = startHealth
+        self.myPlayer.truck.current_node = Node("Bruh")
         self.actionCont.heal(self.myPlayer)
         self.assertLess(startHealth, self.myPlayer.truck.health)
         self.assertLess(self.myPlayer.truck.money, startMoney)

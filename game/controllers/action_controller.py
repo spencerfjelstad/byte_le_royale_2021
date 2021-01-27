@@ -110,7 +110,6 @@ class ActionController(Controller):
             maxPercent = round((player.truck.money / healPrice) / 100, 2)
             if(percentRemain < maxPercent):
                 #If they can afford it, repair the truck all the way
-                breakpoint()
                 player.truck.money -= (percentRemain * 100) * healPrice
                 player.truck.health = GameStats.truck_starting_health
             else:
