@@ -297,9 +297,9 @@ class GameStats:
 
     road_length_variance = .2
 
-    minimum_health_price = 10
+    minimum_repair_price = 10
 
-    maximum_health_price = 30
+    maximum_repair_price = 30
 
     minimum_gas_price = 1
 

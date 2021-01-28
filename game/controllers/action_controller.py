@@ -42,7 +42,7 @@ class ActionController(Controller):
                 self.move(player)
         if(player_action == ActionType.buy_gas):
             self.buy_gas(player)
-        elif(player_action == ActionType.heal):
+        elif(player_action == ActionType.repair):
             self.heal(player)
         elif(player_action == ActionType.upgrade):
             self.upgrade_level(player, player.action.action_parameter)

@@ -75,9 +75,9 @@ class Client(UserClient):
             # Buy gas
             print("Buy Gas")
             actions.set_action(ActionType.buy_gas)
-        elif truck.health < 30 and truck.money > 1000:
-            print("Heal")
-            actions.set_action(ActionType.heal)
+        elif truck.health < 30 and truck.money > 10:
+            print("REPAIR")
+            actions.set_action(ActionType.repair)
         elif  truck.body.level < 3 and self.costs_and_effectiveness[ObjectType.tank][truck.body.level +1] * 1.2 < truck.money:
             actions.set_action(ActionType.upgrade, ObjectType.tank)
             print(("Upgrade current level {} money {}, predicted ammount: {}".format(truck.body.level,truck.money,self.costs_and_effectiveness[ObjectType.tank][truck.body.level] * 1.1)))
