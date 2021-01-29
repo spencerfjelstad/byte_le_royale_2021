@@ -99,7 +99,7 @@ class ActionController(Controller):
             else:
                 #Otherwise, give them the max percentage they can buy
                 player.truck.money = 0
-                player.truck.money += (maxPercent * player.truck.body.max_gas)
+                player.truck.body.current_gas += (maxPercent * player.truck.body.max_gas)
 
     def heal(self, player):
         healPrice = player.truck.current_node.repair_price
