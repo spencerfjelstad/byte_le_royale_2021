@@ -22,7 +22,6 @@ class TestUpgradeTires(unittest.TestCase): # Your test class is a subclass of un
         self.myPlayer.truck.tires = TireType.tire_normal
         self.myPlayer.truck.money = 10000
         expectedCash = 10000 - stats.GameStats.tire_switch_cost
-        #breakpoint()
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.tires, TireType.tire_sticky)
         self.assertEqual(self.myPlayer.truck.tires, TireType.tire_sticky)
         self.assertEqual(expectedCash, self.myPlayer.truck.money)
@@ -31,7 +30,6 @@ class TestUpgradeTires(unittest.TestCase): # Your test class is a subclass of un
         self.myPlayer.truck.tires = TireType.tire_normal
         self.myPlayer.truck.money = 10000
         expectedCash = 10000 - stats.GameStats.tire_switch_cost
-        #breakpoint()
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.tires, TireType.tire_econ)
         self.assertEqual(self.myPlayer.truck.tires, TireType.tire_econ)
 
@@ -39,7 +37,6 @@ class TestUpgradeTires(unittest.TestCase): # Your test class is a subclass of un
         self.myPlayer.truck.tires = TireType.tire_sticky
         self.myPlayer.truck.money = 10000
         expectedCash = 10000 - stats.GameStats.tire_switch_cost
-        #breakpoint()
         self.actionCont.upgrade_level(self.myPlayer, ObjectType.tires, TireType.tire_normal)
         self.assertEqual(self.myPlayer.truck.tires, TireType.tire_normal)
     

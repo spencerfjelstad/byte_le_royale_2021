@@ -1,7 +1,7 @@
 from game.common.game_object import GameObject
 from game.common.enums import *
 import random
-import json
+import json, math
 from game.common.stats import GameStats
 from game.common.game_map import Game_Map
 
@@ -18,7 +18,7 @@ class Contract(GameObject):
         self.game_map = game_map
         self.money_reward = (int(money_reward * GameStats.region_reward_modifier[region])
                 if money_reward is not None and region is not None else 0)
-        self.renown_reward = (int(renown_reward * GameStats.region_reward_modifier[region])
+        self.renown_reward = (int(math.ceil(renown_reward * GameStats.region_reward_modifier[region]))
                 if renown_reward is not None and region is not None else 0)
         self.deadline = deadline
     
