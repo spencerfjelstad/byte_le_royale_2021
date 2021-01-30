@@ -178,8 +178,7 @@ class GameStats:
         RoadType.tundra_road: [EventType.icy_road, EventType.police, EventType.rock_slide, EventType.none],
         RoadType.city_road: [EventType.bandits, EventType.police, EventType.traffic, EventType.none],
         RoadType.highway: [EventType.police, EventType.traffic, EventType.none],
-        RoadType.interstate: [EventType.traffic,
-                              EventType.police, EventType.none]
+        RoadType.interstate: [EventType.traffic, EventType.police, EventType.none]
     }
 
     event_weights = {
@@ -198,23 +197,50 @@ class GameStats:
         RoadType.interstate: [67, 33, 0]
     }
 
+    animal_total = 0
+    bandit_total = 0
+    icy_total = 0
+    police_total = 0
+    rockslide_total = 0
+    traffic_total = 0
+    for i in possible_event_types:
+        for j in possible_event_types[i]:
+            if possible_event_types[i][j] == EventType.animal_in_road:
+                animal_total += event_weights[i][j]
+            elif possible_event_types[i][j] == EventType.bandits:
+                bandit_total += event_weights[i][j]
+            elif possible_event_types[i][j] == EventType.icy_road:
+                icy_total += event_weights[i][j]
+            elif possible_event_types[i][j] == EventType.police:
+                police_total += event_weights[i][j]
+            elif possible_event_types[i][j] == EventType.rock_slide:
+                rockslide_total += event_weights[i][j]
+            elif possible_event_types[i][j] == EventType.traffic:
+                traffic_total += event_weights[i][j]
+    animal_chance = animal_total/2400
+    bandit_chance = bandit_total/2400
+    icy_chance = icy_total/2400
+    police_chance = police_total/2400
+    rockslide_chance = rockslide_total/2400
+    traffic_chance = traffic_total/2400
+
     event_type_damage = {
-        EventType.animal_in_road: 10,
-        EventType.bandits: 20,
-        EventType.icy_road: 5,
-        EventType.police: 5,
-        EventType.rock_slide: 5,
-        EventType.traffic: 5,
+        EventType.animal_in_road: 1/animal_chance,
+        EventType.bandits: 1/bandit_chance,
+        EventType.icy_road: 1/icy_chance,
+        EventType.police: 1/police_chance,
+        EventType.rock_slide: 1/rockslide_chance,
+        EventType.traffic: 1/traffic_chance,
         EventType.none: 0
     }
 
     event_type_time = {
-        EventType.animal_in_road: 5,
-        EventType.bandits: 5,
-        EventType.icy_road: 10,
-        EventType.police: 20,
-        EventType.rock_slide: 10,
-        EventType.traffic: 20,
+        EventType.animal_in_road: animal_total / 20,
+        EventType.bandits: bandit_total / 20,
+        EventType.icy_road: icy_total / 20,
+        EventType.police: police_total / 20,
+        EventType.rock_slide: rockslide_total / 20,
+        EventType.traffic: traffic_total / 20,
         EventType.none: 0
     }
 

@@ -42,26 +42,6 @@ class Truck(GameObject):
             speed = 1
         self.speed = speed
 
-    event_type_bonus = {
-        EventType.police: 0,
-        EventType.animal_in_road: 0,
-        EventType.bandits: 0,
-        EventType.icy_road: 0,
-        EventType.rock_slide: 0,
-        EventType.traffic: 0
-        }
-   
-    total_mountain_bonuses = event_type_bonus[EventType.police] + event_type_bonus[EventType.animal_in_road]\
-        + event_type_bonus[EventType.icy_road] + event_type_bonus[EventType.rock_slide]
-    total_forest_bonuses = event_type_bonus[EventType.police] + event_type_bonus[EventType.animal_in_road]\
-        + event_type_bonus[EventType.icy_road] + event_type_bonus[EventType.rock_slide]
-    total_tundra_bonuses = event_type_bonus[EventType.police]\
-        + event_type_bonus[EventType.icy_road] + event_type_bonus[EventType.rock_slide]
-    total_city_bonuses = event_type_bonus[EventType.police] + event_type_bonus[EventType.bandits]\
-        + event_type_bonus[EventType.traffic]
-    total_highway_bonuses = event_type_bonus[EventType.police] + event_type_bonus[EventType.traffic]
-    total_interstate_bonuses = event_type_bonus[EventType.police] + event_type_bonus[EventType.traffic]
-
     def to_json(self):
         data = super().to_json()
         node = self.current_node.to_json() if self.current_node is not None else None
