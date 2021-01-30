@@ -26,22 +26,22 @@ class GameStats:
 
     # objects that can occupy the body slot
     body_objects = [
-        ObjectType.tank,
-        ObjectType.headlights,
-        ObjectType.sentryGun
+        ObjectType.tank, #max_gas
+        ObjectType.headlights, #animal
+        ObjectType.sentryGun #rockslide
     ]
 
     # objects that can occupy the addon slot
     addonObjects = [
-        ObjectType.policeScanner,
-        ObjectType.rabbitFoot,
-        ObjectType.GPS
+        ObjectType.policeScanner, #police
+        ObjectType.rabbitFoot, #bandit
+        ObjectType.GPS #traffic
     ]
 
     tireObjects = [
-        TireType.tire_econ,
-        TireType.tire_normal,
-        TireType.tire_sticky
+        TireType.tire_econ, #fuel_efficiency
+        TireType.tire_normal, #baseline
+        TireType.tire_sticky #icy
     ]
 
     # Tire types are in the enums. Not sure why I did that lol.
@@ -84,15 +84,15 @@ class GameStats:
         ObjectType.tires: {
 
             "effectiveness": {
-                TireType.tire_econ: .5,
-                TireType.tire_normal: .6,
-                TireType.tire_sticky: .8
+                TireType.tire_econ: 0,
+                TireType.tire_normal: 0,
+                TireType.tire_sticky: .2
             },
 
             "fuel_efficiency": {
                 TireType.tire_econ: 1.5,
                 TireType.tire_normal: 1,
-                TireType.tire_sticky: .5
+                TireType.tire_sticky: .75
             }
         },
 
@@ -292,14 +292,11 @@ class GameStats:
             EventType.rock_slide,
         ],
         TireType.tire_normal: [
-            EventType.animal_in_road,
             EventType.icy_road,
             EventType.police,
             EventType.rock_slide,
         ],
         TireType.tire_econ: [
-            EventType.animal_in_road,
-            EventType.icy_road,
             EventType.police,
             EventType.rock_slide,
         ]
