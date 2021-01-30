@@ -7,12 +7,11 @@ import unittest
 from game.common.player import Player
 from game.controllers.action_controller import ActionController
 from game.common.enums import *
-from game.common.TrUpgrades.gps import GPS
-import copy
+from game.common.TrUpgrades.BodyObjects.sentry_gun import SentryGun
 
 
 # Your test class is a subclass of unittest.Testcase, this is important
-class TestJSON(unittest.TestCase):
+class TestUpgradesentryGun(unittest.TestCase):
 
     # This method is used to set up anything you wish to test prior to every test method below.
     def setUp(self):
@@ -21,15 +20,25 @@ class TestJSON(unittest.TestCase):
         self.actionCont = ActionController()
 
     # Test methods should always start with the word 'test'
-    def test_to_and_back(self):
-        bruh = copy.deepcopy(self.myPlayer.truck)
-        tojsn = self.myPlayer.truck.to_json()
-        trk = Player(2131, 'John')
-        trk.truck.from_json(tojsn)
-        self.assertEqual(bruh.to_json(), trk.truck.to_json())
+    def test_valid_speed(self):
+        sped = stats.GameStats.truck_maximum_speed
+        self.myPlayer.truck.set_current_speed(sped)
+        self.assertEqual(sped,self.myPlayer.truck.get_current_speed())
 
+    def test_bad_speed(self):
+        sped = stats.GameStats.truck_maximum_speed + 1
+        self.myPlayer.truck.set_current_speed(sped)
+        self.assertEqual(stats.GameStats.truck_maximum_speed ,self.myPlayer.truck.get_current_speed())
 
- 
+    def test_negative_speed(self):
+        sped = 0
+        self.myPlayer.truck.set_current_speed(sped)
+        self.assertEqual(1,self.myPlayer.truck.get_current_speed())
+
+    def test_illegal_set(self):
+        sped = stats.GameStats.truck_maximum_speed + 1
+        self.myPlayer.truck.__speed = sped
+        self.assertNotEqual(sped ,self.myPlayer.truck.get_current_speed())
 
     # This is just the very basics of how to set up a test file
     # For more info: https://docs.python.org/3/library/unittest.html

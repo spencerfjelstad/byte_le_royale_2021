@@ -84,9 +84,9 @@ class GameStats:
         ObjectType.tires: {
 
             "effectiveness": {
-                TireType.tire_econ: .5,
-                TireType.tire_normal: .6,
-                TireType.tire_sticky: .8
+                TireType.tire_econ: .05,
+                TireType.tire_normal: .15,
+                TireType.tire_sticky: .23
             },
 
             "fuel_efficiency": {
@@ -309,7 +309,7 @@ class GameStats:
 
     game_max_time = 10000
 
-    player_starting_money = 1000
+    player_starting_money = 4000
 
     truck_starting_gas = 1
 
@@ -319,9 +319,19 @@ class GameStats:
 
     tire_switch_cost = 300
 
-    truck_starting_health = 50
+    truck_starting_health = 500
 
     road_length_variance = .2
+
+    minimum_health_price = 10
+
+    maximum_health_price = 30
+
+    minimum_gas_price = 1
+
+    maximum_gas_price = 5
+
+    truck_maximum_speed = 80
 
     contract_node_count = {
         'short': 8,
@@ -343,7 +353,7 @@ class GameStats:
     }
 
     contract_deadline = {
-        'short': 30,
-        'medium': 35,
-        'long': 54
+        'short': 300000,
+        'medium': 3500,
+        'long': 5400
     }

@@ -15,7 +15,7 @@ from game.common.contract import Contract
 class Truck(GameObject):
 
     def __init__(self, node = None):
-        super().__init__()
+        super().__init__() 
         self.object_type = ObjectType.truck
         self.current_node = node
         self.contract_list = []
@@ -40,6 +40,8 @@ class Truck(GameObject):
     def set_current_speed(self, speed):
         if speed < 1:
             speed = 1
+        elif speed > GameStats.truck_maximum_speed:
+            speed = GameStats.truck_maximum_speed
         self.speed = speed
 
     def to_json(self):
@@ -73,7 +75,7 @@ class Truck(GameObject):
         self.renown = data['renown']
         self.event_type_bonus = data['event_type_bonus']
         if data['body']['object_type'] == ObjectType.headlights:
-            headlights = Headlights()
+            headlights = HeadLights()
             headlights.from_json(data['body'])
             self.body = headlights
         elif data['body']['object_type'] == ObjectType.sentryGun:

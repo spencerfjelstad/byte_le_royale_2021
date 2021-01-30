@@ -13,7 +13,6 @@ from game.controllers.event_controller import EventController
 from game.config import *
 from game.controllers import event_controller
 from game.common.enums import *
-
 from collections import deque
 import math
 import random
@@ -25,7 +24,7 @@ class ActionController(Controller):
         self.event_controller = EventController()
         self.contract_list = list()
 
-    def handle_actions(self, player, obj=None):
+    def handle_actions(self, player):
         player_action = player.action._chosen_action
         # Without a contract truck has no node to move to, ensure a contract is always active
         if player.truck.active_contract is not None or player_action == ActionType.select_contract:
@@ -35,19 +34,19 @@ class ActionController(Controller):
                 #Checks if contract_list is empty. If so, we have a problem
                 if(len(self.contract_list) == 0): raise ValueError("Contract list cannot be empty")
 
-                #Selects the contract given in the player.action.contract_index
+                #Selects the contract given in the player.action.action_parameter
                 self.select_contract(player)
                 
             elif(player_action == ActionType.select_route):
                 #Moves the player to the node given in the action_parameter
                 #self.move(player, player_action.action.action_parameter)
                 self.move(player)
-
         if(player_action == ActionType.buy_gas):
             self.buy_gas(player)
-
+        elif(player_action == ActionType.heal):
+            self.heal(player)
         elif(player_action == ActionType.upgrade):
-            self.upgrade_level(self, player, obj)
+            self.upgrade_level(player, player.action.action_parameter)
 
         elif(player_action == ActionType.choose_speed):
             #This is an ActionType because the user client cannot directly influence truck values. 
@@ -66,7 +65,6 @@ class ActionController(Controller):
         fuel_efficiency = GameStats.costs_and_effectiveness[ObjectType.tires]['fuel_efficiency'][player.truck.tires]
         if(isinstance(player.truck.addons, RabbitFoot)):
             luck = 1 - GameStats.costs_and_effectiveness[ObjectType.rabbitFoot]['effectiveness'][player.truck.addons.level]
-
         for route in self.current_location.roads:
             if route == road: #May need to be redone
                 player.truck.current_node = self.current_location.next_node
@@ -80,21 +78,45 @@ class ActionController(Controller):
 
     # Retrieve by index and store in Player, then clear the list
     def select_contract(self, player):
-        player.truck.active_contract = self.contract_list[int(player.action.action_parameter)]
-        player.truck.current_node = player.truck.active_contract.game_map.current_node
-        self.contract_list.clear()
+        if len(self.contract_list) > int(player.action.action_parameter) or int(player.action.action_parameter) < 0:
+            player.truck.active_contract = self.contract_list[int(player.action.action_parameter)]
+            player.truck.current_node = player.truck.active_contract.game_map.current_node
+            self.contract_list.clear()
+        else:
+            self.print("Contract list index was out of bounds")
 
     def buy_gas(self, player):
-        gasPrice = round(random.uniform(1, 5), 2)  # gas price per percent
+        #Gas price is tied to node
+        gasPrice = player.truck.current_node.gas_price
         if(player.truck.money > 0):
-            percentRemain = player.truck.body.max_gas - round(player.truck.body.current_gas, 2)
+            #Calculate what percent empty is the gas tank
+            percentGone = (1 - (round(player.truck.body.current_gas, 2) / player.truck.body.max_gas))
+            #Calculate the percentage the player could potentially buy
             maxPercent = round((player.truck.money / gasPrice) / 100, 2)
-            if(percentRemain < maxPercent):
-                player.truck.money -= percentRemain * gasPrice
+            if(percentGone < maxPercent):
+                #If they can afford to fill up all the way, fill em up
+                player.truck.money -= (percentGone * 100) * gasPrice
                 player.truck.body.current_gas = player.truck.body.max_gas
             else:
+                #Otherwise, give them the max percentage they can buy
                 player.truck.money = 0
-                player.truck.money += maxPercent
+                player.truck.body.current_gas += (maxPercent * player.truck.body.max_gas)
+
+    def heal(self, player):
+        healPrice = player.truck.current_node.repair_price
+        if(player.truck.money > 0):
+            #Calculate what percent repair is missing
+            percentRemain = 1 - (round(player.truck.health, 2) / GameStats.truck_starting_health)
+            #Calculate what percent repair they can afford
+            maxPercent = round((player.truck.money / healPrice) / 100, 2)
+            if(percentRemain < maxPercent):
+                #If they can afford it, repair the truck all the way
+                player.truck.money -= (percentRemain * 100) * healPrice
+                player.truck.health = GameStats.truck_starting_health
+            else:
+                #Otherwise, do the maximum repairs
+                player.truck.money = 0
+                player.truck.health += maxPercent
 
     def upgrade_body(self, player, objEnum, typ):
         if objEnum is ObjectType.tank:
@@ -208,10 +230,12 @@ class ActionController(Controller):
             # If the objects enum is an addon type, pass off to addon upgrade method
             elif objEnum in GameStats.addonObjects:
                 self.upgrade_addons(player, objEnum, typ)
+                player.truck.addons.update()
 
             # If the objects enum is a body type, pass off to body upgrade method
             elif objEnum in GameStats.body_objects:
                 self.upgrade_body(player, objEnum, typ)
+                player.truck.body.update()
 
             # The upgrade logic for tires is much simpler, but I have decided to modularize it for the sake of consistancy
             elif objEnum is ObjectType.tires:
