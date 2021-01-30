@@ -76,6 +76,7 @@ class TireType:
     tire_normal = 0
     tire_econ = 1
     tire_sticky = 2
+    monster_truck = 3
 
 
 class HeadlightLevel:
