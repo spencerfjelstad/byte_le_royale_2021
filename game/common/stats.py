@@ -289,7 +289,8 @@ class GameStats:
 
     truck_starting_max_gas = 1
 
-    truck_starting_mpg = 8
+    def getMPG(speed):
+        return (-0.002649444*(speed**2))+(.2520296*speed)+.22752
 
     tire_switch_cost = 300
 
@@ -297,9 +298,9 @@ class GameStats:
 
     road_length_variance = .2
 
-    minimum_health_price = 10
+    minimum_repair_price = 10
 
-    maximum_health_price = 30
+    maximum_repair_price = 30
 
     minimum_gas_price = 1
 
@@ -327,7 +328,7 @@ class GameStats:
     }
 
     contract_deadline = {
-        'short': 300000,
+        'short': 3000,
         'medium': 3500,
         'long': 5400
     }

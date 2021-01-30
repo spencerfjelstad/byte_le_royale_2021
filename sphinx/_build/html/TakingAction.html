@@ -1,0 +1,273 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Taking Action &mdash; Placeholder  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Placeholder
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="test.html">My Title</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Placeholder</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Taking Action</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/TakingAction.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="taking-action">
+<h1>Taking Action<a class="headerlink" href="#taking-action" title="Permalink to this headline">¶</a></h1>
+<p>A critical part of building your bot is taking actions. The actions you can take are listed below.
+Only one action can be set per turn. All actions are set by calling</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">enum</span><span class="p">,</span> <span class="p">{</span><span class="n">option</span><span class="p">})</span>
+</pre></div>
+</div>
+<div class="section" id="selecting-a-contract">
+<h2>Selecting a contract<a class="headerlink" href="#selecting-a-contract" title="Permalink to this headline">¶</a></h2>
+<p>A list of contracts will be generated every turn. These contracts can be viewed in truck.contract_list
+Once you have chosen a contract, pass the select contract enum and the index of the contract which you
+wish to select.</p>
+<p>EX:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">select_contract</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Will set your contract to the contract at index 0</p>
+</div>
+<div class="section" id="moving">
+<h2>Moving<a class="headerlink" href="#moving" title="Permalink to this headline">¶</a></h2>
+<p>Moving requires selecting a road. The list of roads you can select is in truck.current_node.roads.
+Simply pass the road you wish to travel to by passing the index of the road you wish to take. Each
+road will lead to the same node.</p>
+<p>EX:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">select_route</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Will take your road at index 0</p>
+</div>
+<div class="section" id="buying-gas">
+<h2>Buying Gas<a class="headerlink" href="#buying-gas" title="Permalink to this headline">¶</a></h2>
+<p>You can buy gas at every node. Gas prices vary from node to node. There are no arguments passed to the
+buy gas method, it will either fill up your tank or buy the most gas you can afford.</p>
+<p>EX:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">buy_gas</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Will fill your tank (or buy the most you can afford</p>
+</div>
+<div class="section" id="repairing">
+<h2>Repairing<a class="headerlink" href="#repairing" title="Permalink to this headline">¶</a></h2>
+<p>Throughout the game your truck will take damage. Similar to buying gas, Repair prices will fluctuate from
+node to node. No arguments are required, and the truck will either fully repair or repair the most you can
+afford.</p>
+<p>EX:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">repair</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Will fill your tank (or buy the most you can afford)</p>
+</div>
+<div class="section" id="upgrading">
+<h2>Upgrading<a class="headerlink" href="#upgrading" title="Permalink to this headline">¶</a></h2>
+<p>Upgrades can negate damage and time penalties from events. There are three upgrade slots (body, addons, and tires)
+which each have three different upgrade types. If you don’t have enough money, the upgrade will be ignored. Switching
+from one object to another will result in a complete loss of the former upgrade.</p>
+<p>EX:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">upgrade</span><span class="p">,</span> <span class="n">Objectype</span><span class="o">.</span><span class="n">policeScanner</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Will upgrade or switch your add on object to policeScanner</p>
+</div>
+<div class="section" id="choosing-a-speed">
+<h2>Choosing a speed<a class="headerlink" href="#choosing-a-speed" title="Permalink to this headline">¶</a></h2>
+<p>You can set your trucks speed to an integer value between 1 and 80 MPH. Going faster will allow you to complete more
+contracts, but will also increase the probability of events happening.</p>
+<p>EX:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">choose_speed</span><span class="p">,</span> <span class="mi">66</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Will set your trucks speed to 66 mph</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, ACM.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

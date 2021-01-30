@@ -42,7 +42,7 @@ class ActionController(Controller):
                 self.move(player)
         if(player_action == ActionType.buy_gas):
             self.buy_gas(player)
-        elif(player_action == ActionType.heal):
+        elif(player_action == ActionType.repair):
             self.heal(player)
         elif(player_action == ActionType.upgrade):
             self.upgrade_level(player, player.action.action_parameter)
@@ -62,14 +62,13 @@ class ActionController(Controller):
         time_taken = 0
         luck = 1
         fuel_efficiency = GameStats.costs_and_effectiveness[ObjectType.tires]['fuel_efficiency'][player.truck.tires]
-        if(isinstance(player.truck.addons, RabbitFoot)):
-            luck = 1 - GameStats.costs_and_effectiveness[ObjectType.rabbitFoot]['effectiveness'][player.truck.addons.level]
         for route in self.current_location.roads:
             if route == road: #May need to be redone
                 player.truck.current_node = self.current_location.next_node
                 self.event_controller.trigger_event(road, player, player.truck)
-                time_taken = (road.length / player.truck.get_current_speed()) * luck
-                gas_used = (road.length/(GameStats.truck_starting_mpg * fuel_efficiency))/(GameStats.truck_starting_max_gas*100)
+                time_taken = (road.length / player.truck.get_current_speed())
+                breakpoint()
+                gas_used = (road.length/(GameStats.getMPG(player.truck.speed) * fuel_efficiency))/(player.truck.body.max_gas*100)
                 player.truck.body.current_gas -= gas_used
                 player.time -= time_taken
                 # Don't care about return value, just updating so contract and player sync
