@@ -1,6 +1,7 @@
 # This is a quick example test file to show you the basics.
 # Always remember to add the proper details to the __init__.py file in the 'tests' folder
 # to insure your tests are run.
+from game.common.action import Action
 from game.common import stats
 from game.utils import helpers
 import unittest
@@ -21,24 +22,6 @@ class TestActionController(unittest.TestCase):
         self.myPlayer = Player(12, "Sean")
         self.myPlayer.truck.money = 10000
         self.actionCont = ActionController()
-
-    # Test methods should always start with the word 'test'
-    #def test_valid_move(self):
-        # self.myPlayer.active_action_parameter = 0
-        # self.actionCont.select_contract(self.myPlayer)
-        # nextNode = self.myPlayer.truck.current_node.next_node
-        # startGas = self.myPlayer.truck.body.current_gas
-        # self.actionCont.move(self.myPlayer, self.myPlayer.truck.current_node.roads[0])
-        # self.assertEqual(nextNode, self.myPlayer.truck.current_node)
-        # self.assertGreater(startGas, self.myPlayer.truck.body.current_gas)
-
-    # def test_invalid_move(self):
-    #     nextNode = self.myPlayer.truck.current_node.next_node
-    #     startGas = self.myPlayer.truck.body.current_gas
-    #     rd = Road('TheWrongWay',RoadType.city_road, 10000)
-    #     self.actionCont.move(self.myPlayer, rd)
-    #     self.assertNotEqual(nextNode, self.myPlayer.truck.current_node)
-    #     self.assertEqual(startGas, self.myPlayer.truck.body.current_gas)
 
     def test_event_controller_tires(self):
         neg = stats.GameStats.costs_and_effectiveness[ObjectType.tires]['effectiveness'][self.myPlayer.truck.tires]

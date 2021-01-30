@@ -103,13 +103,7 @@ class MasterController(Controller):
         data['Team Name'] = clients.team_name
         data['time'] = clients.time
         data['truck'] = clients.truck.to_json()
-
-        # data['action'] = clients.action.to_json()
-        # data['money'] = clients.truck.money
-        # data['renown'] = clients.truck.renown
-        # data['body'] = clients.truck.body.to_json()
-        #data['active_contract'] = clients.active_contract
-
+        
         return data
 
     # Gather necessary data together in results file
