@@ -54,7 +54,6 @@ class Truck(GameObject):
         data['health'] = self.health
         data['money'] = self.money
         data['renown'] = self.renown
-        data['event_type_bonus'] = self.event_type_bonus
         data['body'] = self.body.to_json()
         data['addons'] = self.addons.to_json()
         data['tires'] = self.tires
@@ -73,7 +72,6 @@ class Truck(GameObject):
         self.health = data['health']
         self.money = data['money']
         self.renown = data['renown']
-        self.event_type_bonus = data['event_type_bonus']
         if data['body']['object_type'] == ObjectType.headlights:
             headlights = HeadLights()
             headlights.from_json(data['body'])

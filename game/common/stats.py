@@ -175,57 +175,43 @@ class GameStats:
         RoadType.interstate: 2
     }
 
+    
     possible_event_types = {
-        RoadType.mountain_road: [EventType.rock_slide, EventType.animal_in_road, EventType.icy_road, EventType.police, EventType.none],
-        RoadType.forest_road: [EventType.animal_in_road, EventType.police, EventType.rock_slide, EventType.icy_road, EventType.none],
-        RoadType.tundra_road: [EventType.icy_road, EventType.police, EventType.rock_slide, EventType.none],
-        RoadType.city_road: [EventType.bandits, EventType.police, EventType.traffic, EventType.none],
-        RoadType.highway: [EventType.police, EventType.traffic, EventType.none],
-        RoadType.interstate: [EventType.traffic, EventType.police, EventType.none]
+        RoadType.mountain_road: {EventType.rock_slide: 40, EventType.animal_in_road: 30, EventType.icy_road: 20, EventType.police: 10, EventType.none: 0},
+        RoadType.forest_road: {EventType.animal_in_road: 40, EventType.police: 30, EventType.rock_slide: 20, EventType.icy_road: 10, EventType.none: 0},
+        RoadType.tundra_road: {EventType.icy_road: 50, EventType.police: 33, EventType.rock_slide: 17, EventType.none: 0},
+        RoadType.city_road: {EventType.bandits: 50, EventType.police: 33, EventType.traffic: 17, EventType.none: 0},
+        RoadType.highway: {EventType.police: 67, EventType.traffic: 33, EventType.none: 0},
+        RoadType.interstate: {EventType.traffic: 67, EventType.police: 33, EventType.none: 0}
     }
 
-    event_weights = {
-        # Order for corresponding event type listed above list
-        # Mountain order: rock slide, animal in road, icy road, police, none
-        RoadType.mountain_road: [40, 30, 20, 10, 0],
-        # Forest order: animal in road, police, rock slide, icy road, none
-        RoadType.forest_road: [40, 30, 20, 10, 0],
-        # Tundra order: icy road, police, rock slide, none
-        RoadType.tundra_road: [50, 33, 17, 0],
-        # City order: bandits, police, traffic, none
-        RoadType.city_road: [50, 33, 17, 0],
-        # Highway order: police, traffic, none
-        RoadType.highway: [67, 33, 0],
-        # Interstate order: traffic, police, none
-        RoadType.interstate: [67, 33, 0]
-    }
+    event_weights = dict()
 
-    animal_total = 0
-    bandit_total = 0
-    icy_total = 0
-    police_total = 0
-    rockslide_total = 0
-    traffic_total = 0
-    for i in possible_event_types:
-        for j in possible_event_types[i]:
-            if possible_event_types[i][j] == EventType.animal_in_road:
-                animal_total += event_weights[i][j]
-            elif possible_event_types[i][j] == EventType.bandits:
-                bandit_total += event_weights[i][j]
-            elif possible_event_types[i][j] == EventType.icy_road:
-                icy_total += event_weights[i][j]
-            elif possible_event_types[i][j] == EventType.police:
-                police_total += event_weights[i][j]
-            elif possible_event_types[i][j] == EventType.rock_slide:
-                rockslide_total += event_weights[i][j]
-            elif possible_event_types[i][j] == EventType.traffic:
-                traffic_total += event_weights[i][j]
-    animal_chance = animal_total/2400
-    bandit_chance = bandit_total/2400
-    icy_chance = icy_total/2400
-    police_chance = police_total/2400
-    rockslide_chance = rockslide_total/2400
-    traffic_chance = traffic_total/2400
+    for road_type in possible_event_types:
+        for event_type in possible_event_types[road_type]:
+            if event_type not in event_weights:
+                event_weights[event_type] = 0
+            event_weights[event_type] += possible_event_types[road_type][event_type]
+    # for road_type in possible_event_types.keys():
+    #     for event_type in possible_event_types[road_type]:
+    #         if event_type == EventType.animal_in_road:
+    #             animal_total += event_weights[i][j]
+    #         elif possible_event_types[i][j] == EventType.bandits:
+    #             bandit_total += event_weights[i][j]
+    #         elif possible_event_types[i][j] == EventType.icy_road:
+    #             icy_total += event_weights[i][j]
+    #         elif possible_event_types[i][j] == EventType.police:
+    #             police_total += event_weights[i][j]
+    #         elif possible_event_types[i][j] == EventType.rock_slide:
+    #             rockslide_total += event_weights[i][j]
+    #         elif possible_event_types[i][j] == EventType.traffic:
+    #             traffic_total += event_weights[i][j]
+    animal_chance = event_weights[EventType.animal_in_road]/2400
+    bandit_chance = event_weights[EventType.bandits]/2400
+    icy_chance = event_weights[EventType.icy_road]/2400
+    police_chance = event_weights[EventType.police]/2400
+    rockslide_chance = event_weights[EventType.rock_slide]/2400
+    traffic_chance = event_weights[EventType.traffic]/2400
 
     event_type_damage = {
         EventType.animal_in_road: 1/animal_chance,
@@ -238,12 +224,12 @@ class GameStats:
     }
 
     event_type_time = {
-        EventType.animal_in_road: animal_total / 20,
-        EventType.bandits: bandit_total / 20,
-        EventType.icy_road: icy_total / 20,
-        EventType.police: police_total / 20,
-        EventType.rock_slide: rockslide_total / 20,
-        EventType.traffic: traffic_total / 20,
+        EventType.animal_in_road: event_weights[EventType.animal_in_road] / 20,
+        EventType.bandits: event_weights[EventType.bandits] / 20,
+        EventType.icy_road: event_weights[EventType.icy_road] / 20,
+        EventType.police: event_weights[EventType.police] / 20,
+        EventType.rock_slide: event_weights[EventType.rock_slide] / 20,
+        EventType.traffic: event_weights[EventType.traffic] / 20,
         EventType.none: 0
     }
 
