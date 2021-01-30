@@ -15,7 +15,7 @@ from game.common.contract import Contract
 class Truck(GameObject):
 
     def __init__(self, node = None):
-        super().__init__()
+        super().__init__() 
         self.object_type = ObjectType.truck
         self.current_node = node
         self.contract_list = []
@@ -23,7 +23,7 @@ class Truck(GameObject):
         self.body = Tank()
         self.addons = PoliceScanner()
         self.tires = TireType.tire_normal
-        self.__speed = 50
+        self.speed = 50
         self.health = GameStats.truck_starting_health
         self.money = GameStats.player_starting_money
         self.renown = 0
@@ -35,14 +35,14 @@ class Truck(GameObject):
         return self.active_contract
 
     def get_current_speed(self):
-        return self.__speed
+        return self.speed
 
     def set_current_speed(self, speed):
         if speed < 1:
             speed = 1
         elif speed > GameStats.truck_maximum_speed:
             speed = GameStats.truck_maximum_speed
-        self.__speed = speed
+        self.speed = speed
 
     event_type_bonus = {
         EventType.police: 0,
@@ -70,7 +70,7 @@ class Truck(GameObject):
         data['current_node'] = node
         data['contract_list'] = {contract.name: contract.to_json() for contract in self.contract_list}
         data['active_contract'] = self.active_contract.to_json() if self.active_contract is not None else None
-        data['speed'] = self.__speed
+        data['speed'] = self.speed
         data['health'] = self.health
         data['money'] = self.money
         data['renown'] = self.renown
@@ -89,7 +89,7 @@ class Truck(GameObject):
         for contract in data['contract_list'].values():
             self.contract_list.append(temp.from_json(contract))
         self.active_contract = temp.from_json(data['active_contract'])
-        self.__speed = data['speed']
+        self.speed = data['speed']
         self.health = data['health']
         self.money = data['money']
         self.renown = data['renown']
@@ -130,7 +130,7 @@ class Truck(GameObject):
             Contract: {str(self.active_contract)}
             Gas: {self.body.current_gas}
             Max Gas: {self.body.max_gas}
-            Speed: {self.__speed}
+            Speed: {self.speed}
             Health: {self.health}
             Money: {self.money}
             Renown: {self.renown}
