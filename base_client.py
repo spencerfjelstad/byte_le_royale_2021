@@ -25,17 +25,21 @@ class Client(UserClient):
         
         if(truck.active_contract is None):
             # Select contract
+            print("Select")
             actions.set_action(ActionType.select_contract, 0)
         elif(truck.body.current_gas < .2):
             # Buy gas
+            print("Gas")
             actions.set_action(ActionType.buy_gas)
         elif truck.health < 30 and truck.money > 1000:
             print("Heal")
             actions.set_action(ActionType.heal)
         elif  truck.body.level < 3 and 1000 * 1.2 < truck.money:
+            print("upgrade")
             actions.set_action(ActionType.upgrade, ObjectType.tank)
-        elif(truck.current_node.city_name is not 'end'):
+        elif(truck.current_node.city_name != 'end'):
             # Move to next node
+            print("move")
             actions.set_action(ActionType.select_route, truck.current_node.roads[0])
         
 
