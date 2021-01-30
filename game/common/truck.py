@@ -1,3 +1,5 @@
+from game.common.TrUpgrades.baseUpgradeObject import BaseUpgradeObject
+from game.common.TrUpgrades.BodyObjects.baseBodyObject import BaseBodyObject
 from game.common.game_object import GameObject
 from game.common.enums import *
 from game.common.road import *
@@ -20,8 +22,8 @@ class Truck(GameObject):
         self.current_node = node
         self.contract_list = []
         self.active_contract = None
-        self.body = Tank()
-        self.addons = PoliceScanner()
+        self.body = BaseBodyObject(0,0)
+        self.addons = BaseUpgradeObject(0,0)
         self.tires = TireType.tire_normal
         self.speed = 50
         self.health = GameStats.truck_starting_health

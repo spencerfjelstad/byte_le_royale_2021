@@ -67,7 +67,6 @@ class ActionController(Controller):
                 player.truck.current_node = self.current_location.next_node
                 self.event_controller.trigger_event(road, player, player.truck)
                 time_taken = (road.length / player.truck.get_current_speed())
-                breakpoint()
                 gas_used = (road.length/(GameStats.getMPG(player.truck.speed) * fuel_efficiency))/(player.truck.body.max_gas*100)
                 player.truck.body.current_gas -= gas_used
                 player.time -= time_taken
