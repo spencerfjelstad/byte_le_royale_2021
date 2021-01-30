@@ -34,11 +34,12 @@ class GameStats:
     # objects that can occupy the addon slot
     addonObjects = [
         ObjectType.policeScanner, #police
-        ObjectType.rabbitFoot, #bandit
+        ObjectType.rabbitFoot, #all
         ObjectType.GPS #traffic
     ]
 
     tireObjects = [
+        TireType.monster_truck #bandits
         TireType.tire_econ, #fuel_efficiency
         TireType.tire_normal, #baseline
         TireType.tire_sticky #icy
@@ -50,27 +51,27 @@ class GameStats:
     costs_and_effectiveness = {
         ObjectType.policeScanner: {
             'cost': {
-                ScannerLevel.level_zero: 0,
-                ScannerLevel.level_one: 300,
-                ScannerLevel.level_two: 900,
-                ScannerLevel.level_three: 2000
+                ScannerLevel.level_zero: 5400,
+                ScannerLevel.level_one: 10800,
+                ScannerLevel.level_two: 16200,
+                ScannerLevel.level_three: 21600
             },
 
             # error range provided by each scanner
             'effectiveness': {
                 ScannerLevel.level_zero: .1,
                 ScannerLevel.level_one: .2,
-                ScannerLevel.level_two: .3,
-                ScannerLevel.level_three: .6
+                ScannerLevel.level_two: .35,
+                ScannerLevel.level_three: .5
             }
         },
 
         ObjectType.tank: {
             'cost': {
-                TankLevel.level_zero: 10,
-                TankLevel.level_one: 300,
-                TankLevel.level_two: 900,
-                TankLevel.level_three: 2000
+                TankLevel.level_zero: 5400,
+                TankLevel.level_one: 10800,
+                TankLevel.level_two: 16200,
+                TankLevel.level_three: 21600
             },
 
             'effectiveness': {
@@ -86,79 +87,81 @@ class GameStats:
             "effectiveness": {
                 TireType.tire_econ: 0,
                 TireType.tire_normal: 0,
-                TireType.tire_sticky: .2
+                TireType.tire_sticky: .3
+                TireType.monster_truck: .3
             },
 
             "fuel_efficiency": {
                 TireType.tire_econ: 1.5,
                 TireType.tire_normal: 1,
-                TireType.tire_sticky: .75
+                TireType.tire_sticky: 1
+                TireType.monster_truck = 1
             }
         },
 
 
         ObjectType.headlights: {
             "cost": {
-                HeadlightLevel.level_zero: 10,
-                HeadlightLevel.level_one: 50,
-                HeadlightLevel.level_two: 100,
-                HeadlightLevel.level_three: 300
+                HeadlightLevel.level_zero: 5400,
+                HeadlightLevel.level_one: 10800,
+                HeadlightLevel.level_two: 16200,
+                HeadlightLevel.level_three: 21600
             },
 
             "effectiveness": {
                 HeadlightLevel.level_zero: .1,
-                HeadlightLevel.level_one: .3,
-                HeadlightLevel.level_two: .7,
-                HeadlightLevel.level_three: .9
+                HeadlightLevel.level_one: .2,
+                HeadlightLevel.level_two: .35,
+                HeadlightLevel.level_three: .5
             }
         },
 
         ObjectType.sentryGun: {
             "cost": {
-                SentryGunLevel.level_zero: 10,
-                SentryGunLevel.level_one: 50,
-                SentryGunLevel.level_two: 100,
-                SentryGunLevel.level_three: 300
+                SentryGunLevel.level_zero: 5400,
+                SentryGunLevel.level_one: 10800,
+                SentryGunLevel.level_two: 16200,
+                SentryGunLevel.level_three: 21600
             },
             "effectiveness": {
                 SentryGunLevel.level_zero: .1,
-                SentryGunLevel.level_one: .3,
-                SentryGunLevel.level_two: .6,
-                SentryGunLevel.level_three: .8
+                SentryGunLevel.level_one: .2,
+                SentryGunLevel.level_two: .35,
+                SentryGunLevel.level_three: .5
             }
 
         },
 
         ObjectType.rabbitFoot: {
             "cost": {
-                RabbitFootLevel.level_zero: 10,
-                RabbitFootLevel.level_one: 20,
-                RabbitFootLevel.level_two: 40,
-                RabbitFootLevel.level_three: 80
+                RabbitFootLevel.level_zero: 5400,
+                RabbitFootLevel.level_one: 10800,
+                RabbitFootLevel.level_two: 16200,
+                RabbitFootLevel.level_three: 21600
             },
 
             "effectiveness": {
-                RabbitFootLevel.level_zero: .1,
-                RabbitFootLevel.level_one: .2,
-                RabbitFootLevel.level_two: .25,
-                RabbitFootLevel.level_three: .27
+                RabbitFootLevel.level_zero: .025,
+                RabbitFootLevel.level_one: .05,
+                RabbitFootLevel.level_two: .1,
+                RabbitFootLevel.level_three: .15
             }
 
         },
 
         ObjectType.GPS: {
             "cost": {
-                GPSLevel.level_zero: 100,
-                GPSLevel.level_one: 200,
-                GPSLevel.level_two: 700,
-                GPSLevel.level_three: 1400
+                GPSLevel.level_zero: 5400,
+                GPSLevel.level_one: 10800,
+                GPSLevel.level_two: 16200,
+                GPSLevel.level_three: 21600
             },
 
             "effectiveness": {
-                GPSLevel.level_zero: .33,
-                GPSLevel.level_one: .5,
-                GPSLevel.level_two: .58,
-                GPSLevel.level_three: .65
+                GPSLevel.level_zero: .1,
+                GPSLevel.level_one: .2,
+                GPSLevel.level_two: .35,
+                GPSLevel.level_three: .5
             }
         }
     }
@@ -246,36 +249,15 @@ class GameStats:
 
     negations = {
 
-        ObjectType.headlights: [
-            EventType.animal_in_road,
-            EventType.traffic,
-            EventType.police,
-            EventType.rock_slide
-        ],
-
-        ObjectType.sentryGun: [
-            EventType.bandits,
-            EventType.police,
-            EventType.animal_in_road
-        ],
-
-        ObjectType.GPS: [
-            EventType.bandits,
-            EventType.traffic,
-            EventType.rock_slide,
-            EventType.police
-        ],
-
-        ObjectType.tank: [
-
-        ],
-
-        ObjectType.policeScanner: [
-            EventType.police,
-            EventType.bandits,
-            EventType.rock_slide
-        ],
-
+        ObjectType.headlights: [EventType.animal_in_road],
+        ObjectType.sentryGun: [EventType.rock_slide],
+        ObjectType.GPS: [EventType.traffic],
+        ObjectType.tank: [],
+        ObjectType.policeScanner: [EventType.police],
+        TireType.tire_sticky: [EventType.icy_road],
+        TireType.tire_normal: [],
+        TireType.tire_econ: [],
+        TireType.monster_truck: [EventType.bandits],        
         ObjectType.rabbitFoot: [
             EventType.animal_in_road,
             EventType.bandits,
@@ -283,22 +265,6 @@ class GameStats:
             EventType.police,
             EventType.rock_slide,
             EventType.traffic
-        ],
-
-        TireType.tire_sticky: [
-            EventType.animal_in_road,
-            EventType.icy_road,
-            EventType.police,
-            EventType.rock_slide,
-        ],
-        TireType.tire_normal: [
-            EventType.icy_road,
-            EventType.police,
-            EventType.rock_slide,
-        ],
-        TireType.tire_econ: [
-            EventType.police,
-            EventType.rock_slide,
         ]
     }
 
