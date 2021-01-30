@@ -11,11 +11,8 @@ class EventController(Controller):
         super().__init__()
 
     def trigger_event(self, road, player, truck):
-        #for i in range(len(GameStats.event_weights[road.road_type])-1):
-            #GameStats.event_weights[road.road_type][i] -= truck.event_type_bonus[GameStats.possible_event_types[road.road_type][i]]
-            #GameStats.event_weights[road.road_type][-1] += truck.event_type_bonus[GameStats.possible_event_types[road.road_type][i]]
         # Picks random event type from those possible on given road
-        chosen_event_type = random.choices(list(GameStats.possible_event_types[road.road_type].keys()), weights=GameStats.event_weights[road.road_type].values(), k=1)[0]
+        chosen_event_type = random.choices(list(GameStats.possible_event_types[road.road_type].keys()), weights=GameStats.possible_event_types[road.road_type].values(), k=1)[0]
         mods = self.negation(truck, chosen_event_type)
 
         # Deal damage based on event

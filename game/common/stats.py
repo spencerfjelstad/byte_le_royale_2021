@@ -192,20 +192,6 @@ class GameStats:
             if event_type not in event_weights:
                 event_weights[event_type] = 0
             event_weights[event_type] += possible_event_types[road_type][event_type]
-    # for road_type in possible_event_types.keys():
-    #     for event_type in possible_event_types[road_type]:
-    #         if event_type == EventType.animal_in_road:
-    #             animal_total += event_weights[i][j]
-    #         elif possible_event_types[i][j] == EventType.bandits:
-    #             bandit_total += event_weights[i][j]
-    #         elif possible_event_types[i][j] == EventType.icy_road:
-    #             icy_total += event_weights[i][j]
-    #         elif possible_event_types[i][j] == EventType.police:
-    #             police_total += event_weights[i][j]
-    #         elif possible_event_types[i][j] == EventType.rock_slide:
-    #             rockslide_total += event_weights[i][j]
-    #         elif possible_event_types[i][j] == EventType.traffic:
-    #             traffic_total += event_weights[i][j]
     animal_chance = event_weights[EventType.animal_in_road]/2400
     bandit_chance = event_weights[EventType.bandits]/2400
     icy_chance = event_weights[EventType.icy_road]/2400
