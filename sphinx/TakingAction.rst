@@ -90,7 +90,8 @@ Choosing a speed
 ################
 
 You can set your trucks speed to an integer value between 1 and 80 MPH. Going faster will allow you to complete more
-contracts, but will also increase the probability of events happening.
+contracts, but will also increase the probability of events happening. Your speed also affects your miles per gallon 
+efficiency.
 
 EX:
 
