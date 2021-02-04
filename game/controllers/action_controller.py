@@ -56,6 +56,9 @@ class ActionController(Controller):
             self.print("Action aborted: no active contract!")
 
     # Action Methods ---------------------------------------------------------
+    def set_speed(self, player, speed):
+        player.truck.set_current_speed(speed)
+    
     def move(self, player):
         road = player.action.action_parameter
 
