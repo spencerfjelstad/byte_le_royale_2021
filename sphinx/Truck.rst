@@ -21,4 +21,4 @@ speed              int                         The speed your truck is currently
 renown             int                         Your score. The game is won by having the most renown
 ================  =========================== ===================
 
-Please note that the BaaseBodyObject gives you the default max_gas attribute. You can't switch back to the base objects once you upgrade
+Please note that the BaseBodyObject gives you the default max_gas attribute. You can't switch back to the base objects once you upgrade

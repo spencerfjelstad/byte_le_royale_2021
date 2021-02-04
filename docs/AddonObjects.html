@@ -93,7 +93,12 @@
 <li class="toctree-l1"><a class="reference internal" href="GameMap.html">Game Map</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Node.html">Node</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Road.html">Road</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Add On Objects</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Add On Objects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-policescanner-object">The policeScanner Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-gps-object">The gps Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-rabbits-foot-object">The Rabbits foot Object</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="BodyObjects.html">Body Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TireObjects.html">Tires</a></li>
 </ul>
@@ -165,7 +170,115 @@
             
   <div class="section" id="add-on-objects">
 <h1>Add On Objects<a class="headerlink" href="#add-on-objects" title="Permalink to this headline">¶</a></h1>
-<p>Add-on objects</p>
+<p>Body objects occupy the body attribute in the truck object. You can only have one Body object at a time. Aditionally the body object also holds the
+current_gas attribute, which is how much gas remains in your tank, and the max_gas attribute, which defaults to 1.</p>
+<div class="section" id="the-policescanner-object">
+<h2>The policeScanner Object<a class="headerlink" href="#the-policescanner-object" title="Permalink to this headline">¶</a></h2>
+<p>The police scanner object helps you evade the cops.</p>
+<p>The levels are below</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 60%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Level</p></th>
+<th class="head"><p>Negation modifier</p></th>
+<th class="head"><p>Cost</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0.1</p></td>
+<td><p>5400</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>0.2</p></td>
+<td><p>10800</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>0.35</p></td>
+<td><p>16200</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>0.5</p></td>
+<td><p>21600</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="the-gps-object">
+<h2>The gps Object<a class="headerlink" href="#the-gps-object" title="Permalink to this headline">¶</a></h2>
+<p>GPS will help re-route you away from traffic.</p>
+<p>The levels are below (fix levels)</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 60%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Level</p></th>
+<th class="head"><p>Negation modifier</p></th>
+<th class="head"><p>Cost</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0.1</p></td>
+<td><p>5400</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>0.2</p></td>
+<td><p>10800</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>0.35</p></td>
+<td><p>16200</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>0.5</p></td>
+<td><p>21600</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="the-rabbits-foot-object">
+<h2>The Rabbits foot Object<a class="headerlink" href="#the-rabbits-foot-object" title="Permalink to this headline">¶</a></h2>
+<p>?</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 60%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Level</p></th>
+<th class="head"><p>Negation modifier</p></th>
+<th class="head"><p>Cost</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0.1</p></td>
+<td><p>5400</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>0.2</p></td>
+<td><p>10800</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>0.35</p></td>
+<td><p>16200</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>0.5</p></td>
+<td><p>21600</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 
 

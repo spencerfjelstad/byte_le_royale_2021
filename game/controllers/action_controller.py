@@ -26,34 +26,34 @@ class ActionController(Controller):
 
     def handle_actions(self, player):
         player_action = player.action._chosen_action
+        player.time -= 1
         # Without a contract truck has no node to move to, ensure a contract is always active
         if player.truck.active_contract is not None or player_action == ActionType.select_contract:
-            #Call the appropriate method for this action
-            
-            if(player_action == ActionType.select_contract):
-                #Checks if contract_list is empty. If so, we have a problem
-                if(len(self.contract_list) == 0): raise ValueError("Contract list cannot be empty")
+            # Call the appropriate method for this action
 
-                #Selects the contract given in the player.action.action_parameter
+            if(player_action == ActionType.select_contract):
+                # Checks if contract_list is empty. If so, we have a problem
+                if(len(self.contract_list) == 0):
+                    raise ValueError("Contract list cannot be empty")
+
+                # Selects the contract given in the player.action.action_parameter
                 self.select_contract(player)
-                
+
             elif(player_action == ActionType.select_route):
-                #Moves the player to the node given in the action_parameter
+                # Moves the player to the node given in the action_parameter
                 #self.move(player, player_action.action.action_parameter)
                 self.move(player)
         if(player_action == ActionType.buy_gas):
             self.buy_gas(player)
-<<<<<<< HEAD
+            player.time -= GameStats.gas_pumping_time_penelty
         elif(player_action == ActionType.repair):
-=======
-        elif(player_action == ActionType.heal):
->>>>>>> 52ba5ffcf4e325c1ff362bfbed688b3911faa8b1
             self.heal(player)
+            player.time -= GameStats.repair_pumping_time_penelty
         elif(player_action == ActionType.upgrade):
             self.upgrade_level(player, player.action.action_parameter)
-
+            player.time -= GameStats.upgrade_time_penelty
         elif(player_action == ActionType.choose_speed):
-            #This is an ActionType because the user client cannot directly influence truck values. 
+            # This is an ActionType because the user client cannot directly influence truck values.
             player.truck.set_current_speed(player.action_parameter)
 
         else:
@@ -66,18 +66,15 @@ class ActionController(Controller):
         self.current_location = player.truck.current_node
         time_taken = 0
         luck = 1
-        fuel_efficiency = GameStats.costs_and_effectiveness[ObjectType.tires]['fuel_efficiency'][player.truck.tires]
-<<<<<<< HEAD
-=======
-        if(isinstance(player.truck.addons, RabbitFoot)):
-            luck = 1 - GameStats.costs_and_effectiveness[ObjectType.rabbitFoot]['effectiveness'][player.truck.addons.level]
->>>>>>> 52ba5ffcf4e325c1ff362bfbed688b3911faa8b1
+        fuel_efficiency = GameStats.costs_and_effectiveness[
+            ObjectType.tires]['fuel_efficiency'][player.truck.tires]
         for route in self.current_location.roads:
-            if route == road: #May need to be redone
+            if route == road:  # May need to be redone
                 player.truck.current_node = self.current_location.next_node
                 self.event_controller.trigger_event(road, player, player.truck)
                 time_taken = (road.length / player.truck.get_current_speed())
-                gas_used = (road.length/(GameStats.getMPG(player.truck.speed) * fuel_efficiency))/(player.truck.body.max_gas*100)
+                gas_used = (road.length/(GameStats.getMPG(player.truck.speed)
+                                         * fuel_efficiency))/(player.truck.body.max_gas*100)
                 player.truck.body.current_gas -= gas_used
                 player.time -= time_taken
                 # Don't care about return value, just updating so contract and player sync
@@ -86,49 +83,53 @@ class ActionController(Controller):
     # Retrieve by index and store in Player, then clear the list
     def select_contract(self, player):
         if len(self.contract_list) > int(player.action.action_parameter) or int(player.action.action_parameter) < 0:
-            player.truck.active_contract = self.contract_list[int(player.action.action_parameter)]
+            player.truck.active_contract = self.contract_list[int(
+                player.action.action_parameter)]
             player.truck.current_node = player.truck.active_contract.game_map.current_node
             self.contract_list.clear()
         else:
             self.print("Contract list index was out of bounds")
 
     def buy_gas(self, player):
-        #Gas price is tied to node
+        # Gas price is tied to node
         gasPrice = player.truck.current_node.gas_price
         if(player.truck.money > 0):
-            #Calculate what percent empty is the gas tank
-            percentGone = (1 - (round(player.truck.body.current_gas, 2) / player.truck.body.max_gas))
-            #Calculate the percentage the player could potentially buy
+            # Calculate what percent empty is the gas tank
+            percentGone = (
+                1 - (round(player.truck.body.current_gas, 2) / player.truck.body.max_gas))
+            # Calculate the percentage the player could potentially buy
             maxPercent = round((player.truck.money / gasPrice) / 100, 2)
             if(percentGone < maxPercent):
-                #If they can afford to fill up all the way, fill em up
+                # If they can afford to fill up all the way, fill em up
                 player.truck.money -= (percentGone * 100) * gasPrice
                 player.truck.body.current_gas = player.truck.body.max_gas
             else:
-                #Otherwise, give them the max percentage they can buy
+                # Otherwise, give them the max percentage they can buy
                 player.truck.money = 0
-                player.truck.body.current_gas += (maxPercent * player.truck.body.max_gas)
+                player.truck.body.current_gas += (
+                    maxPercent * player.truck.body.max_gas)
 
     def heal(self, player):
         healPrice = player.truck.current_node.repair_price
         if(player.truck.money > 0):
-            #Calculate what percent repair is missing
-            percentRemain = 1 - (round(player.truck.health, 2) / GameStats.truck_starting_health)
-            #Calculate what percent repair they can afford
+            # Calculate what percent repair is missing
+            percentRemain = 1 - \
+                (round(player.truck.health, 2) / GameStats.truck_starting_health)
+            # Calculate what percent repair they can afford
             maxPercent = round((player.truck.money / healPrice) / 100, 2)
             if(percentRemain < maxPercent):
-                #If they can afford it, repair the truck all the way
+                # If they can afford it, repair the truck all the way
                 player.truck.money -= (percentRemain * 100) * healPrice
                 player.truck.health = GameStats.truck_starting_health
             else:
-                #Otherwise, do the maximum repairs
+                # Otherwise, do the maximum repairs
                 player.truck.money = 0
                 player.truck.health += maxPercent
 
     def upgrade_body(self, player, objEnum, typ):
         if objEnum is ObjectType.tank:
-            #If the player doesn't currently have a tank and they have enough money for the base tank, give them a tank!
-            if (not isinstance(player.truck.body, Tank)) and  GameStats.costs_and_effectiveness[ObjectType.tank]['cost'][0] <= player.truck.money:
+            # If the player doesn't currently have a tank and they have enough money for the base tank, give them a tank!
+            if (not isinstance(player.truck.body, Tank)) and GameStats.costs_and_effectiveness[ObjectType.tank]['cost'][0] <= player.truck.money:
                 player.truck.body = Tank()
                 player.truck.money -= GameStats.costs_and_effectiveness[ObjectType.tank]['cost'][0]
             else:
@@ -148,14 +149,14 @@ class ActionController(Controller):
                 # otherwise, upgrade their current headlights
                 lgt = player.truck.body
                 nxtLev = lgt.level + 1
-                if lgt.level is not HeadlightLevel.level_three and  GameStats.costs_and_effectiveness[ObjectType.headlights]['cost'][nxtLev] <= player.truck.money:
-                    player.truck.money -=  GameStats.costs_and_effectiveness[ObjectType.headlights]['cost'][nxtLev]
+                if lgt.level is not HeadlightLevel.level_three and GameStats.costs_and_effectiveness[ObjectType.headlights]['cost'][nxtLev] <= player.truck.money:
+                    player.truck.money -= GameStats.costs_and_effectiveness[ObjectType.headlights]['cost'][nxtLev]
                     player.truck.body.level = nxtLev
                 else:
                     self.print(
                         "Not enough money or at max level for headlights")
         if objEnum is ObjectType.sentryGun:
-            if (not isinstance(player.truck.body, SentryGun)) and  GameStats.costs_and_effectiveness[ObjectType.sentryGun]['cost'][0] <= player.truck.money:
+            if (not isinstance(player.truck.body, SentryGun)) and GameStats.costs_and_effectiveness[ObjectType.sentryGun]['cost'][0] <= player.truck.money:
                 player.truck.body = SentryGun()
                 player.truck.money -= GameStats.costs_and_effectiveness[ObjectType.sentryGun]['cost'][0]
             else:

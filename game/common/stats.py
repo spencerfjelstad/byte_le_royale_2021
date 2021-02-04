@@ -269,6 +269,12 @@ class GameStats:
 
     truck_maximum_speed = 80
 
+    gas_pumping_time_penelty = 5
+
+    repair_pumping_time_penelty = 10
+
+    upgrade_time_penelty = 4
+
     contract_node_count = {
         'short': 8,
         'medium': 14,

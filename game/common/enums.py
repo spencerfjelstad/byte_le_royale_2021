@@ -28,11 +28,7 @@ class ActionType:
     upgrade = 3
     select_contract = 4
     choose_speed = 5
-<<<<<<< HEAD
     repair= 6
-=======
-    heal = 6
->>>>>>> 52ba5ffcf4e325c1ff362bfbed688b3911faa8b1
 
 class Region:
     none = 0

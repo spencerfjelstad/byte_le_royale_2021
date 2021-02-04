@@ -25,5 +25,28 @@ Level  Max_Gas_multiplier Cost
 The Sentry Gun Object
 #####################
 
-The sentry gun object deters thieves and intimidates cops. It will reduce your damage and time penalties 
+The sentry gun object solves the rockslide event. It will reduce your damage and time penalties 
 according to the to the below table 
+
+=====  ================== ======
+Level    Negation          Cost
+=====  ================== ======
+0       0.1                5400
+1       0.2                10800
+2       0.35               16200
+3       0.5                21600
+=====  ================== ======
+
+The headlights Object
+#####################
+
+The headlights object negates the animal_in_the_road event. Below are the negations
+
+=====  ================== ======
+Level    Negation          Cost
+=====  ================== ======
+0       0.1                5400
+1       0.2                10800
+2       0.35               16200
+3       0.5                21600
+=====  ================== ======

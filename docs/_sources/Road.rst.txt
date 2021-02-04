@@ -40,13 +40,13 @@ Position      Road Type
 
 The potential events that can happen on a given road type are listed below. More on events can be seen at :doc:`./Events` 
 
-============ ==============
+============= ==============
 Road          Events
-============ ==============
-montain_road rock_slide, animal_in_road, icy_road, police, none
-forest_road  animal_in_road, police, rock_slide, icy_road, None
-tundra_road  icy_road, police, rock_slide, none
-city_road    bandits, police, traffic, none
-highway      police, traffic, none
-interstate   traffic, police, none
-=========== ==============
+============= ==============
+montain_road  rock_slide, animal_in_road, icy_road, police, none
+forest_road   animal_in_road, police, rock_slide, icy_road, None
+tundra_road   icy_road, police, rock_slide, none
+city_road     bandits, police, traffic, none
+highway       police, traffic, none
+interstate    traffic, police, none
+============= ==============
