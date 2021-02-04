@@ -266,7 +266,7 @@ class GameStats:
 
     maximum_gas_price = 5
 
-    truck_maximum_speed = 80
+    truck_maximum_speed = 100
 
     contract_node_count = {
         'short': 8,
