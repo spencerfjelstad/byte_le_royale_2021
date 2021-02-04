@@ -8,7 +8,10 @@ current_gas attribute, which is how much gas remains in your tank, and the max_g
 The Tank Object
 ###############
 
-The Tank object increases the max_gas attribute. The levels are below
+The Tank object increases the max_gas attribute. Gas levels are stored as percents, IE level 1 holds 50% more gas than level 0.
+Not having the Tank object leaves your truck with a level 0 tank.
+
+The levels are below
 
 =====  ================== =====
 Level  Max_Gas_multiplier Cost
@@ -22,4 +25,5 @@ Level  Max_Gas_multiplier Cost
 The Sentry Gun Object
 #####################
 
-The sentry gun object deters thieves and intimidates cops. It will reduce your damage to 
+The sentry gun object deters thieves and intimidates cops. It will reduce your damage and time penalties 
+according to the to the below table 

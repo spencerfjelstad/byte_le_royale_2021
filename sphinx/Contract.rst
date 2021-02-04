@@ -2,10 +2,13 @@
 Contract
 ===================
 
-The truck object holds everything related to the game. Below are the listed instance variables
+Contracts come in easy, medium and hard versions, which impact their rewards, renown, length and completabiltiy. 
+Easy contracts give less renown and reward, but are also shorter. The opposite is true with hard contracts
 
 Instance variables
 ##################
+
+Below are the listed instance variables for the contract object
 
 ================  =========================== ===================
 Name               Type                        Description
@@ -17,3 +20,4 @@ money_reward       int                         The amount of money you will reci
 renown_reward      int                         The amount of renown you will recieve from completing this contract
 deadline           int                         The time you must complete the contract by. Decrements Automatically
 ================  =========================== ===================
+

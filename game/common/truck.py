@@ -46,26 +46,6 @@ class Truck(GameObject):
             speed = GameStats.truck_maximum_speed
         self.speed = speed
 
-    event_type_bonus = {
-        EventType.police: 0,
-        EventType.animal_in_road: 0,
-        EventType.bandits: 0,
-        EventType.icy_road: 0,
-        EventType.rock_slide: 0,
-        EventType.traffic: 0
-        }
-   
-    total_mountain_bonuses = event_type_bonus[EventType.police] + event_type_bonus[EventType.animal_in_road]\
-        + event_type_bonus[EventType.icy_road] + event_type_bonus[EventType.rock_slide]
-    total_forest_bonuses = event_type_bonus[EventType.police] + event_type_bonus[EventType.animal_in_road]\
-        + event_type_bonus[EventType.icy_road] + event_type_bonus[EventType.rock_slide]
-    total_tundra_bonuses = event_type_bonus[EventType.police]\
-        + event_type_bonus[EventType.icy_road] + event_type_bonus[EventType.rock_slide]
-    total_city_bonuses = event_type_bonus[EventType.police] + event_type_bonus[EventType.bandits]\
-        + event_type_bonus[EventType.traffic]
-    total_highway_bonuses = event_type_bonus[EventType.police] + event_type_bonus[EventType.traffic]
-    total_interstate_bonuses = event_type_bonus[EventType.police] + event_type_bonus[EventType.traffic]
-
     def to_json(self):
         data = super().to_json()
         node = self.current_node.to_json() if self.current_node is not None else None
@@ -76,7 +56,6 @@ class Truck(GameObject):
         data['health'] = self.health
         data['money'] = self.money
         data['renown'] = self.renown
-        data['event_type_bonus'] = self.event_type_bonus
         data['body'] = self.body.to_json()
         data['addons'] = self.addons.to_json()
         data['tires'] = self.tires
@@ -95,7 +74,6 @@ class Truck(GameObject):
         self.health = data['health']
         self.money = data['money']
         self.renown = data['renown']
-        self.event_type_bonus = data['event_type_bonus']
         if data['body']['object_type'] == ObjectType.headlights:
             headlights = HeadLights()
             headlights.from_json(data['body'])

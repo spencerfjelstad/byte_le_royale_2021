@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
   
@@ -29,10 +29,9 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -40,7 +39,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="The Truck Object" href="Truck.html" />
-    <link rel="prev" title="Welcome to Traveling Trailsmen’s Documentation!" href="index.html" /> 
+    <link rel="prev" title="Indices and tables" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -98,6 +97,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Truck.html">The Truck Object</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Contract.html">Contract</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Events.html">Events</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GameMap.html">Game Map</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Node.html">Node</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Road.html">Road</a></li>
@@ -235,7 +235,8 @@ from one object to another will result in a complete loss of the former upgrade.
 <div class="section" id="choosing-a-speed">
 <h2>Choosing a speed<a class="headerlink" href="#choosing-a-speed" title="Permalink to this headline">¶</a></h2>
 <p>You can set your trucks speed to an integer value between 1 and 80 MPH. Going faster will allow you to complete more
-contracts, but will also increase the probability of events happening.</p>
+contracts, but will also increase the probability of events happening. Your speed also affects your miles per gallon
+efficiency.</p>
 <p>EX:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">choose_speed</span><span class="p">,</span> <span class="mi">66</span><span class="p">)</span>
 </pre></div>
@@ -251,7 +252,7 @@ contracts, but will also increase the probability of events happening.</p>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="Truck.html" class="btn btn-neutral float-right" title="The Truck Object" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Traveling Trailsmen’s Documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Indices and tables" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

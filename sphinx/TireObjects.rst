@@ -2,7 +2,8 @@
 Tires
 ======
 
-Tires impact fuel efficiancy as well as traction. 
+Tires impact fuel efficiancy as well as traction. Unlike other upgrades, there are no levels for 
+tires. Instead switching tires costs a flat $300 each time.
 
 ================  ===================
 Name               Type              

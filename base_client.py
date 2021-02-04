@@ -33,8 +33,13 @@ class Client(UserClient):
             actions.set_action(ActionType.buy_gas)
         elif truck.health < 30 and truck.money > 1000:
             print("Heal")
+<<<<<<< HEAD
             actions.set_action(ActionType.repair)
         elif  truck.body.level < 3 and 1000 * 1.2 < truck.money:
+=======
+            actions.set_action(ActionType.heal)
+        elif  truck.body.level < 3 and 10000 * 1.2 < truck.money:
+>>>>>>> 52ba5ffcf4e325c1ff362bfbed688b3911faa8b1
             print("upgrade")
             actions.set_action(ActionType.upgrade, ObjectType.tank)
         elif(truck.current_node.city_name != 'end'):

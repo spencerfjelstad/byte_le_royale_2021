@@ -4,7 +4,6 @@
    contain the root `toctree` directive.
 
 Welcome to Traveling Trailsmen's Documentation!
-===============================================
 
 .. toctree::
    :maxdepth: 2
@@ -13,12 +12,14 @@ Welcome to Traveling Trailsmen's Documentation!
    TakingAction
    Truck
    Contract
+   Events
    GameMap
    Node
    Road
    AddonObjects
    BodyObjects
    TireObjects
+
 
     
 
