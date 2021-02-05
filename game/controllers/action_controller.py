@@ -73,8 +73,7 @@ class ActionController(Controller):
                 player.truck.current_node = self.current_location.next_node
                 self.event_controller.trigger_event(road, player, player.truck)
                 time_taken = (road.length / player.truck.get_current_speed())
-                gas_used = (road.length/(GameStats.getMPG(player.truck.speed)
-                                         * fuel_efficiency))/(player.truck.body.max_gas*100)
+                gas_used = (road.length/(GameStats.getMPG(player.truck.speed) * fuel_efficiency))/(player.truck.body.max_gas*100)
                 player.truck.body.current_gas -= gas_used
                 player.time -= time_taken
                 # Don't care about return value, just updating so contract and player sync
@@ -95,8 +94,7 @@ class ActionController(Controller):
         gasPrice = player.truck.current_node.gas_price
         if(player.truck.money > 0):
             # Calculate what percent empty is the gas tank
-            percentGone = (
-                1 - (round(player.truck.body.current_gas, 2) / player.truck.body.max_gas))
+            percentGone = (1 - (round(player.truck.body.current_gas, 2) / player.truck.body.max_gas))
             # Calculate the percentage the player could potentially buy
             maxPercent = round((player.truck.money / gasPrice) / 100, 2)
             if(percentGone < maxPercent):
@@ -113,8 +111,7 @@ class ActionController(Controller):
         healPrice = player.truck.current_node.repair_price
         if(player.truck.money > 0):
             # Calculate what percent repair is missing
-            percentRemain = 1 - \
-                (round(player.truck.health, 2) / GameStats.truck_starting_health)
+            percentRemain = 1 - (round(player.truck.health, 2) / GameStats.truck_starting_health)
             # Calculate what percent repair they can afford
             maxPercent = round((player.truck.money / healPrice) / 100, 2)
             if(percentRemain < maxPercent):
