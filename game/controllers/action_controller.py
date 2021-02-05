@@ -30,15 +30,12 @@ class ActionController(Controller):
         # Without a contract truck has no node to move to, ensure a contract is always active
         if player.truck.active_contract is not None or player_action == ActionType.select_contract:
             # Call the appropriate method for this action
-
             if(player_action == ActionType.select_contract):
                 # Checks if contract_list is empty. If so, we have a problem
                 if(len(self.contract_list) == 0):
                     raise ValueError("Contract list cannot be empty")
-
                 # Selects the contract given in the player.action.action_parameter
                 self.select_contract(player)
-
             elif(player_action == ActionType.select_route):
                 # Moves the player to the node given in the action_parameter
                 #self.move(player, player_action.action.action_parameter)
@@ -55,7 +52,6 @@ class ActionController(Controller):
         elif(player_action == ActionType.choose_speed):
             # This is an ActionType because the user client cannot directly influence truck values.
             player.truck.set_current_speed(player.action_parameter)
-
         else:
             self.print("Action aborted: no active contract!")
 
@@ -231,21 +227,17 @@ class ActionController(Controller):
             if not isinstance(player, Player):
                 self.print("The player argument is not a Player object.")
                 return
-
             # If the objects enum is an addon type, pass off to addon upgrade method
             elif objEnum in GameStats.addonObjects:
                 self.upgrade_addons(player, objEnum, typ)
                 player.truck.addons.update()
-
             # If the objects enum is a body type, pass off to body upgrade method
             elif objEnum in GameStats.body_objects:
                 self.upgrade_body(player, objEnum, typ)
                 player.truck.body.update()
-
             # The upgrade logic for tires is much simpler, but I have decided to modularize it for the sake of consistancy
             elif objEnum is ObjectType.tires:
                 self.upgrade_tires(player, objEnum, typ)
-
             else:
                 self.print(
                     "The object argument is not a valid upgradable object.")
