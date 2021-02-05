@@ -22,10 +22,10 @@ class EventController(Controller):
         player.time -= GameStats.event_type_time[chosen_event_type] * (1 - mods['DamageMod'])
 
     def event_chance(self, road, player, truck):
-        if (truck.get_current_speed > 50):
-            chance = .0295*((truck.get_current_speed - 50)**2) + 25.612
+        if (truck.get_current_speed() > 50):
+            chance = .0295*((truck.get_current_speed() - 50)**2) + 25.612
         else:
-            chance = 15*(math.log10(truck.get_current_speed+1))
+            chance = 15*(math.log10(truck.get_current_speed()+1))
         happens = random.choices([True, False], weights=[chance, 100-chance],k=1)[0]
         if happens:
             self.trigger_event(road, player, truck)

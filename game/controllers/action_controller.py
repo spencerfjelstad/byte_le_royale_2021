@@ -47,18 +47,14 @@ class ActionController(Controller):
             self.heal(player)
         elif(player_action == ActionType.upgrade):
             self.upgrade_level(player, player.action.action_parameter)
-
-        elif(player_action == ActionType.choose_speed):
+        elif(player_action == ActionType.set_speed):
             #This is an ActionType because the user client cannot directly influence truck values. 
-            player.truck.set_current_speed(player.action_parameter)
+            player.truck.set_current_speed(player.action.action_parameter)
 
         else:
             self.print("Action aborted: no active contract!")
 
-    # Action Methods ---------------------------------------------------------
-    def set_speed(self, player, speed):
-        player.truck.set_current_speed(speed)
-    
+    # Action Methods ---------------------------------------------------------    
     def move(self, player):
         road = player.action.action_parameter
 
@@ -71,7 +67,7 @@ class ActionController(Controller):
         for route in self.current_location.roads:
             if route == road: #May need to be redone
                 player.truck.current_node = self.current_location.next_node
-                self.event_controller.trigger_event(road, player, player.truck)
+                self.event_controller.event_chance(road, player, player.truck)
                 time_taken = (road.length / player.truck.get_current_speed()) * luck
                 gas_used = (road.length/(GameStats.truck_starting_mpg * fuel_efficiency))/(GameStats.truck_starting_max_gas*100)
                 player.truck.body.current_gas -= gas_used

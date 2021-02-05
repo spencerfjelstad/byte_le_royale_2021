@@ -29,6 +29,7 @@ class ActionType:
     select_contract = 4
     choose_speed = 5
     heal = 6
+    set_speed = 7
 
 class Region:
     none = 0
