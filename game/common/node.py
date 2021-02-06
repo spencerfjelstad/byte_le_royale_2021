@@ -12,7 +12,7 @@ class Node(GameObject):
         self.roads = roads
         self.next_node = next_node
         self.gas_price = round(random.uniform(GameStats.minimum_gas_price, GameStats.maximum_gas_price), 2)  # gas price per percent
-        self.repair_price = round(random.uniform(GameStats.minimum_health_price, GameStats.maximum_health_price), 2)  # Health price per percent
+        self.repair_price = round(random.uniform(GameStats.minimum_repair_price, GameStats.maximum_repair_price), 2)  # Health price per percent
     
     def to_json(self):
         data = super().to_json()
