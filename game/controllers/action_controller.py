@@ -63,15 +63,13 @@ class ActionController(Controller):
 
         self.current_location = player.truck.current_node
         time_taken = 0
-        luck = 1
-        fuel_efficiency = GameStats.costs_and_effectiveness[
-            ObjectType.tires]['fuel_efficiency'][player.truck.tires]
+        fuel_efficiency = GameStats.getMPG(player.truck.speed) * GameStats.costs_and_effectiveness[ObjectType.tires]['fuel_efficiency'][player.truck.tires]
         for route in self.current_location.roads:
             if route == road:  # May need to be redone
                 player.truck.current_node = self.current_location.next_node
                 self.event_controller.event_chance(road, player, player.truck)
-                time_taken = (road.length / player.truck.get_current_speed()) * luck
-                gas_used = (road.length/(GameStats.truck_starting_mpg * fuel_efficiency))/(GameStats.truck_starting_max_gas*100)
+                time_taken = (road.length / player.truck.get_current_speed())
+                gas_used = (road.length/fuel_efficiency)/(player.truck.body.max_gas*100)
                 player.truck.body.current_gas -= gas_used
                 player.time -= time_taken
                 # Don't care about return value, just updating so contract and player sync
