@@ -86,13 +86,13 @@ class MasterController(Controller):
         self.action_controller.handle_actions(client)
         #client.time -= 10
         if client.time <= 0:
-            print("Game is ending because time has run out.")
+            print("Game is ending because time has run out. Final score is " + str(client.truck.renown))
             self.game_over = True
         if client.truck.health <= 0:
-            print("Game is ending because health has run out.")
+            print("Game is ending because health has run out. Final score is " + str(client.truck.renown))
             self.game_over = True
         if client.truck.body.current_gas <= 0:
-            print("Game is ending because gas has run out.")
+            print("Game is ending because gas has run out. Final score is " + str(client.truck.renown))
             self.game_over = True
 
 

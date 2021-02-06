@@ -60,7 +60,6 @@ class ActionController(Controller):
     # Action Methods ---------------------------------------------------------    
     def move(self, player):
         road = player.action.action_parameter
-
         self.current_location = player.truck.current_node
         time_taken = 0
         fuel_efficiency = GameStats.getMPG(player.truck.speed) * GameStats.costs_and_effectiveness[ObjectType.tires]['fuel_efficiency'][player.truck.tires]
