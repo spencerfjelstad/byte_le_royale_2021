@@ -6,13 +6,22 @@ class GameStats:
 
     road_length_maximum_deviation = 20
 
-    region_reward_modifier = {
-        Region.grass_lands: .5,
-        Region.nord_dakotia: .6,
-        Region.mobave_desert: .7,
-        Region.mount_vroom: .8,
+    region_money_reward_modifier = {
+        Region.grass_lands: 1.2,
+        Region.nord_dakotia: 1.2,
+        Region.mobave_desert: 1,
+        Region.mount_vroom: 1,
         Region.lobslantis: .8,
-        Region.tropical_cop_land: .9,
+        Region.tropical_cop_land: .8,
+    }
+
+    region_renown_reward_modifier = {
+        Region.grass_lands: .8,
+        Region.nord_dakotia: .8,
+        Region.mobave_desert: 1,
+        Region.mount_vroom: 1,
+        Region.lobslantis: 1.2,
+        Region.tropical_cop_land: 1.2,
     }
 
     region_difficulty_modifier = {
@@ -250,7 +259,7 @@ class GameStats:
 
     truck_starting_max_gas = 1
 
-    def getMPG(speed):
+    def getMPG(self, speed):
         return (-0.002649444*(speed**2))+(.2520296*speed)+.22752
 
     tire_switch_cost = 300
@@ -283,14 +292,14 @@ class GameStats:
 
     contract_rewards = {
         'money': {
-            'easy': 200,
-            'medium': 500,
-            'hard': 1100
+            'easy': 2000,
+            'medium': 3500,
+            'hard': 5200
         },
         'renown': {
-            'easy': 1,
-            'medium': 3,
-            'hard': 7
+            'easy': 10,
+            'medium': 30,
+            'hard': 70
         }
     }
 
