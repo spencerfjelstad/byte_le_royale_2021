@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/upgrades_body_sentry.png-db858d8cf1f65b121e7bfc89cb36f706.stex"
+path="res://.import/upgrades_none.png-9b202a2fefde2bb2e0c81876f5e066ca.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/upgrades/upgrades_body_sentry.png"
-dest_files=[ "res://.import/upgrades_body_sentry.png-db858d8cf1f65b121e7bfc89cb36f706.stex" ]
+source_file="res://assets/upgrades/upgrades_none.png"
+dest_files=[ "res://.import/upgrades_none.png-9b202a2fefde2bb2e0c81876f5e066ca.stex" ]
 
 [params]
 

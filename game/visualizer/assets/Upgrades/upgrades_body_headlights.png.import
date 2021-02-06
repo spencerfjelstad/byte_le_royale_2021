@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/upgrades_body_headlights.png-1112a8dcd8deba5cee46a56adb6ef75f.stex"
+path="res://.import/upgrades_body_headlights.png-2121ec792edd602bb76bcad50c301452.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Upgrades/upgrades_body_headlights.png"
-dest_files=[ "res://.import/upgrades_body_headlights.png-1112a8dcd8deba5cee46a56adb6ef75f.stex" ]
+source_file="res://assets/upgrades/upgrades_body_headlights.png"
+dest_files=[ "res://.import/upgrades_body_headlights.png-2121ec792edd602bb76bcad50c301452.stex" ]
 
 [params]
 

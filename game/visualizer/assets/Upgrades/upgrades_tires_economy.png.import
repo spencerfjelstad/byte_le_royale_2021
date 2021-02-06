@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/upgrades_tires_economy.png-59fe706729d93a0bb2c54a058c77bf8f.stex"
+path="res://.import/upgrades_tires_economy.png-14ca20b785a5e31224ca5e49bda8649b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Upgrades/upgrades_tires_economy.png"
-dest_files=[ "res://.import/upgrades_tires_economy.png-59fe706729d93a0bb2c54a058c77bf8f.stex" ]
+source_file="res://assets/upgrades/upgrades_tires_economy.png"
+dest_files=[ "res://.import/upgrades_tires_economy.png-14ca20b785a5e31224ca5e49bda8649b.stex" ]
 
 [params]
 
