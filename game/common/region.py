@@ -8,7 +8,7 @@ class Grass_Lands(Node):
         super().__init__()
         self.region = Region.grass_lands
         self.reward_modifier = GameStats.region_reward_modifier[self.region]
-        self.difficulty_modifier = GameStats.node_difficulty_modifier[self.region]
+        self.difficulty_modifier = GameStats.region_difficulty_modifier[self.region]
 
 
 class Nord_Dakotia(Node):
@@ -35,10 +35,10 @@ class Mount_Vroom(Node):
         self.difficulty_modifier = GameStats.region_difficulty_modifier[self.region]
 
 
-class Loblantis(Node):
+class Lobslantis(Node):
     def __init__(self):
         super().__init__()
-        self.region = Region.loblantis
+        self.region = Region.lobslantis
         self.reward_modifier = GameStats.region_reward_modifier[self.region]
         self.difficulty_modifier = GameStats.region_difficulty_modifier[self.region]
 

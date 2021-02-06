@@ -1,5 +1,6 @@
 from game.common.enums import *
 from game.config import Debug
+import copy
 
 
 class UserClient:
@@ -15,5 +16,5 @@ class UserClient:
     def team_name(self):
         return "No_Team_Name_Available"
 
-    def take_turn(self, turn, actions, world):
+    def take_turn(self, turn, actions, world, truck, time):
         raise NotImplementedError("Implement this in subclass")
