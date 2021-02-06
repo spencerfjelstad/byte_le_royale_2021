@@ -1,13 +1,14 @@
 from game.common.game_object import GameObject
 from game.common.enums import *
 import random
-import json
+import json, math
 from game.common.stats import GameStats
 from game.common.game_map import Game_Map
 
 
 class Contract(GameObject):
-    def __init__(self, name=None, region=None, game_map=None, reward=None):
+    def __init__(self, name=None, region=None, game_map=None, money_reward=None,
+            renown_reward=None, deadline=None):
         super().__init__()
         self.object_type = ObjectType.contract
         # if no name is supplied it will generate a random one
@@ -15,15 +16,20 @@ class Contract(GameObject):
         # region is region enum
         self.region = region
         self.game_map = game_map
-        self.reward = reward * GameStats.region_reward_modifier[region]\
-            if reward is not None and region is not None else 0
+        self.money_reward = (int(money_reward * GameStats.region_money_reward_modifier[region])
+                if money_reward is not None and region is not None else 0)
+        self.renown_reward = (int(math.ceil(renown_reward * GameStats.region_renown_reward_modifier[region]))
+                if renown_reward is not None and region is not None else 0)
+        self.deadline = deadline
     
     def to_json(self):
         data = super().to_json()
         data['name'] = self.name
         data['region'] = self.region
         data['game_map'] = self.game_map.to_json()
-        data['reward'] = self.reward
+        data['money_reward'] = self.money_reward
+        data['renown_reward'] = self.renown_reward
+        data['deadline'] = self.deadline
         return data
     
     def from_json(self,data):
@@ -33,7 +39,9 @@ class Contract(GameObject):
         json_map = Game_Map()
         json_map.from_json(data['game_map'])
         self.game_map = json_map
-        self.reward = data['reward']
+        self.money_reward = data['money_reward']
+        self.renown_reward = data['renown_reward']
+        self.deadline = data['deadline']
 
     # generates a random name, has no effect on gameplay other than lols
     def generateName(self):
@@ -47,14 +55,18 @@ class Contract(GameObject):
             return random.choice(verb) + random.choice(quantity) + "of " + noun[index]
         else:
             return random.choice(verb) + random.choice(quantity) + "of " + random.choice(adjective) + noun[index]
-    
-    def __eq__(self, other):
-        return isinstance(other, self.__class__) and self.name == other.name and self.region == other.region and self.cities == other.cities
 
     def __str__(self):
         p = f"""Name: {self.name}
             Region: {self.region}
-            Reward: {self.reward}
+            Money Reward: {self.money_reward}
+            Renown Reward: {self.renown_reward}
+            Deadline: {self.deadline}
             Map: {str(self.game_map.to_list())}
             """
         return p
+
+    def __eq__(self, other):
+        return (isinstance(other, self.__class__) and self.name == other.name and self.region == other.region
+                and self.game_map == other.game_map and self.money_reward == other.money_reward
+                and self.renown_reward == other.renown_reward and self.deadline == other.deadline)
