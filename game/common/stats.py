@@ -6,13 +6,22 @@ class GameStats:
 
     road_length_maximum_deviation = 20
 
-    region_reward_modifier = {
-        Region.grass_lands: .5,
-        Region.nord_dakotia: .6,
-        Region.mobave_desert: .7,
-        Region.mount_vroom: .8,
+    region_money_reward_modifier = {
+        Region.grass_lands: 1.2,
+        Region.nord_dakotia: 1.2,
+        Region.mobave_desert: 1,
+        Region.mount_vroom: 1,
         Region.lobslantis: .8,
-        Region.tropical_cop_land: .9,
+        Region.tropical_cop_land: .8,
+    }
+
+    region_renown_reward_modifier = {
+        Region.grass_lands: .8,
+        Region.nord_dakotia: .8,
+        Region.mobave_desert: 1,
+        Region.mount_vroom: 1,
+        Region.lobslantis: 1.2,
+        Region.tropical_cop_land: 1.2,
     }
 
     region_difficulty_modifier = {
@@ -255,7 +264,7 @@ class GameStats:
 
     tire_switch_cost = 300
 
-    truck_starting_health = 500
+    truck_starting_health = 100
 
     road_length_variance = .2
 
@@ -283,14 +292,14 @@ class GameStats:
 
     contract_rewards = {
         'money': {
-            'easy': 200,
-            'medium': 500,
-            'hard': 1100
+            'easy': 3000,
+            'medium': 3500,
+            'hard': 4200
         },
         'renown': {
-            'easy': 1,
-            'medium': 3,
-            'hard': 7
+            'easy': 20,
+            'medium': 30,
+            'hard': 39
         }
     }
 
