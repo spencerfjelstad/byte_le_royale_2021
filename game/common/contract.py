@@ -16,9 +16,9 @@ class Contract(GameObject):
         # region is region enum
         self.region = region
         self.game_map = game_map
-        self.money_reward = (int(money_reward * GameStats.region_reward_modifier[region])
+        self.money_reward = (int(money_reward * GameStats.region_money_reward_modifier[region])
                 if money_reward is not None and region is not None else 0)
-        self.renown_reward = (int(math.ceil(renown_reward * GameStats.region_reward_modifier[region]))
+        self.renown_reward = (int(math.ceil(renown_reward * GameStats.region_renown_reward_modifier[region]))
                 if renown_reward is not None and region is not None else 0)
         self.deadline = deadline
     
