@@ -23,14 +23,26 @@ class Client(UserClient):
         :param world:       Generic world information
         """
         
+        
         if(truck.active_contract is None):
             # Select contract
+            #print("Select")
             actions.set_action(ActionType.select_contract, 0)
-        elif(truck.body.current_gas < .2):
+        elif(truck.body.current_gas < .20):
             # Buy gas
+            #print("Gas")
             actions.set_action(ActionType.buy_gas)
-        elif(truck.current_node.roads[0] is not None):
+        elif truck.health < 40 and truck.money > 1000:
+            print("Heal")
+            actions.set_action(ActionType.repair)
+        elif  truck.body.level < 3 and 100000 * 1.2 * (truck.body.level + 1) < truck.money:
+            print("upgrade")
+            actions.set_action(ActionType.upgrade, ObjectType.tank)
+        elif(truck.current_node.city_name != 'end'):
             # Move to next node
+            print(truck.get_current_speed())
+            #print("move")
+            print(truck.health)
             actions.set_action(ActionType.select_route, truck.current_node.roads[0])
         
 

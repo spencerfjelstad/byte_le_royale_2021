@@ -22,7 +22,6 @@ class TestJSON(unittest.TestCase):
 
     # Test methods should always start with the word 'test'
     def test_to_and_back(self):
-        breakpoint()
         bruh = copy.deepcopy(self.myPlayer.truck)
         tojsn = self.myPlayer.truck.to_json()
         trk = Player(2131, 'John')

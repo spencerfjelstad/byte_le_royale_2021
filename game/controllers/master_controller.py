@@ -19,7 +19,7 @@ class MasterController(Controller):
     def __init__(self):
         super().__init__()
         self.game_over = False
-                
+
         self.turn = None
         self.current_world_data = None
 
@@ -74,7 +74,7 @@ class MasterController(Controller):
 
         #Time copy to be given to player
         timeCopy = copy.deepcopy(client.time)
-        
+
         # Obfuscate data in objects that that player should not be able to see
         args = (self.turn, actions, self.current_world_data, truckCopy, timeCopy)
         return args
@@ -86,15 +86,15 @@ class MasterController(Controller):
         self.action_controller.handle_actions(client)
         #client.time -= 10
         if client.time <= 0:
-            print("Game is ending because time has run out.")
+            print("Game is ending because time has run out. Final score is " + str(client.truck.renown))
             self.game_over = True
         if client.truck.health <= 0:
-            print("Game is ending because health has run out.")
+            print("Game is ending because health has run out. Final score is " + str(client.truck.renown))
             self.game_over = True
         if client.truck.body.current_gas <= 0:
-            print("Game is ending because gas has run out.")
+            print("Game is ending because gas has run out. Final score is " + str(client.truck.renown))
             self.game_over = True
-        
+
 
     # Return serialized version of game
     def create_turn_log(self, clients, turn):
@@ -103,10 +103,7 @@ class MasterController(Controller):
         data['Team Name'] = clients.team_name
         data['time'] = clients.time
         data['truck'] = clients.truck.to_json()
-        data['money'] = clients.truck.money
-        data['renown'] = clients.truck.renown
-        #data['active_contract'] = clients.active_contract
-
+        
         return data
 
     # Gather necessary data together in results file
@@ -117,4 +114,4 @@ class MasterController(Controller):
         data['player'] = client.to_json()
 
         return data
-    
+

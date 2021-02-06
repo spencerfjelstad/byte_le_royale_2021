@@ -8,6 +8,9 @@ class BaseBodyObject(BaseUpgradeObject):
         self.current_gas = GameStats.truck_starting_gas 
         self.max_gas = GameStats.truck_starting_gas
 
+    def update(self):
+        self.max_gas = GameStats.costs_and_effectiveness[ObjectType.tank]['effectiveness'][0] * GameStats.truck_starting_gas
+
     def to_json(self):
         data = super().to_json()
         data['current_gas'] = self.current_gas

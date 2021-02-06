@@ -1,3 +1,5 @@
+from game.common.TrUpgrades.baseUpgradeObject import BaseUpgradeObject
+from game.common.TrUpgrades.BodyObjects.baseBodyObject import BaseBodyObject
 from game.common.game_object import GameObject
 from game.common.enums import *
 from game.common.road import *
@@ -15,13 +17,13 @@ from game.common.contract import Contract
 class Truck(GameObject):
 
     def __init__(self, node = None):
-        super().__init__()
+        super().__init__() 
         self.object_type = ObjectType.truck
         self.current_node = node
         self.contract_list = []
         self.active_contract = None
-        self.body = Tank()
-        self.addons = PoliceScanner()
+        self.body = BaseBodyObject(0,0)
+        self.addons = BaseUpgradeObject(0,0)
         self.tires = TireType.tire_normal
         self.speed = 50
         self.health = GameStats.truck_starting_health
@@ -40,27 +42,9 @@ class Truck(GameObject):
     def set_current_speed(self, speed):
         if speed < 1:
             speed = 1
+        elif speed > GameStats.truck_maximum_speed:
+            speed = GameStats.truck_maximum_speed
         self.speed = speed
-
-    event_type_bonus = {
-        EventType.police: 0,
-        EventType.animal_in_road: 0,
-        EventType.bandits: 0,
-        EventType.icy_road: 0,
-        EventType.rock_slide: 0,
-        EventType.traffic: 0
-        }
-   
-    total_mountain_bonuses = event_type_bonus[EventType.police] + event_type_bonus[EventType.animal_in_road]\
-        + event_type_bonus[EventType.icy_road] + event_type_bonus[EventType.rock_slide]
-    total_forest_bonuses = event_type_bonus[EventType.police] + event_type_bonus[EventType.animal_in_road]\
-        + event_type_bonus[EventType.icy_road] + event_type_bonus[EventType.rock_slide]
-    total_tundra_bonuses = event_type_bonus[EventType.police]\
-        + event_type_bonus[EventType.icy_road] + event_type_bonus[EventType.rock_slide]
-    total_city_bonuses = event_type_bonus[EventType.police] + event_type_bonus[EventType.bandits]\
-        + event_type_bonus[EventType.traffic]
-    total_highway_bonuses = event_type_bonus[EventType.police] + event_type_bonus[EventType.traffic]
-    total_interstate_bonuses = event_type_bonus[EventType.police] + event_type_bonus[EventType.traffic]
 
     def to_json(self):
         data = super().to_json()
@@ -72,7 +56,6 @@ class Truck(GameObject):
         data['health'] = self.health
         data['money'] = self.money
         data['renown'] = self.renown
-        data['event_type_bonus'] = self.event_type_bonus
         data['body'] = self.body.to_json()
         data['addons'] = self.addons.to_json()
         data['tires'] = self.tires
@@ -91,9 +74,8 @@ class Truck(GameObject):
         self.health = data['health']
         self.money = data['money']
         self.renown = data['renown']
-        self.event_type_bonus = data['event_type_bonus']
         if data['body']['object_type'] == ObjectType.headlights:
-            headlights = Headlights()
+            headlights = HeadLights()
             headlights.from_json(data['body'])
             self.body = headlights
         elif data['body']['object_type'] == ObjectType.sentryGun:
