@@ -3,6 +3,7 @@ from game.common.enums import EventType, ObjectType
 from game.controllers.controller import Controller
 import random
 from game.controllers.controller import Controller
+import math
 
 
 class EventController(Controller):
@@ -21,12 +22,11 @@ class EventController(Controller):
         player.time -= GameStats.event_type_time[chosen_event_type] * (1 - mods['DamageMod'])
 
     def event_chance(self, road, player, truck):
-        #evaluate 25% chance
-        happens = random.choices(
-            [True, False], weights=GameStats.base_event_probability, k=1)[0]
-        #event chance 25% -> 40% if truck going really fast
-        if (truck.get_current_speed > 70):
-            happens = random.choices([True, False], weights=[40,60], k=1)[0]
+        if (truck.get_current_speed() > 50):
+            chance = .0295*((truck.get_current_speed() - 50)**2) + 25.612
+        else:
+            chance = 15*(math.log10(truck.get_current_speed()+1))
+        happens = random.choices([True, False], weights=[chance, 100-chance],k=1)[0]
         if happens:
             self.trigger_event(road, player, truck)
 
