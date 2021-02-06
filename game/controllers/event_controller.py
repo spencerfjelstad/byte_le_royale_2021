@@ -44,17 +44,20 @@ class EventController(Controller):
     def negation(self, truck, event):
         mods = {'HealthMod': 0, 'DamageMod': 0}
         objs = [truck.addons, truck.body]
-        for obj in objs:
-            if event in GameStats.negations[obj.object_type]:
-                potentialMod = self.calculateMod(obj, event)
+        try:
+            for obj in objs:
+                if event in GameStats.negations[obj.object_type]:
+                    potentialMod = self.calculateMod(obj, event)
+                    mods['HealthMod'] = max(potentialMod[0], mods['HealthMod'])
+                    mods['DamageMod'] = max(potentialMod[1], mods['DamageMod'])
+            # The logic for tires is slightly different
+            if event in GameStats.negations[truck.tires]:
+                potentialMod = self.calculateTireMod(truck.tires, event)
                 mods['HealthMod'] = max(potentialMod[0], mods['HealthMod'])
                 mods['DamageMod'] = max(potentialMod[1], mods['DamageMod'])
-        # The logic for tires is slightly different
-        if event in GameStats.negations[truck.tires]:
-            potentialMod = self.calculateTireMod(truck.tires, event)
-            mods['HealthMod'] = max(potentialMod[0], mods['HealthMod'])
-            mods['DamageMod'] = max(potentialMod[1], mods['DamageMod'])
-        return mods
+            return mods
+        except:
+            return {'HealthMod': 0, 'DamageMod': 0}
 
     def handle_actions(self, client):
         return

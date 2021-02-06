@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Index &mdash; Placeholder  documentation</title>
+  <title>Node &mdash; Placeholder  documentation</title>
   
 
   
@@ -36,8 +36,10 @@
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-    <link rel="index" title="Index" href="#" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Road" href="Road.html" />
+    <link rel="prev" title="Game Map" href="GameMap.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -83,13 +85,13 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="TakingAction.html">Taking Action</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Truck.html">The Truck Object</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Contract.html">Contract</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Events.html">Events</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GameMap.html">Game Map</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Node.html">Node</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Node</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Road.html">Road</a></li>
 <li class="toctree-l1"><a class="reference internal" href="AddonObjects.html">Add On Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="BodyObjects.html">Body Objects</a></li>
@@ -142,11 +144,13 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Index</li>
+      <li>Node</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
+          
+            <a href="_sources/Node.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -159,11 +163,45 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-
-<h1 id="index">Index</h1>
-
-<div class="genindex-jumpbox">
- 
+  <div class="section" id="node">
+<h1>Node<a class="headerlink" href="#node" title="Permalink to this headline">¶</a></h1>
+<p>Nodes are stops within each GameMap. Each turn your truck will be at a node. Below
+are the listed instance variables.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 15%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>city_name</p></td>
+<td><p>String</p></td>
+<td><p>The name of the Node you are at</p></td>
+</tr>
+<tr class="row-odd"><td><p>roads</p></td>
+<td><p><a class="reference internal" href="Road.html"><span class="doc">Road</span></a> []</p></td>
+<td><p>A list of roads that you can take to travel to the next node</p></td>
+</tr>
+<tr class="row-even"><td><p>next_node</p></td>
+<td><p>node</p></td>
+<td><p>The next node you will travel to. It will be the same regardless of the road you take</p></td>
+</tr>
+<tr class="row-odd"><td><p>gas_price</p></td>
+<td><p>decimal</p></td>
+<td><p>The current price of gas at this node</p></td>
+</tr>
+<tr class="row-even"><td><p>repair_price</p></td>
+<td><p>decimal</p></td>
+<td><p>The current price of repairing at this node</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 
 
@@ -171,6 +209,10 @@
            
           </div>
           <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="Road.html" class="btn btn-neutral float-right" title="Road" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="GameMap.html" class="btn btn-neutral float-left" title="Game Map" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
 
   <hr/>
 

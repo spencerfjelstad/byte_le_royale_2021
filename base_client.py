@@ -27,14 +27,14 @@ class Client(UserClient):
             # Select contract
             print("Select")
             actions.set_action(ActionType.select_contract, 0)
-        elif(truck.body.current_gas < .2):
+        elif(truck.body.current_gas < .20):
             # Buy gas
             print("Gas")
             actions.set_action(ActionType.buy_gas)
-        elif truck.health < 30 and truck.money > 1000:
+        elif truck.health < 40 and truck.money > 1000:
             print("Heal")
-            actions.set_action(ActionType.heal)
-        elif  truck.body.level < 3 and 10000 * 1.2 < truck.money:
+            actions.set_action(ActionType.repair)
+        elif  truck.body.level < 3 and 100000 * 1.2 * (truck.body.level + 1) < truck.money:
             print("upgrade")
             actions.set_action(ActionType.upgrade, ObjectType.tank)
         elif(truck.current_node.city_name != 'end'):
