@@ -26,7 +26,6 @@ class ActionController(Controller):
 
     def handle_actions(self, player):
         player_action = player.action._chosen_action
-        player.time -= 1
         # Without a contract truck has no node to move to, ensure a contract is always active
         if player.truck.active_contract is not None or player_action == ActionType.select_contract:
             # Call the appropriate method for this action
@@ -36,26 +35,29 @@ class ActionController(Controller):
                     raise ValueError("Contract list cannot be empty")
                 # Selects the contract given in the player.action.action_parameter
                 self.select_contract(player)
+                player.time -= 1
             elif(player_action == ActionType.select_route):
                 # Moves the player to the node given in the action_parameter
                 #self.move(player, player_action.action.action_parameter)
                 self.move(player)
         if(player_action == ActionType.buy_gas):
             self.buy_gas(player)
-            player.time -= GameStats.gas_pumping_time_penelty
+            player.time -= GameStats.gas_pumping_time_penalty
         elif(player_action == ActionType.repair):
             self.heal(player)
-            player.time -= GameStats.repair_pumping_time_penelty
+            player.time -= GameStats.repair_pumping_time_penalty
         elif(player_action == ActionType.upgrade):
             self.upgrade_level(player, player.action.action_parameter)
-            player.time -= GameStats.upgrade_time_penelty
-        elif(player_action == ActionType.choose_speed):
-            # This is an ActionType because the user client cannot directly influence truck values.
-            player.truck.set_current_speed(player.action_parameter)
+            player.time -= GameStats.upgrade_time_penalty
+        elif(player_action == ActionType.set_speed):
+            #This is an ActionType because the user client cannot directly influence truck values. 
+            player.truck.set_current_speed(player.action.action_parameter)
+            player.time -= 1
+
         else:
             self.print("Action aborted: no active contract!")
 
-    # Action Methods ---------------------------------------------------------
+    # Action Methods ---------------------------------------------------------    
     def move(self, player):
         road = player.action.action_parameter
 
@@ -67,9 +69,9 @@ class ActionController(Controller):
         for route in self.current_location.roads:
             if route == road:  # May need to be redone
                 player.truck.current_node = self.current_location.next_node
-                self.event_controller.trigger_event(road, player, player.truck)
-                time_taken = (road.length / player.truck.get_current_speed())
-                gas_used = (road.length/(GameStats.getMPG(player.truck.speed) * fuel_efficiency))/(player.truck.body.max_gas*100)
+                self.event_controller.event_chance(road, player, player.truck)
+                time_taken = (road.length / player.truck.get_current_speed()) * luck
+                gas_used = (road.length/(GameStats.truck_starting_mpg * fuel_efficiency))/(GameStats.truck_starting_max_gas*100)
                 player.truck.body.current_gas -= gas_used
                 player.time -= time_taken
                 # Don't care about return value, just updating so contract and player sync

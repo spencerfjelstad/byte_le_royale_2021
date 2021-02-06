@@ -267,13 +267,13 @@ class GameStats:
 
     maximum_gas_price = 5
 
-    truck_maximum_speed = 80
+    truck_maximum_speed = 100
 
-    gas_pumping_time_penelty = 5
+    gas_pumping_time_penalty = 5
 
-    repair_pumping_time_penelty = 10
+    repair_pumping_time_penalty = 10
 
-    upgrade_time_penelty = 4
+    upgrade_time_penalty = 4
 
     contract_node_count = {
         'short': 8,
