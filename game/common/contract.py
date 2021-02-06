@@ -8,7 +8,7 @@ from game.common.game_map import Game_Map
 
 class Contract(GameObject):
     def __init__(self, name=None, region=None, game_map=None, money_reward=None,
-            renown_reward=None, deadline=None):
+            renown_reward=None, deadline=None, difficulty=None):
         super().__init__()
         self.object_type = ObjectType.contract
         # if no name is supplied it will generate a random one
@@ -21,6 +21,7 @@ class Contract(GameObject):
         self.renown_reward = (int(math.ceil(renown_reward * GameStats.region_renown_reward_modifier[region]))
                 if renown_reward is not None and region is not None else 0)
         self.deadline = deadline
+        self.difficulty = difficulty
     
     def to_json(self):
         data = super().to_json()
@@ -30,6 +31,7 @@ class Contract(GameObject):
         data['money_reward'] = self.money_reward
         data['renown_reward'] = self.renown_reward
         data['deadline'] = self.deadline
+        data['difficulty'] = self.difficulty
         return data
     
     def from_json(self,data):
@@ -42,6 +44,7 @@ class Contract(GameObject):
         self.money_reward = data['money_reward']
         self.renown_reward = data['renown_reward']
         self.deadline = data['deadline']
+        self.difficulty = data['difficulty']
 
     # generates a random name, has no effect on gameplay other than lols
     def generateName(self):
