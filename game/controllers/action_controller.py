@@ -49,6 +49,9 @@ class ActionController(Controller):
         elif(player_action == ActionType.upgrade):
             self.upgrade_level(player, player.action.action_parameter)
             player.time -= GameStats.upgrade_time_penalty
+        elif(player_action == ObjectType.tires):
+            self.upgrade_tires(player, player.action.action_parameter)
+            player.time -= GameStats.upgrade_time_penalty
         elif(player_action == ActionType.set_speed):
             #This is an ActionType because the user client cannot directly influence truck values. 
             player.truck.set_current_speed(player.action.action_parameter)
@@ -82,7 +85,7 @@ class ActionController(Controller):
             player.truck.current_node = player.truck.active_contract.game_map.current_node
             self.contract_list.clear()
         else:
-            self.print("Contract list index was out of bounds")
+            raise Exception("Contract list index was out of bounds")
 
     def buy_gas(self, player):
         # Gas price is tied to node
@@ -209,7 +212,7 @@ class ActionController(Controller):
                     self.print(
                         "Not enough money or at max level for GPS")
 
-    def upgrade_tires(self, player, objEnum, typ):
+    def upgrade_tires(self, player, typ):
         tireLev = player.truck.tires
         if typ in TireType.__dict__.values() and typ is not tireLev and GameStats.tire_switch_cost <= player.truck.money:
             player.truck.tires = typ
