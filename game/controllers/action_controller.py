@@ -50,6 +50,9 @@ class ActionController(Controller):
         elif(player_action == ActionType.upgrade):
             self.upgrade_level(player, player.action.action_parameter)
             player.time -= GameStats.upgrade_time_penalty
+        elif(player_action == ObjectType.tires):
+            self.upgrade_tires(player, player.action.action_parameter)
+            player.time -= GameStats.upgrade_time_penalty
         elif(player_action == ActionType.set_speed):
             #This is an ActionType because the user client cannot directly influence truck values. 
             player.truck.set_current_speed(player.action.action_parameter)
@@ -61,7 +64,6 @@ class ActionController(Controller):
     # Action Methods ---------------------------------------------------------    
     def move(self, player):
         road = player.action.action_parameter
-
         self.current_location = player.truck.map.current_node
         time_taken = 0
         fuel_efficiency = GameStats.getMPG(player.truck.speed) * GameStats.costs_and_effectiveness[ObjectType.tires]['fuel_efficiency'][player.truck.tires]
@@ -73,7 +75,6 @@ class ActionController(Controller):
                 gas_used = (road.length/fuel_efficiency)/(player.truck.body.max_gas*100)
                 player.truck.body.current_gas -= gas_used
                 player.time -= time_taken
-                # Don't care about return value, just updating so contract and player sync
 
     # Retrieve by index and store in Player, then clear the list
     def select_contract(self, player):
@@ -83,7 +84,7 @@ class ActionController(Controller):
             player.truck.map = selection['map']
             self.contract_list.clear()
         else:
-            self.print("Contract list index was out of bounds")
+            raise Exception("Contract list index was out of bounds")
 
     def buy_gas(self, player):
         # Gas price is tied to node
@@ -210,7 +211,7 @@ class ActionController(Controller):
                     self.print(
                         "Not enough money or at max level for GPS")
 
-    def upgrade_tires(self, player, objEnum, typ):
+    def upgrade_tires(self, player, typ):
         tireLev = player.truck.tires
         if typ in TireType.__dict__.values() and typ is not tireLev and GameStats.tire_switch_cost <= player.truck.money:
             player.truck.tires = typ

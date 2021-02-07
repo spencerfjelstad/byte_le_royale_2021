@@ -74,7 +74,7 @@ Will fill your tank (or buy the most you can afford)
 Upgrading
 #########
 
-Upgrades can negate damage and time penalties from events. There are three upgrade slots (body, addons, and tires) 
+Upgrades can negate damage and time penalties from events. There are two upgrade slots (body, addons) 
 which each have three different upgrade types. If you don't have enough money, the upgrade will be ignored. Switching 
 from one object to another will result in a complete loss of the former upgrade.
 
@@ -85,6 +85,21 @@ EX:
     actions.set_action(ActionType.upgrade, Objectype.policeScanner)
 
 Will upgrade or switch your add on object to policeScanner
+
+Switching Tires
+###############
+
+Tires are like upgrades, but they don't have any levels. The syntax is also slightly different
+
+EX:
+
+.. code-block:: python
+
+   actions.set_action(ObjectType.tires, TireType.tire_econ)
+
+Will switch your tires to the tire_econ type
+
+
 
 Choosing a speed
 ################
