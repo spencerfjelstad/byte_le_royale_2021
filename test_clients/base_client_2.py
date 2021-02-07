@@ -81,10 +81,10 @@ class Client(UserClient):
         elif  truck.body.level < 3 and self.costs_and_effectiveness[ObjectType.tank][truck.body.level +1] * 1.2 < truck.money:
             actions.set_action(ActionType.upgrade, ObjectType.tank)
             print(("Upgrade current level {} money {}, predicted ammount: {}".format(truck.body.level,truck.money,self.costs_and_effectiveness[ObjectType.tank][truck.body.level] * 1.1)))
-        elif(truck.current_node.city_name is not 'end'):
+        elif(truck.map.current_node.city_name is not 'end'):
             # Move to next node
             print("Move")
             actions.set_action(ActionType.select_route,
-                               truck.current_node.roads[0])
+                               truck.map.current_node.roads[0])
 
         pass
