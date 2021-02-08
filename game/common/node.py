@@ -19,7 +19,10 @@ class Node(GameObject):
         data['city_name'] = self.city_name
         data['gas_price'] = self.gas_price
         data['repair_price'] = self.repair_price
-        data['roads'] = {road.road_name: road.to_json() for road in self.roads}
+        temp_list = []
+        for road in self.roads:
+            temp_list.append(road.to_json())
+        data['roads'] = temp_list
         data['next_node'] = self.next_node.to_json() if self.next_node is not None else None
         return data
 
@@ -27,7 +30,7 @@ class Node(GameObject):
         super().from_json(data)
         self.city_name = data['city_name']
         temp = Road('temp')
-        for road in data['roads'].values():
+        for road in data['roads']:
             temp.from_json(road)
             self.roads.append(temp)
 
