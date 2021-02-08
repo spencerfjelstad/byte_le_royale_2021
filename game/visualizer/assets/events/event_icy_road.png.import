@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/upgrades_tires_sticky.png-1ca85289d6c2465c68215f3046be7d54.stex"
+path="res://.import/event_icy_road.png-d581a8e3c294dcb9c6338cb3535ccfe3.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Upgrades/upgrades_tires_sticky.png"
-dest_files=[ "res://.import/upgrades_tires_sticky.png-1ca85289d6c2465c68215f3046be7d54.stex" ]
+source_file="res://assets/events/event_icy_road.png"
+dest_files=[ "res://.import/event_icy_road.png-d581a8e3c294dcb9c6338cb3535ccfe3.stex" ]
 
 [params]
 

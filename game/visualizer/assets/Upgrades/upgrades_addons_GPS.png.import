@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/upgrades_addons_GPS.png-971347fb58b48e99e7aba4226d03a7bc.stex"
+path="res://.import/upgrades_addons_GPS.png-318350f00419b7d476cce22f8e06a2d2.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/upgrades/upgrades_addons_GPS.png"
-dest_files=[ "res://.import/upgrades_addons_GPS.png-971347fb58b48e99e7aba4226d03a7bc.stex" ]
+source_file="res://assets/Upgrades/upgrades_addons_GPS.png"
+dest_files=[ "res://.import/upgrades_addons_GPS.png-318350f00419b7d476cce22f8e06a2d2.stex" ]
 
 [params]
 

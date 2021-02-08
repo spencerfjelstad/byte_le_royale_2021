@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/upgrades_tires_sticky.png-1ca85289d6c2465c68215f3046be7d54.stex"
+path="res://.import/event_animal_in_road.png-e3bf5cd0362eb1d632edeff685c6625b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Upgrades/upgrades_tires_sticky.png"
-dest_files=[ "res://.import/upgrades_tires_sticky.png-1ca85289d6c2465c68215f3046be7d54.stex" ]
+source_file="res://assets/events/event_animal_in_road.png"
+dest_files=[ "res://.import/event_animal_in_road.png-e3bf5cd0362eb1d632edeff685c6625b.stex" ]
 
 [params]
 

@@ -22,7 +22,7 @@ class Client(UserClient):
         :param actions:     This is the actions object that you will add effort allocations or decrees to.
         :param world:       Generic world information
         """
-        
+        print(truck.body.current_gas)
         
         if(truck.active_contract is None):
             # Select contract
@@ -30,8 +30,9 @@ class Client(UserClient):
             actions.set_action(ActionType.select_contract, 0)
         elif(truck.body.current_gas < .20):
             # Buy gas
-            #print("Gas")
+            print("Gas")
             actions.set_action(ActionType.buy_gas)
+            
         elif truck.health < 40 and truck.money > 1000:
             print("Heal")
             actions.set_action(ActionType.repair)
@@ -40,9 +41,7 @@ class Client(UserClient):
             actions.set_action(ActionType.upgrade, ObjectType.tank)
         elif(truck.current_node.city_name != 'end'):
             # Move to next node
-            print(truck.get_current_speed())
             #print("move")
-            print(truck.health)
             actions.set_action(ActionType.select_route, truck.current_node.roads[0])
         
 
