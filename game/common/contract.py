@@ -3,11 +3,10 @@ from game.common.enums import *
 import random
 import json, math
 from game.common.stats import GameStats
-from game.common.game_map import Game_Map
 
 
 class Contract(GameObject):
-    def __init__(self, name=None, region=None, game_map=None, money_reward=None,
+    def __init__(self, name=None, region=None, money_reward=None,
             renown_reward=None, deadline=None):
         super().__init__()
         self.object_type = ObjectType.contract
@@ -15,7 +14,6 @@ class Contract(GameObject):
         self.name = self.generateName() if not name else name
         # region is region enum
         self.region = region
-        self.game_map = game_map
         self.money_reward = (int(money_reward * GameStats.region_money_reward_modifier[region])
                 if money_reward is not None and region is not None else 0)
         self.renown_reward = (int(math.ceil(renown_reward * GameStats.region_renown_reward_modifier[region]))
@@ -26,7 +24,6 @@ class Contract(GameObject):
         data = super().to_json()
         data['name'] = self.name
         data['region'] = self.region
-        data['game_map'] = self.game_map.to_json()
         data['money_reward'] = self.money_reward
         data['renown_reward'] = self.renown_reward
         data['deadline'] = self.deadline
@@ -36,9 +33,6 @@ class Contract(GameObject):
         super().from_json(data)
         self.name = data['name']
         self.region = data['region']
-        json_map = Game_Map()
-        json_map.from_json(data['game_map'])
-        self.game_map = json_map
         self.money_reward = data['money_reward']
         self.renown_reward = data['renown_reward']
         self.deadline = data['deadline']
@@ -62,11 +56,10 @@ class Contract(GameObject):
             Money Reward: {self.money_reward}
             Renown Reward: {self.renown_reward}
             Deadline: {self.deadline}
-            Map: {str(self.game_map.to_list())}
             """
         return p
 
     def __eq__(self, other):
         return (isinstance(other, self.__class__) and self.name == other.name and self.region == other.region
-                and self.game_map == other.game_map and self.money_reward == other.money_reward
-                and self.renown_reward == other.renown_reward and self.deadline == other.deadline)
+                and self.money_reward == other.money_reward and self.renown_reward == other.renown_reward 
+                and self.deadline == other.deadline)
