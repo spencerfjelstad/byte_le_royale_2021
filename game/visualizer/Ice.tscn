@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Ice.gd" type="Script" id=1]
+[ext_resource path="res://assets/events/event_icy_road.png" type="Texture" id=2]
+
+[node name="Ice" type="Sprite"]
+texture = ExtResource( 2 )
+script = ExtResource( 1 )

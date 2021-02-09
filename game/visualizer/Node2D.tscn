@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://json_script.gd" type="Script" id=1]
 [ext_resource path="res://truck_HUD_updated.png" type="Texture" id=2]
@@ -9,9 +9,10 @@
 [ext_resource path="res://assets/road_elements/rock.png" type="Texture" id=7]
 [ext_resource path="res://assets/road_elements/road_sign.png" type="Texture" id=8]
 [ext_resource path="res://MenuPopup.gd" type="Script" id=9]
-[ext_resource path="res://assets/events/event_traffic.png" type="Texture" id=10]
-[ext_resource path="res://assets/events/event_rock_slide.png" type="Texture" id=11]
-[ext_resource path="res://assets/events/event_icy_road.png" type="Texture" id=12]
+[ext_resource path="res://Traffic.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Ice.tscn" type="PackedScene" id=13]
+[ext_resource path="res://RockSlide.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Animal.tscn" type="PackedScene" id=15]
 
 [sub_resource type="DynamicFont" id=1]
 size = 10
@@ -51,6 +52,10 @@ font_data = ExtResource( 6 )
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
+Ice = ExtResource( 13 )
+RockSlide = ExtResource( 14 )
+Animal = ExtResource( 15 )
+Traffic = ExtResource( 11 )
 
 [node name="Road" type="Sprite" parent="."]
 position = Vector2( 600, 400 )
@@ -77,43 +82,6 @@ autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="EventTraffic" type="Container" parent="."]
-visible = false
-margin_right = 40.0
-margin_bottom = 40.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Sprite" type="Sprite" parent="EventTraffic"]
-position = Vector2( 600, 500 )
-scale = Vector2( 10, 10 )
-texture = ExtResource( 10 )
-
-[node name="EventIce" type="Container" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Sprite" type="Sprite" parent="EventIce"]
-position = Vector2( 600, 425 )
-texture = ExtResource( 12 )
-
-[node name="EventRock" type="Container" parent="."]
-visible = false
-margin_right = 40.0
-margin_bottom = 40.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Sprite" type="Sprite" parent="EventRock"]
-position = Vector2( 600, 500 )
-scale = Vector2( 3, 3 )
-texture = ExtResource( 11 )
 
 [node name="TruckHUD" type="Sprite" parent="."]
 position = Vector2( 600, 400 )

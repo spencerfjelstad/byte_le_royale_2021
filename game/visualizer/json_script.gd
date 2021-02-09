@@ -1,6 +1,11 @@
 extends Node2D
 
 
+export (PackedScene) var Ice
+export (PackedScene) var RockSlide
+export (PackedScene) var Animal
+export (PackedScene) var Traffic
+
 # Rock starting place = 680, 400
 var turn = 1
 var restart = false
@@ -9,11 +14,12 @@ var data = {}
 
 var eventsDict = {
 	"ice": {
-		"active": false,
+		"active": true,
 		"originx": 600,
 		"originy": 425,
 		"destx": 600,
 		"desty": 800,
+		"sprite": "res://assets/events/event_icy_road.png"
 		},
 	"rock": false
 }
@@ -47,11 +53,7 @@ func _ready():
 	# scale along x and y
 	$TruckHUD.set_scale(Vector2(scale, scale))
 	
-	
-	
-	
-	
-	
+
 	$Timer.set_wait_time(1)
 	$Timer.start()
 	
@@ -75,10 +77,14 @@ func _on_Timer_timeout():
 	$UpgAddOns.texture = load(addons_sprites[turn%3])
 	
 	# Show Events
-	if(turn % 2 == 0):
-		eventsDict["ice"]["active"] = true
-	else: $EventIce.visible = false
-		
+	if(turn % 4 == 0):
+		spawn_ice()
+	elif (turn % 3 == 0):
+		spawn_animal()
+	elif (turn % 2 == 0):
+		spawn_traffic()
+	else:
+		spawn_rock_slide()
 	
 	# TruckHUD moves up and down like a truck bouncing on the road. Keep or no?
 	#if(turn % 2 == 0):
@@ -88,9 +94,8 @@ func _on_Timer_timeout():
 	
 	turn += 1
 
-var signSpeed = .06
-var rockSpeed = .06
-var iceSpeed = .06
+var signSpeed = 1
+var rockSpeed = 1
 
 var xdest = -1400
 var ydest = 840
@@ -104,8 +109,6 @@ var originalDistance = originalPosition.distance_to(Vector2(xdest,ydest))
 var originalRPosition = Vector2(680,400)
 var originalRDistance = originalRPosition.distance_to(Vector2(-xdest, ydest))
 
-var originalIceDistance = Vector2(eventsDict.ice.originx,eventsDict.ice.originy).distance_to(Vector2(eventsDict.ice.destx,eventsDict.ice.desty))
-
 func _process(delta):
 	# Handling rock sprite
 	if($Rock.position.y < 600):
@@ -113,12 +116,12 @@ func _process(delta):
 		var currentRPosition = $Rock.position.distance_to(Vector2(-xdest,ydest))
 		var newRScale = -25/originalRDistance * currentRPosition + 26
 		$Rock.set_scale(Vector2(newRScale,newRScale))
-		rockSpeed = rockSpeed * 1.05
+		rockSpeed = rockSpeed * 1.06
 	else:
 		$Rock.set_position(Vector2(680,400))
 		$Rock.scale.x = 1
 		$Rock.scale.y = 1
-		rockSpeed = .06
+		rockSpeed = 1
 		
 	# Handling sign sprite
 	if($CitySign.position.y < 830):
@@ -126,28 +129,39 @@ func _process(delta):
 		var newScale = -25/originalDistance * currentPosition + 26
 		$CitySign.position = $CitySign.position.move_toward(Vector2(xdest,ydest), delta * (signSpeed + 50) )
 		$CitySign.set_scale(Vector2(newScale,newScale))
-		signSpeed = signSpeed * 1.05
+		signSpeed = signSpeed * 1.06
 	else:
 		$CitySign.set_position(Vector2(530,375))
 		$CitySign.scale.x = 1
 		$CitySign.scale.y = 1
-		signSpeed = .06
+		signSpeed = 1
 	
-	# Events -------------------------
-	# Ice event
-	if(eventsDict["ice"]["active"] and $EventIce/Sprite.position.y < eventsDict["ice"]["desty"] - 1):
-		$EventIce.visible = true
-		
-		var currentDistance = $EventIce/Sprite.position.distance_to(Vector2(eventsDict["ice"]["destx"],eventsDict["ice"]["desty"]))
-		var newScale = (-.577 * currentDistance + originalIceDistance*tan(PI/6))/20 + 1
-		$EventIce/Sprite.set_scale(Vector2(newScale, newScale))
-		$EventIce/Sprite.position = $EventIce/Sprite.position.move_toward(Vector2(eventsDict["ice"]["destx"],eventsDict["ice"]["desty"]), delta * (iceSpeed +50))
-		iceSpeed = iceSpeed * 1.05
-	else:
-		eventsDict["ice"]["active"] = false
-		$EventIce.visible = false
-		$EventIce/Sprite.set_position(Vector2(eventsDict["ice"]["originx"],eventsDict["ice"]["originy"]))
-		iceSpeed = .06
 		
 	
+# Events
+func spawn_ice(posX = eventsDict["ice"]["originx"], posY = eventsDict["ice"]["originy"]):
+	var ice_instance = Ice.instance()
+	add_child(ice_instance)
+	move_child(ice_instance, 2)
+	ice_instance.set_position(Vector2(posX,posY))
 	
+func spawn_rock_slide():
+	var rock_slide_instance = RockSlide.instance()
+	add_child(rock_slide_instance)
+	move_child(rock_slide_instance, 2)
+	pass
+
+func spawn_traffic():
+	var traffic_instance = Traffic.instance()
+	add_child(traffic_instance)
+	move_child(traffic_instance, 1)
+	pass
+
+func spawn_bandits():
+	pass
+	
+func spawn_animal():
+	var animal_instance = Animal.instance()
+	add_child(animal_instance)
+	move_child(animal_instance, 2)
+	pass
