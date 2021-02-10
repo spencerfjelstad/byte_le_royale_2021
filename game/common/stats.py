@@ -30,14 +30,14 @@ class GameStats:
         ContractDifficulty.hard: 2
     }
 
-    region_difficulty_modifier = {
-        Region.grass_lands: .5,
-        Region.nord_dakotia: .6,
-        Region.mobave_desert: .7,
-        Region.mount_vroom: .8,
-        Region.lobslantis: .8,
-        Region.tropical_cop_land: .9,
-    }
+    # region_difficulty_modifier = {
+    #     Region.grass_lands: .5,
+    #     Region.nord_dakotia: .6,
+    #     Region.mobave_desert: .7,
+    #     Region.mount_vroom: .8,
+    #     Region.lobslantis: .8,
+    #     Region.tropical_cop_land: .9,
+    # }
 
     # objects that can occupy the body slot
     body_objects = [

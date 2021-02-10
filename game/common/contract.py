@@ -6,7 +6,7 @@ from game.common.stats import GameStats
 
 
 class Contract(GameObject):
-    def __init__(self, name=None, region=None, game_map=None, money_reward=None,
+    def __init__(self, name=None, region=None, money_reward=None,
             renown_reward=None, deadline=None, difficulty=None):
         super().__init__()
         self.object_type = ObjectType.contract
