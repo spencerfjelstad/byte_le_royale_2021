@@ -65,4 +65,4 @@ class Contract(GameObject):
     def __eq__(self, other):
         return (isinstance(other, self.__class__) and self.name == other.name and self.region == other.region
                 and self.money_reward == other.money_reward and self.renown_reward == other.renown_reward 
-                and self.deadline == other.deadline)
+                and self.deadline == other.deadline and self.difficulty == other.difficulty)
