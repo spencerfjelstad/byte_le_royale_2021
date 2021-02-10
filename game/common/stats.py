@@ -25,9 +25,9 @@ class GameStats:
     }
 
     contract_difficulty_modifier = {
-        'easy': 1,
-        'medium': 1.5,
-        'hard': 2
+        ContractDifficulty.easy: 1,
+        ContractDifficulty.medium: 1.5,
+        ContractDifficulty.hard: 2
     }
 
     region_difficulty_modifier = {

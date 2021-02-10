@@ -35,13 +35,13 @@ def generate_contracts(client):
 
     easy_contract = Contract(None, random.choice(region_list), 
             GameStats.contract_rewards['money']['easy'], GameStats.contract_rewards['renown']['easy'],
-            client.time-GameStats.contract_deadline['short'], 'easy')
+            client.time-GameStats.contract_deadline['short'], ContractDifficulty.easy)
     medium_contract = Contract(None, random.choice(region_list), medium_map,
             GameStats.contract_rewards['money']['medium'], GameStats.contract_rewards['renown']['medium'],
-            client.time-GameStats.contract_deadline['medium'], 'medium')
+            client.time-GameStats.contract_deadline['medium'], ContractDifficulty.medium)
     hard_contract = Contract(None, random.choice(region_list), hard_map,
             GameStats.contract_rewards['money']['hard'], GameStats.contract_rewards['renown']['hard'],
-            client.time-GameStats.contract_deadline['long'], 'hard')
+            client.time-GameStats.contract_deadline['long'], ContractDifficulty.hard)
 
     contract1 = {'contract': easy_contract, 'map': easy_map}
     contract2 = {'contract': medium_contract, 'map': medium_map}
