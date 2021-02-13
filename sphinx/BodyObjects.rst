@@ -10,6 +10,10 @@ The Tank Object
 
 The Tank object increases the max_gas attribute. Gas levels are stored as percents, IE level 1 holds 50% more gas than level 0.
 Not having the Tank object leaves your truck with a level 0 tank.
+Referenced as:
+.. code-block:: python
+
+    ObjectType.tank
 
 The levels are below
 
@@ -25,8 +29,13 @@ Level  Max_Gas_multiplier Cost
 The Sentry Gun Object
 #####################
 
-The sentry gun object solves the rockslide event. It will reduce your damage and time penalties 
-according to the to the below table 
+The sentry gun will shoot bolders out of the road as you pass. It reduces damage and time taken by the rockslide event.
+Referenced as:
+.. code-block:: python
+
+    ObjectType.sentryGun
+
+The levels are below
 
 =====  ================== ======
 Level    Negation          Cost
@@ -40,7 +49,13 @@ Level    Negation          Cost
 The Headlights Object
 #####################
 
-The headlights object negates the animal_in_the_road event. Below are the negations
+The headlights object will increases the brightness of your headlights causing animals to react more quickly if they are in the way.
+It reduces damage and time taken by the animal_in_the_road event.
+.. code-block:: python
+
+    ObjectType.headlights
+
+The levels are below
 
 =====  ================== ======
 Level    Negation          Cost

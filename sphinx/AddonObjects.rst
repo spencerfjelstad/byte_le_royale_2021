@@ -7,7 +7,11 @@ Add-On object occupies the addons attribute of your truck. You can only have one
 The policeScanner Object
 ########################
 
-The police scanner object helps you evade the cops.
+The police scanner object helps you evade the cops. It will reduce the damage and time taken from the police event.
+Referenced as:
+.. code-block:: python
+
+    ObjectType.policeScanner
 
 The levels are below
 
@@ -20,10 +24,14 @@ Level  Negation modifier   Cost
 3       0.5                21600
 =====  ================== =======
 
-The gps Object
+The GPS Object
 ########################
 
-GPS will help re-route you away from traffic.
+GPS will help re-route you away from traffic. It will reduce the damage and time taken from the traffic event.
+Referenced as:
+.. code-block:: python
+
+    ObjectType.GPS
 
 The levels are below
 
@@ -42,6 +50,10 @@ The Rabbits foot Object
 
 The Rabbit's foot will bring you good luck in the event a disaster occuring. 
 It will minorly reduce incoming damage from all event types. This bonus will stack additively with your other damage reduction bonuses.
+Referenced as:
+.. code-block:: python
+
+    ObjectType.rabbitFoot
 
 The levels are below
 

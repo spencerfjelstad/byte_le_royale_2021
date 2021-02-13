@@ -84,7 +84,7 @@ EX:
 
     actions.set_action(ActionType.upgrade, Objectype.policeScanner)
 
-Will upgrade or switch your add on object to policeScanner
+Will upgrade or switch your add on object to policeScanner. Other possible upgrades are tank, headlights, sentryGun, rabbitFoot, and GPS
 
 Switching Tires
 ###############
