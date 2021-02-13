@@ -15,6 +15,15 @@ var restart = false
 var turns = []
 var data = {}
 
+var road_dict = {
+	1: "res://assets/road_type/mountain_road.png",
+	2: "res://assets/road_type/forest_road.png",
+	3: "res://assets/road_type/tundra_road.png",
+	4: "res://assets/road_type/highway_road.png",
+	5: "res://assets/road_type/city_road.png",
+	6: "res://assets/road_type/highway_road.png"
+}
+
 var eventsDict = {
 	"ice": {
 		"active": true,
