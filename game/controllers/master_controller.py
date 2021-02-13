@@ -93,6 +93,8 @@ class MasterController(Controller):
             self.event = new_action[2]
         else:
             self.selected_action = new_action
+            self.selected_route = RoadType.none
+            self.event = EventType.none
         #client.time -= 10
         if client.time <= 0:
             print("Game is ending because time has run out. Final score is " + str(client.truck.renown))
