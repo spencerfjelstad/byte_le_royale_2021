@@ -5,14 +5,15 @@ export (PackedScene) var Ice
 export (PackedScene) var RockSlide
 export (PackedScene) var Animal
 export (PackedScene) var Traffic
+export (PackedScene) var Bandits
+
+export (PackedScene) var Sign
 
 # Rock starting place = 680, 400
 var turn = 1
 var restart = false
 var turns = []
 var data = {}
-
-
 
 var eventsDict = {
 	"ice": {
@@ -71,6 +72,8 @@ func _on_Timer_timeout():
 		$RestartScreen.visible = false
 		restart = false
 	
+	
+	
 	# Handle labels
 	var name = str(data.get(str(turn)).get("truck").get("active_contract").get("name")) + "\n"
 	var money_reward = "Payment: " + str(data.get(str(turn)).get("truck").get("active_contract").get("money_reward")) + "\n"
@@ -92,15 +95,10 @@ func _on_Timer_timeout():
 	$UpgAddOns.texture = load(addons_sprites[turn%3])
 	
 	# Show Events
-	if(turn % 4 == 0):
-		spawn_ice()
-	elif (turn % 3 == 0):
-		spawn_animal()
-	elif (turn % 2 == 0):
-		spawn_traffic()
-	else:
-		spawn_rock_slide()
+	if(turn % 3 == 0): spawn_bandits()
 	
+	# Variable for city sign
+	spawn_sign("Plankton")
 	# TruckHUD moves up and down like a truck bouncing on the road. Keep or no?
 	#if(turn % 2 == 0):
 	#	$TruckHUD.position.y += 2
@@ -139,17 +137,17 @@ func _process(delta):
 		rockSpeed = 1
 		
 	# Handling sign sprite
-	if($CitySign.position.y < 830):
-		var currentPosition = $CitySign.position.distance_to(Vector2(xdest,ydest))
-		var newScale = -25/originalDistance * currentPosition + 26
-		$CitySign.position = $CitySign.position.move_toward(Vector2(xdest,ydest), delta * (signSpeed + 50) )
-		$CitySign.set_scale(Vector2(newScale,newScale))
-		signSpeed = signSpeed * 1.06
-	else:
-		$CitySign.set_position(Vector2(530,375))
-		$CitySign.scale.x = 1
-		$CitySign.scale.y = 1
-		signSpeed = 1
+	#if($CitySign.position.y < 830):
+	#	var currentPosition = $CitySign.position.distance_to(Vector2(xdest,ydest))
+	#	var newScale = -25/originalDistance * currentPosition + 26
+	#	$CitySign.position = $CitySign.position.move_toward(Vector2(xdest,ydest), delta * (signSpeed + 50) )
+	#	$CitySign.set_scale(Vector2(newScale,newScale))
+	#	signSpeed = signSpeed * 1.06
+	#else:
+	#	$CitySign.set_position(Vector2(530,375))
+	#	$CitySign.scale.x = 1
+	#	$CitySign.scale.y = 1
+	#	signSpeed = 1
 	
 		
 	
@@ -173,10 +171,20 @@ func spawn_traffic():
 	pass
 
 func spawn_bandits():
+	var bandits_instance = Bandits.instance()
+	add_child(bandits_instance)
+	move_child(bandits_instance, 3)
 	pass
 	
 func spawn_animal():
 	var animal_instance = Animal.instance()
 	add_child(animal_instance)
 	move_child(animal_instance, 2)
+	pass
+
+func spawn_sign(name):
+	var city_sign_instance = Sign.instance()
+	add_child(city_sign_instance)
+	move_child(city_sign_instance, 2)
+	city_sign_instance.set_city_name(name)
 	pass

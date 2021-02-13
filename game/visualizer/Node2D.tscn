@@ -7,16 +7,13 @@
 [ext_resource path="res://assets/upgrades/upgrades_none.png" type="Texture" id=5]
 [ext_resource path="res://assets/Imagine_Font.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://assets/road_elements/rock.png" type="Texture" id=7]
-[ext_resource path="res://assets/road_elements/road_sign.png" type="Texture" id=8]
+[ext_resource path="res://CitySign.tscn" type="PackedScene" id=8]
 [ext_resource path="res://MenuPopup.gd" type="Script" id=9]
+[ext_resource path="res://Bandits.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Traffic.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Ice.tscn" type="PackedScene" id=13]
 [ext_resource path="res://RockSlide.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Animal.tscn" type="PackedScene" id=15]
-
-[sub_resource type="DynamicFont" id=1]
-size = 10
-font_data = ExtResource( 6 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 30
@@ -56,6 +53,8 @@ Ice = ExtResource( 13 )
 RockSlide = ExtResource( 14 )
 Animal = ExtResource( 15 )
 Traffic = ExtResource( 11 )
+Bandits = ExtResource( 10 )
+Sign = ExtResource( 8 )
 
 [node name="Road" type="Sprite" parent="."]
 position = Vector2( 600, 400 )
@@ -65,23 +64,6 @@ texture = ExtResource( 4 )
 [node name="Rock" type="Sprite" parent="."]
 position = Vector2( 680, 400 )
 texture = ExtResource( 7 )
-
-[node name="CitySign" type="Sprite" parent="."]
-position = Vector2( 530, 375 )
-texture = ExtResource( 8 )
-
-[node name="lblCityName" type="Label" parent="CitySign"]
-margin_left = -24.7106
-margin_top = -20.7733
-margin_right = 25.2894
-margin_bottom = 7.22668
-custom_fonts/font = SubResource( 1 )
-custom_constants/line_spacing = -3
-text = "Plankton"
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="TruckHUD" type="Sprite" parent="."]
 position = Vector2( 600, 400 )
@@ -172,7 +154,6 @@ margin_top = 650.0
 margin_right = 186.0
 margin_bottom = 691.0
 custom_fonts/font = SubResource( 6 )
-text = "100.00 MPH"
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -184,7 +165,6 @@ margin_top = 650.0
 margin_right = 572.0
 margin_bottom = 690.0
 custom_fonts/font = SubResource( 7 )
-text = "00.00%"
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
