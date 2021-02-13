@@ -37,29 +37,36 @@ class ActionController(Controller):
                 # Selects the contract given in the player.action.action_parameter
                 self.select_contract(player)
                 player.time -= 1
+                return ActionType.select_contract
             elif(player_action == ActionType.select_route):
                 # Moves the player to the node given in the action_parameter
                 #self.move(player, player_action.action.action_parameter)
                 self.move(player)
+                return ActionType.select_route
         if(player_action == ActionType.buy_gas):
             self.buy_gas(player)
             player.time -= GameStats.gas_pumping_time_penalty
+            return ActionType.buy_gas
         elif(player_action == ActionType.repair):
             self.heal(player)
             player.time -= GameStats.repair_pumping_time_penalty
+            return ActionType.repair
         elif(player_action == ActionType.upgrade):
             self.upgrade_level(player, player.action.action_parameter)
             player.time -= GameStats.upgrade_time_penalty
+            return ActionType.upgrade
         elif(player_action == ObjectType.tires):
             self.upgrade_tires(player, player.action.action_parameter)
             player.time -= GameStats.upgrade_time_penalty
+            return ActionType.upgrade
         elif(player_action == ActionType.set_speed):
             #This is an ActionType because the user client cannot directly influence truck values. 
             player.truck.set_current_speed(player.action.action_parameter)
             player.time -= 1
-
+            return ActionType.set_speed
         else:
             self.print("Action aborted: no active contract!")
+            return ActionType.none
 
     # Action Methods ---------------------------------------------------------    
     def move(self, player):
