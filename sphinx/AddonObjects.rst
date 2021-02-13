@@ -2,8 +2,7 @@
 Add On Objects
 ==============
 
-Body objects occupy the body attribute in the truck object. You can only have one Body object at a time. Aditionally the body object also holds the 
-current_gas attribute, which is how much gas remains in your tank, and the max_gas attribute, which defaults to 1.
+Add-On object occupies the addons attribute of your truck. You can only have one Add-On object at a time.
 
 The policeScanner Object
 ########################
@@ -26,7 +25,7 @@ The gps Object
 
 GPS will help re-route you away from traffic.
 
-The levels are below (fix levels)
+The levels are below
 
 =====  ================== =======
 Level  Negation modifier   Cost
@@ -41,13 +40,16 @@ Level  Negation modifier   Cost
 The Rabbits foot Object
 ########################
 
-?
+The Rabbit's foot will bring you good luck in the event a disaster occuring. 
+It will minorly reduce incoming damage from all event types. This bonus will stack additively with your other damage reduction bonuses.
+
+The levels are below
 
 =====  ================== =======
 Level  Negation modifier   Cost
 =====  ================== =======
-0       0.1                5400 
-1       0.2                10800
-2       0.35               16200
-3       0.5                21600
+0       0.025              5400 
+1       0.05               10800
+2       0.1                16200
+3       0.15               21600
 =====  ================== =======

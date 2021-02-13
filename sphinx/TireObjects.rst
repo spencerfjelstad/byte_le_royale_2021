@@ -11,8 +11,8 @@ Name               Type
 ================  ===========================
 tire_econ          A fuel efficient tire, but at the cost of traction
 tire_normal        A tire that is balanced between fuel efficiency and traction
-tire_sticky        A high traction tire at the cost of fuel efficiency
-monster_truck      Negates the bandit event
+tire_sticky        Negates damage from the icy_road at the cost of fuel efficiency
+monster_truck      Negates damage from the bandit event at the cost of fuel efficiency
 ================  ===========================
 
 

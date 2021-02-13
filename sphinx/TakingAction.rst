@@ -69,7 +69,7 @@ EX:
 
     actions.set_action(ActionType.repair)
 
-Will fill your tank (or buy the most you can afford)
+Will fill your health (or buy the most you can afford)
 
 Upgrading
 #########

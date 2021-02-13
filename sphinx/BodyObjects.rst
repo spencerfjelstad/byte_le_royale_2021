@@ -16,10 +16,10 @@ The levels are below
 =====  ================== =====
 Level  Max_Gas_multiplier Cost
 =====  ================== =====
-0      1                   10
-1      1.5                 300
-2      2                   900
-3      4                   2000
+0      1                   5400
+1      1.5                 10800
+2      2                   16200
+3      4                   21600
 =====  ================== =====
 
 The Sentry Gun Object
@@ -37,7 +37,7 @@ Level    Negation          Cost
 3       0.5                21600
 =====  ================== ======
 
-The headlights Object
+The Headlights Object
 #####################
 
 The headlights object negates the animal_in_the_road event. Below are the negations
