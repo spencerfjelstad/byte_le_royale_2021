@@ -6,6 +6,7 @@ export (PackedScene) var RockSlide
 export (PackedScene) var Animal
 export (PackedScene) var Traffic
 export (PackedScene) var Bandits
+export (PackedScene) var Police
 
 export (PackedScene) var Sign
 
@@ -16,12 +17,12 @@ var turns = []
 var data = {}
 
 var road_dict = {
-	1: "res://assets/road_type/mountain_road.png",
-	2: "res://assets/road_type/forest_road.png",
-	3: "res://assets/road_type/tundra_road.png",
-	4: "res://assets/road_type/highway_road.png",
-	5: "res://assets/road_type/city_road.png",
-	6: "res://assets/road_type/highway_road.png"
+	"1": "res://assets/road_type/mountain_road.png",
+	"2": "res://assets/road_type/forest_road.png",
+	"3": "res://assets/road_type/tundra_road.png",
+	"4": "res://assets/road_type/highway_road.png",
+	"5": "res://assets/road_type/city_road.png",
+	"6": "res://assets/road_type/highway_road.png"
 }
 
 var eventsDict = {
@@ -98,13 +99,19 @@ func _on_Timer_timeout():
 	$lblMoney.text = str(data.get(str(turn)).get("truck").get("money"))
 	$lblRenown.text = str(data.get(str(turn)).get("truck").get("renown"))
 	
+	var road_type = data.get(str(turn)).get("selected_route")
+	change_road(road_type)
+	
+	var event_type = data.get(str(turn)).get("event")
+	show_event(event_type)
+	
 	# Test if all upgrade textures fit and that I can change the sprite
 	$UpgBody.texture = load(body_sprites[turn%3])
 	$UpgTires.texture = load(tires_sprites[turn%4])
 	$UpgAddOns.texture = load(addons_sprites[turn%3])
 	
 	# Show Events
-	if(turn % 3 == 0): spawn_bandits()
+	#if(turn % 3 == 0): spawn_bandits()
 	
 	# Variable for city sign
 	spawn_sign("Plankton")
@@ -191,9 +198,40 @@ func spawn_animal():
 	move_child(animal_instance, 2)
 	pass
 
+func spawn_police():
+	var police_instance = Police.instance()
+	add_child(police_instance)
+	move_child(police_instance, 10)
+	pass
+
+# Fauna
 func spawn_sign(name):
 	var city_sign_instance = Sign.instance()
 	add_child(city_sign_instance)
 	move_child(city_sign_instance, 2)
 	city_sign_instance.set_city_name(name)
 	pass
+	
+func change_road(road_type):
+	if(road_type != 0):
+		$Environment.texture = load(road_dict[str(road_type)])
+		if(road_type == 6):
+			$Road.play("interstate")
+		else: 
+			$Road.play("default")
+		
+func show_event(event_type):
+	if(event_type != 0):
+		if(event_type == 1):
+			spawn_rock_slide()
+		elif(event_type == 2):
+			spawn_ice()
+		elif(event_type == 3):
+			spawn_animal()
+		elif(event_type == 4):
+			spawn_bandits()
+		elif(event_type == 5):
+			#spawn_police()
+			print("Police not implemented!")
+		elif(event_type == 6):
+			spawn_traffic()

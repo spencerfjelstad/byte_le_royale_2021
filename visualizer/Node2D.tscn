@@ -1,9 +1,9 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://json_script.gd" type="Script" id=1]
 [ext_resource path="res://truck_HUD_updated.png" type="Texture" id=2]
 [ext_resource path="res://assets/Bad Handwriting 7.2.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://road.png" type="Texture" id=4]
+[ext_resource path="res://assets/road_type/road-Sheet.png" type="Texture" id=4]
 [ext_resource path="res://assets/upgrades/upgrades_none.png" type="Texture" id=5]
 [ext_resource path="res://assets/Imagine_Font.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://assets/road_elements/rock.png" type="Texture" id=7]
@@ -11,9 +11,41 @@
 [ext_resource path="res://MenuPopup.gd" type="Script" id=9]
 [ext_resource path="res://Bandits.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Traffic.tscn" type="PackedScene" id=11]
+[ext_resource path="res://assets/road_type/highway_road.png" type="Texture" id=12]
 [ext_resource path="res://Ice.tscn" type="PackedScene" id=13]
 [ext_resource path="res://RockSlide.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Animal.tscn" type="PackedScene" id=15]
+[ext_resource path="res://assets/road_type/interstate-Sheet.png" type="Texture" id=16]
+[ext_resource path="res://Police.tscn" type="PackedScene" id=17]
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 120, 80 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 4 )
+region = Rect2( 120, 0, 120, 80 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 16 )
+region = Rect2( 0, 0, 160, 80 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 16 )
+region = Rect2( 160, 0, 160, 80 )
+
+[sub_resource type="SpriteFrames" id=11]
+animations = [ {
+"frames": [ SubResource( 9 ), SubResource( 10 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 12 ), SubResource( 13 ) ],
+"loop": true,
+"name": "interstate",
+"speed": 10.0
+} ]
 
 [sub_resource type="DynamicFont" id=1]
 size = 30
@@ -54,12 +86,20 @@ RockSlide = ExtResource( 14 )
 Animal = ExtResource( 15 )
 Traffic = ExtResource( 11 )
 Bandits = ExtResource( 10 )
+Police = ExtResource( 17 )
 Sign = ExtResource( 8 )
 
-[node name="Road" type="Sprite" parent="."]
+[node name="Environment" type="Sprite" parent="."]
 position = Vector2( 600, 400 )
 scale = Vector2( 5, 5 )
-texture = ExtResource( 4 )
+texture = ExtResource( 12 )
+
+[node name="Road" type="AnimatedSprite" parent="."]
+position = Vector2( 600, 600 )
+scale = Vector2( 5, 5 )
+frames = SubResource( 11 )
+animation = "interstate"
+playing = true
 
 [node name="Rock" type="Sprite" parent="."]
 position = Vector2( 680, 400 )
