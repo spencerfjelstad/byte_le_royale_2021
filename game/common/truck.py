@@ -16,10 +16,10 @@ from game.common.contract import Contract
 # Probably need to add some extra stuff
 class Truck(GameObject):
 
-    def __init__(self, node = None):
-        super().__init__() 
+    def __init__(self, game_map = None):
+        super().__init__()
         self.object_type = ObjectType.truck
-        self.current_node = node
+        self.map = game_map
         self.contract_list = []
         self.active_contract = None
         self.body = BaseBodyObject(0,0)
@@ -48,9 +48,12 @@ class Truck(GameObject):
 
     def to_json(self):
         data = super().to_json()
-        node = self.current_node.to_json() if self.current_node is not None else None
-        data['current_node'] = node
-        data['contract_list'] = {contract.name: contract.to_json() for contract in self.contract_list}
+        data['map'] = self.map.to_json() if self.map is not None else None
+        temp_list = [] 
+        for i in self.contract_list:
+            temp_dict = {'contract': i['contract'].to_json(), 'map': i['map'].to_json()}
+            temp_list.append(temp_dict)
+        data['contract_list'] = temp_list
         data['active_contract'] = self.active_contract.to_json() if self.active_contract is not None else None
         data['speed'] = self.speed
         data['health'] = self.health
@@ -63,12 +66,19 @@ class Truck(GameObject):
 
     def from_json(self, data):
         super().from_json(data)
-        node = Node('temp')
-        node.from_json(data['current_node'])
-        self.current_node = node
-        temp = Contract()
-        for contract in data['contract_list'].values():
-            self.contract_list.append(temp.from_json(contract))
+        json_map = Game_Map()
+        json_map.from_json(data['map'])
+        self.game_map = json_map
+
+        temp_contract = Contract()
+        temp_map = Game_Map()
+        temp_list = []
+        for i in data['contract_list']:
+            temp_contract.from_json(i['contract']) 
+            temp_map.from_json(i['map'])
+            temp_dict = {'contract': temp_contract, 'map': temp_map}
+            temp_list.append(temp_dict)
+        self.contract_list = temp_list
         self.active_contract = temp.from_json(data['active_contract'])
         self.speed = data['speed']
         self.health = data['health']
@@ -105,8 +115,7 @@ class Truck(GameObject):
         contracts_string = []
         for contract in self.contract_list:
             contracts_string.append(str(contract))
-        p = f"""Current Node: {self.current_node.city_name if self.current_node is not None else None}
-            Contract List: {str(contracts_string)}
+        p = f"""Contract List: {str(contracts_string)}
             Contract: {str(self.active_contract)}
             Gas: {self.body.current_gas}
             Max Gas: {self.body.max_gas}

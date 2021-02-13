@@ -27,7 +27,7 @@ class Client(UserClient):
         return totLen
 
     def canIMakeIt(self, truck):
-        dist = self.chooseBestRoad(truck.current_node.roads)
+        dist = self.chooseBestRoad(truck.map.current_node.roads)
         return True if ((dist.length / 2) / (truck.body.max_gas * 100)) > 0 else False
 
     def handleUpgrades(self, truck, bodyEnum, addonEnum):
@@ -45,9 +45,9 @@ class Client(UserClient):
         score = 0
         for index in range(len(contractList)):
             if truck.money < 3000:
-                score = contractList[index]['contract'].money_reward / self.calculateLength(contractList[index].game_map)
+                score = contractList[index]['contract'].money_reward / self.calculateLength(contractList[index]['map'])
             else:
-                score = contractList[index]['contract'].renown_reward / self.calculateLength(contractList[index].game_map) 
+                score = contractList[index]['contract'].renown_reward / self.calculateLength(contractList[index]['map']) 
             if score > prevBest:
                 prevBest = score
                 bestIndex = index
@@ -75,32 +75,33 @@ class Client(UserClient):
         if(truck.active_contract is None and ActionType.select_contract != self.prevAction):
             # Select contract
             ind = self.chooseBestContract(truck, truck.contract_list)
-            actions.set_action(ActionType.select_contract, ind)
+            actions.set_action(ActionType.select_contract, 0)
             self.prevAction = ActionType.select_contract
             #print("Selecting index " + str(ind))
         elif truck.speed != 47 and self.prevAction != ActionType.set_speed:
             actions.set_action(ActionType.set_speed, 47)
             self.prevAction = ActionType.set_speed
             print("Choose speed: " + str(truck.speed))
-        elif ActionType.buy_gas != self.prevAction and truck.body.current_gas < .15 and (truck.current_node.gas_price < truck.current_node.next_node.gas_price or self.canIMakeIt(truck)):
+        elif ActionType.buy_gas != self.prevAction and truck.body.current_gas < .15 and (truck.map.current_node.gas_price < truck.map.current_node.next_node.gas_price or self.canIMakeIt(truck)):
             # Buy gas
-            #print("Gas")
+            print("Gas")
             actions.set_action(ActionType.buy_gas)
             self.prevAction = ActionType.buy_gas
-        elif ActionType.repair != self.prevAction and ((truck.health < 70 and truck.current_node.repair_price < truck.current_node.next_node.repair_price * 1.5) or truck.health < 50):
+        elif ActionType.repair != self.prevAction and ((truck.health < 70 and truck.map.current_node.repair_price < truck.map.current_node.next_node.repair_price * 1.5) or truck.health < 50):
             actions.set_action(ActionType.repair)
-            #print("Heal")
+            print("Heal")
             self.prevAction = ActionType.repair
         elif truck.tires != TireType.tire_econ and ActionType.upgrade != self.prevAction and truck.money > 1000:
             actions.set_action(ObjectType.tires, TireType.tire_econ)
             self.prevAction = ActionType.upgrade
-        elif  (truck.body.level < 3 and 100000 * 1.2 * (truck.body.level + 1) < truck.money) and ActionType.select_contract != self.prevAction:
-            #print("upgrade")
+        elif  (truck.body.level < 3 and 10000 * 1.2 * (truck.body.level + 1) < truck.money) and ActionType.upgrade != self.prevAction:
+            print("upgrade")
             actions.set_action(ActionType.upgrade, self.handleUpgrades(truck, ObjectType.tank, ObjectType.policeScanner))
             self.prevAction = ActionType.upgrade
         else:
             # Move to next node
-            actions.set_action(ActionType.select_route, self.chooseBestRoad(truck.current_node.roads))
+            print('move')
+            actions.set_action(ActionType.select_route, self.chooseBestRoad(truck.map.current_node.roads))
             self.prevAction = ActionType.select_route
              
         pass
