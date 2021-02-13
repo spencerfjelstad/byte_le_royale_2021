@@ -20,6 +20,7 @@ class EventController(Controller):
         player.truck.health -= GameStats.event_type_damage[chosen_event_type] * (1 - mods['HealthMod']) * GameStats.contract_difficulty_modifier[current_contract.difficulty]
         # Reduce remaining time based on event
         player.time -= GameStats.event_type_time[chosen_event_type] * (1 - mods['DamageMod']) * GameStats.contract_difficulty_modifier[current_contract.difficulty]
+        return chosen_event_type
 
     def event_chance(self, road, player, truck):
         if (truck.get_current_speed() > 50):
@@ -28,7 +29,10 @@ class EventController(Controller):
             chance = 15*(math.log10(truck.get_current_speed()+1))
         happens = random.choices([True, False], weights=[chance, 100-chance],k=1)[0]
         if happens:
-            self.trigger_event(road, player, truck)
+            event = self.trigger_event(road, player, truck)
+        else:
+            event = EventType.none
+        return event
 
     
     def calculateMod(self, obj, event):
