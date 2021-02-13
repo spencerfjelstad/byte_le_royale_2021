@@ -395,7 +395,7 @@ class Server:
         with open(end_path + '/logs/results.json', 'r') as f:
             results = json.load(f)
 
-        score = results['truck']['renown']
+        score = results['player']['truck']['renown']
 
         entry = [x for x in self.db_collection.find({'_id': client})][0]
 

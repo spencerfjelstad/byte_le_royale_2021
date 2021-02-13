@@ -62,7 +62,7 @@ def main():
                 with open(results_path, 'r') as f:
                     r = json.load(f)
 
-                score = r['truck']['renown']
+                score = r['player']['truck']['renown']
 
                 # Zip log files up
                 with zipfile.ZipFile(f'{path}/logs.zip', 'w') as z:
