@@ -1,7 +1,7 @@
 
 IP = '134.129.91.187'
 PORT = 5007
-BUFFER_SIZE = 4096
+BUFFER_SIZE = 10000
 
 REGISTER_COMMANDS = ['register', 'r']
 SUBMIT_COMMANDS = ['submit', 's']
