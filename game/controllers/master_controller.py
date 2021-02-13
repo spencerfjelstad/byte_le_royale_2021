@@ -11,6 +11,7 @@ from game.controllers.action_controller import ActionController
 from game.controllers.controller import Controller
 from game.common.truck import Truck
 from game.utils.contract_utils import generate_contracts, check_contract_completion
+from game.common.game_map import Game_Map
 
 import random
 
@@ -29,7 +30,8 @@ class MasterController(Controller):
     def give_clients_objects(self, client):
         client.truck = Truck()
         node = Node('Start Node')
-        client.truck.current_node = node
+        game_map = Game_Map(node)
+        client.truck.map = game_map
         pass
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
@@ -69,8 +71,6 @@ class MasterController(Controller):
         #Truck obfuscation
         truckCopy = copy.deepcopy(client.truck)
         truckCopy.obfuscate()
-        for contract in truckCopy.contract_list:
-            contract.obfuscate()
 
         #Time copy to be given to player
         timeCopy = copy.deepcopy(client.time)
@@ -114,4 +114,3 @@ class MasterController(Controller):
         data['player'] = client.to_json()
 
         return data
-
