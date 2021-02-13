@@ -190,6 +190,50 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="lblHealth" type="Label" parent="."]
+margin_left = 60.0
+margin_top = 15.0
+margin_right = 184.0
+margin_bottom = 55.0
+custom_fonts/font = SubResource( 7 )
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="lblTime" type="Label" parent="."]
+margin_left = 230.0
+margin_top = 15.0
+margin_right = 354.0
+margin_bottom = 55.0
+custom_fonts/font = SubResource( 7 )
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="lblMoney" type="Label" parent="."]
+margin_left = 850.0
+margin_top = 15.0
+margin_right = 974.0
+margin_bottom = 55.0
+custom_fonts/font = SubResource( 7 )
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="lblRenown" type="Label" parent="."]
+margin_left = 1020.0
+margin_top = 15.0
+margin_right = 1144.0
+margin_bottom = 55.0
+custom_fonts/font = SubResource( 7 )
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="MenuPopup" type="Popup" parent="."]
 pause_mode = 2
 margin_left = 440.0

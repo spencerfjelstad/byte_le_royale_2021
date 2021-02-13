@@ -12,6 +12,8 @@ var restart = false
 var turns = []
 var data = {}
 
+
+
 var eventsDict = {
 	"ice": {
 		"active": true,
@@ -69,7 +71,20 @@ func _on_Timer_timeout():
 		$RestartScreen.visible = false
 		restart = false
 	
-	$lblContract.text = str(data.get(str(turn)).get("truck").get("contract_list"))
+	# Handle labels
+	var name = str(data.get(str(turn)).get("truck").get("active_contract").get("name")) + "\n"
+	var money_reward = "Payment: " + str(data.get(str(turn)).get("truck").get("active_contract").get("money_reward")) + "\n"
+	var renown_reward = "Renown: " + str(data.get(str(turn)).get("truck").get("active_contract").get("renown_reward")) + "\n"
+	var difficulty = "Difficulty: " + str(data.get(str(turn)).get("truck").get("active_contract").get("difficulty")) + "\n"
+	
+	$lblContract.text = name + money_reward + renown_reward + difficulty
+	
+	$lblSpeed.text = str(data.get(str(turn)).get("truck").get("speed")) + " MPH"
+	$lblFuel.text = str(stepify(data.get(str(turn)).get("truck").get("body").get("current_gas"), 0.01) * 100) + "%"
+	$lblHealth.text = str(stepify(data.get(str(turn)).get("truck").get("health"), 0.01))
+	$lblTime.text = "Turn: " + str(turn)
+	$lblMoney.text = str(data.get(str(turn)).get("truck").get("money"))
+	$lblRenown.text = str(data.get(str(turn)).get("truck").get("renown"))
 	
 	# Test if all upgrade textures fit and that I can change the sprite
 	$UpgBody.texture = load(body_sprites[turn%3])
