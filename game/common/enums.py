@@ -104,3 +104,9 @@ class GPSLevel:
     level_one = 1
     level_two = 2
     level_three = 3
+
+class ContractDifficulty:
+    easy = 1
+    medium = 2
+    hard = 3
+    

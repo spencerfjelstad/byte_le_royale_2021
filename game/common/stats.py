@@ -7,31 +7,37 @@ class GameStats:
     road_length_maximum_deviation = 20
 
     region_money_reward_modifier = {
-        Region.grass_lands: 1.2,
+        Region.grass_lands: 1.5,
         Region.nord_dakotia: 1.2,
         Region.mobave_desert: 1,
         Region.mount_vroom: 1,
         Region.lobslantis: .8,
-        Region.tropical_cop_land: .8,
+        Region.tropical_cop_land: .5,
     }
 
     region_renown_reward_modifier = {
-        Region.grass_lands: .8,
+        Region.grass_lands: .5,
         Region.nord_dakotia: .8,
         Region.mobave_desert: 1,
         Region.mount_vroom: 1,
         Region.lobslantis: 1.2,
-        Region.tropical_cop_land: 1.2,
+        Region.tropical_cop_land: 1.5,
     }
 
-    region_difficulty_modifier = {
-        Region.grass_lands: .5,
-        Region.nord_dakotia: .6,
-        Region.mobave_desert: .7,
-        Region.mount_vroom: .8,
-        Region.lobslantis: .8,
-        Region.tropical_cop_land: .9,
+    contract_difficulty_modifier = {
+        ContractDifficulty.easy: 1,
+        ContractDifficulty.medium: 1.5,
+        ContractDifficulty.hard: 2
     }
+
+    # region_difficulty_modifier = {
+    #     Region.grass_lands: .5,
+    #     Region.nord_dakotia: .6,
+    #     Region.mobave_desert: .7,
+    #     Region.mount_vroom: .8,
+    #     Region.lobslantis: .8,
+    #     Region.tropical_cop_land: .9,
+    # }
 
     # objects that can occupy the body slot
     body_objects = [
@@ -292,7 +298,7 @@ class GameStats:
 
     contract_rewards = {
         'money': {
-            'easy': 3000,
+            'easy': 2000,
             'medium': 3500,
             'hard': 4200
         },
