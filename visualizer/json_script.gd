@@ -42,7 +42,7 @@ var addons_sprites = ["res://assets/upgrades/upgrades_addons_GPS.png","res://ass
 
 func _ready():
 	var file = File.new()
-	file.open("../../logs/turn_logs.json", file.READ)
+	file.open("../logs/turn_logs.json", file.READ)
 	var text = file.get_as_text()
 	var result_json = JSON.parse(text)
 	file.close()
