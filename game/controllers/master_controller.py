@@ -80,11 +80,19 @@ class MasterController(Controller):
         return args
 
     selected_action = ActionType.none
+    selected_route = RoadType.none
+    event = EventType.none
     # Perform the main logic that happens per turn
     def turn_logic(self, client, turn):
         random.seed(self.current_world_data["seed"])
 
-        self.selected_action = self.action_controller.handle_actions(client)
+        new_action = self.action_controller.handle_actions(client)
+        if len(str(new_action)) > 1:
+            self.selected_action = new_action[0]
+            self.selected_route = new_action[1]
+            self.event = new_action[2]
+        else:
+            self.selected_action = new_action
         #client.time -= 10
         if client.time <= 0:
             print("Game is ending because time has run out. Final score is " + str(client.truck.renown))
@@ -104,6 +112,8 @@ class MasterController(Controller):
         data['time'] = clients.time
         data['truck'] = clients.truck.to_json()
         data['selected_action'] = self.selected_action
+        data['selected_route'] = self.selected_route
+        data['event'] = self.event
         
         return data
 
