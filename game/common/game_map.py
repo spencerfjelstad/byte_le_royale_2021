@@ -22,7 +22,7 @@ class Game_Map(GameObject):
     
     # This method just makes parsing easier
     def get_next_node(self):
-        if self.current_node.next_node == None:
+        if self.current_node.next_node is None:
             return False
         self.current_node = self.current_node.next_node
         return self.current_node
@@ -34,14 +34,30 @@ class Game_Map(GameObject):
     def length(self):
         i = 1
         curr = self.head
-        if curr == None: return 0
-        while curr.next_node != None:
+        if curr is None: return 0
+        while curr.next_node is not None:
             curr = curr.next_node
             i += 1
         return i
 
+    def to_list(self):
+        node_list = self.head.to_list()
+        return node_list
+
     def to_json(self):
-        return
-    
-    def from_json(self):
-        return
+        data = super().to_json()
+        data['head'] = self.head.to_json()
+        data['current_node'] = self.current_node.to_json()
+        return data
+
+    def from_json(self, data):
+        super().from_json(data)
+        temp_node = Node('temp')
+        temp_node.from_json(data['head'])
+        self.head = temp_node
+        temp_node.from_json(data['current_node'])
+        self.current_node = temp_node
+
+    def __eq__(self, other):
+        return (isinstance(other, self.__class__) and self.head == other.head
+                and self.current_node == other.head)

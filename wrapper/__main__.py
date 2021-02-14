@@ -4,8 +4,11 @@ from game.engine import Engine
 from game.utils.generate_game import generate
 import game.config
 import argparse
+import subprocess
 
 if __name__ == '__main__':
+
+    plat = sys.platform
     # Setup Primary Parser
     par = argparse.ArgumentParser()
 
@@ -24,6 +27,9 @@ if __name__ == '__main__':
     
     run_subpar.add_argument('-quiet', '-q', action='store_true', default=False,
                             dest='q_bool', help='Runs your AI... quietly :)')
+
+    # Visualizer Subparser
+    vis_subpar = spar.add_parser('visualizer', aliases=['v'], help='Visualizes last run game')
 
     # Parse Command Line
     par_args = par.parse_args()
@@ -52,6 +58,18 @@ if __name__ == '__main__':
         engine = Engine(quiet)
         engine.loop()
 
+    elif action in ['visualizer', 'v']:
+        # Check operating system and run corresponding visualizer
+        if plat == "win32":
+            print("You're running Windows")
+            subprocess.call(["../game/visualizer/visualizer.exe"])
+        elif plat == "linux":
+            print("You're a linux man I see.")
+            subprocess.call(["./visualizer.x86_64"])
+        elif plat == "darwin":
+            print("Literally just straight up fuck you man")
+
+    
     # Print help if no arguments are passed
     if len(sys.argv) == 1:
         print("\nLooks like you didn't tell the launcher what to do!"

@@ -13,7 +13,13 @@ class ObjectType:
     truck = 5
     contract = 6
     game_map = 7
-    
+    policeScanner = 8
+    tank = 9
+    tires = 10
+    headlights = 11
+    sentryGun = 12
+    rabbitFoot = 13
+    GPS = 14
 
 class ActionType:
     none = 0
@@ -22,6 +28,8 @@ class ActionType:
     upgrade = 3
     select_contract = 4
     choose_speed = 5
+    repair= 6
+    set_speed = 7
 
 class Region:
     none = 0
@@ -43,10 +51,56 @@ class RoadType:
 
 class EventType:
     none = 0
-    rock_slide = 1
-    icy_road = 2
-    animal_in_road = 3
-    bandits = 4
-    police = 5
-    traffic = 6
+    city = 1
+    warehouse = 2
+    road = 3
+    rock_slide = 4
+    icy_road = 5
+    animal_in_road = 6
+    bandits = 7
+    police = 8
+    traffic = 9
 
+class ScannerLevel:
+    level_zero = 0
+    level_one = 1
+    level_two = 2
+    level_three = 3
+
+class TankLevel:
+    level_zero = 0
+    level_one = 1
+    level_two = 2
+    level_three = 3
+
+class TireType:
+    tire_normal = 0
+    tire_econ = 1
+    tire_sticky = 2
+    monster_truck = 3
+
+
+class HeadlightLevel:
+    level_zero = 0
+    level_one = 1
+    level_two = 2
+    level_three = 3
+
+
+class SentryGunLevel:
+    level_zero = 0
+    level_one = 1
+    level_two = 2
+    level_three = 3
+
+class RabbitFootLevel:
+    level_zero = 0
+    level_one = 1
+    level_two = 2
+    level_three = 3
+
+class GPSLevel:
+    level_zero = 0
+    level_one = 1
+    level_two = 2
+    level_three = 3
