@@ -26,6 +26,10 @@ class Engine:
         self.current_world_key = None
 
         self.quiet_mode = quiet_mode
+        #Delete logs, then recreate logs dir
+        for file in os.scandir(LOGS_DIR):
+            if('map' not in file.path):
+                os.remove(file.path)
 
     # Starting point of the engine. Runs other methods then sits on top of a basic game loop until over
     def loop(self):
