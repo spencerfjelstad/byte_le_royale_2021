@@ -67,7 +67,6 @@ def generate_contracts(client):
         contract_pair = {'contract': contract, 'map': game_map}
         temp_list.append(contract_pair)
 
-    random.shuffle(contract_list)
     rng = random.randint(1, 100)
     if rng < 25:
         index = random.randrange(0, len(temp_list))
@@ -75,6 +74,6 @@ def generate_contracts(client):
         temp_list[index]['contract'] = illegal_contract
 
     contract_list.extend(temp_list)
-    print(str(contract_list))
+    random.shuffle(contract_list)
 
     return contract_list
