@@ -16,7 +16,6 @@ from game.common.game_map import Game_Map
 import random
 
 
-
 class MasterController(Controller):
     def __init__(self):
         super().__init__()
@@ -26,8 +25,6 @@ class MasterController(Controller):
         self.current_world_data = None
 
         self.action_controller = ActionController()
-
-        self.contract_controller = ContractController()
 
     # Receives all clients for the purpose of giving them the objects they will control
     def give_clients_objects(self, client):
@@ -55,7 +52,6 @@ class MasterController(Controller):
     # Receives world data from the generated game log and is responsible for interpreting it
     def interpret_current_turn_data(self, client, world, turn):
         self.current_world_data = world
-        self.contract_controller.world_distances(client.truck.current_node)
 
     # Receive a specific client and send them what they get per turn. Also obfuscates necessary objects.
     def client_turn_arguments(self, client, turn):
