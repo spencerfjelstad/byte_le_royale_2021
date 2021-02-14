@@ -8,6 +8,7 @@ from game.common.player import Player
 from game.controllers.action_controller import ActionController
 from game.common.enums import *
 from game.common.TrUpgrades.gps import GPS
+import copy
 
 
 # Your test class is a subclass of unittest.Testcase, this is important
@@ -16,12 +17,17 @@ class TestJSON(unittest.TestCase):
     # This method is used to set up anything you wish to test prior to every test method below.
     def setUp(self):
         self.myPlayer = Player(12, "Sean")
-        self.myPlayer.money = 10000
+        self.myPlayer.truck.money = 10000
         self.actionCont = ActionController()
 
     # Test methods should always start with the word 'test'
-    def test_upgrade_one_level(self):
-        print(self.myPlayer.truck.to_json())
+    def test_to_and_back(self):
+        bruh = copy.deepcopy(self.myPlayer.truck)
+        tojsn = self.myPlayer.truck.to_json()
+        trk = Player(2131, 'John')
+        trk.truck.from_json(tojsn)
+        self.assertEqual(bruh.to_json(), trk.truck.to_json())
+
 
  
 

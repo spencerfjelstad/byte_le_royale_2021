@@ -1,6 +1,7 @@
 from game.common.game_object import GameObject
 from game.common.enums import *
 from game.common.road import *
+import random
 
 class Node(GameObject):
     
@@ -10,11 +11,18 @@ class Node(GameObject):
         self.city_name = name
         self.roads = roads
         self.next_node = next_node
+        self.gas_price = round(random.uniform(GameStats.minimum_gas_price, GameStats.maximum_gas_price), 2)  # gas price per percent
+        self.repair_price = round(random.uniform(GameStats.minimum_repair_price, GameStats.maximum_repair_price), 2)  # Health price per percent
     
     def to_json(self):
         data = super().to_json()
         data['city_name'] = self.city_name
-        data['roads'] = {road.road_name: road.to_json() for road in self.roads}
+        data['gas_price'] = self.gas_price
+        data['repair_price'] = self.repair_price
+        temp_list = []
+        for road in self.roads:
+            temp_list.append(road.to_json())
+        data['roads'] = temp_list
         data['next_node'] = self.next_node.to_json() if self.next_node is not None else None
         return data
 
@@ -22,8 +30,9 @@ class Node(GameObject):
         super().from_json(data)
         self.city_name = data['city_name']
         temp = Road('temp')
-        for road in data['roads'].values():
-            self.roads.append(temp.from_json(road))
+        for road in data['roads']:
+            temp.from_json(road)
+            self.roads.append(temp)
 
         # Recursively reconstruct linked list
         node_data = data['next_node']
@@ -39,3 +48,7 @@ class Node(GameObject):
             node_list.append(curr_node)
             curr_node = curr_node.next_node
         return node_list
+    
+    def __eq__(self, other):
+        return (isinstance(other, self.__class__) and self.city_name == other.city_name
+                and self.roads == other.roads and self.next_node == other.next_node)
