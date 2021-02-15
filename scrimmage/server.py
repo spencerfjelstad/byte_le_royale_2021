@@ -26,11 +26,15 @@ class Server:
 
         self.loop_continue = True
 
-        self.max_simultaneous_runs = 4
+        #Buffer of runs to help prevent overwrite OS
+        self.sim_buffer_runs = 2
+        self.max_simultaneous_runs = 12
         self.max_runs = 20
-        self.current_running = [x for x in range(self.max_simultaneous_runs)]
+
+
+        self.current_running = [x for x in range(self.max_simultaneous_runs + self.sim_buffer_runs)]
         self.runner_queue = list()
-        self.starting_runs = 20
+        self.starting_runs = 5
 
         # Flags
         self.disable_leaderboard = False
@@ -346,7 +350,7 @@ class Server:
 
     def runner_loop(self):
         while self.loop_continue:
-            if len(self.runner_queue) == 0 and len(self.current_running) == self.max_simultaneous_runs:
+            if len(self.runner_queue) < self.max_simultaneous_runs and not len(self.current_running) == self.max_simultaneous_runs:
                 # Repopulate queue
                 for entry in self.db_collection.find({}):
                     if entry['code_file'] is None or entry['total_runs'] >= self.max_runs:
@@ -427,7 +431,8 @@ class Server:
 
         shutil.rmtree(end_path)
 
-        self.current_running.append(number)
+        self.current_running.insert(0, number)
+        f.close()
 
     def visualizer_loop(self):
         loc = 'scrimmage/vis_temp'
