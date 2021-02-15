@@ -11,6 +11,7 @@ from game.controllers.action_controller import ActionController
 from game.controllers.controller import Controller
 from game.common.truck import Truck
 from game.utils.contract_utils import generate_contracts, check_contract_completion
+from game.common.game_map import Game_Map
 
 import random
 
@@ -29,7 +30,8 @@ class MasterController(Controller):
     def give_clients_objects(self, client):
         client.truck = Truck()
         node = Node('Start Node')
-        client.truck.current_node = node
+        game_map = Game_Map(node)
+        client.truck.map = game_map
         pass
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
@@ -69,8 +71,6 @@ class MasterController(Controller):
         #Truck obfuscation
         truckCopy = copy.deepcopy(client.truck)
         truckCopy.obfuscate()
-        for contract in truckCopy.contract_list:
-            contract.obfuscate()
 
         #Time copy to be given to player
         timeCopy = copy.deepcopy(client.time)
@@ -79,11 +79,22 @@ class MasterController(Controller):
         args = (self.turn, actions, self.current_world_data, truckCopy, timeCopy)
         return args
 
+    selected_action = ActionType.none
+    selected_route = RoadType.none
+    event = EventType.none
     # Perform the main logic that happens per turn
     def turn_logic(self, client, turn):
         random.seed(self.current_world_data["seed"])
 
-        self.action_controller.handle_actions(client)
+        new_action = self.action_controller.handle_actions(client)
+        if len(str(new_action)) > 1:
+            self.selected_action = new_action[0]
+            self.selected_route = new_action[1]
+            self.event = new_action[2]
+        else:
+            self.selected_action = new_action
+            self.selected_route = RoadType.none
+            self.event = EventType.none
         #client.time -= 10
         if client.time <= 0:
             print("Game is ending because time has run out. Final score is " + str(client.truck.renown))
@@ -95,7 +106,6 @@ class MasterController(Controller):
             print("Game is ending because gas has run out. Final score is " + str(client.truck.renown))
             self.game_over = True
 
-
     # Return serialized version of game
     def create_turn_log(self, clients, turn):
         data = dict()
@@ -103,6 +113,9 @@ class MasterController(Controller):
         data['Team Name'] = clients.team_name
         data['time'] = clients.time
         data['truck'] = clients.truck.to_json()
+        data['selected_action'] = self.selected_action
+        data['selected_route'] = self.selected_route
+        data['event'] = self.event
         
         return data
 
@@ -114,4 +127,3 @@ class MasterController(Controller):
         data['player'] = client.to_json()
 
         return data
-

@@ -51,15 +51,12 @@ class RoadType:
 
 class EventType:
     none = 0
-    city = 1
-    warehouse = 2
-    road = 3
-    rock_slide = 4
-    icy_road = 5
-    animal_in_road = 6
-    bandits = 7
-    police = 8
-    traffic = 9
+    rock_slide = 1
+    icy_road = 2
+    animal_in_road = 3
+    bandits = 4
+    police = 5
+    traffic = 6
 
 class ScannerLevel:
     level_zero = 0
@@ -104,3 +101,9 @@ class GPSLevel:
     level_one = 1
     level_two = 2
     level_three = 3
+
+class ContractDifficulty:
+    easy = 1
+    medium = 2
+    hard = 3
+    
