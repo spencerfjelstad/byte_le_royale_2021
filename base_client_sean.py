@@ -7,6 +7,7 @@ class Client(UserClient):
     def __init__(self):
         super().__init__()
         self.prevAction = -1
+        self.turn = 0
 
     def team_name(self):
         """
@@ -28,7 +29,7 @@ class Client(UserClient):
 
     def canIMakeIt(self, truck):
         dist = self.chooseBestRoad(truck.map.current_node.roads)
-        return True if (((dist.length / 2) / (truck.body.max_gas * 100))*(1.05)) > 0 else False
+        return True if (((dist.length / 2) / (truck.body.max_gas * 100))*(1.08)) > 0 else False
 
     def handleUpgrades(self, truck, bodyEnum, addonEnum):
         if truck.body.level < truck.addons.level:
@@ -44,13 +45,22 @@ class Client(UserClient):
         prevBest = -1
         score = 0
         for index in range(len(contractList)):
-            if truck.money < 3000:
+            if truck.money < 10000:
                 score = contractList[index]['contract'].money_reward / self.calculateLength(contractList[index]['map'])
             else:
                 score = contractList[index]['contract'].renown_reward / self.calculateLength(contractList[index]['map']) 
             if score > prevBest:
                 prevBest = score
                 bestIndex = index
+        #print(bestIndex)
+        return bestIndex
+    
+    def chooseBestContract2(self, truck, contractList):
+        bestIndex = -1
+        if self.turn < 10:
+            bestIndex = 0
+        else:
+            bestIndex = 1
         #print(bestIndex)
         return bestIndex
 
@@ -72,9 +82,10 @@ class Client(UserClient):
         :param world:       Generic world information
         """
         
+        self.turn += 1
         if(truck.active_contract is None and ActionType.select_contract != self.prevAction):
             # Select contract
-            ind = self.chooseBestContract(truck, truck.contract_list)
+            ind = self.chooseBestContract2(truck, truck.contract_list)
             actions.set_action(ActionType.select_contract, 0)
             self.prevAction = ActionType.select_contract
             #print("Selecting index " + str(ind))
