@@ -1,8 +1,9 @@
 from game.common.stats import GameStats
 from game.common.enums import EventType, ObjectType
+from game.common.illegal_contract import IllegalContract
 from game.controllers.controller import Controller
+from game.common.TrUpgrades.police_scanner import PoliceScanner
 import random
-from game.controllers.controller import Controller
 import math
 
 
@@ -17,9 +18,9 @@ class EventController(Controller):
         mods = self.negation(truck, chosen_event_type)
         current_contract = player.truck.get_active_contract()
         # Deal damage based on event
-        player.truck.health -= GameStats.event_type_damage[chosen_event_type] * (1 - mods['HealthMod']) * GameStats.contract_difficulty_modifier[current_contract.difficulty]
+        player.truck.health -= GameStats.event_type_damage[chosen_event_type] * (1 - mods['HealthMod']) * GameStats.contract_stats['difficulty_modifier'][current_contract.difficulty]
         # Reduce remaining time based on event
-        player.time -= GameStats.event_type_time[chosen_event_type] * (1 - mods['DamageMod']) * GameStats.contract_difficulty_modifier[current_contract.difficulty]
+        player.time -= GameStats.event_type_time[chosen_event_type] * (1 - mods['DamageMod']) * GameStats.contract_stats['difficulty_modifier'][current_contract.difficulty]
         return chosen_event_type
 
     def event_chance(self, road, player, truck):
@@ -28,12 +29,31 @@ class EventController(Controller):
         else:
             chance = 15*(math.log10(truck.get_current_speed()+1))
         happens = random.choices([True, False], weights=[chance, 100-chance],k=1)[0]
+        event = []
         if happens:
-            event = self.trigger_event(road, player, truck)
+            event.append(self.trigger_event(road, player, truck))
         else:
-            event = EventType.none
+            event.append(EventType.none)
+        event.append(self.police_event(player))
         return event
+    
+    def police_event(self, player): 
+        if isinstance(player.truck.active_contract, IllegalContract):
+            mitigation = (
+                    GameStats.costs_and_effectiveness[ObjectType.policeScanner]['effectiveness'][player.truck.addons.level] 
+                    if isinstance(player.truck.addons, PoliceScanner) else 0
+            )
 
+            level = player.truck.active_contract.level
+            risk = GameStats.illegal_contract_stats['risk'][level]*(1-mitigation)
+            caught = random.choices([True, False], weights=[risk, 1-risk], k=1)[0]
+            if caught:
+                player.truck.money -= GameStats.illegal_contract_stats['money_penalty'][level]
+                player.time -= GameStats.illegal_contract_stats['time_penalty'][level]
+                player.truck.active_contract = None
+            return caught
+        else:
+            return False
     
     def calculateMod(self, obj, event):
         health = GameStats.costs_and_effectiveness[obj.object_type]['effectiveness'][obj.level]
