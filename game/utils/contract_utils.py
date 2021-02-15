@@ -68,7 +68,7 @@ def generate_contracts(client):
         temp_list.append(contract_pair)
 
     rng = random.randint(1, 100)
-    if rng < 25:
+    if rng <= 25:
         index = random.randrange(0, len(temp_list))
         illegal_contract = IllegalContract(temp_list[index]['contract'])
         temp_list[index]['contract'] = illegal_contract
