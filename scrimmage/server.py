@@ -28,8 +28,8 @@ class Server:
 
         #Buffer of runs to help prevent overwrite OS
         self.sim_buffer_runs = 2
-        self.max_simultaneous_runs = 12
-        self.max_runs = 20
+        self.max_simultaneous_runs = 10
+        self.max_runs = 30
 
 
         self.current_running = [x for x in range(self.max_simultaneous_runs + self.sim_buffer_runs)]
@@ -269,7 +269,7 @@ class Server:
         stats += f'Submission: {client["submissions"]}\n'
         stats += f'Average Run: {client["average_run"]}\n'
         stats += f'Best Run: {client["best_run"]}\n'
-        stats += f'Total Runs: {client["total_runs"]}/{self.max_runs}\n'
+        stats += f'Total Runs/Currently running: {client["total_runs"]}/{self.max_runs}\n'
 
         if client['error'] is not None:
             stats += f'\nSubmitted client has an error:\n{client["error"]}\n'
@@ -350,13 +350,14 @@ class Server:
 
     def runner_loop(self):
         while self.loop_continue:
-            if len(self.runner_queue) < self.max_simultaneous_runs and not len(self.current_running) == self.max_simultaneous_runs:
+            if len(self.runner_queue) < self.max_simultaneous_runs and not len(self.current_running) == self.sim_buffer_runs:
                 # Repopulate queue
                 for entry in self.db_collection.find({}):
                     if entry['code_file'] is None or entry['total_runs'] >= self.max_runs:
                         continue
                     self.runner_queue.append(entry['_id'])
-
+                    # Update total number of runs. Has to be here so the loop has up to date information. Downside is that user may think runs are complete when they are not
+                    self.db_collection.update_one({'_id': entry['_id']}, {'$inc': {'total_runs': 1}})
                 continue
 
             if len(self.runner_queue) == 0 or len(self.current_running) == 0:
@@ -402,9 +403,6 @@ class Server:
         score = results['player']['truck']['renown']
 
         entry = [x for x in self.db_collection.find({'_id': client})][0]
-
-        # Update total number of runs
-        self.db_collection.update_one({'_id': client}, {'$inc': {'total_runs': 1}})
 
         # Update best run
         if score > entry['best_run']:
