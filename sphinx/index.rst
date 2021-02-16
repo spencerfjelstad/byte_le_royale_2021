@@ -9,7 +9,7 @@ Welcome to Traveling Trailsmen's Documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   Running
+   RunningTheGame
    TakingAction
    Truck
    Contract

@@ -31,7 +31,7 @@ You can generate a new game map by calling
 
     python launcher.pyz g
 
-within a terminal. You can keep the same game map by just not running the above command
+within a terminal. You can keep the same game map by just not running the above command.
 
 
 Running the game
@@ -44,14 +44,14 @@ You can run the bot by calling
     python launcher.pyz r
 
 within the terminal. Print statements within your client will print if you wish to use them for debugging purposes. Alternatively, you can view
-the turn logs that are produced within the logs folder
+the turn logs that are produced within the logs folder.
 
 
 Running the visualize
 ---------------------
 
 As a third option for debugging, we have built a visualizer! The visualizer visually depicts the logs that are produced, so you can more easily decipher what went wrong. 
-The visualizer can be run within
+The visualizer can be run with
 
 .. code-block:: python
 
@@ -75,13 +75,13 @@ scrimmage server by running
 
     python launcher.pyz scrimmage
 
-After connecting there are 4 commands you can run 
+After connecting there are 4 commands you can run.
 
 register
 ----------
 
 registering is required to enter the competition. Once you provide a team name, a vID will be downloaded you your computer. this vID is required to upload your client to the 
-server under your team name, so don't delete it! If your teamates wish to upload to the server, you'll have to send them the vID
+server under your team name, so don't delete it! If your teamates wish to upload to the server, you'll have to send them the vID.
 
 
 submit
@@ -95,7 +95,8 @@ then run 30 times to create an average score. Feel free to submit as many times 
 view stats
 ------------
 
-Returns stats relating to your submission/s. All stats relate to your most recent submission. Please note that the stats will continue to change until all runs are completed.
+Returns stats relating to your submission/s. All stats relate to your most recent submission. Please note that the stats will continue to change until all 
+runs are completed.
 
 
 leaderboard
