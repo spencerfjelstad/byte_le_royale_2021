@@ -1,10 +1,9 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://json_script.gd" type="Script" id=1]
 [ext_resource path="res://truck_HUD_updated.png" type="Texture" id=2]
 [ext_resource path="res://assets/Bad Handwriting 7.2.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://assets/road_type/road-Sheet.png" type="Texture" id=4]
-[ext_resource path="res://assets/upgrades/upgrades_none.png" type="Texture" id=5]
 [ext_resource path="res://assets/Imagine_Font.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://assets/road_elements/rock.png" type="Texture" id=7]
 [ext_resource path="res://CitySign.tscn" type="PackedScene" id=8]
@@ -128,7 +127,6 @@ __meta__ = {
 [node name="UpgBody" type="Sprite" parent="."]
 position = Vector2( 450, 60 )
 scale = Vector2( 3, 3 )
-texture = ExtResource( 5 )
 
 [node name="lblBody" type="Label" parent="."]
 margin_left = 410.0
@@ -139,7 +137,7 @@ custom_fonts/font = SubResource( 7 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_constants/line_spacing = -3
 text = "Body:
-Lv 1"
+"
 align = 1
 autowrap = true
 __meta__ = {
@@ -149,7 +147,6 @@ __meta__ = {
 [node name="UpgTires" type="Sprite" parent="."]
 position = Vector2( 600, 60 )
 scale = Vector2( 3, 3 )
-texture = ExtResource( 5 )
 
 [node name="lblTires" type="Label" parent="."]
 margin_left = 560.595
@@ -160,7 +157,7 @@ custom_fonts/font = SubResource( 8 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_constants/line_spacing = -3
 text = "Tires: 
-Lv 0"
+"
 align = 1
 autowrap = true
 __meta__ = {
@@ -170,7 +167,6 @@ __meta__ = {
 [node name="UpgAddOns" type="Sprite" parent="."]
 position = Vector2( 750, 60 )
 scale = Vector2( 3, 3 )
-texture = ExtResource( 5 )
 
 [node name="lblAddOns" type="Label" parent="."]
 margin_left = 710.0
@@ -181,7 +177,7 @@ custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_constants/line_spacing = -3
 text = "Add-Ons:
-Lvl 1"
+"
 align = 1
 autowrap = true
 __meta__ = {
