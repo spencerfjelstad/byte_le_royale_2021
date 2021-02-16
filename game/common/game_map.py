@@ -50,6 +50,7 @@ class Game_Map(GameObject):
         data['current_node'] = self.current_node.to_json()
         return data
 
+    # This no longer works, linked list no longer in logs
     def from_json(self, data):
         super().from_json(data)
         temp_node = Node('temp')
