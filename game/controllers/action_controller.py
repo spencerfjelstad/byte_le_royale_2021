@@ -42,7 +42,7 @@ class ActionController(Controller):
                 # Moves the player to the node given in the action_parameter
                 #self.move(player, player_action.action.action_parameter)
                 move = self.move(player)
-                return [ActionType.select_route, move[0], move[1]]
+                return [ActionType.select_route, move[0], move[1], move[2]]
         if(player_action == ActionType.buy_gas):
             self.buy_gas(player)
             player.time -= GameStats.gas_pumping_time_penalty
@@ -82,7 +82,7 @@ class ActionController(Controller):
                 gas_used = (road.length/fuel_efficiency)/(player.truck.body.max_gas*100)
                 player.truck.body.current_gas -= gas_used
                 player.time -= time_taken
-        return [road.road_type, event]
+        return [road.road_type, event[0], event[1]]
 
     # Retrieve by index and store in Player, then clear the list
     def select_contract(self, player):
