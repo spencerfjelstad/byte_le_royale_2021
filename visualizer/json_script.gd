@@ -7,6 +7,7 @@ export (PackedScene) var Animal
 export (PackedScene) var Traffic
 export (PackedScene) var Bandits
 export (PackedScene) var Police
+export (PackedScene) var Rock
 
 export (PackedScene) var Sign
 
@@ -63,16 +64,22 @@ func _input(event):
 
 func _on_Timer_timeout():
 	var file = File.new()
-	file.open("../logs/turn_" + ("%04d" % turn) + ".json", file.READ)
-	var text = file.get_as_text()
-	var result_json = JSON.parse(text)
-	file.close()
+	var file_path = "../logs/turn_" + ("%04d" % turn) + ".json"
+	print(file.file_exists(file_path))
+	if(!file.file_exists(file_path)):
+		$GameOver.visible = true
+		$GameOver.game_over = true
+	else:
+		file.open(file_path, file.READ)
+		var text = file.get_as_text()
+		var result_json = JSON.parse(text)
+		file.close()
 	
-	if result_json.error == OK:
-		data = result_json.result
+		if result_json.error == OK:
+			data = result_json.result
 	
 	if(restart): 
-		OS.delay_msec(1000)
+		OS.delay_msec(2000)
 		$RestartScreen.visible = false
 		restart = false
 	
@@ -101,6 +108,7 @@ func _on_Timer_timeout():
 	
 	if(road_type != 0):
 		spawn_sign("Plankton")
+		spawn_rock()
 		# vv Line to use when Chris implements shortened JSON
 		#spawn_sign(str(data.get("truck").get("current_node").get("city_name")))
 	
@@ -113,50 +121,6 @@ func _on_Timer_timeout():
 	
 	turn += 1
 
-var signSpeed = 1
-var rockSpeed = 1
-
-var xdest = -1400
-var ydest = 840
-
-var xorig = 530
-var yorig = 375
-
-var originalPosition = Vector2(530,375)
-var originalDistance = originalPosition.distance_to(Vector2(xdest,ydest))
-
-var originalRPosition = Vector2(680,400)
-var originalRDistance = originalRPosition.distance_to(Vector2(-xdest, ydest))
-
-func _process(delta):
-	# Handling rock sprite
-	if($Rock.position.y < 600):
-		$Rock.position = $Rock.position.move_toward(Vector2(-xdest,ydest), delta * (rockSpeed + 20) )
-		var currentRPosition = $Rock.position.distance_to(Vector2(-xdest,ydest))
-		var newRScale = -25/originalRDistance * currentRPosition + 26
-		$Rock.set_scale(Vector2(newRScale,newRScale))
-		rockSpeed = rockSpeed * 1.06
-	else:
-		$Rock.set_position(Vector2(680,400))
-		$Rock.scale.x = 1
-		$Rock.scale.y = 1
-		rockSpeed = 1
-		
-	# Handling sign sprite
-	#if($CitySign.position.y < 830):
-	#	var currentPosition = $CitySign.position.distance_to(Vector2(xdest,ydest))
-	#	var newScale = -25/originalDistance * currentPosition + 26
-	#	$CitySign.position = $CitySign.position.move_toward(Vector2(xdest,ydest), delta * (signSpeed + 50) )
-	#	$CitySign.set_scale(Vector2(newScale,newScale))
-	#	signSpeed = signSpeed * 1.06
-	#else:
-	#	$CitySign.set_position(Vector2(530,375))
-	#	$CitySign.scale.x = 1
-	#	$CitySign.scale.y = 1
-	#	signSpeed = 1
-	
-		
-	
 # Events
 func spawn_ice(posX = eventsDict["ice"]["originx"], posY = eventsDict["ice"]["originy"]):
 	var ice_instance = Ice.instance()
@@ -168,31 +132,26 @@ func spawn_rock_slide():
 	var rock_slide_instance = RockSlide.instance()
 	add_child(rock_slide_instance)
 	move_child(rock_slide_instance, 2)
-	pass
 
 func spawn_traffic():
 	var traffic_instance = Traffic.instance()
 	add_child(traffic_instance)
 	move_child(traffic_instance, 2)
-	pass
 
 func spawn_bandits():
 	var bandits_instance = Bandits.instance()
 	add_child(bandits_instance)
 	move_child(bandits_instance, 3)
-	pass
 	
 func spawn_animal():
 	var animal_instance = Animal.instance()
 	add_child(animal_instance)
 	move_child(animal_instance, 2)
-	pass
 
 func spawn_police():
 	var police_instance = Police.instance()
 	add_child(police_instance)
 	move_child(police_instance, 10)
-	pass
 
 # Fauna
 func spawn_sign(name):
@@ -200,7 +159,11 @@ func spawn_sign(name):
 	add_child(city_sign_instance)
 	move_child(city_sign_instance, 2)
 	city_sign_instance.set_city_name(name)
-	pass
+	
+func spawn_rock():
+	var rock_instance = Rock.instance()
+	add_child(rock_instance)
+	move_child(rock_instance, 2)
 	
 func change_road(road_type):
 	if(road_type != 0):

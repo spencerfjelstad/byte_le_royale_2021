@@ -25,7 +25,7 @@ class Truck(GameObject):
         self.body = BaseBodyObject(0,0)
         self.addons = BaseUpgradeObject(0,0)
         self.tires = TireType.tire_normal
-        self.speed = 50
+        self.speed = 100
         self.health = GameStats.truck_starting_health
         self.money = GameStats.player_starting_money
         self.renown = 0
