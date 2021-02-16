@@ -55,7 +55,7 @@ class EventType:
     icy_road = 2
     animal_in_road = 3
     bandits = 4
-    police = 5
+    bounty_hunter = 5
     traffic = 6
 
 class ScannerLevel:
@@ -102,8 +102,12 @@ class GPSLevel:
     level_two = 2
     level_three = 3
 
+class ContrabandLevel:
+    level_zero = 0
+    level_one = 1
+    level_two = 2
+
 class ContractDifficulty:
-    easy = 1
-    medium = 2
-    hard = 3
-    
+    easy = 0
+    medium = 1
+    hard = 2
