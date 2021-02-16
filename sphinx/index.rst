@@ -9,6 +9,7 @@ Welcome to Traveling Trailsmen's Documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   Running
    TakingAction
    Truck
    Contract
@@ -19,7 +20,7 @@ Welcome to Traveling Trailsmen's Documentation!
    AddonObjects
    BodyObjects
    TireObjects
-   Running
+  
 
 
     
