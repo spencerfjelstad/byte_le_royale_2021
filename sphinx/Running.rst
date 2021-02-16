@@ -41,7 +41,7 @@ You can run the bot by calling
 
 .. code-block:: python
 
-    python launcher.pyz g
+    python launcher.pyz r
 
 within the terminal. Print statements within your client will print if you wish to use them for debugging purposes. Alternatively, you can view
 the turn logs that are produced within the logs folder
@@ -54,9 +54,6 @@ As a third option for debugging, we have built a visualizer! The visualizer visu
 The visualizer can be run within
 
 .. code-block:: python
-.. code-block:: python
-
-    python launcher.pyz v
 
     python launcher.pyz v
 
