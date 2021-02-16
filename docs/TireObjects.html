@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8" />
   
@@ -29,15 +29,17 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Running the game" href="Running.html" />
     <link rel="prev" title="Body Objects" href="BodyObjects.html" /> 
 </head>
 
@@ -95,6 +97,7 @@
 <li class="toctree-l1"><a class="reference internal" href="AddonObjects.html">Add On Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="BodyObjects.html">Body Objects</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tires</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Running.html">Running the game</a></li>
 </ul>
 
             
@@ -167,28 +170,34 @@
 <p>Tires impact fuel efficiancy as well as traction. Unlike other upgrades, there are no levels for
 tires. Instead switching tires costs a flat $300 each time. Also note that monster truck tires negate
 the bandits event and that sticky tires negate the icyroads event.</p>
-<table class="docutils align-default">
+<table border="1" class="docutils">
 <colgroup>
-<col style="width: 21%" />
-<col style="width: 79%" />
+<col width="17%" />
+<col width="11%" />
+<col width="72%" />
 </colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Name</p></th>
-<th class="head"><p>Type</p></th>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Negations</th>
+<th class="head">Type</th>
 </tr>
 </thead>
-<tbody>
-<tr class="row-even"><td><p>tire_econ</p></td>
-<td><p>A fuel efficient tire, but at the cost of traction</p></td>
+<tbody valign="top">
+<tr class="row-even"><td>tire_econ</td>
+<td>0.0</td>
+<td>A fuel efficient tire, but at the cost of traction</td>
 </tr>
-<tr class="row-odd"><td><p>tire_normal</p></td>
-<td><p>A tire that is balanced between fuel efficiency and traction</p></td>
+<tr class="row-odd"><td>tire_normal</td>
+<td>0.0</td>
+<td>A tire that is balanced between fuel efficiency and traction</td>
 </tr>
-<tr class="row-even"><td><p>tire_sticky</p></td>
-<td><p>A high traction tire at the cost of fuel efficiency</p></td>
+<tr class="row-even"><td>tire_sticky</td>
+<td>0.2</td>
+<td>Negates damage from the icy_road event at the cost of fuel efficiency</td>
 </tr>
-<tr class="row-odd"><td><p>monster_truck</p></td>
-<td><p>Negates the bandit event</p></td>
+<tr class="row-odd"><td>monster_truck</td>
+<td>0.2</td>
+<td>Negates damage from the bandit event at the cost of fuel efficiency</td>
 </tr>
 </tbody>
 </table>
@@ -200,6 +209,7 @@ the bandits event and that sticky tires negate the icyroads event.</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="Running.html" class="btn btn-neutral float-right" title="Running the game" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="BodyObjects.html" class="btn btn-neutral float-left" title="Body Objects" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
