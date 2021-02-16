@@ -105,6 +105,10 @@ func _on_Timer_timeout():
 	var event_type = data.get(str(turn)).get("event")
 	show_event(event_type)
 	
+	#var current_city_name = str(data.get(str(turn)).get("truck").get("current_node").get(""))
+	if(road_type != 0):
+		spawn_sign("Plankton")
+	
 	# Test if all upgrade textures fit and that I can change the sprite
 	$UpgBody.texture = load(body_sprites[turn%3])
 	$UpgTires.texture = load(tires_sprites[turn%4])
@@ -114,7 +118,7 @@ func _on_Timer_timeout():
 	#if(turn % 3 == 0): spawn_bandits()
 	
 	# Variable for city sign
-	spawn_sign("Plankton")
+	
 	# TruckHUD moves up and down like a truck bouncing on the road. Keep or no?
 	#if(turn % 2 == 0):
 	#	$TruckHUD.position.y += 2
@@ -231,7 +235,6 @@ func show_event(event_type):
 		elif(event_type == 4):
 			spawn_bandits()
 		elif(event_type == 5):
-			#spawn_police()
-			print("Police not implemented!")
+			spawn_police()
 		elif(event_type == 6):
 			spawn_traffic()
