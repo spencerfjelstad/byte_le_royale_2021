@@ -104,8 +104,8 @@ class GameStats:
             "fuel_efficiency": {
                 TireType.tire_econ: 1.5,
                 TireType.tire_normal: 1,
-                TireType.tire_sticky: 1,
-                TireType.monster_truck: 1
+                TireType.tire_sticky: .8,
+                TireType.monster_truck: .8
             }
         },
 
