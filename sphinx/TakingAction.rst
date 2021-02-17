@@ -5,6 +5,7 @@ Taking Action
 A critical part of building your bot is taking actions. The actions you can take are listed below.
 Only one action can be set per turn. All actions are set by calling
 
+
 .. code-block:: python
 
     actions.set_action(ActionType.enum, {option})
@@ -17,7 +18,6 @@ A list of contracts will be generated every turn. These contracts can be viewed 
 Once you have chosen a contract, pass the select contract enum and the index of the contract which you
 wish to select. 
 
-EX:
 
 .. code-block:: python
 
@@ -32,7 +32,6 @@ Moving requires selecting a road. The list of roads you can select is in truck.c
 Simply pass the road you wish to travel to by passing the index of the road you wish to take. Each
 road will lead to the same node.
 
-EX:
 
 .. code-block:: python
 
@@ -47,7 +46,6 @@ Buying Gas
 You can buy gas at every node. Gas prices vary from node to node. There are no arguments passed to the 
 buy gas method, it will either fill up your tank or buy the most gas you can afford.
 
-EX:
 
 .. code-block:: python
 
@@ -63,8 +61,6 @@ Throughout the game your truck will take damage. Similar to buying gas, Repair p
 node to node. No arguments are required, and the truck will either fully repair or repair the most you can 
 afford.
 
-EX:
-
 .. code-block:: python
 
     actions.set_action(ActionType.repair)
@@ -78,8 +74,6 @@ Upgrades can negate damage and time penalties from events. There are two upgrade
 which each have three different upgrade types. If you don't have enough money, the upgrade will be ignored. Switching 
 from one object to another will result in a complete loss of the former upgrade.
 
-EX:
-
 .. code-block:: python
 
     actions.set_action(ActionType.upgrade, Objectype.policeScanner)
@@ -90,8 +84,6 @@ Switching Tires
 ###############
 
 Tires are like upgrades, but they don't have any levels. The syntax is also slightly different
-
-EX:
 
 .. code-block:: python
 
@@ -106,8 +98,6 @@ Choosing a speed
 
 You can set your trucks speed to an integer value between 1 and 80 MPH. Going faster will allow you to complete more
 contracts, but will also increase the probability of events happening. Your speed will also affect your fuel efficiency.
-
-EX:
 
 .. code-block:: python
 
