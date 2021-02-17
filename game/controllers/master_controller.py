@@ -99,13 +99,13 @@ class MasterController(Controller):
             self.caught_by_police = False
         #client.time -= 10
         if client.time <= 0:
-            print("Game is ending because time has run out. Final score is " + str(client.truck.renown))
+            print("Game is ending because time has run out. Final score is " + str(client.truck.renown) + " ending on turn "+ str(self.turn))
             self.game_over = True
         if client.truck.health <= 0:
-            print("Game is ending because health has run out. Final score is " + str(client.truck.renown))
+            print("Game is ending because health has run out. Final score is " + str(client.truck.renown) + " ending on turn "+ str(self.turn))
             self.game_over = True
         if client.truck.body.current_gas <= 0:
-            print("Game is ending because gas has run out. Final score is " + str(client.truck.renown))
+            print("Game is ending because gas has run out. Final score is " + str(client.truck.renown) + " ending on turn "+ str(self.turn))
             self.game_over = True
 
     # Return serialized version of game

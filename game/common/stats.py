@@ -175,16 +175,6 @@ class GameStats:
             }
         }
     }
-
-    road_type_length_modifier = {
-        RoadType.mountain_road: 1,
-        RoadType.forest_road: 1,
-        RoadType.tundra_road: 1.5,
-        RoadType.city_road: 1.5,
-        RoadType.highway: 2,
-        RoadType.interstate: 2
-    }
-
     
     possible_event_types = {
         RoadType.mountain_road: {EventType.rock_slide: 40, EventType.animal_in_road: 30, EventType.icy_road: 20, EventType.bounty_hunter: 10, EventType.none: 0},
