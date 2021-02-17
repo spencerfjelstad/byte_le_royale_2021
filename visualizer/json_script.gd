@@ -7,9 +7,11 @@ export (PackedScene) var Animal
 export (PackedScene) var Traffic
 export (PackedScene) var Bandits
 export (PackedScene) var Police
-export (PackedScene) var Rock
 
+export (PackedScene) var Rock
 export (PackedScene) var Sign
+
+var universal_speed = 1
 
 # Rock starting place = 680, 400
 var turn = 1
@@ -60,12 +62,20 @@ func _ready():
 func _input(event):
 	if event.is_action_pressed("pause"):
 		get_tree().set_pause(!get_tree().paused)
+	elif event.is_action_pressed("faster"):
+		print("gas gas gas")
+		$Timer.set_wait_time($Timer.wait_time / 2)
+		universal_speed *= 2
+	elif event.is_action_pressed("slower"):
+		print("brake brake brake")
+		$Timer.set_wait_time($Timer.wait_time * 2)
+		universal_speed /= 2
+		
 		
 
 func _on_Timer_timeout():
 	var file = File.new()
 	var file_path = "../logs/turn_" + ("%04d" % turn) + ".json"
-	print(file.file_exists(file_path))
 	if(!file.file_exists(file_path)):
 		$GameOver.visible = true
 		$GameOver.game_over = true
@@ -127,26 +137,31 @@ func spawn_ice(posX = eventsDict["ice"]["originx"], posY = eventsDict["ice"]["or
 	add_child(ice_instance)
 	move_child(ice_instance, 2)
 	ice_instance.set_position(Vector2(posX,posY))
+	ice_instance.set_universal_speed(universal_speed)
 	
 func spawn_rock_slide():
 	var rock_slide_instance = RockSlide.instance()
 	add_child(rock_slide_instance)
 	move_child(rock_slide_instance, 2)
+	rock_slide_instance.set_universal_speed(universal_speed)
 
 func spawn_traffic():
 	var traffic_instance = Traffic.instance()
 	add_child(traffic_instance)
 	move_child(traffic_instance, 2)
+	traffic_instance.set_universal_speed(universal_speed)
 
 func spawn_bandits():
 	var bandits_instance = Bandits.instance()
 	add_child(bandits_instance)
 	move_child(bandits_instance, 3)
+	bandits_instance.set_universal_speed(universal_speed)
 	
 func spawn_animal():
 	var animal_instance = Animal.instance()
 	add_child(animal_instance)
 	move_child(animal_instance, 2)
+	animal_instance.set_universal_speed(universal_speed)
 
 func spawn_police():
 	var police_instance = Police.instance()
@@ -159,11 +174,13 @@ func spawn_sign(name):
 	add_child(city_sign_instance)
 	move_child(city_sign_instance, 2)
 	city_sign_instance.set_city_name(name)
+	city_sign_instance.set_universal_speed(universal_speed)
 	
 func spawn_rock():
 	var rock_instance = Rock.instance()
 	add_child(rock_instance)
 	move_child(rock_instance, 2)
+	rock_instance.set_universal_speed(universal_speed)
 	
 func change_road(road_type):
 	if(road_type != 0):
