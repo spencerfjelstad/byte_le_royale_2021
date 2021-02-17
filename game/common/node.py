@@ -23,7 +23,11 @@ class Node(GameObject):
         for road in self.roads:
             temp_list.append(road.to_json())
         data['roads'] = temp_list
-        data['next_node'] = self.next_node.to_json() if self.next_node is not None else None
+        data['next_node'] = {'city_name': self.next_node.city_name, 'gas_price': self.next_node.gas_price, 
+                'repair_price': self.next_node.repair_price} if self.next_node is not None else None
+
+        # Deprecated to reduce log size
+#        data['next_node'] = self.next_node.to_json() if self.next_node is not None else None
         return data
 
     def from_json(self, data):
@@ -33,13 +37,19 @@ class Node(GameObject):
         for road in data['roads']:
             temp.from_json(road)
             self.roads.append(temp)
+        # This no longer allows for complete reconstruction, loses subsequent nodes and roads
+        temp = Node()
+        temp.city_name = data['city_name']
+        temp.gas_price = data['gas_price']
+        temp.repair_price = data['repair_price']
+        self.next_node = temp
 
-        # Recursively reconstruct linked list
-        node_data = data['next_node']
-        if node_data is not None:
-            temp_node = Node('temp')
-            temp_node.from_json(node_data)
-            self.next_node = temp_node
+        # Recursively reconstruct linked list (deprecated)
+#        node_data = data['next_node']
+#        if node_data is not None:
+#            temp_node = Node('temp')
+#            temp_node.from_json(node_data)
+#            self.next_node = temp_node
 
     def to_list(self):
         curr_node = self
