@@ -24,11 +24,6 @@ class GameStats:
         Region.tropical_cop_land: 1.5,
     }
 
-    contract_difficulty_modifier = {
-        ContractDifficulty.easy: 1,
-        ContractDifficulty.medium: 1.5,
-        ContractDifficulty.hard: 2
-    }
 
     # region_difficulty_modifier = {
     #     Region.grass_lands: .5,
@@ -180,24 +175,14 @@ class GameStats:
             }
         }
     }
-
-    road_type_length_modifier = {
-        RoadType.mountain_road: 1,
-        RoadType.forest_road: 1,
-        RoadType.tundra_road: 1.5,
-        RoadType.city_road: 1.5,
-        RoadType.highway: 2,
-        RoadType.interstate: 2
-    }
-
     
     possible_event_types = {
-        RoadType.mountain_road: {EventType.rock_slide: 40, EventType.animal_in_road: 30, EventType.icy_road: 20, EventType.police: 10, EventType.none: 0},
-        RoadType.forest_road: {EventType.animal_in_road: 40, EventType.police: 30, EventType.rock_slide: 20, EventType.icy_road: 10, EventType.none: 0},
-        RoadType.tundra_road: {EventType.icy_road: 50, EventType.police: 33, EventType.rock_slide: 17, EventType.none: 0},
-        RoadType.city_road: {EventType.bandits: 50, EventType.police: 33, EventType.traffic: 17, EventType.none: 0},
-        RoadType.highway: {EventType.police: 67, EventType.traffic: 33, EventType.none: 0},
-        RoadType.interstate: {EventType.traffic: 67, EventType.police: 33, EventType.none: 0}
+        RoadType.mountain_road: {EventType.rock_slide: 40, EventType.animal_in_road: 30, EventType.icy_road: 20, EventType.bounty_hunter: 10, EventType.none: 0},
+        RoadType.forest_road: {EventType.animal_in_road: 40, EventType.bounty_hunter: 30, EventType.rock_slide: 20, EventType.icy_road: 10, EventType.none: 0},
+        RoadType.tundra_road: {EventType.icy_road: 50, EventType.bounty_hunter: 33, EventType.rock_slide: 17, EventType.none: 0},
+        RoadType.city_road: {EventType.bandits: 50, EventType.bounty_hunter: 33, EventType.traffic: 17, EventType.none: 0},
+        RoadType.highway: {EventType.bounty_hunter: 67, EventType.traffic: 33, EventType.none: 0},
+        RoadType.interstate: {EventType.traffic: 67, EventType.bounty_hunter: 33, EventType.none: 0}
     }
 
     event_weights = dict()
@@ -210,7 +195,7 @@ class GameStats:
     animal_chance = event_weights[EventType.animal_in_road]/2400
     bandit_chance = event_weights[EventType.bandits]/2400
     icy_chance = event_weights[EventType.icy_road]/2400
-    police_chance = event_weights[EventType.police]/2400
+    bounty_hunter_chance = event_weights[EventType.bounty_hunter]/2400
     rockslide_chance = event_weights[EventType.rock_slide]/2400
     traffic_chance = event_weights[EventType.traffic]/2400
 
@@ -218,7 +203,7 @@ class GameStats:
         EventType.animal_in_road: 1/animal_chance,
         EventType.bandits: 1/bandit_chance,
         EventType.icy_road: 1/icy_chance,
-        EventType.police: 1/police_chance,
+        EventType.bounty_hunter: 1/bounty_hunter_chance,
         EventType.rock_slide: 1/rockslide_chance,
         EventType.traffic: 1/traffic_chance,
         EventType.none: 0
@@ -228,7 +213,7 @@ class GameStats:
         EventType.animal_in_road: event_weights[EventType.animal_in_road] / 20,
         EventType.bandits: event_weights[EventType.bandits] / 20,
         EventType.icy_road: event_weights[EventType.icy_road] / 20,
-        EventType.police: event_weights[EventType.police] / 20,
+        EventType.bounty_hunter: event_weights[EventType.bounty_hunter] / 20,
         EventType.rock_slide: event_weights[EventType.rock_slide] / 20,
         EventType.traffic: event_weights[EventType.traffic] / 20,
         EventType.none: 0
@@ -240,7 +225,7 @@ class GameStats:
         ObjectType.sentryGun: [EventType.rock_slide],
         ObjectType.GPS: [EventType.traffic],
         ObjectType.tank: [],
-        ObjectType.policeScanner: [EventType.police],
+        ObjectType.policeScanner: [EventType.bounty_hunter],
         TireType.tire_sticky: [EventType.icy_road],
         TireType.tire_normal: [],
         TireType.tire_econ: [],
@@ -249,7 +234,7 @@ class GameStats:
             EventType.animal_in_road,
             EventType.bandits,
             EventType.icy_road,
-            EventType.police,
+            EventType.bounty_hunter,
             EventType.rock_slide,
             EventType.traffic
         ]
@@ -290,27 +275,53 @@ class GameStats:
 
     upgrade_time_penalty = 4
 
-    contract_node_count = {
-        'short': 8,
-        'medium': 14,
-        'long': 21
-    }
-
-    contract_rewards = {
-        'money': {
-            'easy': 2000,
+    contract_stats = {
+        'node_count': {
+            'short': 9,
+            'medium': 14,
+            'long': 21
+        },
+        'money_reward': {
+            'easy': 3000,
             'medium': 3500,
             'hard': 4200
         },
-        'renown': {
+        'renown_reward': {
             'easy': 20,
             'medium': 30,
             'hard': 39
+        },
+        'deadline': {
+            'short': 3000,
+            'medium': 3500,
+            'long': 5400
+        },
+        'difficulty_modifier': {
+            ContractDifficulty.easy: 1,
+            ContractDifficulty.medium: 1.5,
+            ContractDifficulty.hard: 2
         }
     }
 
-    contract_deadline = {
-        'short': 3000,
-        'medium': 3500,
-        'long': 5400
+    illegal_contract_stats = {
+        'risk': {
+            ContrabandLevel.level_zero: .10,
+            ContrabandLevel.level_one: .20,
+            ContrabandLevel.level_two: .30
+        },
+        'time_penalty': {
+            ContrabandLevel.level_zero: 400,
+            ContrabandLevel.level_one: 670,
+            ContrabandLevel.level_two: 940
+        },
+        'money_penalty': {
+            ContrabandLevel.level_zero: 100,
+            ContrabandLevel.level_one: 250,
+            ContrabandLevel.level_two: 550
+        },
+        'reward_modifier': {
+            ContrabandLevel.level_zero: 3,
+            ContrabandLevel.level_one: 5,
+            ContrabandLevel.level_two: 7
+        }
     }

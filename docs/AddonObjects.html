@@ -7,12 +7,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Add On Objects &mdash; Placeholder  documentation</title>
+  <title>Add On Objects &mdash; Byte-le Royale Documentation 9 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
 
   
   
@@ -32,6 +33,7 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/accordion.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -53,7 +55,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> Placeholder
+            <a href="index.html" class="icon icon-home"> Byte-le Royale Documentation
           
 
           
@@ -61,6 +63,10 @@
 
           
             
+            
+              <div class="version">
+                Version 1.0
+              </div>
             
           
 
@@ -86,6 +92,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="RunningTheGame.html">Running the game</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TakingAction.html">Taking Action</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Truck.html">The Truck Object</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Contract.html">Contract</a></li>
@@ -95,7 +102,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Road.html">Road</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Add On Objects</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#the-policescanner-object">The policeScanner Object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#the-gps-object">The gps Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-gps-object">The GPS Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#the-rabbits-foot-object">The Rabbits foot Object</a></li>
 </ul>
 </li>
@@ -116,7 +123,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Placeholder</a>
+          <a href="index.html">Byte-le Royale Documentation</a>
         
       </nav>
 
@@ -170,11 +177,15 @@
             
   <div class="section" id="add-on-objects">
 <h1>Add On Objects<a class="headerlink" href="#add-on-objects" title="Permalink to this headline">¶</a></h1>
-<p>Body objects occupy the body attribute in the truck object. You can only have one Body object at a time. Aditionally the body object also holds the
-current_gas attribute, which is how much gas remains in your tank, and the max_gas attribute, which defaults to 1.</p>
+<p>Add-On object occupies the addons attribute of your truck. You can only have one Add-On object at a time.</p>
 <div class="section" id="the-policescanner-object">
 <h2>The policeScanner Object<a class="headerlink" href="#the-policescanner-object" title="Permalink to this headline">¶</a></h2>
-<p>The police scanner object helps you evade the cops.</p>
+<p>The police scanner object helps you evade the cops. It will reduce the damage and time taken from the police event.
+Referenced as:
+.. code-block:: python</p>
+<blockquote>
+<div><p>ObjectType.policeScanner</p>
+</div></blockquote>
 <p>The levels are below</p>
 <table class="docutils align-default">
 <colgroup>
@@ -209,9 +220,14 @@ current_gas attribute, which is how much gas remains in your tank, and the max_g
 </table>
 </div>
 <div class="section" id="the-gps-object">
-<h2>The gps Object<a class="headerlink" href="#the-gps-object" title="Permalink to this headline">¶</a></h2>
-<p>GPS will help re-route you away from traffic.</p>
-<p>The levels are below (fix levels)</p>
+<h2>The GPS Object<a class="headerlink" href="#the-gps-object" title="Permalink to this headline">¶</a></h2>
+<p>GPS will help re-route you away from traffic. It will reduce the damage and time taken from the traffic event.
+Referenced as:
+.. code-block:: python</p>
+<blockquote>
+<div><p>ObjectType.GPS</p>
+</div></blockquote>
+<p>The levels are below</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 17%" />
@@ -246,7 +262,14 @@ current_gas attribute, which is how much gas remains in your tank, and the max_g
 </div>
 <div class="section" id="the-rabbits-foot-object">
 <h2>The Rabbits foot Object<a class="headerlink" href="#the-rabbits-foot-object" title="Permalink to this headline">¶</a></h2>
-<p>?</p>
+<p>The Rabbit’s foot will bring you good luck in the event a disaster occuring.
+It will minorly reduce incoming damage from all event types. This bonus will stack additively with your other damage reduction bonuses.
+Referenced as:
+.. code-block:: python</p>
+<blockquote>
+<div><p>ObjectType.rabbitFoot</p>
+</div></blockquote>
+<p>The levels are below</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 17%" />
@@ -261,19 +284,19 @@ current_gas attribute, which is how much gas remains in your tank, and the max_g
 </thead>
 <tbody>
 <tr class="row-even"><td><p>0</p></td>
-<td><p>0.1</p></td>
+<td><p>0.025</p></td>
 <td><p>5400</p></td>
 </tr>
 <tr class="row-odd"><td><p>1</p></td>
-<td><p>0.2</p></td>
+<td><p>0.05</p></td>
 <td><p>10800</p></td>
 </tr>
 <tr class="row-even"><td><p>2</p></td>
-<td><p>0.35</p></td>
+<td><p>0.1</p></td>
 <td><p>16200</p></td>
 </tr>
 <tr class="row-odd"><td><p>3</p></td>
-<td><p>0.5</p></td>
+<td><p>0.15</p></td>
 <td><p>21600</p></td>
 </tr>
 </tbody>
@@ -295,7 +318,7 @@ current_gas attribute, which is how much gas remains in your tank, and the max_g
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2021, ACM.
+        &#169; Copyright 2021-2022, NDSU ACM.
 
     </p>
   </div>

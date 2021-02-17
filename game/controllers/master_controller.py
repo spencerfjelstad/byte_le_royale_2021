@@ -87,23 +87,25 @@ class MasterController(Controller):
         random.seed(self.current_world_data["seed"])
 
         new_action = self.action_controller.handle_actions(client)
-        if len(str(new_action)) > 1:
+        if not isinstance(new_action, int):
             self.selected_action = new_action[0]
             self.selected_route = new_action[1]
             self.event = new_action[2]
+            self.caught_by_police = new_action[3]
         else:
             self.selected_action = new_action
             self.selected_route = RoadType.none
             self.event = EventType.none
+            self.caught_by_police = False
         #client.time -= 10
         if client.time <= 0:
-            print("Game is ending because time has run out. Final score is " + str(client.truck.renown))
+            print("Game is ending because time has run out. Final score is " + str(client.truck.renown) + " ending on turn "+ str(self.turn))
             self.game_over = True
         if client.truck.health <= 0:
-            print("Game is ending because health has run out. Final score is " + str(client.truck.renown))
+            print("Game is ending because health has run out. Final score is " + str(client.truck.renown) + " ending on turn "+ str(self.turn))
             self.game_over = True
         if client.truck.body.current_gas <= 0:
-            print("Game is ending because gas has run out. Final score is " + str(client.truck.renown))
+            print("Game is ending because gas has run out. Final score is " + str(client.truck.renown) + " ending on turn "+ str(self.turn))
             self.game_over = True
 
     # Return serialized version of game
@@ -116,6 +118,7 @@ class MasterController(Controller):
         data['selected_action'] = self.selected_action
         data['selected_route'] = self.selected_route
         data['event'] = self.event
+        data['caught_by_police'] = self.caught_by_police
         
         return data
 

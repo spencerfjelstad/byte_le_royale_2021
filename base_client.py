@@ -31,6 +31,7 @@ class Client(UserClient):
             # Buy gas
             print("Gas")
             actions.set_action(ActionType.buy_gas)
+            
         elif truck.health < 40 and truck.money > 1000:
             print("Heal")
             actions.set_action(ActionType.repair)
