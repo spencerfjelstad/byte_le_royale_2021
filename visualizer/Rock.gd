@@ -1,11 +1,14 @@
 extends Sprite
 
-var originx = 530 - 100
-var originy = 375
-var destx = -1400 - 100
+var xAdjust = randi()%300+1
+
+var originx = 800 + xAdjust
+var originy = 400
+var destx = 1500 + xAdjust
 var desty = 840
 
 var iceSpeed = 1
+
 
 var originalIceDistance = Vector2(originx,originy).distance_to(Vector2(destx,desty))
 
