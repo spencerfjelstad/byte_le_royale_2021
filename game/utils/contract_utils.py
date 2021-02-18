@@ -9,15 +9,19 @@ from game.common.illegal_contract import IllegalContract
 from game.utils.create_game_map import create_game_map
 
 def check_contract_completion(client):
+    state = ContractState.unchanged
     if client.truck.active_contract is not None:
         # May want to impose a penalty for failed contract
         if client.truck.active_contract.deadline > client.time:
             client.truck.active_contract = None
             client.truck.map.current_node.next_node = None
+            state = ContractState.failed
         elif client.truck.map.current_node.next_node is None:
             client.truck.money += client.truck.active_contract.money_reward
             client.truck.renown += client.truck.active_contract.renown_reward
             client.truck.active_contract = None
+            state = ContractState.completed
+    return state
 
 # Generate list of contracts, store for verification
 def generate_contracts(client):
