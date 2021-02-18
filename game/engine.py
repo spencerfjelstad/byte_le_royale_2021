@@ -123,7 +123,7 @@ class Engine:
                                                 MAX_CLIENTS_START)
 
         if client_num_correct is not None:
-            self.shutdown(source='Client_error')
+            self.shutdown(source='Invalid number of clients found.')
 
         # Finally, request master controller to establish clients with basic objects
         if SET_NUMBER_OF_CLIENTS_START == 1:
@@ -226,7 +226,7 @@ class Engine:
                                                 MIN_CLIENTS_CONTINUE,
                                                 MAX_CLIENTS_CONTINUE)
         if client_num_correct is not None:
-            self.shutdown(source='Client_error')
+            self.shutdown(source='Invalid number of clients found.')
 
         # Finally, consult master controller for game logic
         if SET_NUMBER_OF_CLIENTS_START == 1:
