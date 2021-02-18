@@ -7,12 +7,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Contract &mdash; Placeholder  documentation</title>
+  <title>Contract &mdash; Byte-le Royale Documentation 9 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
 
   
   
@@ -32,6 +33,7 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/accordion.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -53,7 +55,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> Placeholder
+            <a href="index.html" class="icon icon-home"> Byte-le Royale Documentation
           
 
           
@@ -61,6 +63,10 @@
 
           
             
+            
+              <div class="version">
+                Version 1.0
+              </div>
             
           
 
@@ -86,6 +92,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="RunningTheGame.html">Running the game</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TakingAction.html">Taking Action</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Truck.html">The Truck Object</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Contract</a><ul>
@@ -114,7 +121,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Placeholder</a>
+          <a href="index.html">Byte-le Royale Documentation</a>
         
       </nav>
 
@@ -169,7 +176,14 @@
   <div class="section" id="contract">
 <h1>Contract<a class="headerlink" href="#contract" title="Permalink to this headline">¶</a></h1>
 <p>Contracts come in easy, medium and hard versions, which impact their rewards, renown, length and completabiltiy.
-Easy contracts give less renown and reward, but are also shorter. The opposite is true with hard contracts</p>
+Easy contracts give less renown and reward, but are also shorter. The opposite is true with hard contracts. Please note that
+in contract list you are given a dictionary where [‘map’] is the game_map <a class="reference internal" href="GameMap.html"><span class="doc">Game Map</span></a> you need to traverse to complete the contract
+and [‘contract’] is the contract object.</p>
+<p>EX:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contractList</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="s1">&#39;contract&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>will access a contract object at an associated index</p>
 <div class="section" id="instance-variables">
 <h2>Instance variables<a class="headerlink" href="#instance-variables" title="Permalink to this headline">¶</a></h2>
 <p>Below are the listed instance variables for the contract object</p>
@@ -194,21 +208,21 @@ Easy contracts give less renown and reward, but are also shorter. The opposite i
 <td><p>Region.Enum</p></td>
 <td><p>The type of region the contract will be in. Impacts events</p></td>
 </tr>
-<tr class="row-even"><td><p>game_map</p></td>
-<td><p><a class="reference internal" href="GameMap.html"><span class="doc">Game Map</span></a></p></td>
-<td><p>The map you need to traverse to complete the contract</p></td>
-</tr>
-<tr class="row-odd"><td><p>money_reward</p></td>
+<tr class="row-even"><td><p>money_reward</p></td>
 <td><p>int</p></td>
 <td><p>The amount of money you will recieve from completing this contract</p></td>
 </tr>
-<tr class="row-even"><td><p>renown_reward</p></td>
+<tr class="row-odd"><td><p>renown_reward</p></td>
 <td><p>int</p></td>
 <td><p>The amount of renown you will recieve from completing this contract</p></td>
 </tr>
-<tr class="row-odd"><td><p>deadline</p></td>
+<tr class="row-even"><td><p>deadline</p></td>
 <td><p>int</p></td>
 <td><p>The time you must complete the contract by. Decrements Automatically</p></td>
+</tr>
+<tr class="row-odd"><td><p>difficulty</p></td>
+<td><p>int</p></td>
+<td><p>The difficulty enum, where 1 is easy and 3 is hard</p></td>
 </tr>
 </tbody>
 </table>
@@ -229,7 +243,7 @@ Easy contracts give less renown and reward, but are also shorter. The opposite i
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2021, ACM.
+        &#169; Copyright 2021-2022, NDSU ACM.
 
     </p>
   </div>

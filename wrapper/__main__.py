@@ -1,5 +1,5 @@
 import sys
-
+from scrimmage.client import Client
 from game.engine import Engine
 from game.utils.generate_game import generate
 import game.config
@@ -28,6 +28,9 @@ if __name__ == '__main__':
     run_subpar.add_argument('-quiet', '-q', action='store_true', default=False,
                             dest='q_bool', help='Runs your AI... quietly :)')
 
+     # Scrimmage Subparser
+    scrim_subpar = spar.add_parser('scrimmage', aliases=['s'], help='Boot client for scrimmage server')
+    
     # Visualizer Subparser
     vis_subpar = spar.add_parser('visualizer', aliases=['v'], help='Visualizes last run game')
 
@@ -57,6 +60,11 @@ if __name__ == '__main__':
 
         engine = Engine(quiet)
         engine.loop()
+
+     # Boot up the scrimmage server client
+    elif action in ['scrimmage', 's']:
+        cl = Client()
+
 
     elif action in ['visualizer', 'v']:
         # Check operating system and run corresponding visualizer

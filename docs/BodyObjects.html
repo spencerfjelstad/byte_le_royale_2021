@@ -7,12 +7,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Body Objects &mdash; Placeholder  documentation</title>
+  <title>Body Objects &mdash; Byte-le Royale Documentation 9 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
 
   
   
@@ -32,6 +33,7 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/accordion.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -53,7 +55,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> Placeholder
+            <a href="index.html" class="icon icon-home"> Byte-le Royale Documentation
           
 
           
@@ -61,6 +63,10 @@
 
           
             
+            
+              <div class="version">
+                Version 1.0
+              </div>
             
           
 
@@ -86,6 +92,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="RunningTheGame.html">Running the game</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TakingAction.html">Taking Action</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Truck.html">The Truck Object</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Contract.html">Contract</a></li>
@@ -97,7 +104,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Body Objects</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#the-tank-object">The Tank Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#the-sentry-gun-object">The Sentry Gun Object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#the-headlights-object">The headlights Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-headlights-object">The Headlights Object</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="TireObjects.html">Tires</a></li>
@@ -116,7 +123,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Placeholder</a>
+          <a href="index.html">Byte-le Royale Documentation</a>
         
       </nav>
 
@@ -175,13 +182,18 @@ current_gas attribute, which is how much gas remains in your tank, and the max_g
 <div class="section" id="the-tank-object">
 <h2>The Tank Object<a class="headerlink" href="#the-tank-object" title="Permalink to this headline">¶</a></h2>
 <p>The Tank object increases the max_gas attribute. Gas levels are stored as percents, IE level 1 holds 50% more gas than level 0.
-Not having the Tank object leaves your truck with a level 0 tank.</p>
+Not having the Tank object leaves your truck with a level 0 tank.
+Referenced as:
+.. code-block:: python</p>
+<blockquote>
+<div><p>ObjectType.tank</p>
+</div></blockquote>
 <p>The levels are below</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 18%" />
-<col style="width: 64%" />
-<col style="width: 18%" />
+<col style="width: 17%" />
+<col style="width: 62%" />
+<col style="width: 21%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Level</p></th>
@@ -192,27 +204,32 @@ Not having the Tank object leaves your truck with a level 0 tank.</p>
 <tbody>
 <tr class="row-even"><td><p>0</p></td>
 <td><p>1</p></td>
-<td><p>10</p></td>
+<td><p>5400</p></td>
 </tr>
 <tr class="row-odd"><td><p>1</p></td>
 <td><p>1.5</p></td>
-<td><p>300</p></td>
+<td><p>10800</p></td>
 </tr>
 <tr class="row-even"><td><p>2</p></td>
 <td><p>2</p></td>
-<td><p>900</p></td>
+<td><p>16200</p></td>
 </tr>
 <tr class="row-odd"><td><p>3</p></td>
 <td><p>4</p></td>
-<td><p>2000</p></td>
+<td><p>21600</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="section" id="the-sentry-gun-object">
 <h2>The Sentry Gun Object<a class="headerlink" href="#the-sentry-gun-object" title="Permalink to this headline">¶</a></h2>
-<p>The sentry gun object solves the rockslide event. It will reduce your damage and time penalties
-according to the to the below table</p>
+<p>The sentry gun will shoot bolders out of the road as you pass. It reduces damage and time taken by the rockslide event.
+Referenced as:
+.. code-block:: python</p>
+<blockquote>
+<div><p>ObjectType.sentryGun</p>
+</div></blockquote>
+<p>The levels are below</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 17%" />
@@ -246,8 +263,14 @@ according to the to the below table</p>
 </table>
 </div>
 <div class="section" id="the-headlights-object">
-<h2>The headlights Object<a class="headerlink" href="#the-headlights-object" title="Permalink to this headline">¶</a></h2>
-<p>The headlights object negates the animal_in_the_road event. Below are the negations</p>
+<h2>The Headlights Object<a class="headerlink" href="#the-headlights-object" title="Permalink to this headline">¶</a></h2>
+<p>The headlights object will increases the brightness of your headlights causing animals to react more quickly if they are in the way.
+It reduces damage and time taken by the animal_in_the_road event.
+.. code-block:: python</p>
+<blockquote>
+<div><p>ObjectType.headlights</p>
+</div></blockquote>
+<p>The levels are below</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 17%" />
@@ -296,7 +319,7 @@ according to the to the below table</p>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2021, ACM.
+        &#169; Copyright 2021-2022, NDSU ACM.
 
     </p>
   </div>

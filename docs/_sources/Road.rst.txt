@@ -18,23 +18,7 @@ length             decimal            The length of the road
 Road Type Modifiers
 ###################
 
-There are 6 Roadtypes, mountain_road, forest_road, tundra_road, city_road, highway, and interstate.
-
-**Length Modifiers**
-
-road types modify the potential lengths of a road. Below are the roads listed in order of the magnitude
-of their modifier, with position 0 being the smallest. Road type enumerations can be accessed by RoadType.<RoadType>
-
-========== ==============
-Position      Road Type
-========== ==============
- 0          montain_road
- 1          forest_road
- 2          tundra_road
- 3          city_road
- 4          highway
- 5          interstate
-========== ==============
+There are 6 Roadtypes, mountain_road, forest_road, tundra_road, city_road, highway, and interstate. Road type enumerations can be accessed by RoadType.<RoadType> 
 
 **Potential Events**
 
@@ -44,7 +28,7 @@ The potential events that can happen on a given road type are listed below. More
 Road          Events
 ============= ==============
 montain_road  rock_slide, animal_in_road, icy_road, police, none
-forest_road   animal_in_road, police, rock_slide, icy_road, None
+forest_road   animal_in_road, police, rock_slide, icy_road, none
 tundra_road   icy_road, police, rock_slide, none
 city_road     bandits, police, traffic, none
 highway       police, traffic, none
