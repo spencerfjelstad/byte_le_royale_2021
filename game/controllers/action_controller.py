@@ -66,6 +66,7 @@ class ActionController(Controller):
             return ActionType.set_speed
         else:
             self.print("Action aborted: no active contract!")
+            player.time -= 1
             return ActionType.none
 
     # Action Methods ---------------------------------------------------------    
