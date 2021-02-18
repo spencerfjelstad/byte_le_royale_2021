@@ -24,11 +24,6 @@ class GameStats:
         Region.tropical_cop_land: 1.5,
     }
 
-    contract_difficulty_modifier = {
-        ContractDifficulty.easy: 1,
-        ContractDifficulty.medium: 1.5,
-        ContractDifficulty.hard: 2
-    }
 
     # region_difficulty_modifier = {
     #     Region.grass_lands: .5,
@@ -109,8 +104,8 @@ class GameStats:
             "fuel_efficiency": {
                 TireType.tire_econ: 1.5,
                 TireType.tire_normal: 1,
-                TireType.tire_sticky: 1,
-                TireType.monster_truck: 1
+                TireType.tire_sticky: .8,
+                TireType.monster_truck: .8
             }
         },
 
@@ -180,16 +175,6 @@ class GameStats:
             }
         }
     }
-
-    road_type_length_modifier = {
-        RoadType.mountain_road: 1,
-        RoadType.forest_road: 1,
-        RoadType.tundra_road: 1.5,
-        RoadType.city_road: 1.5,
-        RoadType.highway: 2,
-        RoadType.interstate: 2
-    }
-
     
     possible_event_types = {
         RoadType.mountain_road: {EventType.rock_slide: 40, EventType.animal_in_road: 30, EventType.icy_road: 20, EventType.bounty_hunter: 10, EventType.none: 0},
@@ -310,6 +295,11 @@ class GameStats:
             'short': 3000,
             'medium': 3500,
             'long': 5400
+        },
+        'difficulty_modifier': {
+            ContractDifficulty.easy: 1,
+            ContractDifficulty.medium: 1.5,
+            ContractDifficulty.hard: 2
         }
     }
 
