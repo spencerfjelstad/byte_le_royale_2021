@@ -32,12 +32,12 @@ var upg_body_lvl = ""
 var upg_tires = ""
 
 var road_dict = {
-	"1": "res://assets/road_type/mountain_road.png",
-	"2": "res://assets/road_type/forest_road.png",
-	"3": "res://assets/road_type/tundra_road.png",
-	"4": "res://assets/road_type/highway_road.png",
-	"5": "res://assets/road_type/city_road.png",
-	"6": "res://assets/road_type/highway_road.png"
+	"1": "visualizer/assets/road_type/mountain_road.png",
+	"2": "visualizer/assets/road_type/forest_road.png",
+	"3": "visualizer/assets/road_type/tundra_road.png",
+	"4": "visualizer/assets/road_type/highway_road.png",
+	"5": "visualizer/assets/road_type/city_road.png",
+	"6": "visualizer/assets/road_type/highway_road.png"
 }
 
 var eventsDict = {
@@ -47,7 +47,7 @@ var eventsDict = {
 		"originy": 425,
 		"destx": 600,
 		"desty": 800,
-		"sprite": "res://assets/events/event_icy_road.png"
+		"sprite": "visualizer/assets/events/event_icy_road.png"
 		},
 	"rock": false
 }
@@ -87,7 +87,7 @@ func _input(event):
 
 func _on_Timer_timeout():
 	var file = File.new()
-	var file_path = "../logs/turn_" + ("%04d" % turn) + ".json"
+	var file_path = "./logs/turn_" + ("%04d" % turn) + ".json"
 	if(!file.file_exists(file_path)):
 		$GameOver.visible = true
 		$GameOver.game_over = true
@@ -266,16 +266,16 @@ func show_upgrades_body(upgrade_type):
 	var texture = ""
 	# None
 	if(upgrade_type == 0):
-		texture = "res://assets/Upgrades/upgrades_none.png"
+		texture = "visualizer/assets/Upgrades/upgrades_none.png"
 	# Tank	
 	elif(upgrade_type == 9):
-		texture = "res://assets/upgrades/upgrades_body_tank.png"
+		texture = "visualizer/assets/upgrades/upgrades_body_tank.png"
 	# Headlights
 	elif(upgrade_type == 11):
-		texture = "res://assets/upgrades/upgrades_body_headlights.png"
+		texture = "visualizer/assets/upgrades/upgrades_body_headlights.png"
 	# Sentry Gun
 	elif(upgrade_type == 12):
-		texture = "res://assets/upgrades/upgrades_body_sentry.png"
+		texture = "visualizer/assets/upgrades/upgrades_body_sentry.png"
 		
 	$UpgBody.texture = load(texture)	
 	
@@ -283,16 +283,16 @@ func show_upgrades_addons(upgrade_type):
 	var texture = ""
 	# None
 	if(upgrade_type == 0):
-		texture = "res://assets/Upgrades/upgrades_none.png"
+		texture = "visualizer/assets/Upgrades/upgrades_none.png"
 	# Police Scanner	
 	elif(upgrade_type == 8):
-		texture = "res://assets/upgrades/upgrades_addons_policescanner.png"
+		texture = "visualizer/assets/upgrades/upgrades_addons_policescanner.png"
 	# Rabbit Foot
 	elif(upgrade_type == 13):
-		texture = "res://assets/upgrades/upgrades_addons_rabbit_foot.png"
+		texture = "visualizer/assets/upgrades/upgrades_addons_rabbit_foot.png"
 	# GPS
 	elif(upgrade_type == 14):
-		texture = "res://assets/upgrades/upgrades_addons_GPS.png"
+		texture = "visualizer/assets/upgrades/upgrades_addons_GPS.png"
 		
 	$UpgAddOns.texture = load(texture)	
 
@@ -300,16 +300,16 @@ func show_upgrades_tires(upgrade_type):
 	var texture = ""
 	# Normal
 	if(upgrade_type == 0):
-		texture = "res://assets/upgrades/upgrades_tires_normal.png"
+		texture = "visualizer/assets/upgrades/upgrades_tires_normal.png"
 	# Economy	
 	elif(upgrade_type == 1):
-		texture = "res://assets/upgrades/upgrades_tires_economy.png"
+		texture = "visualizer/assets/upgrades/upgrades_tires_economy.png"
 	# Sticky
 	elif(upgrade_type == 2):
-		texture = "res://assets/upgrades/upgrades_tires_sticky.png"
+		texture = "visualizer/assets/upgrades/upgrades_tires_sticky.png"
 	# Monster Truck
 	elif(upgrade_type == 3):
-		texture = "res://assets/upgrades/upgrades_tires_monster.png"
+		texture = "visualizer/assets/upgrades/upgrades_tires_monster.png"
 	
 	$UpgTires.texture = load(texture)	
 	
