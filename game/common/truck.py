@@ -19,7 +19,6 @@ class Truck(GameObject):
     def __init__(self, game_map = None):
         super().__init__()
         self.object_type = ObjectType.truck
-        self.map = game_map
         self.contract_list = []
         self.active_contract = None
         self.body = BaseBodyObject(0,0)
@@ -48,11 +47,9 @@ class Truck(GameObject):
 
     def to_json(self):
         data = super().to_json()
-        #data['map'] = self.map.to_json() if self.map is not None else None
         temp_list = [] 
-        for i in self.contract_list:
-            temp_dict = {'contract': i['contract'].to_json(), 'map': i['map'].to_json()}
-            temp_list.append(temp_dict)
+        for contract in self.contract_list:
+            temp_list.append(contract.to_json())
         #data['contract_list'] = temp_list
         data['active_contract'] = self.active_contract.to_json() if self.active_contract is not None else None
         data['speed'] = self.speed
@@ -71,12 +68,9 @@ class Truck(GameObject):
         self.game_map = json_map
 
         temp_contract = Contract()
-        temp_map = Game_Map()
         temp_list = []
-        for i in data['contract_list']:
-            temp_contract.from_json(i['contract']) 
-            temp_map.from_json(i['map'])
-            temp_dict = {'contract': temp_contract, 'map': temp_map}
+        for contract in data['contract_list']:
+            temp_contract.from_json(contract) 
             temp_list.append(temp_dict)
         self.contract_list = temp_list
         self.active_contract = temp.from_json(data['active_contract'])

@@ -29,9 +29,6 @@ class MasterController(Controller):
     # Receives all clients for the purpose of giving them the objects they will control
     def give_clients_objects(self, client):
         client.truck = Truck()
-        node = Node('Start Node')
-        game_map = Game_Map(node)
-        client.truck.map = game_map
         pass
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
@@ -57,7 +54,7 @@ class MasterController(Controller):
     def client_turn_arguments(self, client, turn):
         # Add contracts available in city and current active contract to truck for access by client
         actions = Action()
-        check_contract_completion(client)
+        self.contract_status = check_contract_completion(client)
         contract_list = generate_contracts(client)
         self.action_controller.contract_list = contract_list
 
@@ -119,6 +116,7 @@ class MasterController(Controller):
         data['selected_route'] = self.selected_route
         data['event'] = self.event
         data['caught_by_police'] = self.caught_by_police
+        data['contract_status'] = self.contract_status
         
         return data
 

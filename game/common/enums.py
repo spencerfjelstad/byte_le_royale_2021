@@ -28,7 +28,8 @@ class ActionType:
     upgrade = 3
     select_contract = 4
     set_speed = 5
-    repair= 6
+    repair = 6
+    change_tires = 7
 
 class Region:
     none = 0
@@ -110,3 +111,8 @@ class ContractDifficulty:
     easy = 0
     medium = 1
     hard = 2
+
+class ContractState:
+    unchanged = 0
+    completed = 1
+    failed = 2

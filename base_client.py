@@ -38,10 +38,10 @@ class Client(UserClient):
         elif  truck.body.level < 3 and 100000 * 1.2 * (truck.body.level + 1) < truck.money:
             print("upgrade")
             actions.set_action(ActionType.upgrade, ObjectType.tank)
-        elif(truck.map.current_node.city_name != 'end'):
+        elif(truck.active_contract.game_map.current_node.city_name != 'end'):
             # Move to next node
             print("move")
-            actions.set_action(ActionType.select_route, truck.map.current_node.roads[0])
+            actions.set_action(ActionType.select_route, truck.active_contract.game_map.current_node.roads[0])
         
 
         

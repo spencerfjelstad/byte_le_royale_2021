@@ -56,10 +56,10 @@ class ActionController(Controller):
             self.upgrade_level(player, player.action.action_parameter)
             player.time -= GameStats.upgrade_time_penalty
             return ActionType.upgrade
-        elif(player_action == ObjectType.tires):
+        elif(player_action == ActionType.change_tires):
             self.upgrade_tires(player, player.action.action_parameter)
             player.time -= GameStats.upgrade_time_penalty
-            return ActionType.upgrade
+            return ActionType.change_tires
         elif(player_action == ActionType.set_speed):
             #This is an ActionType because the user client cannot directly influence truck values. 
             player.truck.set_current_speed(player.action.action_parameter)
@@ -79,12 +79,12 @@ class ActionController(Controller):
             road = param
         else:
             raise ValueError("Attribute passed to move action was not an index or a road!")
-        self.current_location = player.truck.map.current_node
+        self.current_location = player.truck.active_contract.game_map.current_node
         time_taken = 0
         fuel_efficiency = GameStats.getMPG(player.truck.speed) * GameStats.costs_and_effectiveness[ObjectType.tires]['fuel_efficiency'][player.truck.tires]
         for route in self.current_location.roads:
             if route == road:  # May need to be redone
-                player.truck.map.get_next_node()
+                player.truck.active_contract.game_map.get_next_node()
                 event = self.event_controller.event_chance(road, player, player.truck)
                 time_taken = (road.length / player.truck.get_current_speed())
                 gas_used = (road.length/fuel_efficiency)/(player.truck.body.max_gas*100)
@@ -95,16 +95,14 @@ class ActionController(Controller):
     # Retrieve by index and store in Player, then clear the list
     def select_contract(self, player):
         if len(self.contract_list) > int(player.action.action_parameter) and int(player.action.action_parameter) >= -1:
-            selection = self.contract_list[int(player.action.action_parameter)]
-            player.truck.active_contract = selection['contract']
-            player.truck.map = selection['map']
+            player.truck.active_contract = self.contract_list[int(player.action.action_parameter)]
             self.contract_list.clear()
         else:
             raise Exception("Contract list index was out of bounds")
 
     def buy_gas(self, player):
         # Gas price is tied to node
-        gasPrice = player.truck.map.current_node.gas_price
+        gasPrice = player.truck.active_contract.game_map.current_node.gas_price
         if(player.truck.money > 0):
             # Calculate what percent empty is the gas tank
             percentGone = (1 - (round(player.truck.body.current_gas, 2) / player.truck.body.max_gas))
@@ -121,7 +119,7 @@ class ActionController(Controller):
                     maxPercent * player.truck.body.max_gas)
 
     def heal(self, player):
-        healPrice = player.truck.map.current_node.repair_price
+        healPrice = player.truck.active_contract.game_map.current_node.repair_price
         if(player.truck.money > 0):
             # Calculate what percent repair is missing
             percentRemain = 1 - (round(player.truck.health, 2) / GameStats.truck_starting_health)
