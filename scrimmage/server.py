@@ -46,7 +46,8 @@ class Server:
 
         self.loop.run_in_executor(None, self.await_input)
         self.loop.run_in_executor(None, self.runner_loop)
-        self.loop.run_in_executor(None, self.visualizer_loop)
+        #uncomment when it's working
+        #self.loop.run_in_executor(None, self.visualizer_loop)
 
         try:
             self.loop.run_forever()
