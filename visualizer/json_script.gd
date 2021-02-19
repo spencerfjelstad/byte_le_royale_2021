@@ -133,7 +133,7 @@ func _on_Timer_timeout():
 		money_reward = "Payment: " + str(data.get("truck").get("active_contract").get("money_reward")) + "\n"
 		renown_reward = "Renown: " + str(data.get("truck").get("active_contract").get("renown_reward")) + "\n"
 		difficulty = "Difficulty: " + str(data.get("truck").get("active_contract").get("difficulty")) + "\n"
-		var next_city_value = data.get("truck").get("map").get("current_node").get("next_node")
+		var next_city_value = data.get("truck").get("active_contract").get("game_map").get("current_node").get("next_node")
 		if(next_city_value != null):
 			next_city = "Next city: " + next_city_value.get("city_name")
 		else:
@@ -170,7 +170,9 @@ func _on_Timer_timeout():
 	# If we're "moving", spawn moving things
 	if(road_type != 0):
 		spawn_rock()
-		spawn_sign(str(data.get("truck").get("map").get("current_node").get("city_name")))
+		var contract = data.get("truck").get("active_contract")
+		if(contract != null):
+			spawn_sign(str(contract.get("game_map").get("current_node").get("city_name")))
 	
 	# Save variables for Game Over screen
 	upg_body = data.get("truck").get("body").get("object_type")
