@@ -74,7 +74,7 @@ class ActionController(Controller):
     def move(self, player):
         param = player.action.action_parameter
         if type(param) == int:
-            road = player.truck.map.current_node.roads[param]
+            road = player.truck.active_contract.game_map.current_node.roads[param]
         elif type(param) == Road:
             road = param
         else:
