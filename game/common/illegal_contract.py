@@ -17,9 +17,9 @@ class IllegalContract(Contract):
         mod = GameStats.illegal_contract_stats['reward_modifier'][self.level]
         if len(args) == 1:
             contract = args[0]
-            super().__init__(name, contract.region, contract.money_reward*mod, contract.renown_reward*mod, contract.deadline, contract.difficulty)
+            super().__init__(name, contract.region, contract.game_map, contract.money_reward*mod, contract.renown_reward*mod, contract.deadline, contract.difficulty)
         else:
-            super().__init__(name, args[1], args[2]*mod, args[3]*mod, args[4], args[5])
+            super().__init__(name, args[1], args[2], args[3]*mod, args[3]*mod, args[4], args[5])
 
     def generate_name(self):
         verb = ["Smuggle ", "Bootleg ", "Run ", "Slip ", "Move "]
