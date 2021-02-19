@@ -35,7 +35,7 @@ class Client(UserClient):
         return totLen
 
     def canIMakeIt(self, truck):
-        dist = self.chooseBestRoad(truck.map.current_node.roads)
+        dist = self.chooseBestRoad(truck.active_contract.game_map.current_node.roads)
         return True if (dist.length/self.getMPG(truck.speed))/(truck.body.max_gas*100) - (dist.length * 1.11) > 0 else False
 
     def handleUpgrades(self, truck, bodyEnum, addonEnum):
@@ -53,9 +53,9 @@ class Client(UserClient):
         score = 0
         for index in range(len(contractList)):
             if truck.money < 10000:
-                score = contractList[index]['contract'].money_reward / self.calculateLength(contractList[index]['map'])
+                score = contractList[index].money_reward / self.calculateLength(contractList[index].game_map)
             else:
-                score = contractList[index]['contract'].renown_reward / self.calculateLength(contractList[index]['map']) 
+                score = contractList[index].renown_reward / self.calculateLength(contractList[index].game_map) 
             if score > prevBest:
                 prevBest = score
                 bestIndex = index
@@ -74,6 +74,19 @@ class Client(UserClient):
     def chooseBestContract2(self, truck, contractList):
         bestIndex = -1
         for index in range(len(contractList)):
+            if self.turn < self.low and contractList[index].difficulty == ContractDifficulty.easy:
+                bestIndex = index
+            elif self.turn < self.high and contractList[index].difficulty == ContractDifficulty.medium:
+                bestIndex = index
+            elif self.turn > self.high and contractList[index].difficulty == ContractDifficulty.hard:
+                bestIndex = index
+        #print(contractList[bestIndex]['contract'].difficulty == ContractDifficulty.easy)
+        return bestIndex
+    
+
+    def chooseBestContract2(self, truck, contractList):
+        bestIndex = -1
+        for index in range(len(contractList)):
             if self.turn < self.low and contractList[index]['contract'].difficulty == ContractDifficulty.easy:
                 bestIndex = index
             elif self.turn < self.high and contractList[index]['contract'].difficulty == ContractDifficulty.medium:
@@ -83,14 +96,26 @@ class Client(UserClient):
         #print(contractList[bestIndex]['contract'].difficulty == ContractDifficulty.easy)
         return bestIndex
 
-    def chooseBestRoad(self,roads):
+    def chooseShortestRoad(self,roads):
         shortest = 10000
-        index = -1
+        index = roads[0]
         for x in range(len(roads)):
-               if(shortest > roads[x].length):
+               if(shortest > roads[x].length and roads[x].road_type != RoadType.city_road):
                    index = roads[x]
         #print("move index: " + str(index))
         return index
+
+    def chooseBestRoad(self,roads):
+        bestScore = -1
+        index = -1
+        for x in range(len(roads)):
+            score = roads[x].length
+            if roads[x].road_type is RoadType.city_road or RoadType.mountain_road:
+                score = (score * 1.4)  
+            if bestScore > score:
+                index = x 
+        #print("move index: " + str(index))
+        return roads[index]
 
     # This is where your AI will decide what to do
     def take_turn(self, turn, actions, world, truck, time):
@@ -109,7 +134,7 @@ class Client(UserClient):
         elif ActionType.set_speed not in self.queue and (truck.speed != self.low_speed and self.turn < self.high) or (truck.speed != self.high_speed and self.turn > self.high):
             actions.set_action(ActionType.set_speed, self.low_speed) if self.turn < self.high else actions.set_action(ActionType.set_speed, self.high_speed)
             print('speed')
-        elif ActionType.buy_gas not in self.queue and (( truck.map.current_node.next_node is not None and truck.map.current_node.gas_price > truck.map.current_node.next_node.gas_price and self.canIMakeIt(truck)) or not self.canIMakeIt(truck)):
+        elif ActionType.buy_gas not in self.queue and (( truck.active_contract.game_map.current_node.next_node is not None and truck.active_contract.game_map.current_node.gas_price > truck.active_contract.game_map.current_node.next_node.gas_price and self.canIMakeIt(truck)) or not self.canIMakeIt(truck)):
                 # Buy gas
                 #print("Gas")
                 actions.set_action(ActionType.buy_gas)
@@ -124,12 +149,13 @@ class Client(UserClient):
         else:
             # Move to next node
             #print("move")
-            actions.set_action(ActionType.select_route, self.chooseBestRoad(truck.map.current_node.roads))
+            actions.set_action(ActionType.select_route, self.chooseBestRoad(truck.active_contract.game_map.current_node.roads))
         if len(self.queue) > 2:
             self.queue.pop(-1)
         self.queue.insert(0, actions._chosen_action)
              
         pass
+
 
 
 
