@@ -48,7 +48,7 @@ class Truck(GameObject):
 
     def to_json(self):
         data = super().to_json()
-        #data['map'] = self.map.to_json() if self.map is not None else None
+        data['map'] = self.map.to_json() if self.map is not None else None
         temp_list = [] 
         for i in self.contract_list:
             temp_dict = {'contract': i['contract'].to_json(), 'map': i['map'].to_json()}
