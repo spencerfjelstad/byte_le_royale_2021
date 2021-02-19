@@ -54,7 +54,6 @@ def generate_contracts(client):
 
     diff_list = ['easy', 'medium', 'hard']
     length_list = ['short', 'medium', 'long']
-    temp_list = []
     for i in range(random.randint(1, 4)):
         rng = random.randint(ContractDifficulty.easy, ContractDifficulty.hard)
         game_map = create_game_map(GameStats.contract_stats['node_count'][length_list[rng]],
@@ -63,15 +62,14 @@ def generate_contracts(client):
             GameStats.contract_stats['money_reward'][diff_list[rng]], 
             GameStats.contract_stats['renown_reward'][diff_list[rng]],
             client.time-GameStats.contract_stats['deadline'][length_list[rng]], rng)
-        temp_list.append(contract)
+        contract_list.append(contract)
 
     rng = random.randint(1, 100)
     if rng <= 25:
-        index = random.randrange(0, len(temp_list))
-        illegal_contract = IllegalContract(temp_list[index])
-        temp_list[index] = illegal_contract
+        index = random.randrange(3, len(contract_list))
+        illegal_contract = IllegalContract(contract_list[index])
+        contract_list[index] = illegal_contract
 
-    contract_list.extend(temp_list)
     random.shuffle(contract_list)
 
     return contract_list
