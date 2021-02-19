@@ -28,7 +28,8 @@ class ActionType:
     upgrade = 3
     select_contract = 4
     set_speed = 5
-    repair= 6
+    repair = 6
+    change_tires = 7
 
 class Region:
     none = 0
