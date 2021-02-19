@@ -55,10 +55,10 @@ class ActionController(Controller):
             self.upgrade_level(player, player.action.action_parameter)
             player.time -= GameStats.upgrade_time_penalty
             return ActionType.upgrade
-        elif(player_action == ObjectType.tires):
+        elif(player_action == ActionType.change_tires):
             self.upgrade_tires(player, player.action.action_parameter)
             player.time -= GameStats.upgrade_time_penalty
-            return ActionType.upgrade
+            return ActionType.change_tires
         elif(player_action == ActionType.set_speed):
             #This is an ActionType because the user client cannot directly influence truck values. 
             player.truck.set_current_speed(player.action.action_parameter)
