@@ -110,3 +110,8 @@ class ContractDifficulty:
     easy = 0
     medium = 1
     hard = 2
+
+class ContractState:
+    unchanged = 0
+    completed = 1
+    failed = 2
