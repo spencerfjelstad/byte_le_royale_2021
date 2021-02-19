@@ -226,7 +226,7 @@ class Engine:
                                                 MIN_CLIENTS_CONTINUE,
                                                 MAX_CLIENTS_CONTINUE)
         if client_num_correct is not None:
-            self.shutdown(source='Invalid number of clients found.')
+            self.shutdown(source='Client(s) have errored out and cannot continue.')
 
         # Finally, consult master controller for game logic
         if SET_NUMBER_OF_CLIENTS_START == 1:
