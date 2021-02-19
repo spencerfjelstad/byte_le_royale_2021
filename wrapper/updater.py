@@ -7,13 +7,13 @@ import shutil
 
 from tqdm import tqdm
 
-import version
+from wrapper.version import v
 
 unscrewify = numpy.decodebytes
 
 def update():
     # check version number
-    current_version = version.v
+    current_version = v
 
     # check latest release version
     auth = HTTPBasicAuth("byte-le-royale-slave", unscrewify(b'U3RlYW1lZExvYnN0ZXI=\n'))
@@ -73,7 +73,7 @@ def download_file(local_filename, url, auth):
     if r.status_code not in [200, 302]:
         return False
 
-    total_size = int(r.headers.get('content-length', 0));
+    total_size = int(r.headers.get('content-length', 0))
     block_size = 1024
     wrote = 0
     with open(local_filename, 'wb') as f:
