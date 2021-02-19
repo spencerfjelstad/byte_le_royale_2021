@@ -192,15 +192,7 @@ Only one action can be set per turn. All actions are set by calling</p>
 <h2>Selecting a contract<a class="headerlink" href="#selecting-a-contract" title="Permalink to this headline">¶</a></h2>
 <p>A list of contracts will be generated every turn. These contracts can be viewed in truck.contract_list
 Once you have chosen a contract, pass the select contract enum and the index of the contract which you
-<<<<<<< HEAD
 wish to select. Selecting a contract takes one hour.</p>
-=======
-<<<<<<<< HEAD:docs/LearnTheTruckinGame/TakingAction.html
-wish to select.</p>
-========
-wish to select. Selecting a contract takes one hour.</p>
->>>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff:docs/TakingAction.html
->>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">select_contract</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -210,17 +202,8 @@ wish to select. Selecting a contract takes one hour.</p>
 <h2>Moving<a class="headerlink" href="#moving" title="Permalink to this headline">¶</a></h2>
 <p>Moving requires selecting a road. The list of roads you can select is in truck.current_node.roads.
 Simply pass the road you wish to travel to by passing the index of the road you wish to take. Each
-<<<<<<< HEAD
 road will lead to the same node. Please note that the amount of time it takes to travel a road is
 simply calculated by (road.length / player.truck.get_current_speed())</p>
-=======
-<<<<<<<< HEAD:docs/LearnTheTruckinGame/TakingAction.html
-road will lead to the same node.</p>
-========
-road will lead to the same node. Please note that the amount of time it takes to travel a road is
-simply calculated by (road.length / player.truck.get_current_speed())</p>
->>>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff:docs/TakingAction.html
->>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">select_route</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -229,17 +212,8 @@ simply calculated by (road.length / player.truck.get_current_speed())</p>
 <div class="section" id="buying-gas">
 <h2>Buying Gas<a class="headerlink" href="#buying-gas" title="Permalink to this headline">¶</a></h2>
 <p>You can buy gas at every node. Gas prices vary from node to node. There are no arguments passed to the
-<<<<<<< HEAD
 buy gas method, it will either fill up your tank or buy the most gas you can afford. Buying gas also takes
 a flat 5 hours.</p>
-=======
-<<<<<<<< HEAD:docs/LearnTheTruckinGame/TakingAction.html
-buy gas method, it will either fill up your tank or buy the most gas you can afford.</p>
-========
-buy gas method, it will either fill up your tank or buy the most gas you can afford. Buying gas also takes
-a flat 5 hours.</p>
->>>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff:docs/TakingAction.html
->>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">buy_gas</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -249,15 +223,11 @@ a flat 5 hours.</p>
 <h2>Repairing<a class="headerlink" href="#repairing" title="Permalink to this headline">¶</a></h2>
 <p>Throughout the game your truck will take damage. Similar to buying gas, Repair prices will fluctuate from
 node to node. No arguments are required, and the truck will either fully repair or repair the most you can
-<<<<<<< HEAD
-afford. Repairing a truck takes 10 hours.</p>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+afford. Repairing a truck takes 10 hours.
 =======
-<<<<<<<< HEAD:docs/LearnTheTruckinGame/TakingAction.html
-afford.</p>
-========
-afford. Repairing a truck takes 10 hours.</p>
->>>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff:docs/TakingAction.html
->>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff
+afford.
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">repair</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -267,15 +237,11 @@ afford. Repairing a truck takes 10 hours.</p>
 <h2>Upgrading<a class="headerlink" href="#upgrading" title="Permalink to this headline">¶</a></h2>
 <p>Upgrades can negate damage and time penalties from events. There are two upgrade slots (body, addons)
 which each have three different upgrade types. If you don’t have enough money, the upgrade will be ignored. Switching
-<<<<<<< HEAD
-from one object to another will result in a complete loss of the former upgrade. Upgrading takes 4 hours.</p>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+from one object to another will result in a complete loss of the former upgrade. Upgrading takes 4 hours.
 =======
-<<<<<<<< HEAD:docs/LearnTheTruckinGame/TakingAction.html
-from one object to another will result in a complete loss of the former upgrade.</p>
-========
-from one object to another will result in a complete loss of the former upgrade. Upgrading takes 4 hours.</p>
->>>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff:docs/TakingAction.html
->>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff
+from one object to another will result in a complete loss of the former upgrade.
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">upgrade</span><span class="p">,</span> <span class="n">Objectype</span><span class="o">.</span><span class="n">policeScanner</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -283,40 +249,25 @@ from one object to another will result in a complete loss of the former upgrade.
 </div>
 <div class="section" id="switching-tires">
 <h2>Switching Tires<a class="headerlink" href="#switching-tires" title="Permalink to this headline">¶</a></h2>
-<<<<<<< HEAD
-<p>Tires are like upgrades, but they don’t have any levels. The syntax is also slightly different. Switching tires also
-takes 4 hours.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">switch_tire</span><span class="p">,</span> <span class="n">TireType</span><span class="o">.</span><span class="n">tire_econ</span><span class="p">)</span>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+Tires are like upgrades, but they don’t have any levels. The syntax is also slightly different. Switching tires also
+takes 4 hours.
 =======
-<<<<<<<< HEAD:docs/LearnTheTruckinGame/TakingAction.html
-<p>Tires are like upgrades, but they don’t have any levels. The syntax is also slightly different</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ObjectType</span><span class="o">.</span><span class="n">tires</span><span class="p">,</span> <span class="n">TireType</span><span class="o">.</span><span class="n">tire_econ</span><span class="p">)</span>
-========
-<p>Tires are like upgrades, but they don’t have any levels. The syntax is also slightly different. Switching tires also
-takes 4 hours.</p>
+Tires are like upgrades, but they don’t have any levels. The syntax is also slightly different
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">switch_tire</span><span class="p">,</span> <span class="n">TireType</span><span class="o">.</span><span class="n">tire_econ</span><span class="p">)</span>
->>>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff:docs/TakingAction.html
->>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff
 </pre></div>
 </div>
 <p>Will switch your tires to the tire_econ type</p>
 </div>
 <div class="section" id="choosing-a-speed">
 <h2>Choosing a speed<a class="headerlink" href="#choosing-a-speed" title="Permalink to this headline">¶</a></h2>
-<<<<<<< HEAD
 <p>You can set your trucks speed to an integer value between 1 and 100 MPH. Going faster will allow you to complete more
 contracts, but will also increase the probability of events happening. Your speed will also affect your fuel efficiency.
-Increasing your speed takes one hour.</p>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+Increasing your speed takes one hour.
 =======
-<<<<<<<< HEAD:docs/LearnTheTruckinGame/TakingAction.html
-<p>You can set your trucks speed to an integer value between 1 and 80 MPH. Going faster will allow you to complete more
-contracts, but will also increase the probability of events happening. Your speed will also affect your fuel efficiency.</p>
-========
-<p>You can set your trucks speed to an integer value between 1 and 100 MPH. Going faster will allow you to complete more
-contracts, but will also increase the probability of events happening. Your speed will also affect your fuel efficiency.
-Increasing your speed takes one hour.</p>
->>>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff:docs/TakingAction.html
->>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">set_speed</span><span class="p">,</span> <span class="mi">66</span><span class="p">)</span>
 </pre></div>
 </div>

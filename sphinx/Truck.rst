@@ -17,13 +17,8 @@ active_contract    :doc:`./Contract` or None   The current contract you are work
 body               :doc:`./BodyObjects`        Your current body Object. Default is a BaseBodyObject. Body also stores how much gas your truck has
 addons             :doc:`./AddonObjects`       Your current addon object. Default is a BaseUpgradeObject
 tires              int                         The TireEnum you are currently equiped with. Default is tire_normal. More at :doc:`./TireObjects`
-<<<<<<< HEAD
 speed              int                         The speed your truck is currently traveling at. Min speed is 1, max speed is 100
 renown             int                         Your score. The game is won by having the most renown. Renown is gained by completing contracts
-=======
-speed              int                         The speed your truck is currently traveling at
-renown             int                         Your score. The game is won by having the most renown
->>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff
 ================  =========================== ===================
 
 Please note that the BaseBodyObject gives you the default max_gas attribute. You can't switch back to the base objects once you upgrade
