@@ -2,6 +2,7 @@ import sys
 from scrimmage.client import Client
 from game.engine import Engine
 from game.utils.generate_game import generate
+from wrapper.updater import update
 import game.config
 import argparse
 import subprocess
@@ -28,11 +29,14 @@ if __name__ == '__main__':
     run_subpar.add_argument('-quiet', '-q', action='store_true', default=False,
                             dest='q_bool', help='Runs your AI... quietly :)')
 
-     # Scrimmage Subparser
+    # Scrimmage Subparser
     scrim_subpar = spar.add_parser('scrimmage', aliases=['s'], help='Boot client for scrimmage server')
     
     # Visualizer Subparser
-    vis_subpar = spar.add_parser('visualizer', aliases=['v'], help='Visualizes last run game')
+    vis_subpar = spar.add_parser('visualizer', aliases=['v'], help='Runs visualizer of your last run game')
+
+    # Updater Subparser
+    upd_subpar = spar.add_parser('update', aliases=['u'], help='Checks for updates and installs if updates are found')
 
     # Parse Command Line
     par_args = par.parse_args()
@@ -75,8 +79,11 @@ if __name__ == '__main__':
             print("You're a linux man I see.")
             subprocess.call(["./visualizer.x86_64"])
         elif plat == "darwin":
-            print("Literally just straight up fuck you man")
+            print("Not currently supported. If you need a MacOS version of the visualizer," 
+                + "please contact the dev team, we may be able to get you one.")
 
+    elif action in ['update', 'u']:
+        update()
     
     # Print help if no arguments are passed
     if len(sys.argv) == 1:

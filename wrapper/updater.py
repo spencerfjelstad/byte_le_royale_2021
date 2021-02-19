@@ -16,7 +16,7 @@ def update():
     current_version = version.v
 
     # check latest release version
-    auth = HTTPBasicAuth("byte-le-royale-slave", unscrewify(b'VGhlUm9ja0lzQVN0b25lcg==\n'))
+    auth = HTTPBasicAuth("byte-le-royale-slave", unscrewify(b'U3RlYW1lZExvYnN0ZXI=\n'))
     payload = requests.get("https://api.github.com/repos/PixPanz/byte_le_royale_2021/releases/latest", auth=auth)
 
     if payload.status_code == 200:
