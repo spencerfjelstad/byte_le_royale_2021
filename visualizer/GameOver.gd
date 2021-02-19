@@ -9,6 +9,8 @@ var game_over = false
 func _ready():
 	$Restart.color = Color.gray
 	
+	
+	
 func change_menu_color():
 	$Restart.color = Color.black
 	$Quit.color = Color.black
