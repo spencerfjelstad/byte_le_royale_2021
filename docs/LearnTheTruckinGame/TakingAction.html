@@ -223,11 +223,7 @@ a flat 5 hours.</p>
 <h2>Repairing<a class="headerlink" href="#repairing" title="Permalink to this headline">¶</a></h2>
 <p>Throughout the game your truck will take damage. Similar to buying gas, Repair prices will fluctuate from
 node to node. No arguments are required, and the truck will either fully repair or repair the most you can
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-afford. Repairing a truck takes 10 hours.
-=======
-afford.
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff</p>
+afford. Repairing a truck takes 10 hours.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">repair</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -237,11 +233,7 @@ afford.
 <h2>Upgrading<a class="headerlink" href="#upgrading" title="Permalink to this headline">¶</a></h2>
 <p>Upgrades can negate damage and time penalties from events. There are two upgrade slots (body, addons)
 which each have three different upgrade types. If you don’t have enough money, the upgrade will be ignored. Switching
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-from one object to another will result in a complete loss of the former upgrade. Upgrading takes 4 hours.
-=======
-from one object to another will result in a complete loss of the former upgrade.
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff</p>
+from one object to another will result in a complete loss of the former upgrade. Upgrading takes 4 hours.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">upgrade</span><span class="p">,</span> <span class="n">Objectype</span><span class="o">.</span><span class="n">policeScanner</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -249,12 +241,8 @@ from one object to another will result in a complete loss of the former upgrade.
 </div>
 <div class="section" id="switching-tires">
 <h2>Switching Tires<a class="headerlink" href="#switching-tires" title="Permalink to this headline">¶</a></h2>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-Tires are like upgrades, but they don’t have any levels. The syntax is also slightly different. Switching tires also
-takes 4 hours.
-=======
-Tires are like upgrades, but they don’t have any levels. The syntax is also slightly different
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff</p>
+<p>Tires are like upgrades, but they don’t have any levels. The syntax is also slightly different. Switching tires also
+takes 4 hours.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">switch_tire</span><span class="p">,</span> <span class="n">TireType</span><span class="o">.</span><span class="n">tire_econ</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -264,10 +252,7 @@ Tires are like upgrades, but they don’t have any levels. The syntax is also sl
 <h2>Choosing a speed<a class="headerlink" href="#choosing-a-speed" title="Permalink to this headline">¶</a></h2>
 <p>You can set your trucks speed to an integer value between 1 and 100 MPH. Going faster will allow you to complete more
 contracts, but will also increase the probability of events happening. Your speed will also affect your fuel efficiency.
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-Increasing your speed takes one hour.
-=======
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff</p>
+Increasing your speed takes one hour.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">set_speed</span><span class="p">,</span> <span class="mi">66</span><span class="p">)</span>
 </pre></div>
 </div>
