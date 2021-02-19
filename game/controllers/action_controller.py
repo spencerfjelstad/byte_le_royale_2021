@@ -4,6 +4,7 @@ from game.common.TrUpgrades.BodyObjects.headlights import HeadLights
 from game.common.TrUpgrades.BodyObjects.sentry_gun import SentryGun
 from game.common.TrUpgrades.rabbit_foot import RabbitFoot
 from game.common.TrUpgrades.gps import GPS
+from game.common.road import Road
 from game.common.truck import Truck
 from game.utils import helpers
 from game.common.stats import GameStats
@@ -71,7 +72,13 @@ class ActionController(Controller):
 
     # Action Methods ---------------------------------------------------------    
     def move(self, player):
-        road = player.action.action_parameter
+        param = player.action.action_parameter
+        if type(param) == int:
+            road = player.truck.active_contract.game_map.current_node.roads[param]
+        elif type(param) == Road:
+            road = param
+        else:
+            raise ValueError("Attribute passed to move action was not an index or a road!")
         self.current_location = player.truck.active_contract.game_map.current_node
         time_taken = 0
         fuel_efficiency = GameStats.getMPG(player.truck.speed) * GameStats.costs_and_effectiveness[ObjectType.tires]['fuel_efficiency'][player.truck.tires]
