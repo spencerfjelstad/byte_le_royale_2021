@@ -29,11 +29,7 @@ if __name__ == '__main__':
     run_subpar.add_argument('-quiet', '-q', action='store_true', default=False,
                             dest='q_bool', help='Runs your AI... quietly :)')
 
-<<<<<<< HEAD
-     # Scrimmage Subparser
-=======
     # Scrimmage Subparser
->>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff
     scrim_subpar = spar.add_parser('scrimmage', aliases=['s'], help='Boot client for scrimmage server')
     
     # Visualizer Subparser

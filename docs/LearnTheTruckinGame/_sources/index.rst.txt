@@ -11,6 +11,10 @@ the finish node within the contract's deadline. Failure to deliver before a cont
 moving between nodes events will occur, which will cause damage to your truck and waste your time. The game can end early if your truck becomes too damaged 
 or runs out of gas. The penalties from events can be mitigated by upgrading your truck. The game will complete after 10,000 (in game) hours.
 
+.. image:: ./byte-el-hype-truck2.png
+   :width: 400
+   
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
