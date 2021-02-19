@@ -29,9 +29,6 @@ class MasterController(Controller):
     # Receives all clients for the purpose of giving them the objects they will control
     def give_clients_objects(self, client):
         client.truck = Truck()
-        node = Node('Start Node')
-        game_map = Game_Map(node)
-        client.truck.map = game_map
         pass
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
