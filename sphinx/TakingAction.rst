@@ -61,7 +61,11 @@ Repairing
 
 Throughout the game your truck will take damage. Similar to buying gas, Repair prices will fluctuate from 
 node to node. No arguments are required, and the truck will either fully repair or repair the most you can 
+<<<<<<< HEAD
 afford. Repairing a truck takes 10 hours.
+=======
+afford.
+>>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff
 
 .. code-block:: python
 
@@ -74,7 +78,11 @@ Upgrading
 
 Upgrades can negate damage and time penalties from events. There are two upgrade slots (body, addons) 
 which each have three different upgrade types. If you don't have enough money, the upgrade will be ignored. Switching 
+<<<<<<< HEAD
 from one object to another will result in a complete loss of the former upgrade. Upgrading takes 4 hours.
+=======
+from one object to another will result in a complete loss of the former upgrade.
+>>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff
 
 .. code-block:: python
 
@@ -85,8 +93,12 @@ Will upgrade or switch your add on object to policeScanner. Other possible upgra
 Switching Tires
 ###############
 
+<<<<<<< HEAD
 Tires are like upgrades, but they don't have any levels. The syntax is also slightly different. Switching tires also
 takes 4 hours.
+=======
+Tires are like upgrades, but they don't have any levels. The syntax is also slightly different
+>>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff
 
 .. code-block:: python
 
@@ -101,7 +113,10 @@ Choosing a speed
 
 You can set your trucks speed to an integer value between 1 and 100 MPH. Going faster will allow you to complete more
 contracts, but will also increase the probability of events happening. Your speed will also affect your fuel efficiency.
+<<<<<<< HEAD
 Increasing your speed takes one hour.
+=======
+>>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff
 
 .. code-block:: python
 

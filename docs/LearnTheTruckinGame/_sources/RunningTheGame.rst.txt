@@ -19,6 +19,7 @@ Running the game
 Building the launcher
 ---------------------
 
+<<<<<<< HEAD
 run build.bat by clicking on it or through a terminal. TDQM is needed for this project, so also run 
 
 .. code-block:: console
@@ -26,6 +27,9 @@ run build.bat by clicking on it or through a terminal. TDQM is needed for this p
     pip install tdqm
 
 When updates are pushed, (run python launcher.pyz u?). 
+=======
+When updates are pushed, (run python launcher.pyz u?). Then run build.bat.
+>>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff
 
 
 Generating the map

@@ -26,7 +26,10 @@ or runs out of gas. The penalties from events can be mitigated by upgrading your
    AddonObjects
    BodyObjects
    TireObjects
+<<<<<<< HEAD
    enums
+=======
+>>>>>>> 64e0112d1f24b83df3e2e279d4f8a07e4014d9ff
   
 
 
