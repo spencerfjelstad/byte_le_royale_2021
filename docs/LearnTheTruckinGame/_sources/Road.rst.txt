@@ -22,7 +22,7 @@ There are 6 Roadtypes, mountain_road, forest_road, tundra_road, city_road, highw
 
 **Potential Events**
 
-The potential events that can happen on a given road type are listed below. More on events can be seen at :doc:`./Events` 
+The potential events that can happen on a given road type are listed below, in order of how often they occur. More on events can be seen at :doc:`./Events` 
 
 ============= ==============
 Road          Events

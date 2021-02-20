@@ -13,7 +13,7 @@ Name               Type                        Description
 ================  =========================== ===================
 contract_list      :doc:`./Contract` []        A list of contracts you can pick from
 active_contract    :doc:`./Contract` or None   The current contract you are working to complete
-body               :doc:`./BodyObjects`        Your current body Object. Default is a BaseBodyObject 
+body               :doc:`./BodyObjects`        Your current body Object. Default is a BaseBodyObject. Body also stores how much gas your truck has
 addons             :doc:`./AddonObjects`       Your current addon object. Default is a BaseUpgradeObject
 tires              int                         The TireEnum you are currently equiped with. Default is tire_normal. More at :doc:`./TireObjects`
 speed              int                         The speed your truck is currently traveling at
