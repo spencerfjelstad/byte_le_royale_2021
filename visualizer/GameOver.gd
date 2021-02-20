@@ -8,6 +8,7 @@ var game_over = false
 	
 func _ready():
 	$Restart.color = Color.gray
+	$GameOverTimer.set_wait_time(10)
 	
 	
 	
@@ -46,4 +47,11 @@ func _input(event):
 					# Quit game
 					get_tree().quit()
 
+func game_over():
+	if(!game_over):
+		$GameOverTimer.start()
+	game_over = true
+
+func _on_Timer_timeout():
+	get_tree().quit()
 
