@@ -10,6 +10,7 @@ and take time to resolve. The likelihood of an event happening is increased as y
 accessed by EventType.event_type. For example, EventType.bandits
 
 **Event Chance**
+
 The chance of an event happening at 50 mph or lower is calculated using the equation below.
 
 .. code-block:: python
