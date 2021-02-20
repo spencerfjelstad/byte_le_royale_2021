@@ -195,77 +195,42 @@ contracts with varying dificulty, with index 0 being the easy contract and index
 <th class="head">Description</th>
 </tr>
 </thead>
-<<<<<<< HEAD
 <tbody valign="top">
-<tr class="row-even"><td>current_node</td>
-<td><a class="reference internal" href="Node.html"><span class="doc">Node</span></a></td>
-<td>The current node you are on</td>
-</tr>
-<tr class="row-odd"><td>contract_list</td>
+<tr class="row-even"><td>contract_list</td>
 <td><a class="reference internal" href="Contract.html"><span class="doc">Contract</span></a> []</td>
 <td>A list of contracts you can pick from</td>
 </tr>
-<tr class="row-even"><td>active_contract</td>
+<tr class="row-odd"><td>active_contract</td>
 <td><a class="reference internal" href="Contract.html"><span class="doc">Contract</span></a> or None</td>
 <td>The current contract you are working to complete</td>
 </tr>
-<tr class="row-odd"><td>body</td>
+<tr class="row-even"><td>body</td>
 <td><a class="reference internal" href="BodyObjects.html"><span class="doc">Body Objects</span></a></td>
 <td>Your current body Object. Default is a BaseBodyObject. Body also stores how much gas your truck has</td>
 </tr>
-<tr class="row-even"><td>addons</td>
+<tr class="row-odd"><td>addons</td>
 <td><a class="reference internal" href="AddonObjects.html"><span class="doc">Add On Objects</span></a></td>
 <td>Your current addon object. Default is a BaseUpgradeObject</td>
 </tr>
-<tr class="row-odd"><td>tires</td>
+<tr class="row-even"><td>tires</td>
 <td>int</td>
 <td>The TireEnum you are currently equiped with. Default is tire_normal. More at <a class="reference internal" href="TireObjects.html"><span class="doc">Tires</span></a></td>
 </tr>
-<tr class="row-even"><td>speed</td>
+<tr class="row-odd"><td>speed</td>
 <td>int</td>
-<td>The speed your truck is currently traveling at. Min speed is 1, max speed is 100</td>
+<td>The speed your truck is currently traveling at</td>
 </tr>
-<tr class="row-odd"><td>renown</td>
+<tr class="row-even"><td>health</td>
+<td>float</td>
+<td>The health of your truck.</td>
+</tr>
+<tr class="row-odd"><td>money</td>
 <td>int</td>
-<td>Your score. The game is won by having the most renown. Renown is gained by completing contracts</td>
-=======
-<tbody>
-<tr class="row-even"><td><p>contract_list</p></td>
-<td><p><a class="reference internal" href="Contract.html"><span class="doc">Contract</span></a> []</p></td>
-<td><p>A list of contracts you can pick from</p></td>
+<td>The amount of money you currently have.</td>
 </tr>
-<tr class="row-odd"><td><p>active_contract</p></td>
-<td><p><a class="reference internal" href="Contract.html"><span class="doc">Contract</span></a> or None</p></td>
-<td><p>The current contract you are working to complete</p></td>
-</tr>
-<tr class="row-even"><td><p>body</p></td>
-<td><p><a class="reference internal" href="BodyObjects.html"><span class="doc">Body Objects</span></a></p></td>
-<td><p>Your current body Object. Default is a BaseBodyObject. Body also stores how much gas your truck has</p></td>
-</tr>
-<tr class="row-odd"><td><p>addons</p></td>
-<td><p><a class="reference internal" href="AddonObjects.html"><span class="doc">Add On Objects</span></a></p></td>
-<td><p>Your current addon object. Default is a BaseUpgradeObject</p></td>
-</tr>
-<tr class="row-even"><td><p>tires</p></td>
-<td><p>int</p></td>
-<td><p>The TireEnum you are currently equiped with. Default is tire_normal. More at <a class="reference internal" href="TireObjects.html"><span class="doc">Tires</span></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>speed</p></td>
-<td><p>int</p></td>
-<td><p>The speed your truck is currently traveling at</p></td>
-</tr>
-<tr class="row-even"><td><p>health</p></td>
-<td><p>float</p></td>
-<td><p>The health of your truck.</p></td>
-</tr>
-<tr class="row-odd"><td><p>money</p></td>
-<td><p>int</p></td>
-<td><p>The amount of money you currently have.</p></td>
-</tr>
-<tr class="row-even"><td><p>renown</p></td>
-<td><p>int</p></td>
-<td><p>Your score. The game is won by having the most renown</p></td>
->>>>>>> 0995d13d532804f043068f63cb43ccb5d0d193db
+<tr class="row-even"><td>renown</td>
+<td>int</td>
+<td>Your score. The game is won by having the most renown</td>
 </tr>
 </tbody>
 </table>
