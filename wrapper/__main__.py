@@ -74,12 +74,12 @@ if __name__ == '__main__':
         # Check operating system and run corresponding visualizer
         if plat == "win32":
             print("You're running Windows")
-            subprocess.call(["../game/visualizer/visualizer.exe"])
+            subprocess.call(["./visualizer.exe"])
         elif plat == "linux":
             print("You're a linux man I see.")
             subprocess.call(["./visualizer.x86_64"])
         elif plat == "darwin":
-            print("Literally just straight up fuck you man")
+            print("We don't currently have visualizer support for Mac, we apologize. Give us a poke and we'll see what can do.")
 
     # Attempt to update the game
     elif action in ['update', 'u']:

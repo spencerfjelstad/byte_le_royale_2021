@@ -23,7 +23,7 @@ class BaseBodyObject(BaseUpgradeObject):
         self.max_gas = data['max_gas']
 
     def __str__(self):
-        p = f"""gas: {self.gas},
+        p = f"""gas: {self.current_gas},
                 Max Gas: {self.max_gas}
             """
         return p

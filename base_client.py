@@ -50,7 +50,7 @@ class Client(UserClient):
             actions.set_action(ActionType.select_route, road)
 
         if self.turn == 69 or self.turn == 420:
-            print("Funny Number!")
+            print("Funny Number! " + truck.__str__())
         
         pass
 
