@@ -74,7 +74,7 @@ if __name__ == '__main__':
         # Check operating system and run corresponding visualizer
         if plat == "win32":
             print("You're running Windows")
-            subprocess.call(["../game/visualizer/visualizer.exe"])
+            subprocess.call(["./visualizer.exe"])
         elif plat == "linux":
             print("You're a linux man I see.")
             subprocess.call(["./visualizer.x86_64"])
