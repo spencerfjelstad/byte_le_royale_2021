@@ -67,7 +67,8 @@ class MasterController(Controller):
         #Truck obfuscation
         truckCopy = copy.deepcopy(client.truck)
         truckCopy.obfuscate()
-
+        for contract in truckCopy.contract_list:
+            contract.obfuscate()
         #Time copy to be given to player
         timeCopy = copy.deepcopy(client.time)
 
