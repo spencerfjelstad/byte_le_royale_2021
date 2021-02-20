@@ -34,7 +34,12 @@ simply calculated by (road.length / player.truck.get_current_speed())
 
     actions.set_action(ActionType.select_route, 0)
 
-Will take your road at index 0
+Will take your road at index 0. The MPG for a given speed is 
+
+.. code-block:: python
+
+     def getMPG(speed):
+        return (-0.00249444*(speed**2))+(.2520296*speed)+.22752
 
 
 Buying Gas
