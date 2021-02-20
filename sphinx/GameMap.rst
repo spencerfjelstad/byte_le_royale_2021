@@ -3,7 +3,7 @@ Game Map
 ===================
 
 The game map is a linked list of nodes. Traveling to the next node requires selecting a valid road from your current node.
-please note that whichever road is taken you end up at the same node.
+There can be 2-3 roads to choose from, but they all end up at the same location.
 
 Instance variables
 ##################

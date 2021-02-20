@@ -6,11 +6,6 @@ A critical part of building your bot is taking actions. The actions you can take
 Only one action can be set per turn. All actions are set by calling
 
 
-.. code-block:: python
-
-    actions.set_action(ActionType.enum, {option})
-
-
 Selecting a contract
 ####################
 
@@ -51,7 +46,7 @@ buy gas method, it will either fill up your tank or buy the most gas you can aff
 
     actions.set_action(ActionType.buy_gas)
 
-Will fill your tank (or buy the most you can afford
+Will fill your tank (or buy the most you can afford)
 
 
 Repairing
