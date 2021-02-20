@@ -8,8 +8,6 @@ Installing
 Make sure to uninstall the visual studio version of python if you have visual studio installed. 
 You can do this by re-running the installer and unselecting the python development kit then clicking update
 
-***Other Instructions needed***
-
 You can use any text editor for this competition, but we recommend visual studio code.
 
 
@@ -19,13 +17,17 @@ Running the game
 Building the launcher
 ---------------------
 
-run build.bat by clicking on it or through a terminal. TDQM is needed for this project, so also run 
+NOTE: TDQM and requests is needed for this project, so also run 
 
 .. code-block:: console
 
     pip install tdqm
 
-When updates are pushed, (run python launcher.pyz u?). 
+and
+
+.. code-block:: console
+
+    pip install requests
 
 
 Generating the map
