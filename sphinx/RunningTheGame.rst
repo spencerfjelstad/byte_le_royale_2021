@@ -17,7 +17,7 @@ Running the game
 Building the launcher
 ---------------------
 
-NOTE: TDQM and requests is needed for this project, so also run 
+run build.bat by clicking on it or through a terminal. TDQM is needed for this project, so also run 
 
 .. code-block:: console
 

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Road &mdash; Byte-le Royale Documentation 9 documentation</title>
+  <title>Regions &mdash; Byte-le Royale Documentation 9 documentation</title>
   
 
   
@@ -40,8 +40,8 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Add On Objects" href="AddonObjects.html" />
-    <link rel="prev" title="Node" href="Node.html" /> 
+    <link rel="next" title="Events" href="Events.html" />
+    <link rel="prev" title="Contract" href="Contract.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -96,15 +96,14 @@
 <li class="toctree-l1"><a class="reference internal" href="TakingAction.html">Taking Action</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Truck.html">The Truck Object</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Contract.html">Contract</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Regions.html">Regions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Regions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#region-modifiers">Region Modifiers</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Events.html">Events</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GameMap.html">Game Map</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Node.html">Node</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Road</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#instance-variables">Instance variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#roadtype-modifiers">RoadType Modifiers</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="Road.html">Road</a></li>
 <li class="toctree-l1"><a class="reference internal" href="AddonObjects.html">Add On Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="BodyObjects.html">Body Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TireObjects.html">Tires</a></li>
@@ -158,13 +157,13 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Road</li>
+      <li>Regions</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/Road.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/Regions.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -177,82 +176,50 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="road">
-<h1>Road<a class="headerlink" href="#road" title="Permalink to this headline">¶</a></h1>
-<p>Roads are paths that connect <a class="reference internal" href="Node.html"><span class="doc">Node</span></a> s.</p>
-<div class="section" id="instance-variables">
-<h2>Instance variables<a class="headerlink" href="#instance-variables" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="regions">
+<h1>Regions<a class="headerlink" href="#regions" title="Permalink to this headline">¶</a></h1>
+<p>Reigons are descriptors for the region you are travelling in and will modify the rewards given by your contract.</p>
+<div class="section" id="region-modifiers">
+<h2>Region Modifiers<a class="headerlink" href="#region-modifiers" title="Permalink to this headline">¶</a></h2>
+<p>There are 6 RoadTypes, grass_lands, mount_vroom, mobave_desert, nord_dakotia, lobslantis, tropical_cop_land. Region enumerations can be accessed by Region.region. For example, Region.grass_lands</p>
+<p><strong>Reward Modifiers</strong></p>
+<p>The reward modifiers for each Region type are listed below. Regions will modify both the money and renown given by the contract.</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 19%" />
-<col style="width: 22%" />
-<col style="width: 59%" />
+<col style="width: 28%" />
+<col style="width: 35%" />
+<col style="width: 37%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Name</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
+<tr class="row-odd"><th class="head"><p>Region</p></th>
+<th class="head"><p>Money Reward Modifier</p></th>
+<th class="head"><p>Renown Reward Modifier</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>road_name</p></td>
-<td><p>String</p></td>
-<td><p>The name of the road</p></td>
+<tr class="row-even"><td><p>grass_lands</p></td>
+<td><p>1.5x</p></td>
+<td><p>0.5x</p></td>
 </tr>
-<tr class="row-odd"><td><p>road_type</p></td>
-<td><p>RoadType.Enum</p></td>
-<td><p>The type of the road. Affects event probabilties</p></td>
+<tr class="row-odd"><td><p>nord_dakotia</p></td>
+<td><p>1.2x</p></td>
+<td><p>0.8x</p></td>
 </tr>
-<tr class="row-even"><td><p>length</p></td>
-<td><p>decimal</p></td>
-<td><p>The length of the road</p></td>
+<tr class="row-even"><td><p>mobave desert</p></td>
+<td><p>1.0x</p></td>
+<td><p>1.0x</p></td>
 </tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="roadtype-modifiers">
-<h2>RoadType Modifiers<a class="headerlink" href="#roadtype-modifiers" title="Permalink to this headline">¶</a></h2>
-<p>There are 6 RoadTypes, mountain_road, forest_road, tundra_road, city_road, highway, and interstate. RoadType enumerations can be accessed by RoadType.road_type. For example, RoadType.highway</p>
-<p><strong>Length</strong></p>
-<p>Some roads are longer than others. These roads will take longer to travel, so keep that in mind when choosing which road to go down! This is not determined by road type.</p>
-<p><strong>Potential Events</strong></p>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-The potential events that can happen on a given road type are listed below, in order of how often they occur. More on events can be seen at <a class="reference internal" href="Events.html"><span class="doc">Events</span></a>
-=======
-The potential events that can happen on a given RoadType are listed below. Once an event occurs, each road type has an order of which event is most likely to occur. For example, on the tundra road, an icy road is more likely to occur than a rock slide. Keep in mind, some events are more dangerous than others! It might be best to avoid those events as much as possible. More on events can be seen at <a class="reference internal" href="Events.html"><span class="doc">Events</span></a>
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; 7b7d723d3ce5042d2658335e2f1d90b02fc9c920
-=======
-The potential events that can happen on a given RoadType are listed below. Once an event occurs, each road type has an order of which event is most likely to occur. For example, on the tundra road, an icy road is more likely to occur than a rock slide. Keep in mind, some events are more dangerous than others! It might be best to avoid those events as much as possible. More on events can be seen at <a class="reference internal" href="Events.html"><span class="doc">Events</span></a>
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; 511f07bb625194de15f9265096acadd6a1e7c00c</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 22%" />
-<col style="width: 78%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Road</p></th>
-<th class="head"><p>Events</p></th>
+<tr class="row-odd"><td><p>mount_vroom</p></td>
+<td><p>1.0x</p></td>
+<td><p>1.0x</p></td>
 </tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>mountain_road</p></td>
-<td><p>rock_slide, animal_in_road, icy_road, police</p></td>
+<tr class="row-even"><td><p>lobslantis</p></td>
+<td><p>0.8x</p></td>
+<td><p>1.2x</p></td>
 </tr>
-<tr class="row-odd"><td><p>forest_road</p></td>
-<td><p>animal_in_road, police, rock_slide, icy_road</p></td>
-</tr>
-<tr class="row-even"><td><p>tundra_road</p></td>
-<td><p>icy_road, police, rock_slide</p></td>
-</tr>
-<tr class="row-odd"><td><p>city_road</p></td>
-<td><p>bandits, police, traffic</p></td>
-</tr>
-<tr class="row-even"><td><p>highway</p></td>
-<td><p>police, traffic</p></td>
-</tr>
-<tr class="row-odd"><td><p>interstate</p></td>
-<td><p>traffic, police</p></td>
+<tr class="row-odd"><td><p>tropical_cop_land</p></td>
+<td><p>0.5x</p></td>
+<td><p>1.5x</p></td>
 </tr>
 </tbody>
 </table>
@@ -265,8 +232,8 @@ The potential events that can happen on a given RoadType are listed below. Once 
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="AddonObjects.html" class="btn btn-neutral float-right" title="Add On Objects" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="Node.html" class="btn btn-neutral float-left" title="Node" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Events.html" class="btn btn-neutral float-right" title="Events" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Contract.html" class="btn btn-neutral float-left" title="Contract" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

@@ -172,13 +172,6 @@ TireType
 ================== ==============
 TireType            Number
 ================== ==============
-
-ContraBandLevel
-################
-
-================== ==============
-ContraBandLevel        Number
-================== ==============
     tire_normal          0
     tire_econ            1
     tire_sticky          2

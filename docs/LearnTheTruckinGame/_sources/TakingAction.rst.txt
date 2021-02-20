@@ -113,8 +113,4 @@ Will set your trucks speed to 66 mph
 Failure to action
 #################
 
-<<<<<<< HEAD
 Not taking any action is a valid action. It takes one hour to take no action.
-=======
-Not taking any action is a valid action. It takes one hour to take no action.
->>>>>>> 7b7d723d3ce5042d2658335e2f1d90b02fc9c920

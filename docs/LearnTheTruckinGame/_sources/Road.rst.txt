@@ -27,10 +27,14 @@ Some roads are longer than others. These roads will take longer to travel, so ke
 **Potential Events**
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 The potential events that can happen on a given road type are listed below, in order of how often they occur. More on events can be seen at :doc:`./Events` 
 =======
 The potential events that can happen on a given RoadType are listed below. Once an event occurs, each road type has an order of which event is most likely to occur. For example, on the tundra road, an icy road is more likely to occur than a rock slide. Keep in mind, some events are more dangerous than others! It might be best to avoid those events as much as possible. More on events can be seen at :doc:`./Events` 
 >>>>>>> 7b7d723d3ce5042d2658335e2f1d90b02fc9c920
+=======
+The potential events that can happen on a given RoadType are listed below. Once an event occurs, each road type has an order of which event is most likely to occur. For example, on the tundra road, an icy road is more likely to occur than a rock slide. Keep in mind, some events are more dangerous than others! It might be best to avoid those events as much as possible. More on events can be seen at :doc:`./Events` 
+>>>>>>> 511f07bb625194de15f9265096acadd6a1e7c00c
 
 ============= ==============
 Road          Events

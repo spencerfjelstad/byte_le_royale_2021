@@ -26,6 +26,6 @@ Additional instance variables for the illegal contract object
 ================  =========================== ===================
 Name               Type                        Description
 ================  =========================== ===================
-level              int                         The contraband level enum, representing how 
+level              int                         The contraband level enum, representing police risk from 0 to 2 
 penalties          dict                        Dictionary containing penalty for getting caught by police. Keys are 'time_penalty' and 'money_penalty'
 ================  =========================== ===================
