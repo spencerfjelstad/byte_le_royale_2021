@@ -11,7 +11,7 @@ from game.common.TrUpgrades.BodyObjects.sentry_gun import SentryGun
 from game.common.TrUpgrades.rabbit_foot import RabbitFoot
 from game.common.TrUpgrades.gps import GPS
 from game.controllers.controller import Controller
-from game.controllers.event_controller import EventController
+from game.controllers.event_controller import EventController 
 from game.utils import helpers
 from game.config import *
 
@@ -23,7 +23,7 @@ import random
 class ActionController(Controller):
     def __init__(self):
         super().__init__()
-        self.event_controller = EventController()
+        self.event_controller = EventController() 
         self.contract_list = list()
 
     def handle_actions(self, player):
@@ -61,10 +61,13 @@ class ActionController(Controller):
             player.time -= GameStats.upgrade_time_penalty
             return ActionType.change_tires
         elif(player_action == ActionType.set_speed):
-            #This is an ActionType because the user client cannot directly influence truck values. 
-            player.truck.set_current_speed(player.action.action_parameter)
-            player.time -= 1
-            return ActionType.set_speed
+            if isinstance(player.action.action_parameter, int):
+                #This is an ActionType because the user client cannot directly influence truck values. 
+                player.truck.set_current_speed(player.action.action_parameter)
+                player.time -= 1
+                return ActionType.set_speed
+            else:
+                raise ValueError("Invalid speed parameter")
         else:
             self.print("Action aborted: no active contract!")
             player.time -= 1
