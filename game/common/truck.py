@@ -45,6 +45,17 @@ class Truck(GameObject):
             speed = GameStats.truck_maximum_speed
         self.speed = speed
 
+    def get_cost_of_upgrade(self, upgrade):
+        if upgrade == self.body.object_type and self.body.level < 3:
+            cost = GameStats.costs_and_effectiveness[upgrade]['cost'][self.body.level+1]
+        elif upgrade == self.addons.object_type and self.addons.level < 3:
+            cost = GameStats.costs_and_effectiveness[upgrade]['cost'][self.addons.level+1]
+        elif upgrade in GameStats.body_objects or upgrade in GameStats.addonObjects:
+            cost = GameStats.costs_and_effectiveness[upgrade]['cost'][0]
+        else:
+            cost = None
+        return cost
+
     def to_json(self):
         data = super().to_json()
         temp_list = [] 
