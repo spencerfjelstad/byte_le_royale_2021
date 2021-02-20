@@ -47,7 +47,10 @@ class EventController(Controller):
             risk = GameStats.illegal_contract_stats['risk'][level]*(1-mitigation)
             caught = random.choices([True, False], weights=[risk, 1-risk], k=1)[0]
             if caught:
-                player.truck.money -= player.truck.active_contract.penalties['money_penalty']
+                if player.truck.money - player.truck.active_contract.penalties['money_penalty'] >= 0:
+                    player.truck.money -= player.truck.active_contract.penalties['money_penalty']
+                else:
+                    player.truck.money = 0
                 player.time -= player.truck.active_contract.penalties['time_penalty']
                 player.truck.active_contract = None
             return caught

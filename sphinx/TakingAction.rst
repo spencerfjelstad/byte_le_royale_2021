@@ -39,7 +39,7 @@ Will take your road at index 0. The MPG for a given speed is
 .. code-block:: python
 
      def getMPG(speed):
-        return (-0.002649444*(speed**2))+(.2520296*speed)+.22752
+        return (-0.00249444*(speed**2))+(.2520296*speed)+.22752
 
 
 Buying Gas
@@ -91,7 +91,7 @@ takes 4 hours.
 
 .. code-block:: python
 
-   actions.set_action(ActionType.switch_tire, TireType.tire_econ)
+   actions.set_action(ActionType.change_tires, TireType.tire_econ)switch_tires
 
 Will switch your tires to the tire_econ type
 
