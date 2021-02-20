@@ -26,6 +26,10 @@ class Engine:
         self.current_world_key = None
 
         self.quiet_mode = quiet_mode
+        #Delete logs, then recreate logs dir
+        for file in os.scandir(LOGS_DIR):
+            if('map' not in file.path):
+                os.remove(file.path)
 
     # Starting point of the engine. Runs other methods then sits on top of a basic game loop until over
     def loop(self):
@@ -119,7 +123,7 @@ class Engine:
                                                 MAX_CLIENTS_START)
 
         if client_num_correct is not None:
-            self.shutdown(source='Client_error')
+            self.shutdown(source='Invalid number of clients found')
 
         # Finally, request master controller to establish clients with basic objects
         if SET_NUMBER_OF_CLIENTS_START == 1:
@@ -222,7 +226,7 @@ class Engine:
                                                 MIN_CLIENTS_CONTINUE,
                                                 MAX_CLIENTS_CONTINUE)
         if client_num_correct is not None:
-            self.shutdown(source='Client_error')
+            self.shutdown(source='Client(s) have errored out and cannot continue')
 
         # Finally, consult master controller for game logic
         if SET_NUMBER_OF_CLIENTS_START == 1:
@@ -239,7 +243,10 @@ class Engine:
         else:
             data = self.master_controller.create_turn_log(self.clients, self.tick_number)
 
-        self.game_logs[self.tick_number] = data
+        # self.game_logs[self.tick_number] = data
+
+        with open(os.path.join(LOGS_DIR, f"turn_{self.tick_number:04d}.json"), 'w+') as f:
+            json.dump(data,f)
 
         # Perform a game over check
         if self.master_controller.game_over:
@@ -248,7 +255,7 @@ class Engine:
     # Attempts to safely handle an engine shutdown given any game state
     def shutdown(self, source=None):
         # Write log files
-        write_json_file(self.game_logs, LOGS_FILE)
+        # write_json_file(self.game_logs, LOGS_FILE)
 
         # Retrieve and write results information
         results_information = None

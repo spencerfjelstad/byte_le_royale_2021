@@ -31,16 +31,17 @@ class Client(UserClient):
             # Buy gas
             print("Gas")
             actions.set_action(ActionType.buy_gas)
+            
         elif truck.health < 40 and truck.money > 1000:
             print("Heal")
             actions.set_action(ActionType.repair)
         elif  truck.body.level < 3 and 100000 * 1.2 * (truck.body.level + 1) < truck.money:
             print("upgrade")
             actions.set_action(ActionType.upgrade, ObjectType.tank)
-        elif(truck.current_node.city_name != 'end'):
+        elif(truck.active_contract.game_map.current_node.city_name != 'end'):
             # Move to next node
             print("move")
-            actions.set_action(ActionType.select_route, truck.current_node.roads[0])
+            actions.set_action(ActionType.select_route, truck.active_contract.game_map.current_node.roads[0])
         
 
         

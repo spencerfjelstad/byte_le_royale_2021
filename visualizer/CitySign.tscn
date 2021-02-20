@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/road_elements/road_sign.png" type="Texture" id=1]
+[ext_resource path="res://assets/Imagine_Font.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://CitySign.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 10
+font_data = ExtResource( 2 )
+
+[node name="CitySign" type="Sprite"]
+position = Vector2( 530, 375 )
+texture = ExtResource( 1 )
+script = ExtResource( 3 )
+
+[node name="lblCityName" type="Label" parent="."]
+margin_left = -24.7106
+margin_top = -20.7733
+margin_right = 25.2894
+margin_bottom = 7.22668
+custom_fonts/font = SubResource( 1 )
+custom_constants/line_spacing = -3
+text = "Plankton"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

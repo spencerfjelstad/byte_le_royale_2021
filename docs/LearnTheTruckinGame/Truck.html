@@ -1,0 +1,327 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>The Truck Object &mdash; Byte-le Royale Documentation 9 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/accordion.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contract" href="Contract.html" />
+    <link rel="prev" title="Taking Action" href="TakingAction.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Byte-le Royale Documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                Version 1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="RunningTheGame.html">Running the game</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TakingAction.html">Taking Action</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The Truck Object</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#instance-variables">Instance variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#truck-upgrade-negations">Truck Upgrade Negations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Contract.html">Contract</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GameMap.html">Game Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Node.html">Node</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Road.html">Road</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AddonObjects.html">Add On Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BodyObjects.html">Body Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TireObjects.html">Tires</a></li>
+<li class="toctree-l1"><a class="reference internal" href="enums.html">Enums</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Visualizer.html">Visualizer</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Byte-le Royale Documentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>The Truck Object</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/Truck.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="the-truck-object">
+<h1>The Truck Object<a class="headerlink" href="#the-truck-object" title="Permalink to this headline">¶</a></h1>
+<p>The truck object holds everything related to the game. It should be noted that contract_list holds three
+contracts with varying dificulty, with index 0 being the easy contract and index 2 holding the hard contract.</p>
+<div class="section" id="instance-variables">
+<h2>Instance variables<a class="headerlink" href="#instance-variables" title="Permalink to this headline">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 19%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>contract_list</p></td>
+<td><p><a class="reference internal" href="Contract.html"><span class="doc">Contract</span></a> []</p></td>
+<td><p>A list of contracts you can pick from</p></td>
+</tr>
+<tr class="row-odd"><td><p>active_contract</p></td>
+<td><p><a class="reference internal" href="Contract.html"><span class="doc">Contract</span></a> or None</p></td>
+<td><p>The current contract you are working to complete</p></td>
+</tr>
+<tr class="row-even"><td><p>body</p></td>
+<td><p><a class="reference internal" href="BodyObjects.html"><span class="doc">Body Objects</span></a></p></td>
+<td><p>Your current body Object. Default is a BaseBodyObject. Body also stores how much gas your truck has</p></td>
+</tr>
+<tr class="row-odd"><td><p>addons</p></td>
+<td><p><a class="reference internal" href="AddonObjects.html"><span class="doc">Add On Objects</span></a></p></td>
+<td><p>Your current addon object. Default is a BaseUpgradeObject</p></td>
+</tr>
+<tr class="row-even"><td><p>tires</p></td>
+<td><p>int</p></td>
+<td><p>The TireEnum you are currently equiped with. Default is tire_normal. More at <a class="reference internal" href="TireObjects.html"><span class="doc">Tires</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>speed</p></td>
+<td><p>int</p></td>
+<td><p>The speed your truck is currently traveling at</p></td>
+</tr>
+<tr class="row-even"><td><p>health</p></td>
+<td><p>float</p></td>
+<td><p>The health of your truck.</p></td>
+</tr>
+<tr class="row-odd"><td><p>money</p></td>
+<td><p>int</p></td>
+<td><p>The amount of money you currently have.</p></td>
+</tr>
+<tr class="row-even"><td><p>renown</p></td>
+<td><p>int</p></td>
+<td><p>Your score. The game is won by having the most renown</p></td>
+</tr>
+</tbody>
+</table>
+<p>Please note that the BaseBodyObject gives you the default max_gas attribute. You can’t switch back to the base objects once you upgrade</p>
+</div>
+<div class="section" id="truck-upgrade-negations">
+<h2>Truck Upgrade Negations<a class="headerlink" href="#truck-upgrade-negations" title="Permalink to this headline">¶</a></h2>
+<p>Some truck upgrade has the potential to negate some of the time and damage penalties from events. Listed below are all
+Negations. For more on upgrades, you can visit <a class="reference internal" href="BodyObjects.html"><span class="doc">Body Objects</span></a> , <a class="reference internal" href="AddonObjects.html"><span class="doc">Add On Objects</span></a> , or <a class="reference internal" href="TireObjects.html"><span class="doc">Tires</span></a></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 82%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Upgrade</p></th>
+<th class="head"><p>Negates</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ObjectType.headlights</p></td>
+<td><p>EventType.animal_in_road</p></td>
+</tr>
+<tr class="row-odd"><td><p>ObjectType.sentryGun</p></td>
+<td><p>EventType.rock_slide</p></td>
+</tr>
+<tr class="row-even"><td><p>ObjectType.GPS</p></td>
+<td><p>EventType.traffic</p></td>
+</tr>
+<tr class="row-odd"><td><p>ObjectType.policeScanner</p></td>
+<td><p>EventType.bounty_hunter</p></td>
+</tr>
+<tr class="row-even"><td><p>TireType.tire_sticky</p></td>
+<td><p>EventType.icy_road</p></td>
+</tr>
+<tr class="row-odd"><td><p>TireType.monster_truck</p></td>
+<td><p>EventType.bandits</p></td>
+</tr>
+<tr class="row-even"><td><p>ObjectType.rabbitFoot</p></td>
+<td><p>EventType.animal_in_road, EventType.bandits,EventType.icy_road, EventType.bounty_hunter, EventType.rock_slide, EventType.traffic</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="Contract.html" class="btn btn-neutral float-right" title="Contract" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="TakingAction.html" class="btn btn-neutral float-left" title="Taking Action" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021-2022, NDSU ACM.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

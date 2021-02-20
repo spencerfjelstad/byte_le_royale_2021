@@ -11,6 +11,7 @@ from game.controllers.action_controller import ActionController
 from game.controllers.controller import Controller
 from game.common.truck import Truck
 from game.utils.contract_utils import generate_contracts, check_contract_completion
+from game.common.game_map import Game_Map
 
 import random
 
@@ -28,8 +29,6 @@ class MasterController(Controller):
     # Receives all clients for the purpose of giving them the objects they will control
     def give_clients_objects(self, client):
         client.truck = Truck()
-        node = Node('Start Node')
-        client.truck.current_node = node
         pass
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
@@ -50,27 +49,24 @@ class MasterController(Controller):
     # Receives world data from the generated game log and is responsible for interpreting it
     def interpret_current_turn_data(self, client, world, turn):
         self.current_world_data = world
+        random.seed(world["seed"])
 
     # Receive a specific client and send them what they get per turn. Also obfuscates necessary objects.
     def client_turn_arguments(self, client, turn):
         # Add contracts available in city and current active contract to truck for access by client
         actions = Action()
-        check_contract_completion(client)
+        self.contract_status = check_contract_completion(client)
         contract_list = generate_contracts(client)
         self.action_controller.contract_list = contract_list
 
         client.truck.contract_list = copy.deepcopy(contract_list)
         client.action = actions
 
-
-
         # Create deep copies of all objects sent to the player
 
         #Truck obfuscation
         truckCopy = copy.deepcopy(client.truck)
         truckCopy.obfuscate()
-        for contract in truckCopy.contract_list:
-            contract.obfuscate()
 
         #Time copy to be given to player
         timeCopy = copy.deepcopy(client.time)
@@ -79,22 +75,32 @@ class MasterController(Controller):
         args = (self.turn, actions, self.current_world_data, truckCopy, timeCopy)
         return args
 
+    selected_action = ActionType.none
+    selected_route = RoadType.none
+    event = EventType.none
     # Perform the main logic that happens per turn
     def turn_logic(self, client, turn):
-        random.seed(self.current_world_data["seed"])
-
-        self.action_controller.handle_actions(client)
+        new_action = self.action_controller.handle_actions(client)
+        if not isinstance(new_action, int):
+            self.selected_action = new_action[0]
+            self.selected_route = new_action[1]
+            self.event = new_action[2]
+            self.caught_by_police = new_action[3]
+        else:
+            self.selected_action = new_action
+            self.selected_route = RoadType.none
+            self.event = EventType.none
+            self.caught_by_police = False
         #client.time -= 10
         if client.time <= 0:
-            print("Game is ending because time has run out. Final score is " + str(client.truck.renown))
+            print("Game is ending because time has run out. Final score is " + str(client.truck.renown) + " ending on turn "+ str(self.turn))
             self.game_over = True
         if client.truck.health <= 0:
-            print("Game is ending because health has run out. Final score is " + str(client.truck.renown))
+            print("Game is ending because health has run out. Final score is " + str(client.truck.renown) + " ending on turn "+ str(self.turn))
             self.game_over = True
         if client.truck.body.current_gas <= 0:
-            print("Game is ending because gas has run out. Final score is " + str(client.truck.renown))
+            print("Game is ending because gas has run out. Final score is " + str(client.truck.renown) + " ending on turn "+ str(self.turn))
             self.game_over = True
-
 
     # Return serialized version of game
     def create_turn_log(self, clients, turn):
@@ -103,6 +109,11 @@ class MasterController(Controller):
         data['Team Name'] = clients.team_name
         data['time'] = clients.time
         data['truck'] = clients.truck.to_json()
+        data['selected_action'] = self.selected_action
+        data['selected_route'] = self.selected_route
+        data['event'] = self.event
+        data['caught_by_police'] = self.caught_by_police
+        data['contract_status'] = self.contract_status
         
         return data
 
@@ -114,4 +125,3 @@ class MasterController(Controller):
         data['player'] = client.to_json()
 
         return data
-

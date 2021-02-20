@@ -27,9 +27,9 @@ class ActionType:
     buy_gas = 2
     upgrade = 3
     select_contract = 4
-    choose_speed = 5
-    repair= 6
-    set_speed = 7
+    set_speed = 5
+    repair = 6
+    change_tires = 7
 
 class Region:
     none = 0
@@ -51,15 +51,12 @@ class RoadType:
 
 class EventType:
     none = 0
-    city = 1
-    warehouse = 2
-    road = 3
-    rock_slide = 4
-    icy_road = 5
-    animal_in_road = 6
-    bandits = 7
-    police = 8
-    traffic = 9
+    rock_slide = 1
+    icy_road = 2
+    animal_in_road = 3
+    bandits = 4
+    bounty_hunter = 5
+    traffic = 6
 
 class ScannerLevel:
     level_zero = 0
@@ -104,3 +101,18 @@ class GPSLevel:
     level_one = 1
     level_two = 2
     level_three = 3
+
+class ContrabandLevel:
+    level_zero = 0
+    level_one = 1
+    level_two = 2
+
+class ContractDifficulty:
+    easy = 0
+    medium = 1
+    hard = 2
+
+class ContractState:
+    unchanged = 0
+    completed = 1
+    failed = 2

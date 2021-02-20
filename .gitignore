@@ -132,3 +132,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#vID
+/vID
+/scrimmage/temp/*
+/scrimmage/vis_temp/*
+/wrapper/my_token.py
