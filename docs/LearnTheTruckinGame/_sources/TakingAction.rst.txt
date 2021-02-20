@@ -86,7 +86,7 @@ takes 4 hours.
 
 .. code-block:: python
 
-   actions.set_action(ActionType.switch_tire, TireType.tire_econ)
+   actions.set_action(ActionType.change_tires, TireType.tire_econ)
 
 Will switch your tires to the tire_econ type
 
