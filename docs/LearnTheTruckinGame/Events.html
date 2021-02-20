@@ -41,7 +41,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Game Map" href="GameMap.html" />
-    <link rel="prev" title="Contract" href="Contract.html" /> 
+    <link rel="prev" title="Regions" href="Regions.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -96,6 +96,7 @@
 <li class="toctree-l1"><a class="reference internal" href="TakingAction.html">Taking Action</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Truck.html">The Truck Object</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Contract.html">Contract</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Regions.html">Regions</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Events</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#potential-events">Potential Events</a></li>
 </ul>
@@ -182,6 +183,15 @@
 <p>There are 6 EventTypes, animal_in_road, bandits, icy_road, police, rock_slide, traffic. Each event will do damage to your truck
 and take time to resolve. The likelihood of an event happening is increased as your speed increases. EventType type enumerations can be
 accessed by EventType.event_type. For example, EventType.bandits</p>
+<p><strong>Event Chance</strong></p>
+<p>The chance of an event happening at 50 mph or lower is calculated using the equation below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">event_chance</span> <span class="o">=</span> <span class="mi">15</span><span class="n">log</span> <span class="p">(</span><span class="n">speed</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The chance of an event happening at greater than 50 mph is calculated using the equation below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">event_chance</span> <span class="o">=</span> <span class="mf">0.0295</span><span class="p">(</span><span class="n">speed</span> <span class="o">-</span> <span class="mi">50</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">25.612</span>
+</pre></div>
+</div>
 <p><strong>Damage Penalty</strong></p>
 <p>Below are the EventTypes and their base damage. Damage penalties will reduce your truck’s health. This is calculated by the event’s base damage multiplied by the contract difficulty + 1. For example, if you had an easy difficulty contract and you got pulled over by the police, you would take 11.65 * 1 damage. Damage can be reduced by upgrades or can be increased by contract difficulty.</p>
 <table class="docutils align-default">
@@ -258,7 +268,7 @@ accessed by EventType.event_type. For example, EventType.bandits</p>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="GameMap.html" class="btn btn-neutral float-right" title="Game Map" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="Contract.html" class="btn btn-neutral float-left" title="Contract" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Regions.html" class="btn btn-neutral float-left" title="Regions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
