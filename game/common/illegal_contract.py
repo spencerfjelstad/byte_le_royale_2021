@@ -10,9 +10,8 @@ class IllegalContract(Contract):
         contraband_levels = [ContrabandLevel.level_zero, ContrabandLevel.level_one, 
                 ContrabandLevel.level_two]
         self.level = random.choice(contraband_levels) if level is None else level
-        self.risk = GameStats.illegal_contract_stats['risk'][self.level]
-        self.penalties = {'time_penalty': GameStats.illegal_contract_stats['time_penalty'], 
-                'money_penalty': GameStats.illegal_contract_stats['money_penalty']}
+        self.penalties = {'time_penalty': GameStats.illegal_contract_stats['time_penalty'][self.level], 
+                'money_penalty': GameStats.illegal_contract_stats['money_penalty'][self.level]}
         name = self.generate_name()
         mod = GameStats.illegal_contract_stats['reward_modifier'][self.level]
         if len(args) == 1:
@@ -33,12 +32,10 @@ class IllegalContract(Contract):
     def to_json(self):
         data = super().to_json()
         data['level'] = self.level
-        data['risk'] = self.risk
         data['penalties'] = self.penalties
         return data
 
     def from_json(self, data):
         super().from_json(data)
         self.level = data['level']
-        self.risk = data['risk']
         self.penalties = data['penalties']
