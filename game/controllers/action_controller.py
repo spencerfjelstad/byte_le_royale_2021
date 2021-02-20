@@ -1,19 +1,19 @@
+from game.common.player import Player
+from game.common.truck import Truck
+from game.common.road import Road
+from game.common.contract import Contract
+from game.common.stats import GameStats
+from game.common.enums import *
 from game.common.TrUpgrades.BodyObjects.tank import Tank
 from game.common.TrUpgrades.police_scanner import PoliceScanner
 from game.common.TrUpgrades.BodyObjects.headlights import HeadLights
 from game.common.TrUpgrades.BodyObjects.sentry_gun import SentryGun
 from game.common.TrUpgrades.rabbit_foot import RabbitFoot
 from game.common.TrUpgrades.gps import GPS
-from game.common.road import Road
-from game.common.truck import Truck
-from game.utils import helpers
-from game.common.stats import GameStats
-from game.common.player import Player
 from game.controllers.controller import Controller
 from game.controllers.event_controller import EventController
+from game.utils import helpers
 from game.config import *
-from game.controllers import event_controller
-from game.common.enums import *
 
 from collections import deque
 import math
@@ -94,11 +94,17 @@ class ActionController(Controller):
 
     # Retrieve by index and store in Player, then clear the list
     def select_contract(self, player):
-        if len(self.contract_list) > int(player.action.action_parameter) and int(player.action.action_parameter) >= -1:
-            player.truck.active_contract = self.contract_list[int(player.action.action_parameter)]
+        if isinstance(player.action.action_parameter, int) and player.action.action_parameter >= -1:
+            if len(self.contract_list) > int(player.action.action_parameter):
+                player.truck.active_contract = self.contract_list[int(player.action.action_parameter)]
+                self.contract_list.clear()
+            else:
+                raise Exception("Invalid contract selection index!")
+        elif isinstance(player.action.action_parameter, Contract) and player.action.action_parameter in self.contract_list:
+            player.truck.active_contract = player.action.action_parameter
             self.contract_list.clear()
         else:
-            raise Exception("Contract list index was out of bounds")
+            raise Exception("Invalid contract selection parameter! Must be valid index or contract!")
 
     def buy_gas(self, player):
         # Gas price is tied to node

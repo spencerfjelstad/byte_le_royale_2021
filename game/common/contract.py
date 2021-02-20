@@ -64,6 +64,7 @@ class Contract(GameObject):
             Money Reward: {self.money_reward}
             Renown Reward: {self.renown_reward}
             Deadline: {self.deadline}
+            Difficulty: {self.difficulty}
             """
         return p
 
