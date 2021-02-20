@@ -183,6 +183,15 @@
 <p>There are 6 EventTypes, animal_in_road, bandits, icy_road, police, rock_slide, traffic. Each event will do damage to your truck
 and take time to resolve. The likelihood of an event happening is increased as your speed increases. EventType type enumerations can be
 accessed by EventType.event_type. For example, EventType.bandits</p>
+<p><strong>Event Chance</strong>
+The chance of an event happening at 50 mph or lower is calculated using the equation below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">event_chance</span> <span class="o">=</span> <span class="mi">15</span><span class="n">log</span> <span class="p">(</span><span class="n">speed</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The chance of an event happening at greater than 50 mph is calculated using the equation below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">event_chance</span> <span class="o">=</span> <span class="mf">0.0295</span><span class="p">(</span><span class="n">speed</span> <span class="o">-</span> <span class="mi">50</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">25.612</span>
+</pre></div>
+</div>
 <p><strong>Damage Penalty</strong></p>
 <p>Below are the EventTypes and their base damage. Damage penalties will reduce your truck’s health. This is calculated by the event’s base damage multiplied by the contract difficulty + 1. For example, if you had an easy difficulty contract and you got pulled over by the police, you would take 11.65 * 1 damage. Damage can be reduced by upgrades or can be increased by contract difficulty.</p>
 <table class="docutils align-default">
