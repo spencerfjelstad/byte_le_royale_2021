@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8" />
   
@@ -30,10 +30,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/accordion.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/accordion.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -98,7 +99,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#building-the-launcher">Building the launcher</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#generating-the-map">Generating the map</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id2">Running the game</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#running-the-visualize">Running the visualize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-the-visualizer">Running the visualizer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#improving-the-bot">Improving the bot</a></li>
 </ul>
 </li>
@@ -121,6 +122,8 @@
 <li class="toctree-l1"><a class="reference internal" href="AddonObjects.html">Add On Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="BodyObjects.html">Body Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TireObjects.html">Tires</a></li>
+<li class="toctree-l1"><a class="reference internal" href="enums.html">Enums</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Visualizer.html">Visualizer</a></li>
 </ul>
 
             
@@ -201,7 +204,11 @@ You can do this by re-running the installer and unselecting the python developme
 <h2>Running the game<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="building-the-launcher">
 <h3>Building the launcher<a class="headerlink" href="#building-the-launcher" title="Permalink to this headline">¶</a></h3>
-<p>When updates are pushed, (run python launcher.pyz u?). Then run build.bat.</p>
+<p>run build.bat by clicking on it or through a terminal. TDQM is needed for this project, so also run</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pip install tdqm</span>
+</pre></div>
+</div>
+<p>When updates are pushed, (run python launcher.pyz u?).</p>
 </div>
 <div class="section" id="generating-the-map">
 <h3>Generating the map<a class="headerlink" href="#generating-the-map" title="Permalink to this headline">¶</a></h3>
@@ -209,7 +216,7 @@ You can do this by re-running the installer and unselecting the python developme
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">g</span>
 </pre></div>
 </div>
-<p>within a terminal. You can keep the same game map by just not running the above command.</p>
+<p>within a terminal in the byte-le folder. You can keep the same game map by just not running the above command.</p>
 </div>
 <div class="section" id="id2">
 <h3>Running the game<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
@@ -220,8 +227,8 @@ You can do this by re-running the installer and unselecting the python developme
 <p>within the terminal. Print statements within your client will print if you wish to use them for debugging purposes. Alternatively, you can view
 the turn logs that are produced within the logs folder.</p>
 </div>
-<div class="section" id="running-the-visualize">
-<h3>Running the visualize<a class="headerlink" href="#running-the-visualize" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="running-the-visualizer">
+<h3>Running the visualizer<a class="headerlink" href="#running-the-visualizer" title="Permalink to this headline">¶</a></h3>
 <p>As a third option for debugging, we have built a visualizer! The visualizer visually depicts the logs that are produced, so you can more easily decipher what went wrong.
 The visualizer can be run with</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">v</span>
@@ -230,7 +237,7 @@ The visualizer can be run with</p>
 </div>
 <div class="section" id="improving-the-bot">
 <h3>Improving the bot<a class="headerlink" href="#improving-the-bot" title="Permalink to this headline">¶</a></h3>
-<p>All improvements should be made within the client. We provide a base client but you are welcome to rename the file or create multiple client files. Make sure to check the
+<p>All improvements should be made within the client. We provide a base client but you are welcome to rename the file or create multiple client files. Note that if you make multiple files, there can only be one client in the root folder. Place the other clients in the test_clients folder. Make sure to check the
 documentation for hints on how to improve!</p>
 </div>
 </div>
@@ -244,18 +251,18 @@ scrimmage server by running</p>
 <p>After connecting there are 4 commands you can run.</p>
 <div class="section" id="register">
 <h3>register<a class="headerlink" href="#register" title="Permalink to this headline">¶</a></h3>
-<p>registering is required to enter the competition. Once you provide a team name, a vID will be downloaded you your computer. this vID is required to upload your client to the
+<p>Registering is required to enter the competition but only needs to be done once. Once you provide a team name, a vID will be downloaded you your computer. this vID is required to upload your client to the
 server under your team name, so don’t delete it! If your teamates wish to upload to the server, you’ll have to send them the vID.</p>
 </div>
 <div class="section" id="submit">
 <h3>submit<a class="headerlink" href="#submit" title="Permalink to this headline">¶</a></h3>
-<p>Once you’ve registered, you can submit your client. Atleast one client must be submitted by midnight to be elligable to win. The server will automatically look for files in the
+<p>Once you’ve registered, you can submit your client. At least one client must be submitted by midnight to be elligible to win. The server will automatically look for files in the
 root directory that contain the word ‘client’. Otherwise, you can manually select the file. Once you’ve confirmed the file, it will be uploaded to the server and
 then run 30 times to create an average score. Feel free to submit as many times as you like, but please refrain from excessive uploads.</p>
 </div>
 <div class="section" id="view-stats">
 <h3>view stats<a class="headerlink" href="#view-stats" title="Permalink to this headline">¶</a></h3>
-<p>Returns stats relating to your submission/s. All stats relate to your most recent submission. Please note that the stats will continue to change until all
+<p>Returns stats relating to your submissions(s). All stats relate to your most recent submission. Please note that the stats will continue to change until all
 runs are completed.</p>
 </div>
 <div class="section" id="leaderboard">

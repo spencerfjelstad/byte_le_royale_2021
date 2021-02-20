@@ -49,6 +49,7 @@ class MasterController(Controller):
     # Receives world data from the generated game log and is responsible for interpreting it
     def interpret_current_turn_data(self, client, world, turn):
         self.current_world_data = world
+        random.seed(world["seed"])
 
     # Receive a specific client and send them what they get per turn. Also obfuscates necessary objects.
     def client_turn_arguments(self, client, turn):
@@ -61,14 +62,13 @@ class MasterController(Controller):
         client.truck.contract_list = copy.deepcopy(contract_list)
         client.action = actions
 
-
-
         # Create deep copies of all objects sent to the player
 
         #Truck obfuscation
         truckCopy = copy.deepcopy(client.truck)
         truckCopy.obfuscate()
-
+        for contract in truckCopy.contract_list:
+            contract.obfuscate()
         #Time copy to be given to player
         timeCopy = copy.deepcopy(client.time)
 
@@ -81,8 +81,6 @@ class MasterController(Controller):
     event = EventType.none
     # Perform the main logic that happens per turn
     def turn_logic(self, client, turn):
-        random.seed(self.current_world_data["seed"])
-
         new_action = self.action_controller.handle_actions(client)
         if not isinstance(new_action, int):
             self.selected_action = new_action[0]

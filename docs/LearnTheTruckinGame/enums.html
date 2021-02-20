@@ -1,0 +1,700 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Enums &mdash; Byte-le Royale Documentation 9 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/accordion.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Visualizer" href="Visualizer.html" />
+    <link rel="prev" title="Tires" href="TireObjects.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Byte-le Royale Documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                Version 1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="RunningTheGame.html">Running the game</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TakingAction.html">Taking Action</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Truck.html">The Truck Object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Contract.html">Contract</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GameMap.html">Game Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Node.html">Node</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Road.html">Road</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AddonObjects.html">Add On Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BodyObjects.html">Body Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TireObjects.html">Tires</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Enums</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#objectstypes">ObjectsTypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#actiontype">ActionType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#regions">Regions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#roadtype">RoadType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#eventtype">EventType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scannerlevel">ScannerLevel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tanklevel">TankLevel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#headlightlevel">HeadlightLevel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sentrygunlevel">SentryGunLevel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rabbitfootlevel">rabbitFootLevel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gpslevel">GPSLevel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tiretype">TireType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contrabandlevel">ContrabandLevel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contractdifficulty">ContractDifficulty</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Visualizer.html">Visualizer</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Byte-le Royale Documentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Enums</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/enums.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="enums">
+<h1>Enums<a class="headerlink" href="#enums" title="Permalink to this headline">¶</a></h1>
+<p>Below are all of the Enumerations for the game.</p>
+<div class="section" id="objectstypes">
+<h2>ObjectsTypes<a class="headerlink" href="#objectstypes" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">ObjectType</th>
+<th class="head">Number</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>none</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>action</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>player</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>node</td>
+<td>3</td>
+</tr>
+<tr class="row-even"><td>road</td>
+<td>4</td>
+</tr>
+<tr class="row-odd"><td>truck</td>
+<td>5</td>
+</tr>
+<tr class="row-even"><td>contract</td>
+<td>6</td>
+</tr>
+<tr class="row-odd"><td>game_map</td>
+<td>7</td>
+</tr>
+<tr class="row-even"><td>policeScanner</td>
+<td>8</td>
+</tr>
+<tr class="row-odd"><td>tank</td>
+<td>9</td>
+</tr>
+<tr class="row-even"><td>tires</td>
+<td>10</td>
+</tr>
+<tr class="row-odd"><td>headlights</td>
+<td>11</td>
+</tr>
+<tr class="row-even"><td>sentryGun</td>
+<td>12</td>
+</tr>
+<tr class="row-odd"><td>rabbitFoot</td>
+<td>13</td>
+</tr>
+<tr class="row-even"><td>GPS</td>
+<td>14</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="actiontype">
+<h2>ActionType<a class="headerlink" href="#actiontype" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="53%" />
+<col width="47%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">ActionType</th>
+<th class="head">Number</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>none</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>select_route</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>buy_gas</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>upgrade</td>
+<td>3</td>
+</tr>
+<tr class="row-even"><td>select_contract</td>
+<td>4</td>
+</tr>
+<tr class="row-odd"><td>set_speed</td>
+<td>5</td>
+</tr>
+<tr class="row-even"><td>repair</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="regions">
+<h2>Regions<a class="headerlink" href="#regions" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="56%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">RegionType</th>
+<th class="head">Number</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>none</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>grass_lands</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>mount_vroom</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>mobave_desert</td>
+<td>3</td>
+</tr>
+<tr class="row-even"><td>nord_dakotia</td>
+<td>4</td>
+</tr>
+<tr class="row-odd"><td>lobslantis</td>
+<td>5</td>
+</tr>
+<tr class="row-even"><td>tropical_cop_land</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="roadtype">
+<h2>RoadType<a class="headerlink" href="#roadtype" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="56%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">RoadType</th>
+<th class="head">Number</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>none</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>mountain_road</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>forest_road</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>tundra_road</td>
+<td>3</td>
+</tr>
+<tr class="row-even"><td>highway</td>
+<td>4</td>
+</tr>
+<tr class="row-odd"><td>city_road</td>
+<td>5</td>
+</tr>
+<tr class="row-even"><td>interstate</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="eventtype">
+<h2>EventType<a class="headerlink" href="#eventtype" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="56%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">EventType</th>
+<th class="head">Number</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>none</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>rock_slide</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>icy_road</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>animal_in_road</td>
+<td>3</td>
+</tr>
+<tr class="row-even"><td>bandits</td>
+<td>4</td>
+</tr>
+<tr class="row-odd"><td>bounty_hunter</td>
+<td>5</td>
+</tr>
+<tr class="row-even"><td>interstate</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="scannerlevel">
+<h2>ScannerLevel<a class="headerlink" href="#scannerlevel" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="56%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">ScannerLevel</th>
+<th class="head">Number</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>level_zero</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>level_one</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>level_two</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>level_three</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="tanklevel">
+<h2>TankLevel<a class="headerlink" href="#tanklevel" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="56%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">TankLevel</th>
+<th class="head">Number</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>level_zero</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>level_one</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>level_two</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>level_three</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="headlightlevel">
+<h2>HeadlightLevel<a class="headerlink" href="#headlightlevel" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="56%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">HeadlightLevel</th>
+<th class="head">Number</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>level_zero</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>level_one</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>level_two</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>level_three</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="sentrygunlevel">
+<h2>SentryGunLevel<a class="headerlink" href="#sentrygunlevel" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="56%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">SentryGunLevel</th>
+<th class="head">Number</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>level_zero</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>level_one</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>level_two</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>level_three</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="rabbitfootlevel">
+<h2>rabbitFootLevel<a class="headerlink" href="#rabbitfootlevel" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="56%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">rabbitFootLevel</th>
+<th class="head">Number</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>level_zero</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>level_one</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>level_two</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>level_three</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="gpslevel">
+<h2>GPSLevel<a class="headerlink" href="#gpslevel" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="56%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">GPSLevel</th>
+<th class="head">Number</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>level_zero</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>level_one</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>level_two</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>level_three</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="tiretype">
+<h2>TireType<a class="headerlink" href="#tiretype" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="56%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">TireType</th>
+<th class="head">Number</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>level_zero</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>level_one</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>level_two</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>level_three</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="contrabandlevel">
+<h2>ContrabandLevel<a class="headerlink" href="#contrabandlevel" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="56%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">ContrabandLevel</th>
+<th class="head">Number</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>level_zero</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>level_one</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>level_two</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="contractdifficulty">
+<h2>ContractDifficulty<a class="headerlink" href="#contractdifficulty" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="59%" />
+<col width="41%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">ContractDifficulty</th>
+<th class="head">Number</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>easy</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>medium</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>hard</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="Visualizer.html" class="btn btn-neutral float-right" title="Visualizer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="TireObjects.html" class="btn btn-neutral float-left" title="Tires" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021-2022, NDSU ACM.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

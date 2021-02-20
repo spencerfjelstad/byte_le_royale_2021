@@ -7,24 +7,32 @@ import shutil
 
 from tqdm import tqdm
 
-import version
+from version import v
+
+try:
+    import my_token
+except:
+    pass
 
 unscrewify = numpy.decodebytes
 
 def update():
     # check version number
-    current_version = version.v
+    current_version = v
 
     # check latest release version
-    auth = HTTPBasicAuth("byte-le-royale-slave", unscrewify(b'VGhlUm9ja0lzQVN0b25lcg==\n'))
-    payload = requests.get("https://api.github.com/repos/PixPanz/byte_le_royale_2021/releases/latest", auth=auth)
+    try:
+        auth = HTTPBasicAuth(my_token.username, my_token.token)
+        payload = requests.get("https://api.github.com/repos/PixPanz/byte_le_royale_2021/releases/latest", auth=auth)
+    except:
+        payload = requests.get("https://api.github.com/repos/PixPanz/byte_le_royale_2021/releases/latest")
 
     if payload.status_code == 200:
         json = payload.json()
         remote_version = json["tag_name"]
         asset_id = json["assets"][0]["id"]
     else:
-        print("There was an issue attempting to update: Bad Request: \"{0}\"".format(payload.body))
+        print("There was an issue attempting to update: Bad Request: \"{0}\"".format(payload.content))
         exit()
 
     try:
@@ -73,7 +81,7 @@ def download_file(local_filename, url, auth):
     if r.status_code not in [200, 302]:
         return False
 
-    total_size = int(r.headers.get('content-length', 0));
+    total_size = int(r.headers.get('content-length', 0))
     block_size = 1024
     wrote = 0
     with open(local_filename, 'wb') as f:

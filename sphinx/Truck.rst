@@ -11,13 +11,14 @@ Instance variables
 ================  =========================== ===================
 Name               Type                        Description
 ================  =========================== ===================
-current_node       :doc:`./Node`               The current node you are on
-contract_list      :doc:`./Contract` []         A list of contracts you can pick from
+contract_list      :doc:`./Contract` []        A list of contracts you can pick from
 active_contract    :doc:`./Contract` or None   The current contract you are working to complete
-body               :doc:`./BodyObjects`        Your current body Object. Default is a BaseBodyObject 
+body               :doc:`./BodyObjects`        Your current body Object. Default is a BaseBodyObject. Body also stores how much gas your truck has
 addons             :doc:`./AddonObjects`       Your current addon object. Default is a BaseUpgradeObject
 tires              int                         The TireEnum you are currently equiped with. Default is tire_normal. More at :doc:`./TireObjects`
 speed              int                         The speed your truck is currently traveling at
+health             float                       The health of your truck. 
+money              int                         The amount of money you currently have. 
 renown             int                         Your score. The game is won by having the most renown
 ================  =========================== ===================
 
@@ -27,7 +28,7 @@ Please note that the BaseBodyObject gives you the default max_gas attribute. You
 Truck Upgrade Negations
 ########################
 
-Each truck upgrade has the potential to negate some of the time and damage penalties from events. Listed below are all
+Some truck upgrade has the potential to negate some of the time and damage penalties from events. Listed below are all
 Negations. For more on upgrades, you can visit :doc:`./BodyObjects` , :doc:`./AddonObjects` , or :doc:`./TireObjects`
 
 ============================ =============================

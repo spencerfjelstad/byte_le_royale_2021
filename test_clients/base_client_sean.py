@@ -82,15 +82,40 @@ class Client(UserClient):
                 bestIndex = index
         #print(contractList[bestIndex]['contract'].difficulty == ContractDifficulty.easy)
         return bestIndex
+    
 
-    def chooseBestRoad(self,roads):
+    def chooseBestContract2(self, truck, contractList):
+        bestIndex = -1
+        for index in range(len(contractList)):
+            if self.turn < self.low and contractList[index]['contract'].difficulty == ContractDifficulty.easy:
+                bestIndex = index
+            elif self.turn < self.high and contractList[index]['contract'].difficulty == ContractDifficulty.medium:
+                bestIndex = index
+            elif self.turn > self.high and contractList[index]['contract'].difficulty == ContractDifficulty.hard:
+                bestIndex = index
+        #print(contractList[bestIndex]['contract'].difficulty == ContractDifficulty.easy)
+        return bestIndex
+
+    def chooseShortestRoad(self,roads):
         shortest = 10000
-        index = -1
+        index = roads[0]
         for x in range(len(roads)):
-               if(shortest > roads[x].length):
+               if(shortest > roads[x].length and roads[x].road_type != RoadType.city_road):
                    index = roads[x]
         #print("move index: " + str(index))
         return index
+
+    def chooseBestRoad(self,roads):
+        bestScore = -1
+        index = -1
+        for x in range(len(roads)):
+            score = roads[x].length
+            if roads[x].road_type is RoadType.city_road or RoadType.mountain_road:
+                score = (score * 1.4)  
+            if bestScore > score:
+                index = x 
+        #print("move index: " + str(index))
+        return roads[index]
 
     # This is where your AI will decide what to do
     def take_turn(self, turn, actions, world, truck, time):
@@ -130,6 +155,7 @@ class Client(UserClient):
         self.queue.insert(0, actions._chosen_action)
              
         pass
+
 
 
 
