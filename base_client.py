@@ -29,8 +29,8 @@ class Client(UserClient):
             print("Select")
             chosen_contract = self.select_new_contract(actions, truck)
             actions.set_action(ActionType.select_contract, chosen_contract)
-        # Buy gas if below 20% and enough money to fill tank to full at max gas price
-        elif(truck.body.current_gas < .20 and truck.money > 500):
+        # Buy gas if below 20% and there is enough money to fill tank to full at max gas price
+        elif(truck.body.current_gas < .20 and truck.money > 100*truck.active_contract.game_map.current_node.gas_price):
             print("Gas")
             actions.set_action(ActionType.buy_gas)
         # If health is below max and have enough money to fully repair do so

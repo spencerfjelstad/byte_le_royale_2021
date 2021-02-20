@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8" />
   
@@ -30,10 +30,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/accordion.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/accordion.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -191,9 +192,10 @@ Only one action can be set per turn. All actions are set by calling</p>
 <div class="section" id="selecting-a-contract">
 <h2>Selecting a contract<a class="headerlink" href="#selecting-a-contract" title="Permalink to this headline">¶</a></h2>
 <p>A list of contracts will be generated every turn. These contracts can be viewed in truck.contract_list
-Once you have chosen a contract, pass the select contract enum and the index of the contract which you
-wish to select. Selecting a contract takes one hour.</p>
+Once you have chosen a contract, pass the select contract enum and either the index of the contract which you
+wish to select or the contract object. Selecting a contract takes one hour.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">select_contract</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">select_contract</span><span class="p">,</span> <span class="n">chosen_contract</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Will set your contract to the contract at index 0</p>

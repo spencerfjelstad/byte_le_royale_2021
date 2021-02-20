@@ -15,13 +15,14 @@ Selecting a contract
 ####################
 
 A list of contracts will be generated every turn. These contracts can be viewed in truck.contract_list
-Once you have chosen a contract, pass the select contract enum and the index of the contract which you
-wish to select. Selecting a contract takes one hour.
+Once you have chosen a contract, pass the select contract enum and either the index of the contract which you
+wish to select or the contract object. Selecting a contract takes one hour.
 
 
 .. code-block:: python
 
     actions.set_action(ActionType.select_contract, 0)
+    actions.set_action(ActionType.select_contract, chosen_contract)
 
 Will set your contract to the contract at index 0
 
