@@ -2,7 +2,7 @@
 Road
 ================
 
-Roads are paths that connect :doc:`./Node`s. 
+Roads are paths that connect :doc:`./Node` s. 
 
 Instance variables
 ##################

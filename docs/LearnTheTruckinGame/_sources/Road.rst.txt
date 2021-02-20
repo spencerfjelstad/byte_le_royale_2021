@@ -15,19 +15,19 @@ road_type          RoadType.Enum      The type of the road. Affects event probab
 length             decimal            The length of the road
 ================  ================== ===================
 
-Road Type Modifiers
-###################
+RoadType Modifiers
+##################
 
-There are 6 Roadtypes, mountain_road, forest_road, tundra_road, city_road, highway, and interstate. Road type enumerations can be accessed by RoadType.<RoadType> 
+There are 6 RoadTypes, mountain_road, forest_road, tundra_road, city_road, highway, and interstate. RoadType enumerations can be accessed by RoadType.road_type. For example, RoadType.highway
 
 **Potential Events**
 
-The potential events that can happen on a given road type are listed below, in order of how often they occur. More on events can be seen at :doc:`./Events` 
+The potential events that can happen on a given RoadType are listed below. More on events can be seen at :doc:`./Events` 
 
 ============= ==============
 Road          Events
 ============= ==============
-montain_road  rock_slide, animal_in_road, icy_road, police, none
+mountain_road  rock_slide, animal_in_road, icy_road, police, none
 forest_road   animal_in_road, police, rock_slide, icy_road, none
 tundra_road   icy_road, police, rock_slide, none
 city_road     bandits, police, traffic, none
