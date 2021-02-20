@@ -6,6 +6,7 @@ class Client(UserClient):
     # Variables and info you want to save between turns go here
     def __init__(self):
         super().__init__()
+        self.turn = 0
 
     def team_name(self):
         """
@@ -22,27 +23,61 @@ class Client(UserClient):
         :param actions:     This is the actions object that you will add effort allocations or decrees to.
         :param world:       Generic world information
         """
-        
+        self.turn += 1
+
+        chosen_upgrade = self.select_upgrade(actions, truck)
+        # If there is not an active contract get one
         if(truck.active_contract is None):
-            # Select contract
-            print("Select")
-            actions.set_action(ActionType.select_contract, 0)
-        elif(truck.body.current_gas < .20):
-            # Buy gas
+            #print("Select")
+            chosen_contract = self.select_new_contract(actions, truck)
+            actions.set_action(ActionType.select_contract, chosen_contract)
+        # Buy gas if below 20% and there is enough money to fill tank to full at max gas price
+        elif (truck.speed != 100):
+            actions.set_action(ActionType.set_speed, 100)
+            print('speed')
+        elif(truck.body.current_gas < 1 and truck.money > 100*truck.active_contract.game_map.current_node.gas_price):
             print("Gas")
             actions.set_action(ActionType.buy_gas)
-            
-        elif truck.health < 40 and truck.money > 1000:
-            print("Heal")
+        # If health is below max and have enough money to fully repair do so
+        elif truck.health < 100 and truck.money > 1000:
+            #print("Heal")
             actions.set_action(ActionType.repair)
-        elif  truck.body.level < 3 and 100000 * 1.2 * (truck.body.level + 1) < truck.money:
-            print("upgrade")
-            actions.set_action(ActionType.upgrade, ObjectType.tank)
-        elif(truck.active_contract.game_map.current_node.city_name != 'end'):
+        elif chosen_upgrade is not None:
+            #print("Upgrade")
+            actions.set_action(ActionType.upgrade, chosen_upgrade)
+        elif(truck.active_contract.game_map.current_node.next_node is not None):
             # Move to next node
-            print("move")
-            actions.set_action(ActionType.select_route, truck.active_contract.game_map.current_node.roads[0])
-        
+            # Road can be selected by passing the index or road object
+            #print("Move")
+            road = self.select_new_route(actions, truck)
+            actions.set_action(ActionType.select_route, road)
 
+        if self.turn == 69 or self.turn == 420:
+            print("Funny Number! " + truck.__str__())
         
         pass
+
+    # These methods are not necessary, so feel free to modify or replace
+    def select_new_contract(self, actions, truck):
+        selected_contract = truck.contract_list[0]
+        for contract in truck.contract_list:
+            if contract.difficulty == ContractDifficulty.easy:
+                selected_contract = contract
+        return selected_contract
+
+    # Contract can be selected by passing the index or contract object
+    def select_upgrade(self, actions, truck):
+        target_body_upgrade = ObjectType.tank
+        target_addons_upgrade = ObjectType.rabbitFoot
+        if truck.body.level < 3 and truck.get_cost_of_upgrade(target_body_upgrade) < truck.money:
+            chosen_upgrade = target_body_upgrade
+        elif truck.addons.level < 3 and truck.get_cost_of_upgrade(target_addons_upgrade) < truck.money:
+            chosen_upgrade = target_addons_upgrade
+        else:
+            chosen_upgrade = None
+        return chosen_upgrade
+    
+    # Road can be selected by passing the index or road object
+    def select_new_route(self, actions, truck):
+        roads = truck.active_contract.game_map.current_node.roads
+        return roads[0]
