@@ -31,6 +31,7 @@ or runs out of gas. The penalties from events can be mitigated by upgrading your
    BodyObjects
    TireObjects
    enums
+   Visualizer
   
 
 

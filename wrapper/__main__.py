@@ -5,6 +5,7 @@ from game.utils.generate_game import generate
 import game.config
 import argparse
 import subprocess
+import updater
 
 if __name__ == '__main__':
 
@@ -33,6 +34,9 @@ if __name__ == '__main__':
     
     # Visualizer Subparser
     vis_subpar = spar.add_parser('visualizer', aliases=['v'], help='Visualizes last run game')
+
+    # Updating Subparser
+    upd_subpar = spar.add_parser('update', aliases=['u'], help='Updates your game to match the newest version if possible')
 
     # Parse Command Line
     par_args = par.parse_args()
@@ -77,6 +81,9 @@ if __name__ == '__main__':
         elif plat == "darwin":
             print("Literally just straight up fuck you man")
 
+    # Attempt to update the game
+    elif action in ['update', 'u']:
+        updater.update()
     
     # Print help if no arguments are passed
     if len(sys.argv) == 1:

@@ -108,6 +108,7 @@
 <li class="toctree-l1"><a class="reference internal" href="BodyObjects.html">Body Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TireObjects.html">Tires</a></li>
 <li class="toctree-l1"><a class="reference internal" href="enums.html">Enums</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Visualizer.html">Visualizer</a></li>
 </ul>
 
             
@@ -177,8 +178,20 @@
             
   <div class="section" id="contract">
 <h1>Contract<a class="headerlink" href="#contract" title="Permalink to this headline">¶</a></h1>
+<<<<<<< HEAD
 <p>Contracts come in easy, medium and hard versions, which impact their rewards, renown, length and completabiltiy.
 Easy contracts give less renown and reward, but are also shorter. The opposite is true with hard contracts. Contract also contains the map <a class="reference internal" href="GameMap.html"><span class="doc">Game Map</span></a> you need to traverse to complete the contract. Illegal contracts have all of the properties of a regular contract, however they also introduce the risk of getting caught by police. If caught you will receive a money penalty and a time penalty, as well as lose the contract. To compensate for this additional risk, the money and renown you receive for completing an illegal contract will be much greater than a normal contract. An illegal contract’s risk can be reduced by upgrading the police scanner.</p>
+=======
+<p>Contracts come in easy, medium and hard versions, which impact their rewards, renown, length and completability.
+Easy contracts give less renown and reward, but are also shorter. The opposite is true with hard contracts. Please note that
+in contract list you are given a dictionary where [‘map’] is the game_map <a class="reference internal" href="GameMap.html"><span class="doc">Game Map</span></a> you need to traverse to complete the contract
+and [‘contract’] is the contract object.</p>
+<p>EX:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contractList</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="s1">&#39;contract&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>will access a contract object at an associated index</p>
+>>>>>>> 0995d13d532804f043068f63cb43ccb5d0d193db
 <div class="section" id="instance-variables">
 <h2>Instance variables<a class="headerlink" href="#instance-variables" title="Permalink to this headline">¶</a></h2>
 <p>Below are the listed instance variables for the contract object</p>
@@ -239,9 +252,15 @@ Easy contracts give less renown and reward, but are also shorter. The opposite i
 <td>int</td>
 <td>The contraband level enum, representing how</td>
 </tr>
+<<<<<<< HEAD
 <tr class="row-odd"><td>penalties</td>
 <td>dict</td>
 <td>Dictionary containing penalty for getting caught by police. Keys are ‘time_penalty’ and ‘money_penalty’</td>
+=======
+<tr class="row-odd"><td><p>difficulty</p></td>
+<td><p>int</p></td>
+<td><p>The difficulty enum, where 0 is easy and 2 is hard</p></td>
+>>>>>>> 0995d13d532804f043068f63cb43ccb5d0d193db
 </tr>
 </tbody>
 </table>

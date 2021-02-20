@@ -4,8 +4,8 @@ Add On Objects
 
 Add-On object occupies the addons attribute of your truck. You can only have one Add-On object at a time.
 
-The policeScanner Object
-########################
+The Police Scanner Object
+#########################
 
 The police scanner object helps you evade the cops. It will reduce the damage and time taken from the police event.
 Referenced as:
@@ -47,7 +47,7 @@ Level  Negation modifier   Cost
 =====  ================== =======
 
 
-The Rabbits foot Object
+The Rabbits Foot Object
 ########################
 
 The Rabbit's foot will bring you good luck in the event a disaster occuring. 

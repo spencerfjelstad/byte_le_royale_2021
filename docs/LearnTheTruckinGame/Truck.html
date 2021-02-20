@@ -109,6 +109,7 @@
 <li class="toctree-l1"><a class="reference internal" href="BodyObjects.html">Body Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TireObjects.html">Tires</a></li>
 <li class="toctree-l1"><a class="reference internal" href="enums.html">Enums</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Visualizer.html">Visualizer</a></li>
 </ul>
 
             
@@ -194,6 +195,7 @@ contracts with varying dificulty, with index 0 being the easy contract and index
 <th class="head">Description</th>
 </tr>
 </thead>
+<<<<<<< HEAD
 <tbody valign="top">
 <tr class="row-even"><td>current_node</td>
 <td><a class="reference internal" href="Node.html"><span class="doc">Node</span></a></td>
@@ -226,6 +228,44 @@ contracts with varying dificulty, with index 0 being the easy contract and index
 <tr class="row-odd"><td>renown</td>
 <td>int</td>
 <td>Your score. The game is won by having the most renown. Renown is gained by completing contracts</td>
+=======
+<tbody>
+<tr class="row-even"><td><p>contract_list</p></td>
+<td><p><a class="reference internal" href="Contract.html"><span class="doc">Contract</span></a> []</p></td>
+<td><p>A list of contracts you can pick from</p></td>
+</tr>
+<tr class="row-odd"><td><p>active_contract</p></td>
+<td><p><a class="reference internal" href="Contract.html"><span class="doc">Contract</span></a> or None</p></td>
+<td><p>The current contract you are working to complete</p></td>
+</tr>
+<tr class="row-even"><td><p>body</p></td>
+<td><p><a class="reference internal" href="BodyObjects.html"><span class="doc">Body Objects</span></a></p></td>
+<td><p>Your current body Object. Default is a BaseBodyObject. Body also stores how much gas your truck has</p></td>
+</tr>
+<tr class="row-odd"><td><p>addons</p></td>
+<td><p><a class="reference internal" href="AddonObjects.html"><span class="doc">Add On Objects</span></a></p></td>
+<td><p>Your current addon object. Default is a BaseUpgradeObject</p></td>
+</tr>
+<tr class="row-even"><td><p>tires</p></td>
+<td><p>int</p></td>
+<td><p>The TireEnum you are currently equiped with. Default is tire_normal. More at <a class="reference internal" href="TireObjects.html"><span class="doc">Tires</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>speed</p></td>
+<td><p>int</p></td>
+<td><p>The speed your truck is currently traveling at</p></td>
+</tr>
+<tr class="row-even"><td><p>health</p></td>
+<td><p>float</p></td>
+<td><p>The health of your truck.</p></td>
+</tr>
+<tr class="row-odd"><td><p>money</p></td>
+<td><p>int</p></td>
+<td><p>The amount of money you currently have.</p></td>
+</tr>
+<tr class="row-even"><td><p>renown</p></td>
+<td><p>int</p></td>
+<td><p>Your score. The game is won by having the most renown</p></td>
+>>>>>>> 0995d13d532804f043068f63cb43ccb5d0d193db
 </tr>
 </tbody>
 </table>
@@ -233,7 +273,7 @@ contracts with varying dificulty, with index 0 being the easy contract and index
 </div>
 <div class="section" id="truck-upgrade-negations">
 <h2>Truck Upgrade Negations<a class="headerlink" href="#truck-upgrade-negations" title="Permalink to this headline">¶</a></h2>
-<p>Each truck upgrade has the potential to negate some of the time and damage penalties from events. Listed below are all
+<p>Some truck upgrade has the potential to negate some of the time and damage penalties from events. Listed below are all
 Negations. For more on upgrades, you can visit <a class="reference internal" href="BodyObjects.html"><span class="doc">Body Objects</span></a> , <a class="reference internal" href="AddonObjects.html"><span class="doc">Add On Objects</span></a> , or <a class="reference internal" href="TireObjects.html"><span class="doc">Tires</span></a></p>
 <table border="1" class="docutils">
 <colgroup>

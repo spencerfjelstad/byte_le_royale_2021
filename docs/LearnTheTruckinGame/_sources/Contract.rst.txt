@@ -21,11 +21,3 @@ deadline           int                         The time you must complete the co
 difficulty         int                         The difficulty enum, where 0 is easy and 2 is hard
 ================  =========================== ===================
 
-Additional instance variables for the illegal contract object
-
-================  =========================== ===================
-Name               Type                        Description
-================  =========================== ===================
-level              int                         The contraband level enum, representing how 
-penalties          dict                        Dictionary containing penalty for getting caught by police. Keys are 'time_penalty' and 'money_penalty'
-================  =========================== ===================

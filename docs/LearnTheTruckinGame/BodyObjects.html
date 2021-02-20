@@ -110,6 +110,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="TireObjects.html">Tires</a></li>
 <li class="toctree-l1"><a class="reference internal" href="enums.html">Enums</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Visualizer.html">Visualizer</a></li>
 </ul>
 
             
@@ -179,16 +180,23 @@
             
   <div class="section" id="body-objects">
 <h1>Body Objects<a class="headerlink" href="#body-objects" title="Permalink to this headline">¶</a></h1>
-<p>Body objects occupy the body attribute in the truck object. You can only have one Body object at a time. Aditionally the body object also holds the
+<p>Body objects occupy the body attribute in the truck object. You can only have one Body object at a time. Additionally the body object also holds the
 current_gas attribute, which is how much gas remains in your tank, and the max_gas attribute, which defaults to 1.</p>
 <div class="section" id="the-tank-object">
 <h2>The Tank Object<a class="headerlink" href="#the-tank-object" title="Permalink to this headline">¶</a></h2>
 <p>The Tank object increases the max_gas attribute. Gas levels are stored as percents, IE level 1 holds 50% more gas than level 0.
 Not having the Tank object leaves your truck with a level 0 tank.
+<<<<<<< HEAD
 Referenced as:
 .. code-block:: python</p>
 <blockquote>
 <div>ObjectType.tank</div></blockquote>
+=======
+Referenced as:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ObjectType</span><span class="o">.</span><span class="n">tank</span>
+</pre></div>
+</div>
+>>>>>>> 0995d13d532804f043068f63cb43ccb5d0d193db
 <p>The levels are below</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -224,11 +232,19 @@ Referenced as:
 </div>
 <div class="section" id="the-sentry-gun-object">
 <h2>The Sentry Gun Object<a class="headerlink" href="#the-sentry-gun-object" title="Permalink to this headline">¶</a></h2>
+<<<<<<< HEAD
 <p>The sentry gun will shoot bolders out of the road as you pass. It reduces damage and time taken by the rockslide event.
 Referenced as:
 .. code-block:: python</p>
 <blockquote>
 <div>ObjectType.sentryGun</div></blockquote>
+=======
+<p>The sentry gun will shoot boulders out of the road as you pass. It reduces damage and time taken by the rockslide event.
+Referenced as:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ObjectType</span><span class="o">.</span><span class="n">sentryGun</span>
+</pre></div>
+</div>
+>>>>>>> 0995d13d532804f043068f63cb43ccb5d0d193db
 <p>The levels are below</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -264,11 +280,19 @@ Referenced as:
 </div>
 <div class="section" id="the-headlights-object">
 <h2>The Headlights Object<a class="headerlink" href="#the-headlights-object" title="Permalink to this headline">¶</a></h2>
+<<<<<<< HEAD
 <p>The headlights object will increases the brightness of your headlights causing animals to react more quickly if they are in the way.
 It reduces damage and time taken by the animal_in_the_road event.
 .. code-block:: python</p>
 <blockquote>
 <div>ObjectType.headlights</div></blockquote>
+=======
+<p>The headlights object will increases the brightness of your headlights allowing you to react to animals in the road quicker.
+It reduces damage and time taken by the animal_in_road event.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ObjectType</span><span class="o">.</span><span class="n">headlights</span>
+</pre></div>
+</div>
+>>>>>>> 0995d13d532804f043068f63cb43ccb5d0d193db
 <p>The levels are below</p>
 <table border="1" class="docutils">
 <colgroup>

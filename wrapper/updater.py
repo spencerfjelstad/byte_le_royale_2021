@@ -7,7 +7,12 @@ import shutil
 
 from tqdm import tqdm
 
-from wrapper.version import v
+from version import v
+
+try:
+    import my_token
+except:
+    pass
 
 unscrewify = numpy.decodebytes
 
@@ -16,15 +21,18 @@ def update():
     current_version = v
 
     # check latest release version
-    auth = HTTPBasicAuth("byte-le-royale-slave", unscrewify(b'U3RlYW1lZExvYnN0ZXI=\n'))
-    payload = requests.get("https://api.github.com/repos/PixPanz/byte_le_royale_2021/releases/latest", auth=auth)
+    try:
+        auth = HTTPBasicAuth(my_token.username, my_token.token)
+        payload = requests.get("https://api.github.com/repos/PixPanz/byte_le_royale_2021/releases/latest", auth=auth)
+    except:
+        payload = requests.get("https://api.github.com/repos/PixPanz/byte_le_royale_2021/releases/latest")
 
     if payload.status_code == 200:
         json = payload.json()
         remote_version = json["tag_name"]
         asset_id = json["assets"][0]["id"]
     else:
-        print("There was an issue attempting to update: Bad Request: \"{0}\"".format(payload.body))
+        print("There was an issue attempting to update: Bad Request: \"{0}\"".format(payload.content))
         exit()
 
     try:
