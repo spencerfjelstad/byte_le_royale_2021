@@ -5,6 +5,7 @@ from game.utils.generate_game import generate
 import game.config
 import argparse
 import subprocess
+import updater
 
 if __name__ == '__main__':
 
@@ -33,6 +34,9 @@ if __name__ == '__main__':
     
     # Visualizer Subparser
     vis_subpar = spar.add_parser('visualizer', aliases=['v'], help='Visualizes last run game')
+
+    # Updating Subparser
+    upd_subpar = spar.add_parser('update', aliases=['u'], help='Updates your game to match the newest version if possible')
 
     # Parse Command Line
     par_args = par.parse_args()
@@ -70,13 +74,16 @@ if __name__ == '__main__':
         # Check operating system and run corresponding visualizer
         if plat == "win32":
             print("You're running Windows")
-            subprocess.call(["../game/visualizer/visualizer.exe"])
+            subprocess.call(["./visualizer.exe"])
         elif plat == "linux":
             print("You're a linux man I see.")
             subprocess.call(["./visualizer.x86_64"])
         elif plat == "darwin":
-            print("Literally just straight up fuck you man")
+            print("We don't currently have visualizer support for Mac, we apologize. Give us a poke and we'll see what can do.")
 
+    # Attempt to update the game
+    elif action in ['update', 'u']:
+        updater.update()
     
     # Print help if no arguments are passed
     if len(sys.argv) == 1:

@@ -6,6 +6,7 @@ class Client(UserClient):
     # Variables and info you want to save between turns go here
     def __init__(self):
         super().__init__()
+        self.turn = 0
 
     def team_name(self):
         """

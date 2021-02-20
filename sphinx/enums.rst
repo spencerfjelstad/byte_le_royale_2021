@@ -172,17 +172,24 @@ TireType
 ================== ==============
 TireType            Number
 ================== ==============
-level_zero              0
-level_one               1
-level_two               2
-level_three             3
-================== ==============
 
 ContraBandLevel
 ################
 
 ================== ==============
 ContraBandLevel        Number
+================== ==============
+    tire_normal          0
+    tire_econ            1
+    tire_sticky          2
+    monster_truck        3
+================== ==============
+
+ContrabandLevel
+################
+
+================== ==============
+ContrabandLevel        Number
 ================== ==============
 level_zero              0
 level_one               1

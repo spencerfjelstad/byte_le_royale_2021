@@ -114,6 +114,7 @@
 <li class="toctree-l1"><a class="reference internal" href="BodyObjects.html">Body Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TireObjects.html">Tires</a></li>
 <li class="toctree-l1"><a class="reference internal" href="enums.html">Enums</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Visualizer.html">Visualizer</a></li>
 </ul>
 
             
@@ -185,15 +186,13 @@
 <h1>Taking Action<a class="headerlink" href="#taking-action" title="Permalink to this headline">¶</a></h1>
 <p>A critical part of building your bot is taking actions. The actions you can take are listed below.
 Only one action can be set per turn. All actions are set by calling</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">enum</span><span class="p">,</span> <span class="p">{</span><span class="n">option</span><span class="p">})</span>
-</pre></div>
-</div>
 <div class="section" id="selecting-a-contract">
 <h2>Selecting a contract<a class="headerlink" href="#selecting-a-contract" title="Permalink to this headline">¶</a></h2>
 <p>A list of contracts will be generated every turn. These contracts can be viewed in truck.contract_list
-Once you have chosen a contract, pass the select contract enum and the index of the contract which you
-wish to select. Selecting a contract takes one hour.</p>
+Once you have chosen a contract, pass the select contract enum and either the index of the contract which you
+wish to select or the contract object. Selecting a contract takes one hour.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">select_contract</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">select_contract</span><span class="p">,</span> <span class="n">chosen_contract</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Will set your contract to the contract at index 0</p>
@@ -207,7 +206,11 @@ simply calculated by (road.length / player.truck.get_current_speed())</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">select_route</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Will take your road at index 0</p>
+<p>Will take your road at index 0. The MPG for a given speed is</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getMPG</span><span class="p">(</span><span class="n">speed</span><span class="p">):</span>
+   <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.00249444</span><span class="o">*</span><span class="p">(</span><span class="n">speed</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span><span class="o">+</span><span class="p">(</span><span class="o">.</span><span class="mi">2520296</span><span class="o">*</span><span class="n">speed</span><span class="p">)</span><span class="o">+.</span><span class="mi">22752</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="buying-gas">
 <h2>Buying Gas<a class="headerlink" href="#buying-gas" title="Permalink to this headline">¶</a></h2>
@@ -217,7 +220,7 @@ a flat 5 hours.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">buy_gas</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Will fill your tank (or buy the most you can afford</p>
+<p>Will fill your tank (or buy the most you can afford)</p>
 </div>
 <div class="section" id="repairing">
 <h2>Repairing<a class="headerlink" href="#repairing" title="Permalink to this headline">¶</a></h2>
@@ -260,7 +263,11 @@ Increasing your speed takes one hour.</p>
 </div>
 <div class="section" id="failure-to-action">
 <h2>Failure to action<a class="headerlink" href="#failure-to-action" title="Permalink to this headline">¶</a></h2>
-<p>Not taking any action is a valid action. It takes one hour to take no action.</p>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+Not taking any action is a valid action. It takes one hour to take no action.
+=======
+Not taking any action is a valid action. It takes one hour to take no action.
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 7b7d723d3ce5042d2658335e2f1d90b02fc9c920</p>
 </div>
 </div>
 
