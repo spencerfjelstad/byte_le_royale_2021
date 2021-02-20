@@ -87,11 +87,11 @@ class Client(UserClient):
     def chooseBestContract2(self, truck, contractList):
         bestIndex = -1
         for index in range(len(contractList)):
-            if self.turn < self.low and contractList[index]['contract'].difficulty == ContractDifficulty.easy:
+            if self.turn < self.low and contractList[index].difficulty == ContractDifficulty.easy:
                 bestIndex = index
-            elif self.turn < self.high and contractList[index]['contract'].difficulty == ContractDifficulty.medium:
+            elif self.turn < self.high and contractList[index].difficulty == ContractDifficulty.medium:
                 bestIndex = index
-            elif self.turn > self.high and contractList[index]['contract'].difficulty == ContractDifficulty.hard:
+            elif self.turn > self.high and contractList[index].difficulty == ContractDifficulty.hard:
                 bestIndex = index
         #print(contractList[bestIndex]['contract'].difficulty == ContractDifficulty.easy)
         return bestIndex
@@ -126,7 +126,7 @@ class Client(UserClient):
         :param world:       Generic world information
         """
         self.turn += 1
-        if(truck.active_contract is None and ActionType.select_contract not in self.queue):
+        if(truck.active_contract is None):
             # Select contract
             ind = self.chooseBestContract2(truck, truck.contract_list)
             actions.set_action(ActionType.select_contract, ind)
