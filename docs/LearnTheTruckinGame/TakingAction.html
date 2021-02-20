@@ -101,6 +101,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#upgrading">Upgrading</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#switching-tires">Switching Tires</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#choosing-a-speed">Choosing a speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#failure-to-action">Failure to action</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Truck.html">The Truck Object</a></li>
@@ -112,6 +113,7 @@
 <li class="toctree-l1"><a class="reference internal" href="AddonObjects.html">Add On Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="BodyObjects.html">Body Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TireObjects.html">Tires</a></li>
+<li class="toctree-l1"><a class="reference internal" href="enums.html">Enums</a></li>
 </ul>
 
             
@@ -190,7 +192,7 @@ Only one action can be set per turn. All actions are set by calling</p>
 <h2>Selecting a contract<a class="headerlink" href="#selecting-a-contract" title="Permalink to this headline">¶</a></h2>
 <p>A list of contracts will be generated every turn. These contracts can be viewed in truck.contract_list
 Once you have chosen a contract, pass the select contract enum and the index of the contract which you
-wish to select.</p>
+wish to select. Selecting a contract takes one hour.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">select_contract</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -200,7 +202,8 @@ wish to select.</p>
 <h2>Moving<a class="headerlink" href="#moving" title="Permalink to this headline">¶</a></h2>
 <p>Moving requires selecting a road. The list of roads you can select is in truck.current_node.roads.
 Simply pass the road you wish to travel to by passing the index of the road you wish to take. Each
-road will lead to the same node.</p>
+road will lead to the same node. Please note that the amount of time it takes to travel a road is
+simply calculated by (road.length / player.truck.get_current_speed())</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">select_route</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -209,7 +212,8 @@ road will lead to the same node.</p>
 <div class="section" id="buying-gas">
 <h2>Buying Gas<a class="headerlink" href="#buying-gas" title="Permalink to this headline">¶</a></h2>
 <p>You can buy gas at every node. Gas prices vary from node to node. There are no arguments passed to the
-buy gas method, it will either fill up your tank or buy the most gas you can afford.</p>
+buy gas method, it will either fill up your tank or buy the most gas you can afford. Buying gas also takes
+a flat 5 hours.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">buy_gas</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -219,7 +223,7 @@ buy gas method, it will either fill up your tank or buy the most gas you can aff
 <h2>Repairing<a class="headerlink" href="#repairing" title="Permalink to this headline">¶</a></h2>
 <p>Throughout the game your truck will take damage. Similar to buying gas, Repair prices will fluctuate from
 node to node. No arguments are required, and the truck will either fully repair or repair the most you can
-afford.</p>
+afford. Repairing a truck takes 10 hours.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">repair</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -229,7 +233,7 @@ afford.</p>
 <h2>Upgrading<a class="headerlink" href="#upgrading" title="Permalink to this headline">¶</a></h2>
 <p>Upgrades can negate damage and time penalties from events. There are two upgrade slots (body, addons)
 which each have three different upgrade types. If you don’t have enough money, the upgrade will be ignored. Switching
-from one object to another will result in a complete loss of the former upgrade.</p>
+from one object to another will result in a complete loss of the former upgrade. Upgrading takes 4 hours.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">upgrade</span><span class="p">,</span> <span class="n">Objectype</span><span class="o">.</span><span class="n">policeScanner</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -237,20 +241,26 @@ from one object to another will result in a complete loss of the former upgrade.
 </div>
 <div class="section" id="switching-tires">
 <h2>Switching Tires<a class="headerlink" href="#switching-tires" title="Permalink to this headline">¶</a></h2>
-<p>Tires are like upgrades, but they don’t have any levels. The syntax is also slightly different</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ObjectType</span><span class="o">.</span><span class="n">tires</span><span class="p">,</span> <span class="n">TireType</span><span class="o">.</span><span class="n">tire_econ</span><span class="p">)</span>
+<p>Tires are like upgrades, but they don’t have any levels. The syntax is also slightly different. Switching tires also
+takes 4 hours.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">switch_tire</span><span class="p">,</span> <span class="n">TireType</span><span class="o">.</span><span class="n">tire_econ</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Will switch your tires to the tire_econ type</p>
 </div>
 <div class="section" id="choosing-a-speed">
 <h2>Choosing a speed<a class="headerlink" href="#choosing-a-speed" title="Permalink to this headline">¶</a></h2>
-<p>You can set your trucks speed to an integer value between 1 and 80 MPH. Going faster will allow you to complete more
-contracts, but will also increase the probability of events happening. Your speed will also affect your fuel efficiency.</p>
+<p>You can set your trucks speed to an integer value between 1 and 100 MPH. Going faster will allow you to complete more
+contracts, but will also increase the probability of events happening. Your speed will also affect your fuel efficiency.
+Increasing your speed takes one hour.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">set_speed</span><span class="p">,</span> <span class="mi">66</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Will set your trucks speed to 66 mph</p>
+</div>
+<div class="section" id="failure-to-action">
+<h2>Failure to action<a class="headerlink" href="#failure-to-action" title="Permalink to this headline">¶</a></h2>
+<p>Not taking any action is a valid action. It takes one hour to take no action.</p>
 </div>
 </div>
 
