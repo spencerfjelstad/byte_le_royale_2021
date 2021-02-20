@@ -1,5 +1,5 @@
 ================
-Region
+Regions
 ================
 
 Reigons are descriptors for the region you are travelling in and will modify the rewards given by your contract.

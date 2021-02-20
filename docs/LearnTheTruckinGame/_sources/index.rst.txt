@@ -23,6 +23,7 @@ or runs out of gas. The penalties from events can be mitigated by upgrading your
    TakingAction
    Truck
    Contract
+   Regions
    Events
    GameMap
    Node
@@ -32,6 +33,7 @@ or runs out of gas. The penalties from events can be mitigated by upgrading your
    TireObjects
    enums
    Visualizer
+
   
 
 
