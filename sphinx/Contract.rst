@@ -2,7 +2,7 @@
 Contract
 ===================
 
-Contracts come in easy, medium and hard versions, which impact their rewards, renown, length and completabiltiy. 
+Contracts come in easy, medium and hard versions, which impact their rewards, renown, length and completability. 
 Easy contracts give less renown and reward, but are also shorter. The opposite is true with hard contracts. Please note that 
 in contract list you are given a dictionary where ['map'] is the game_map :doc:`./GameMap` you need to traverse to complete the contract
 and ['contract'] is the contract object.
@@ -28,6 +28,6 @@ region             Region.Enum                 The type of region the contract w
 money_reward       int                         The amount of money you will recieve from completing this contract
 renown_reward      int                         The amount of renown you will recieve from completing this contract
 deadline           int                         The time you must complete the contract by. Decrements Automatically
-difficulty         int                         The difficulty enum, where 1 is easy and 3 is hard
+difficulty         int                         The difficulty enum, where 0 is easy and 2 is hard
 ================  =========================== ===================
 

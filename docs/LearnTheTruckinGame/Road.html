@@ -101,13 +101,14 @@
 <li class="toctree-l1"><a class="reference internal" href="Node.html">Node</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Road</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#instance-variables">Instance variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#road-type-modifiers">Road Type Modifiers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#roadtype-modifiers">RoadType Modifiers</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="AddonObjects.html">Add On Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="BodyObjects.html">Body Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TireObjects.html">Tires</a></li>
 <li class="toctree-l1"><a class="reference internal" href="enums.html">Enums</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Visualizer.html">Visualizer</a></li>
 </ul>
 
             
@@ -208,15 +209,17 @@
 </tbody>
 </table>
 </div>
-<div class="section" id="road-type-modifiers">
-<h2>Road Type Modifiers<a class="headerlink" href="#road-type-modifiers" title="Permalink to this headline">¶</a></h2>
-<p>There are 6 Roadtypes, mountain_road, forest_road, tundra_road, city_road, highway, and interstate. Road type enumerations can be accessed by RoadType.&lt;RoadType&gt;</p>
+<div class="section" id="roadtype-modifiers">
+<h2>RoadType Modifiers<a class="headerlink" href="#roadtype-modifiers" title="Permalink to this headline">¶</a></h2>
+<p>There are 6 RoadTypes, mountain_road, forest_road, tundra_road, city_road, highway, and interstate. RoadType enumerations can be accessed by RoadType.road_type. For example, RoadType.highway</p>
+<p><strong>Length</strong></p>
+<p>Some roads are longer than others. These roads will take longer to travel, so keep that in mind when choosing which road to go down! This is not determined by road type.</p>
 <p><strong>Potential Events</strong></p>
-<p>The potential events that can happen on a given road type are listed below, in order of how often they occur. More on events can be seen at <a class="reference internal" href="Events.html"><span class="doc">Events</span></a></p>
+<p>The potential events that can happen on a given RoadType are listed below. Once an event occurs, each road type has an order of which event is most likely to occur. For example, on the tundra road, an icy road is more likely to occur than a rock slide. Keep in mind, some events are more dangerous than others! It might be best to avoid those events as much as possible. More on events can be seen at <a class="reference internal" href="Events.html"><span class="doc">Events</span></a></p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 21%" />
-<col style="width: 79%" />
+<col style="width: 22%" />
+<col style="width: 78%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Road</p></th>
@@ -224,23 +227,23 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>montain_road</p></td>
-<td><p>rock_slide, animal_in_road, icy_road, police, none</p></td>
+<tr class="row-even"><td><p>mountain_road</p></td>
+<td><p>rock_slide, animal_in_road, icy_road, police</p></td>
 </tr>
 <tr class="row-odd"><td><p>forest_road</p></td>
-<td><p>animal_in_road, police, rock_slide, icy_road, none</p></td>
+<td><p>animal_in_road, police, rock_slide, icy_road</p></td>
 </tr>
 <tr class="row-even"><td><p>tundra_road</p></td>
-<td><p>icy_road, police, rock_slide, none</p></td>
+<td><p>icy_road, police, rock_slide</p></td>
 </tr>
 <tr class="row-odd"><td><p>city_road</p></td>
-<td><p>bandits, police, traffic, none</p></td>
+<td><p>bandits, police, traffic</p></td>
 </tr>
 <tr class="row-even"><td><p>highway</p></td>
-<td><p>police, traffic, none</p></td>
+<td><p>police, traffic</p></td>
 </tr>
 <tr class="row-odd"><td><p>interstate</p></td>
-<td><p>traffic, police, none</p></td>
+<td><p>traffic, police</p></td>
 </tr>
 </tbody>
 </table>

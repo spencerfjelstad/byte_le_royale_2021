@@ -178,11 +178,11 @@ level_two               2
 level_three             3
 ================== ==============
 
-ContraBandLevel
+ContrabandLevel
 ################
 
 ================== ==============
-ContraBandLevel        Number
+ContrabandLevel        Number
 ================== ==============
 level_zero              0
 level_one               1
