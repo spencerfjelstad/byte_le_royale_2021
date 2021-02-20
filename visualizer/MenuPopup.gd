@@ -1,11 +1,7 @@
 extends Popup
 
-#onready var player = get_node("/root/Root/Player")
 var already_paused
 var selected_menu
-
-#func _ready():
-	#player = get_node("/root/Root/Player")
 	
 func change_menu_color():
 	$Resume.color = Color.gray
@@ -29,7 +25,6 @@ func _input(event):
 			selected_menu = 0
 			change_menu_color()
 			# Show popup
-			#player.set_process_input(false)
 			popup()
 	else:
 		if Input.is_action_just_pressed("ui_down"):
