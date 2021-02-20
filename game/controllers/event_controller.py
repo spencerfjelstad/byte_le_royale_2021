@@ -43,13 +43,12 @@ class EventController(Controller):
                     GameStats.costs_and_effectiveness[ObjectType.policeScanner]['effectiveness'][player.truck.addons.level] 
                     if isinstance(player.truck.addons, PoliceScanner) else 0
             )
-
-            level = player.truck.active_contract.level
-            risk = GameStats.illegal_contract_stats['risk'][level]*(1-mitigation)
+            lvl = player.truck.active_contract.level
+            risk = GameStats.illegal_contract_stats['risk'][lvl]*(1-mitigation)
             caught = random.choices([True, False], weights=[risk, 1-risk], k=1)[0]
             if caught:
-                player.truck.money -= GameStats.illegal_contract_stats['money_penalty'][level]
-                player.time -= GameStats.illegal_contract_stats['time_penalty'][level]
+                player.truck.money -= player.truck.active_contract.penalties['money_penalty']
+                player.time -= player.truck.active_contract.penalties['time_penalty']
                 player.truck.active_contract = None
             return caught
         else:
