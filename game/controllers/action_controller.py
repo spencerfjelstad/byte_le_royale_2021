@@ -142,7 +142,7 @@ class ActionController(Controller):
             else:
                 # Otherwise, do the maximum repairs
                 player.truck.money = 0
-                player.truck.health += maxPercent
+                player.truck.health += maxPercent * 100
 
     def upgrade_body(self, player, objEnum, typ):
         if objEnum is ObjectType.tank:
