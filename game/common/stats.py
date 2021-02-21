@@ -251,7 +251,7 @@ class GameStats:
     truck_starting_max_gas = 1
 
     def getMPG(speed):
-        return (-0.002649444*(speed**2))+(.2520296*speed)+.22752
+        return (-0.00249444*(speed**2))+(.2520296*speed)+.22752
 
     tire_switch_cost = 300
 

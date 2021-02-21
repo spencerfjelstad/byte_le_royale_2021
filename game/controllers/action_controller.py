@@ -114,7 +114,8 @@ class ActionController(Controller):
         gasPrice = player.truck.active_contract.game_map.current_node.gas_price
         if(player.truck.money > 0):
             # Calculate what percent empty is the gas tank
-            percentGone = (1 - (round(player.truck.body.current_gas, 2) / player.truck.body.max_gas))
+            player.truck.body.update()
+            percentGone = (1 - (round(player.truck.body.current_gas, 2) / (player.truck.body.max_gas)))
             # Calculate the percentage the player could potentially buy
             maxPercent = round((player.truck.money / gasPrice) / 100, 2)
             if(percentGone < maxPercent):
@@ -141,7 +142,7 @@ class ActionController(Controller):
             else:
                 # Otherwise, do the maximum repairs
                 player.truck.money = 0
-                player.truck.health += maxPercent
+                player.truck.health += maxPercent * 100
 
     def upgrade_body(self, player, objEnum, typ):
         if objEnum is ObjectType.tank:

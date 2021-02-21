@@ -207,7 +207,11 @@ simply calculated by (road.length / player.truck.get_current_speed())</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">select_route</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Will take your road at index 0</p>
+<p>Will take your road at index 0. The MPG for a given speed is</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getMPG</span><span class="p">(</span><span class="n">speed</span><span class="p">):</span>
+   <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.00249444</span><span class="o">*</span><span class="p">(</span><span class="n">speed</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span><span class="o">+</span><span class="p">(</span><span class="o">.</span><span class="mi">2520296</span><span class="o">*</span><span class="n">speed</span><span class="p">)</span><span class="o">+.</span><span class="mi">22752</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="buying-gas">
 <h2>Buying Gas<a class="headerlink" href="#buying-gas" title="Permalink to this headline">¶</a></h2>
@@ -243,7 +247,7 @@ from one object to another will result in a complete loss of the former upgrade.
 <h2>Switching Tires<a class="headerlink" href="#switching-tires" title="Permalink to this headline">¶</a></h2>
 <p>Tires are like upgrades, but they don’t have any levels. The syntax is also slightly different. Switching tires also
 takes 4 hours.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">switch_tire</span><span class="p">,</span> <span class="n">TireType</span><span class="o">.</span><span class="n">tire_econ</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">change_tires</span><span class="p">,</span> <span class="n">TireType</span><span class="o">.</span><span class="n">tire_econ</span><span class="p">)</span><span class="n">switch_tires</span>
 </pre></div>
 </div>
 <p>Will switch your tires to the tire_econ type</p>
