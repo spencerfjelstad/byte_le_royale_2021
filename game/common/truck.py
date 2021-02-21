@@ -4,6 +4,7 @@ from game.common.game_object import GameObject
 from game.common.enums import *
 from game.common.road import *
 from game.common.node import Node
+from game.common.illegal_contract import IllegalContract
 from game.common.TrUpgrades.BodyObjects.tank import Tank
 from game.common.TrUpgrades.BodyObjects.headlights import HeadLights
 from game.common.TrUpgrades.BodyObjects.sentry_gun import SentryGun
@@ -55,6 +56,9 @@ class Truck(GameObject):
         else:
             cost = None
         return cost
+
+    def is_illegal_contract(self, contract):
+        return isinstance(contract, IllegalContract)
 
     def to_json(self):
         data = super().to_json()
