@@ -1,3 +1,4 @@
+import sys
 import base64 as numpy
 import math
 import os
@@ -20,6 +21,15 @@ def update():
     # check version number
     current_version = v
 
+    # check operating system
+    plat = sys.platform
+    vis_os = 1
+    if plat == "win32":
+        vis_os = 1
+    elif plat == "linux":
+        vis_os = 2
+    else: vis_os = 1
+
     # check latest release version
     try:
         auth = HTTPBasicAuth(my_token.username, my_token.token)
@@ -31,6 +41,7 @@ def update():
         json = payload.json()
         remote_version = json["tag_name"]
         asset_id = json["assets"][0]["id"]
+        vis_id = json["assets"][vis_os]["id"]
     else:
         print("There was an issue attempting to update: Bad Request: \"{0}\"".format(payload.content))
         exit()
@@ -58,16 +69,31 @@ def update():
     if not os.path.exists("br_updates"):
         os.makedirs("br_updates")
 
-    remote_url = "https://api.github.com/repos/PixPanz/byte_le_royale_2021/releases/assets/{0}".format(asset_id)
-    local_file = "br_updates/v{0}.pyz".format(remote_version)
+    remote_launcher_url = "https://api.github.com/repos/PixPanz/byte_le_royale_2021/releases/assets/{0}".format(asset_id)
+    local_launcher_file = "br_updates/v{0}.pyz".format(remote_version)
 
-    if not download_file(local_file, remote_url, auth):
-        print("Update failed, please try again later.")
+    remote_visualizer_url = "https://api.github.com/repos/PixPanz/byte_le_royale_2021/releases/assets/{0}".format(vis_id)
+    local_visualizer_file = "br_updates/visualizer"
+
+    if not download_file(local_launcher_file, remote_launcher_url, auth):
+        print("Launcher update failed, please try again later.")
+        exit()
+    
+    if not download_file(local_visualizer_file, remote_visualizer_url, auth):
+        print("Visualizer update failed, please try again later.")
         exit()
 
+    # update
     old_file = "launcher.pyz"
     print("Replacing {0} with updated launcher.".format(old_file))
-    shutil.copyfile(local_file, old_file)
+    shutil.copyfile(local_launcher_file, old_file)
+
+    if vis_os == 1: old_file = "visualizer.exe"
+    elif vis_os == 2: old_file = "visualizer.x86_64"
+    else: old_file = "visualizer.exe"
+    print("Replacing {0} with updated visualizer.".format(old_file))
+    shutil.copyfile(local_visualizer_file, old_file)
+
     shutil.rmtree('br_updates')
 
     print("Update complete!")

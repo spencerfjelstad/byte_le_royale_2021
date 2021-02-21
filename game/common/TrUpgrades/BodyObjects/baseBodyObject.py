@@ -5,8 +5,8 @@ from game.common.enums import ObjectType, TankLevel
 class BaseBodyObject(BaseUpgradeObject):
     def __init__(self,objType, lev):
         super().__init__(objType, lev)
-        self.current_gas = GameStats.truck_starting_gas 
-        self.max_gas = GameStats.truck_starting_gas
+        self.current_gas = GameStats.costs_and_effectiveness[ObjectType.tank]['effectiveness'][0] * GameStats.truck_starting_gas
+        self.max_gas = GameStats.costs_and_effectiveness[ObjectType.tank]['effectiveness'][0] * GameStats.truck_starting_gas
 
     def update(self):
         self.max_gas = GameStats.costs_and_effectiveness[ObjectType.tank]['effectiveness'][0] * GameStats.truck_starting_gas
@@ -23,7 +23,7 @@ class BaseBodyObject(BaseUpgradeObject):
         self.max_gas = data['max_gas']
 
     def __str__(self):
-        p = f"""gas: {self.gas},
+        p = f"""gas: {self.current_gas},
                 Max Gas: {self.max_gas}
             """
         return p

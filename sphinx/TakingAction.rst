@@ -10,13 +10,14 @@ Selecting a contract
 ####################
 
 A list of contracts will be generated every turn. These contracts can be viewed in truck.contract_list
-Once you have chosen a contract, pass the select contract enum and the index of the contract which you
-wish to select. Selecting a contract takes one hour.
+Once you have chosen a contract, pass the select contract enum and either the index of the contract which you
+wish to select or the contract object. Selecting a contract takes one hour.
 
 
 .. code-block:: python
 
     actions.set_action(ActionType.select_contract, 0)
+    actions.set_action(ActionType.select_contract, chosen_contract)
 
 Will set your contract to the contract at index 0
 
@@ -33,7 +34,12 @@ simply calculated by (road.length / player.truck.get_current_speed())
 
     actions.set_action(ActionType.select_route, 0)
 
-Will take your road at index 0
+Will take your road at index 0. The MPG for a given speed is 
+
+.. code-block:: python
+
+     def getMPG(speed):
+        return (-0.00249444*(speed**2))+(.2520296*speed)+.22752
 
 
 Buying Gas
@@ -85,7 +91,7 @@ takes 4 hours.
 
 .. code-block:: python
 
-   actions.set_action(ActionType.switch_tire, TireType.tire_econ)
+   actions.set_action(ActionType.change_tires, TireType.tire_econ)switch_tires
 
 Will switch your tires to the tire_econ type
 

@@ -30,6 +30,7 @@ var upg_addons_lvl = ""
 var upg_body = ""
 var upg_body_lvl = ""
 var upg_tires = ""
+var team_name = ""
 
 var road_dict = {
 	"1": "visualizer/assets/road_type/mountain_road.png",
@@ -90,7 +91,7 @@ func _on_Timer_timeout():
 	var file_path = "./logs/turn_" + ("%04d" % turn) + ".json"
 	if(!file.file_exists(file_path)):
 		$GameOver.visible = true
-		$GameOver.game_over = true
+		$GameOver.game_over()
 		
 		# Set game over screen variables
 		$GameOver/lblFinalRenown.text = "Renown: " + renown
@@ -103,6 +104,8 @@ func _on_Timer_timeout():
 		$GameOver/lblFinalAddOns.text = "Add Ons: " + upgrades_to_string(upg_addons) + " LVL " + str(upg_addons_lvl)
 		$GameOver/lblFinalBody.text = "Body: " + upgrades_to_string(upg_body) + " LVL " + str(upg_body_lvl)
 		$GameOver/lblFinalTires.text = "Tires: " + tires_to_string(upg_tires)
+		
+		$GameOver/lblFinalTeamName.text = "Team Name: " + team_name
 		
 	else:
 		file.open(file_path, file.READ)
@@ -160,6 +163,8 @@ func _on_Timer_timeout():
 	$lblRenown.text = renown
 	
 	$lblTurn.text = "Turn: " + str(turn)
+	team_name = str(data.get("Team Name"))
+	$lblTeamName.text = team_name
 	
 	var road_type = data.get("selected_route")
 	change_road(road_type)

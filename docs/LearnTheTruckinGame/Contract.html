@@ -40,7 +40,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Events" href="Events.html" />
+    <link rel="next" title="Regions" href="Regions.html" />
     <link rel="prev" title="The Truck Object" href="Truck.html" /> 
 </head>
 
@@ -99,6 +99,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#instance-variables">Instance variables</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="Regions.html">Regions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Events.html">Events</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GameMap.html">Game Map</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Node.html">Node</a></li>
@@ -177,15 +178,8 @@
             
   <div class="section" id="contract">
 <h1>Contract<a class="headerlink" href="#contract" title="Permalink to this headline">¶</a></h1>
-<p>Contracts come in easy, medium and hard versions, which impact their rewards, renown, length and completability.
-Easy contracts give less renown and reward, but are also shorter. The opposite is true with hard contracts. Please note that
-in contract list you are given a dictionary where [‘map’] is the game_map <a class="reference internal" href="GameMap.html"><span class="doc">Game Map</span></a> you need to traverse to complete the contract
-and [‘contract’] is the contract object.</p>
-<p>EX:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contractList</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="s1">&#39;contract&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
-<p>will access a contract object at an associated index</p>
+<p>Contracts come in easy, medium and hard versions, which impact their rewards, renown, length and completabiltiy.
+Easy contracts give less renown and reward, but are also shorter. The opposite is true with hard contracts. Contract also contains the map <a class="reference internal" href="GameMap.html"><span class="doc">Game Map</span></a> you need to traverse to complete the contract. Illegal contracts have all of the properties of a regular contract, however they also introduce the risk of getting caught by police. If caught you will receive a money penalty and a time penalty, as well as lose the contract. To compensate for this additional risk, the money and renown you receive for completing an illegal contract will be much greater than a normal contract. An illegal contract’s risk can be reduced by upgrading the police scanner.</p>
 <div class="section" id="instance-variables">
 <h2>Instance variables<a class="headerlink" href="#instance-variables" title="Permalink to this headline">¶</a></h2>
 <p>Below are the listed instance variables for the contract object</p>
@@ -228,6 +222,30 @@ and [‘contract’] is the contract object.</p>
 </tr>
 </tbody>
 </table>
+<p>Additional instance variables for the illegal contract object</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 18%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>level</p></td>
+<td><p>int</p></td>
+<td><p>The contraband level enum, representing police risk from 0 to 2</p></td>
+</tr>
+<tr class="row-odd"><td><p>penalties</p></td>
+<td><p>dict</p></td>
+<td><p>Dictionary containing penalty for getting caught by police. Keys are ‘time_penalty’ and ‘money_penalty’</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
@@ -237,7 +255,7 @@ and [‘contract’] is the contract object.</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="Events.html" class="btn btn-neutral float-right" title="Events" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Regions.html" class="btn btn-neutral float-right" title="Regions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="Truck.html" class="btn btn-neutral float-left" title="The Truck Object" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
