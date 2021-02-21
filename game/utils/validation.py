@@ -24,6 +24,8 @@ def verify_code(filename):
                     illegal_imports.append(module)
 
                 line.remove('from')
+                if 'import' in line:
+                    line.remove('import')
             elif 'import' in line:
                 module = line[line.index('import') + 1]
                 if module not in ALLOWED_MODULES:
