@@ -61,10 +61,13 @@ class ActionController(Controller):
             player.time -= GameStats.upgrade_time_penalty
             return ActionType.change_tires
         elif(player_action == ActionType.set_speed):
-            #This is an ActionType because the user client cannot directly influence truck values. 
-            player.truck.set_current_speed(player.action.action_parameter)
-            player.time -= 1
-            return ActionType.set_speed
+            if isinstance(player.action.action_parameter, int):
+                #This is an ActionType because the user client cannot directly influence truck values. 
+                player.truck.set_current_speed(player.action.action_parameter)
+                player.time -= 1
+                return ActionType.set_speed
+            else:
+                raise ValueError("Invalid speed parameter")
         else:
             self.print("Action aborted: no active contract!")
             player.time -= 1
@@ -111,7 +114,8 @@ class ActionController(Controller):
         gasPrice = player.truck.active_contract.game_map.current_node.gas_price
         if(player.truck.money > 0):
             # Calculate what percent empty is the gas tank
-            percentGone = (1 - (round(player.truck.body.current_gas, 2) / player.truck.body.max_gas))
+            player.truck.body.update()
+            percentGone = (1 - (round(player.truck.body.current_gas, 2) / (player.truck.body.max_gas)))
             # Calculate the percentage the player could potentially buy
             maxPercent = round((player.truck.money / gasPrice) / 100, 2)
             if(percentGone < maxPercent):
