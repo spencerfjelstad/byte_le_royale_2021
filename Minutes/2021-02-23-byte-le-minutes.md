@@ -1,0 +1,33 @@
+# 02-23-2021-Byte-le-Minutes:
+
+# Postmortem:
+- Similar level of issues to Market Space
+    - Not the worst, but close. Lots of room for improvement.
+- Issues
+    - Wren left early, only one with strong idea of final game design
+        - In future design should be discussed in depth at start of development
+        - All devs should understand plan and goals for game
+    - Scrimmage Server
+        - Major problems, needs rework or rewrite
+    - Lack of accountability
+        - Need more active role/better mentoring
+        - Hierarchy brought up
+            - Could result in conflict of egos
+        - Potential for scrum master/project manager role
+            - Create project guidelines, scrum master responsible for ensuring process is followed
+            - May not solve development issues
+    - Development Timeline
+        - Critical components of game need to be finished sooner
+        - Development should continue over the summer
+        - Ideally allow several months for testing and balancing
+    - Pull Requests
+        - Need to be stricter
+        - Weekly PR
+            - Review, identify issues
+            - Game must run, no partial implementations merged
+            - Unit tests put in place when introducing new feature
+                - Test abnormal input
+        - More people need to review
+            - Tag at least two people to review
+    - Visualizer 
+        - Needs to be started earlier
