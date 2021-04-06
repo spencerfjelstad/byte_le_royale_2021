@@ -94,7 +94,7 @@ size = 24
 font_data = ExtResource( 6 )
 
 [sub_resource type="DynamicFont" id=19]
-size = 33
+size = 32
 font_data = ExtResource( 6 )
 
 [sub_resource type="DynamicFont" id=17]
@@ -237,12 +237,12 @@ __meta__ = {
 }
 
 [node name="lblTeamName" type="Label" parent="."]
-margin_left = 564.444
-margin_top = 735.657
-margin_right = 873.444
-margin_bottom = 784.657
+margin_left = 560.0
+margin_top = 735.0
+margin_right = 860.0
+margin_bottom = 784.0
 custom_fonts/font = SubResource( 11 )
-custom_colors/font_color = Color( 0.658824, 0.415686, 0.321569, 1 )
+custom_colors/font_color = Color( 0.505882, 0.278431, 0.223529, 1 )
 clip_text = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -489,21 +489,16 @@ custom_fonts/font = SubResource( 16 )
 text = "Body:"
 autowrap = true
 
-[node name="GameOverTimer" type="Timer" parent="GameOver"]
-
 [node name="lblFinalTeamName" type="Label" parent="GameOver"]
-anchor_top = -0.0353554
-anchor_bottom = -0.0353554
 margin_left = -440.0
-margin_top = -201.0
-margin_right = 758.0
-margin_bottom = -167.0
+margin_top = -181.0
+margin_right = 760.0
+margin_bottom = -149.0
 custom_fonts/font = SubResource( 19 )
 align = 1
 valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+
+[node name="FinalTimer" type="Timer" parent="GameOver"]
 
 [node name="MenuPopup" type="Popup" parent="."]
 pause_mode = 2
@@ -598,4 +593,4 @@ text = "RESTARTING
 align = 1
 valign = 1
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
-[connection signal="timeout" from="GameOver/GameOverTimer" to="GameOver" method="_on_Timer_timeout"]
+[connection signal="timeout" from="GameOver/FinalTimer" to="GameOver" method="_on_FinalTimer_timeout"]

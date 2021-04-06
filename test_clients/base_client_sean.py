@@ -10,8 +10,8 @@ class Client(UserClient):
         self.queue = []
         self.low = 800
         self.high = 1500
-        self.low_speed = 46
-        self.high_speed = 69
+        self.low_speed = 100
+        self.high_speed = 100
 
     def team_name(self):
         """
@@ -127,7 +127,7 @@ class Client(UserClient):
         """
         self.turn += 1
         if(truck.active_contract is None):
-            # Select contract
+            # Select contractCont
             ind = self.chooseBestContract2(truck, truck.contract_list)
             actions.set_action(ActionType.select_contract, ind)
             #print("Selecting index " + str(ind))

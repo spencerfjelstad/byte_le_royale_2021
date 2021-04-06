@@ -8,7 +8,7 @@ var game_over = false
 	
 func _ready():
 	$Restart.color = Color.gray
-	$GameOverTimer.set_wait_time(10)
+	$FinalTimer.set_wait_time(10)
 	
 	
 	
@@ -49,9 +49,8 @@ func _input(event):
 
 func game_over():
 	if(!game_over):
-		$GameOverTimer.start()
+		$FinalTimer.start()
 	game_over = true
 
-func _on_Timer_timeout():
+func _on_FinalTimer_timeout():
 	get_tree().quit()
-

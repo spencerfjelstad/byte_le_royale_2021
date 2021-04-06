@@ -1,2 +1,2 @@
 @echo off
-python .\launcher.pyz visualizer -s
+python .\launcher.pyz visualizer
