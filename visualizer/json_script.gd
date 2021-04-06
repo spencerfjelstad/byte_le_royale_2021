@@ -41,6 +41,7 @@ var road_dict = {
 	"6": "visualizer/assets/road_type/highway_road.png"
 }
 
+# This never got used. Was an idea on how to organize object speeds and placements, but I ended up just moving them all to external scripts
 var eventsDict = {
 	"ice": {
 		"active": true,
@@ -53,7 +54,9 @@ var eventsDict = {
 	"rock": false
 }
 
+# This function is our init. It's the first thing that runs. 
 func _ready():
+	# Make sure the TruckHUD is centered. This mattered more when I was trying to implement full screen.
 	var viewportWidth = get_viewport().size.x
 	var viewportHeight = get_viewport().size.y
 
@@ -67,33 +70,53 @@ func _ready():
 	# scale along x and y
 	$TruckHUD.set_scale(Vector2(scale, scale))
 	
+	# I ran each turn on a timer. You can make a timer by creating the node as a child. Make sure to make a "connections" on your timer.
+	# My timer node has a connection (click on the wifi signal symbol) that calls _on_Timer_timeout() when the timer times out. 
+	# Or just google a tutorial
 	$Timer.set_wait_time(1)
 	$Timer.start()
 	
-
+# This listens for an input, event, and calls the correct methods on that event. 
 func _input(event):
+	# The pause menu is mostly handled in the MenuPopup script. This just pauses the game.
 	if event.is_action_pressed("pause"):
 		get_tree().set_pause(!get_tree().paused)
 	elif event.is_action_pressed("faster"):
+		# This makes it so you can't speed up to infinity. Mostly because it broke when you sped it up too much.
 		if($Timer.wait_time > .135):
+			# Change the timer wait time to speed it up
 			$Timer.set_wait_time($Timer.wait_time / 2)
 			universal_speed *= 2
+		# This method handles the UI informing the player of the change in speed.
 		changed_game_speed()
 	elif event.is_action_pressed("slower"):
+		# This makes it so you can't slow down to infinity, because that's boring.
 		if($Timer.wait_time < 1):
+			# Change the timer wait time to speed it up
 			$Timer.set_wait_time($Timer.wait_time * 2)
 			universal_speed /= 2
+		# This method handles the UI informing the player of the change in speed.
 		changed_game_speed()
 		
-
+# This method is called when the timer times out. It handles changing turn information... mostly
 func _on_Timer_timeout():
+	
+	# This wonderful beaut handles the JSON file input. 
 	var file = File.new()
+	# This gets the file path based off of which turn it is. Since each turn is a separate file, we have to change the number
+	# at the end of the file to match the turn
 	var file_path = "./logs/turn_" + ("%04d" % turn) + ".json"
+	# If there is no JSON file, we assume that means it's GAME OVER
 	if(!file.file_exists(file_path)):
+		# Game over is an invisible node that I plop over the game to give the illusion it doesn't exist anymore.
+		# I make it visible and start game over's code in a separate script. 
 		$GameOver.visible = true
 		$GameOver.game_over()
 		
 		# Set game over screen variables
+		
+		# I saved all the previous turns variables so I could use them for the game over screen. 
+		# There's definitely a better way to do this, but I did this like day of or day before
 		$GameOver/lblFinalRenown.text = "Renown: " + renown
 		$GameOver/lblFinalFuel.text = "Fuel: " + fuel
 		$GameOver/lblFinalSpeed.text = "Speed: " + speed
@@ -107,15 +130,21 @@ func _on_Timer_timeout():
 		
 		$GameOver/lblFinalTeamName.text = "Team Name: " + team_name
 		
+	# If the JSON file was found	
 	else:
+		# Random file magic 
 		file.open(file_path, file.READ)
 		var text = file.get_as_text()
 		var result_json = JSON.parse(text)
 		file.close()
 	
+		# Data is my string that contains the entire turn file
 		if result_json.error == OK:
 			data = result_json.result
 	
+	# If people want to restart their run, I block out the screen and give objects time to pass by
+	# The restart flag is changed in the MenuPopup script
+	# This is bad
 	if(restart): 
 		OS.delay_msec(2000)
 		$RestartScreen.visible = false
@@ -123,7 +152,7 @@ func _on_Timer_timeout():
 	
 	
 	
-	
+	# Get the values from the JSON and place on the screen
 	# Contracts
 	var active_contract = data.get("truck").get("active_contract")
 	var cname = ""
@@ -131,6 +160,7 @@ func _on_Timer_timeout():
 	var renown_reward = ""
 	var difficulty = ""
 	var next_city = ""
+	# If we have a contract
 	if(active_contract != null):
 		cname = active_contract.get("name") + "\n"
 		money_reward = "Payment: " + str(data.get("truck").get("active_contract").get("money_reward")) + "\n"
@@ -141,10 +171,11 @@ func _on_Timer_timeout():
 			next_city = "Next city: " + next_city_value.get("city_name")
 		else:
 			next_city = "Next city: Not in route"
-		
+	# If we don't have a contract
 	else:
 		cname = "No contract selected"
 	
+	# Display the information from the contract
 	$lblContract.text = cname + money_reward + renown_reward + difficulty + next_city
 	
 	# Handle labels
@@ -194,6 +225,11 @@ func _on_Timer_timeout():
 	
 	turn += 1
 
+# I handle moving objects like you would a bullet. 
+# Check out this tutorial. This is what I used. https://www.youtube.com/watch?v=ggt05fCiH7M
+# Basically I have created scenes for each moving object. I spawn an instance of those objects so I can shoot them like bullets. 
+# The instance disappears when it reaches a certain distance
+# If you want to see the scripts in the scene, check out the Ice.gd script
 # Events
 func spawn_ice(posX = eventsDict["ice"]["originx"], posY = eventsDict["ice"]["originy"]):
 	var ice_instance = Ice.instance()
@@ -246,6 +282,8 @@ func spawn_rock():
 	move_child(rock_instance, 2)
 	rock_instance.set_universal_speed(universal_speed)
 	
+	
+# These methods help keep the code less crazy looking. They just do a lot of enum checking
 func change_road(road_type):
 	if(road_type != 0):
 		$Environment.texture = load(road_dict[str(road_type)])
@@ -361,5 +399,7 @@ func tires_to_string(upgrade_type):
 
 func changed_game_speed():
 	$lblGameSpeed.visible = true
+	# Display what speed the game is at. 
 	$lblGameSpeed.text = (str(1/$Timer.wait_time) + "X")
+	# This makes it disappear all spooky like 
 	$lblGameSpeed.modulate.a = 1

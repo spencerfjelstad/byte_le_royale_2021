@@ -46,11 +46,17 @@ func _input(event):
 				1:
 					# Quit game
 					get_tree().quit()
-
+					
+# This method is called in json_script when game over is detected. It starts the timer for the end screen to close automatically.
+# It needs to close automatically so the scrimmmage server can run through the games without needing input.
+# If you have more time than 2 weeks you could try figuring out how to use a command to get the running exe to terminate. 
+# This also sets my game_over flag to true so that the game over code works. 
 func game_over():
 	if(!game_over):
 		$FinalTimer.start()
 	game_over = true
 
+# Close the game
 func _on_FinalTimer_timeout():
 	get_tree().quit()
+	
