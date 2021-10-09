@@ -5,9 +5,14 @@ CREATE TABLE University (
     uniName   varchar(100) NOT NULL CHECK (uniName <> '')
 );
 
+CREATE TABLE TeamType (
+    teamTypeID    serial PRIMARY KEY,
+    teamName   varchar(100) NOT NULL CHECK (teamName <> '')
+);
+
 CREATE TABLE Team (
     teamID     uuid PRIMARY KEY,
-    teamType   varchar(40) NOT NULL CHECK (teamType <> ''),
+    teamTypeID integer REFERENCES TeamType(teamTypeID),
     teamName   varchar(100) NOT NULL CHECK (teamName <> ''),
     uniID integer REFERENCES University (uniID)
 );
@@ -33,7 +38,7 @@ CREATE TABLE Run(
 CREATE TABLE Logs (
     runID integer REFERENCES Submission (SubmissionID),
     logText VARCHAR
-)
+);
 
 -- CREATE TABLE Run(
 --     SubmissionID REFERENCES Submission (SubmissionID),
@@ -41,3 +46,6 @@ CREATE TABLE Logs (
 --     RunID integer PRIMARY KEY DEFAULT nextval('serial'),
 --     winnerSubmission REFERENCES Submission (SubmissionID)
 -- );
+
+INSERT INTO teamtype (teamname) VALUES ('Graduate'), ('Under Graduate'), ('Alumni');
+INSERT INTO university(uniname) VALUES ('NDSU'), ('UND'), ('MSUM');
