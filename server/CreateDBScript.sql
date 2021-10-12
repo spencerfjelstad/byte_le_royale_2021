@@ -7,14 +7,15 @@ CREATE TABLE University (
 
 CREATE TABLE TeamType (
     teamTypeID    serial PRIMARY KEY,
-    teamName   varchar(100) NOT NULL CHECK (teamName <> '')
+    teamTypeName   varchar(100) NOT NULL CHECK (teamName <> '')
 );
 
 CREATE TABLE Team (
     teamID     uuid PRIMARY KEY,
     teamTypeID integer REFERENCES TeamType(teamTypeID),
     teamName   varchar(100) NOT NULL CHECK (teamName <> ''),
-    uniID integer REFERENCES University (uniID)
+    uniID integer REFERENCES University (uniID),
+    UNIQUE(teamName)
 );
 
 CREATE TABLE Submission (

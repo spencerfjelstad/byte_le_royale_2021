@@ -23,6 +23,11 @@ class ClientUtils:
         resp = requests.post(self.IP + "register", reg_data)
         return resp
 
+    def submit_file(self, file, vid):
+        data = {"file" : file, "vid" : vid}
+        resp = requests.post(self.IP + "submit", data )
+        return resp
+
     def to_table(self,json):
         json_atribs = json[0].keys()
         row_format ="{:>20}" * (len(json_atribs))

@@ -3,6 +3,7 @@ from flask.wrappers import Request
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from flask import request
+from requests.models import HTTPError
 
 app = Flask(__name__)
 
@@ -41,5 +42,26 @@ def insert_team():
     name = request.form.get("name")
     uni = request.form.get("uni")
     cur = conn.cursor()
-    cur.execute("INSERT INTO team (teamtypeid, teamname, uniid) VALUES ('{}', '{}', {})  RETURNING teamid".format(teamtype, name, uni))
+    cur.execute("SELECT insert_team('{}', '{}', {})".format(teamtype, name, uni))
+    conn.commit()
     return cur.fetchone()[0]
+
+@app.route("/api/submit", methods = ['POST'])
+def submit_file():
+    file = request.json["file"]
+    vid = request.json["vid"]
+    bad_words = check_illegal_keywords(file)
+    if bad_words:
+        return HTTPError("Contained illegal keywords {0}".format(bad_words))
+    cur = conn.cursor()
+    cur.execute("CALL submit_code_file('{0}', '{1}')".format(file, vid))
+    conn.commit()
+    return "True"
+
+def check_illegal_keywords(file):
+    '''This should be expanded on, made better'''
+    bad_words_list = ['open', 'os', 'import']
+    rtn_bad_words = []
+    for bad_word in rtn_bad_words:
+        if bad_word in file:
+            rtn_bad_words.append(bad_word)

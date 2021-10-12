@@ -10,6 +10,12 @@ CLIENT_KEYWORD = ""
 
 class Client:
     def __init__(self):
+
+        # If vID exists, read it
+        if os.path.isfile('vID'):
+            with open('vID') as f:
+                self.vid = f.read()
+
         self.utils = ClientUtils()
         self.loop = asyncio.get_event_loop()
         self.loop.run_until_complete(self.handle_client())
@@ -98,9 +104,8 @@ class Client:
         print("You can give a copy to your teammates so they can submit and view stats.")
 
     async def submit(self):
-        cont = await self.verify()
 
-        if cont == 'False':
+        if not self.verify():
             print('Cannot submit at this time.')
             return
 
@@ -128,12 +133,8 @@ class Client:
 
         # Send client file
         print('Submitting file.')
-        f = open(file, 'rb')
-        #line = f.read(BUFFER_SIZE)
-        # while line:
-        #     self.writer.write(line)
-        #     line = f.read(BUFFER_SIZE)
-        #     await self.writer.drain()
+        with open(file, 'rb') as fl:
+            self.utils.send_file(fl, self.vid)
 
         print('File sent successfully.')
 
@@ -163,21 +164,9 @@ class Client:
         # Check vID for uuid
         if not os.path.isfile('vID'):
             print("Cannot find vID, please register first.")
-            return
-
-        tid = ''
-        with open('vID', 'r') as f:
-            tid = f.read()
-
-        # Send uuid
-        self.writer.write(tid.encode())
-        await self.writer.drain()
-
-        # Receive state of server
-        #cont = await self.reader.read(BUFFER_SIZE)
-        #cont = cont.decode()
-        #return cont
-
+            return False
+        return True
+        
 
 if __name__ == '__main__':
     cli = Client()
