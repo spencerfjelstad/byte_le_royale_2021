@@ -42,7 +42,7 @@ def insert_team():
     name = request.form.get("name")
     uni = request.form.get("uni")
     cur = conn.cursor()
-    cur.execute("SELECT insert_team('{}', '{}', {})".format(teamtype, name, uni))
+    cur.execute("SELECT insert_team(%s, %s, %s)", (teamtype, name, uni))
     conn.commit()
     return cur.fetchone()[0]
 
@@ -54,7 +54,7 @@ def submit_file():
     if bad_words:
         return HTTPError("Contained illegal keywords {0}".format(bad_words))
     cur = conn.cursor()
-    cur.execute("CALL submit_code_file('{0}', '{1}')".format(file, vid))
+    cur.execute("CALL submit_code_file(%s, %s)", (file, vid))
     conn.commit()
     return "True"
 

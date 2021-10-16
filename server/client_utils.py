@@ -25,7 +25,7 @@ class ClientUtils:
 
     def submit_file(self, file, vid):
         data = {"file" : file, "vid" : vid}
-        resp = requests.post(self.IP + "submit", data )
+        resp = requests.post(self.IP + "submit", json= data )
         return resp
 
     def to_table(self,json):

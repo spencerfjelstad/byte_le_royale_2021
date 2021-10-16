@@ -4,8 +4,8 @@ import os
 #from game.config import CLIENT_DIRECTORY, CLIENT_KEYWORD
 from client_utils import ClientUtils
 
-CLIENT_DIRECTORY = ""
-CLIENT_KEYWORD = ""
+CLIENT_DIRECTORY = "../test_clients/"
+CLIENT_KEYWORD = "client"
 
 
 class Client:
@@ -97,7 +97,7 @@ class Client:
 
         # Put uuid into file for verification (vID)
         with open('vID', 'w+') as f:
-            f.write(str(v_id))
+            f.write(v_id.decode('UTF-8'))
 
         print("Registration successful.")
         print("You have been given an ID file in your Byte-le folder. Don't move or lose it!")
@@ -127,14 +127,15 @@ class Client:
         else:
             file = input('Could not find file: please manually type file name: ')
 
-        if not os.path.isfile(file):
+        if not os.path.isfile(CLIENT_DIRECTORY + file):
             print('File not found.')
             return
 
         # Send client file
         print('Submitting file.')
-        with open(file, 'rb') as fl:
-            self.utils.send_file(fl, self.vid)
+        with open(CLIENT_DIRECTORY + file) as fl:
+            fil = "".join(fl.readlines())
+            self.utils.submit_file(fil, self.vid)
 
         print('File sent successfully.')
 
@@ -160,7 +161,7 @@ class Client:
         #lb = lb.decode()
         #print(lb)
 
-    async def verify(self):
+    def verify(self):
         # Check vID for uuid
         if not os.path.isfile('vID'):
             print("Cannot find vID, please register first.")
