@@ -2,9 +2,9 @@ import asyncio
 import os
 
 #from game.config import CLIENT_DIRECTORY, CLIENT_KEYWORD
-from client_utils import ClientUtils
+from .client_utils import ClientUtils
 
-CLIENT_DIRECTORY = "../test_clients/"
+CLIENT_DIRECTORY = "./"
 CLIENT_KEYWORD = "client"
 
 

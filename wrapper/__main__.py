@@ -1,5 +1,5 @@
 import sys
-from scrimmage.client import Client
+from server.client import Client
 from game.engine import Engine
 from game.utils.generate_game import generate
 import game.config
@@ -61,12 +61,11 @@ if __name__ == '__main__':
         
         if par_args.q_bool:
             quiet = True
-
         engine = Engine(quiet)
         engine.loop()
 
      # Boot up the scrimmage server client
-    elif action in ['scrimmage', 's']:
+    elif action in ['server', 's', 'scrimmage']:
         cl = Client()
 
 
