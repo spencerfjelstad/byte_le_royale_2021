@@ -21,19 +21,19 @@ def hello_world():
 @app.route("/api/get_unis", methods = ['get'])
 def get_unis():
     cur = conn.cursor(cursor_factory=RealDictCursor)
-    cur.execute("SELECT uni_id, uni_name FROM university")
+    cur.execute("SELECT (get_universities()).*")
     return jsonify(cur.fetchall())
 
 @app.route("/api/get_team_types", methods = ['get'])
 def get_team_types():
     cur = conn.cursor(cursor_factory=RealDictCursor)
-    cur.execute("SELECT team_type_id, team_type_name FROM team_type")
+    cur.execute("SELECT (get_team_types()).*")
     return jsonify(cur.fetchall())
 
 @app.route("/api/get_teams", methods = ['get'])
 def get_teams():
     cur = conn.cursor(cursor_factory=RealDictCursor)
-    cur.execute("SELECT team_name, uni_name, team_type_name FROM team JOIN university ON team.uni_id = university.uni_id JOIN team_type ON team.team_type_id = team_type.team_type_id")
+    cur.execute("SELECT (get_teams()).*")
     return jsonify(cur.fetchall())
 
 @app.route("/api/register", methods = ['POST'])
