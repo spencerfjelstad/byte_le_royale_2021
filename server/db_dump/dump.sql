@@ -5,12 +5,12 @@
 -- Dumped from database version 13.4
 -- Dumped by pg_dump version 13.4
 
--- Started on 2021-10-17 18:29:37
+-- Started on 2021-10-17 19:02:13
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'WIN1256';
+SET client_encoding = 'WIN1252';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
@@ -36,11 +36,11 @@ COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UU
 
 
 --
--- TOC entry 236 (class 1255 OID 17378)
+-- TOC entry 235 (class 1255 OID 17402)
 -- Name: fetch_latest_clients(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.fetch_latest_clients() RETURNS TABLE(teamid uuid, submissionid integer, filetext character varying)
+CREATE FUNCTION public.fetch_latest_clients() RETURNS TABLE(team_id uuid, submission_id integer, file_text character varying)
     LANGUAGE plpgsql
     AS $$
 BEGIN
@@ -48,20 +48,20 @@ BEGIN
 -- find the latest submission.
 RETURN QUERY
 SELECT
-    sub.teamid,
-    sub.submissionid,
-    codefile.filetext
+    sub.team_id,
+    sub.submission_id,
+    code_file.file_text
 from
     codefile
     JOIN (
         SELECT
-            submission.teamid,
-            MAX(submission.submissionid) as submissionid
+            submission.team_id,
+            MAX(submission.submission_id) as submission_id
         FROM
             submission
         GROUP BY
-            submission.teamid
-    ) as sub ON sub.submissionid = codefile.submissionid;
+            submission.team_id
+    ) as sub ON sub.submission_id = codefile.submission_id;
 end;
 $$;
 
@@ -88,56 +88,56 @@ $$;
 ALTER FUNCTION public.insert_group_run() OWNER TO postgres;
 
 --
--- TOC entry 239 (class 1255 OID 17400)
+-- TOC entry 238 (class 1255 OID 17404)
 -- Name: insert_run(integer, integer, integer); Type: PROCEDURE; Schema: public; Owner: postgres
 --
 
-CREATE PROCEDURE public.insert_run(submid integer, score integer, grouprunid integer)
+CREATE PROCEDURE public.insert_run(sub_id integer, score integer, group_run_id integer)
     LANGUAGE plpgsql
     AS $$
 begin
     -- insert run into run table
-	INSERT INTO run(submissionid, score, group_run_id) VALUES (submid, score, grouprunid);
+	INSERT INTO run(submission_id, score, group_run_id) VALUES (subm_id, score, group_run_id);
 end;
 $$;
 
 
-ALTER PROCEDURE public.insert_run(submid integer, score integer, grouprunid integer) OWNER TO postgres;
+ALTER PROCEDURE public.insert_run(sub_id integer, score integer, group_run_id integer) OWNER TO postgres;
 
 --
--- TOC entry 235 (class 1255 OID 17376)
+-- TOC entry 236 (class 1255 OID 17403)
 -- Name: insert_team(integer, character varying, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.insert_team(teamtype integer, team character varying, uni integer) RETURNS uuid
+CREATE FUNCTION public.insert_team(team_type integer, team character varying, uni integer) RETURNS uuid
     LANGUAGE plpgsql
     AS $$
 DECLARE tmid uuid;
 BEGIN
 -- Insert into team
-    INSERT INTO team (teamtypeid, teamname, uniid) VALUES (teamtype, team, uni)  RETURNING teamid INTO tmid;
+    INSERT INTO team (team_type_id, team_name, uni_id) VALUES (team_type, team, uni)  RETURNING team_id INTO tmid;
 	return tmid;
 end;
 $$;
 
 
-ALTER FUNCTION public.insert_team(teamtype integer, team character varying, uni integer) OWNER TO postgres;
+ALTER FUNCTION public.insert_team(team_type integer, team character varying, uni integer) OWNER TO postgres;
 
 --
--- TOC entry 238 (class 1255 OID 17371)
+-- TOC entry 239 (class 1255 OID 17405)
 -- Name: submit_code_file(character varying, uuid); Type: PROCEDURE; Schema: public; Owner: postgres
 --
 
 CREATE PROCEDURE public.submit_code_file(file character varying, vid uuid)
     LANGUAGE plpgsql
     AS $$
-DECLARE subID int = 0;
+DECLARE sub_ID int = 0;
 begin
     -- insert submission into submission table
-	INSERT INTO SUBMISSION (teamid) VALUES (vid) RETURNING submissionid INTO subID;
+	INSERT INTO SUBMISSION (team_id) VALUES (v_id) RETURNING submission_id INTO sub_ID;
 	
     -- insert file into file table
-	INSERT INTO codefile(submissionid, filetext) VALUES (subid, file);
+	INSERT INTO code_file(submission_id, file_text) VALUES (sub_id, file);
 end;
 $$;
 
@@ -150,16 +150,16 @@ SET default_table_access_method = heap;
 
 --
 -- TOC entry 206 (class 1259 OID 17290)
--- Name: codefile; Type: TABLE; Schema: public; Owner: postgres
+-- Name: code_file; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.codefile (
-    submissionid integer,
-    filetext character varying
+CREATE TABLE public.code_file (
+    submission_id integer,
+    file_text character varying
 );
 
 
-ALTER TABLE public.codefile OWNER TO postgres;
+ALTER TABLE public.code_file OWNER TO postgres;
 
 --
 -- TOC entry 213 (class 1259 OID 17381)
@@ -168,7 +168,7 @@ ALTER TABLE public.codefile OWNER TO postgres;
 
 CREATE TABLE public.group_run (
     group_run_id integer NOT NULL,
-    startrun timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+    start_run timestamp without time zone DEFAULT CURRENT_TIMESTAMP
 );
 
 
@@ -205,8 +205,8 @@ ALTER SEQUENCE public.group_run_group_run_id_seq OWNED BY public.group_run.group
 --
 
 CREATE TABLE public.logs (
-    runid integer,
-    logtext character varying
+    run_id integer,
+    log_text character varying
 );
 
 
@@ -218,8 +218,8 @@ ALTER TABLE public.logs OWNER TO postgres;
 --
 
 CREATE TABLE public.run (
-    submissionid integer,
-    runid integer NOT NULL,
+    submission_id integer,
+    run_id integer NOT NULL,
     score integer,
     group_run_id integer
 );
@@ -249,7 +249,7 @@ ALTER TABLE public.run_runid_seq OWNER TO postgres;
 -- Name: run_runid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.run_runid_seq OWNED BY public.run.runid;
+ALTER SEQUENCE public.run_runid_seq OWNED BY public.run.run_id;
 
 
 --
@@ -258,10 +258,10 @@ ALTER SEQUENCE public.run_runid_seq OWNED BY public.run.runid;
 --
 
 CREATE TABLE public.submission (
-    teamid uuid,
-    submissionid integer NOT NULL,
+    team_id uuid,
+    submission_id integer NOT NULL,
     valid boolean DEFAULT false NOT NULL,
-    submittime timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+    submit_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP
 );
 
 
@@ -289,7 +289,7 @@ ALTER TABLE public.submission_submissionid_seq OWNER TO postgres;
 -- Name: submission_submissionid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.submission_submissionid_seq OWNED BY public.submission.submissionid;
+ALTER SEQUENCE public.submission_submissionid_seq OWNED BY public.submission.submission_id;
 
 
 --
@@ -298,11 +298,11 @@ ALTER SEQUENCE public.submission_submissionid_seq OWNED BY public.submission.sub
 --
 
 CREATE TABLE public.team (
-    teamid uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    uniid integer,
-    teamtypeid integer,
-    teamname character varying(100) NOT NULL,
-    CONSTRAINT team_teamname_check CHECK (((teamname)::text <> ''::text))
+    team_id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    uni_id integer,
+    team_type_id integer,
+    team_name character varying(100) NOT NULL,
+    CONSTRAINT team_teamname_check CHECK (((team_name)::text <> ''::text))
 );
 
 
@@ -310,17 +310,17 @@ ALTER TABLE public.team OWNER TO postgres;
 
 --
 -- TOC entry 211 (class 1259 OID 17339)
--- Name: teamtype; Type: TABLE; Schema: public; Owner: postgres
+-- Name: team_type; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.teamtype (
-    teamtypeid integer NOT NULL,
-    teamtypename character varying(100) NOT NULL,
-    CONSTRAINT teamtype_teamname_check CHECK (((teamtypename)::text <> ''::text))
+CREATE TABLE public.team_type (
+    team_type_id integer NOT NULL,
+    team_type_name character varying(100) NOT NULL,
+    CONSTRAINT teamtype_teamname_check CHECK (((team_type_name)::text <> ''::text))
 );
 
 
-ALTER TABLE public.teamtype OWNER TO postgres;
+ALTER TABLE public.team_type OWNER TO postgres;
 
 --
 -- TOC entry 210 (class 1259 OID 17337)
@@ -344,7 +344,7 @@ ALTER TABLE public.teamtype_teamtypeid_seq OWNER TO postgres;
 -- Name: teamtype_teamtypeid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.teamtype_teamtypeid_seq OWNED BY public.teamtype.teamtypeid;
+ALTER SEQUENCE public.teamtype_teamtypeid_seq OWNED BY public.team_type.team_type_id;
 
 
 --
@@ -353,9 +353,9 @@ ALTER SEQUENCE public.teamtype_teamtypeid_seq OWNED BY public.teamtype.teamtypei
 --
 
 CREATE TABLE public.university (
-    uniid integer NOT NULL,
-    uniname character varying(100) NOT NULL,
-    CONSTRAINT university_uniname_check CHECK (((uniname)::text <> ''::text))
+    uni_id integer NOT NULL,
+    uni_name character varying(100) NOT NULL,
+    CONSTRAINT university_uniname_check CHECK (((uni_name)::text <> ''::text))
 );
 
 
@@ -383,7 +383,7 @@ ALTER TABLE public.university_uniid_seq OWNER TO postgres;
 -- Name: university_uniid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.university_uniid_seq OWNED BY public.university.uniid;
+ALTER SEQUENCE public.university_uniid_seq OWNED BY public.university.uni_id;
 
 
 --
@@ -396,34 +396,34 @@ ALTER TABLE ONLY public.group_run ALTER COLUMN group_run_id SET DEFAULT nextval(
 
 --
 -- TOC entry 2911 (class 2604 OID 17306)
--- Name: run runid; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: run run_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.run ALTER COLUMN runid SET DEFAULT nextval('public.run_runid_seq'::regclass);
+ALTER TABLE ONLY public.run ALTER COLUMN run_id SET DEFAULT nextval('public.run_runid_seq'::regclass);
 
 
 --
 -- TOC entry 2908 (class 2604 OID 17280)
--- Name: submission submissionid; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: submission submission_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.submission ALTER COLUMN submissionid SET DEFAULT nextval('public.submission_submissionid_seq'::regclass);
+ALTER TABLE ONLY public.submission ALTER COLUMN submission_id SET DEFAULT nextval('public.submission_submissionid_seq'::regclass);
 
 
 --
 -- TOC entry 2912 (class 2604 OID 17342)
--- Name: teamtype teamtypeid; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: team_type team_type_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.teamtype ALTER COLUMN teamtypeid SET DEFAULT nextval('public.teamtype_teamtypeid_seq'::regclass);
+ALTER TABLE ONLY public.team_type ALTER COLUMN team_type_id SET DEFAULT nextval('public.teamtype_teamtypeid_seq'::regclass);
 
 
 --
 -- TOC entry 2904 (class 2604 OID 17259)
--- Name: university uniid; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: university uni_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.university ALTER COLUMN uniid SET DEFAULT nextval('public.university_uniid_seq'::regclass);
+ALTER TABLE ONLY public.university ALTER COLUMN uni_id SET DEFAULT nextval('public.university_uniid_seq'::regclass);
 
 
 --
@@ -441,7 +441,7 @@ ALTER TABLE ONLY public.group_run
 --
 
 ALTER TABLE ONLY public.run
-    ADD CONSTRAINT run_pkey PRIMARY KEY (runid);
+    ADD CONSTRAINT run_pkey PRIMARY KEY (run_id);
 
 
 --
@@ -450,7 +450,7 @@ ALTER TABLE ONLY public.run
 --
 
 ALTER TABLE ONLY public.submission
-    ADD CONSTRAINT submission_pkey PRIMARY KEY (submissionid);
+    ADD CONSTRAINT submission_pkey PRIMARY KEY (submission_id);
 
 
 --
@@ -459,7 +459,7 @@ ALTER TABLE ONLY public.submission
 --
 
 ALTER TABLE ONLY public.team
-    ADD CONSTRAINT team_pkey PRIMARY KEY (teamid);
+    ADD CONSTRAINT team_pkey PRIMARY KEY (team_id);
 
 
 --
@@ -468,16 +468,16 @@ ALTER TABLE ONLY public.team
 --
 
 ALTER TABLE ONLY public.team
-    ADD CONSTRAINT team_teamname_key UNIQUE (teamname);
+    ADD CONSTRAINT team_teamname_key UNIQUE (team_name);
 
 
 --
 -- TOC entry 2927 (class 2606 OID 17345)
--- Name: teamtype teamtype_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: team_type teamtype_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.teamtype
-    ADD CONSTRAINT teamtype_pkey PRIMARY KEY (teamtypeid);
+ALTER TABLE ONLY public.team_type
+    ADD CONSTRAINT teamtype_pkey PRIMARY KEY (team_type_id);
 
 
 --
@@ -486,16 +486,16 @@ ALTER TABLE ONLY public.teamtype
 --
 
 ALTER TABLE ONLY public.university
-    ADD CONSTRAINT university_pkey PRIMARY KEY (uniid);
+    ADD CONSTRAINT university_pkey PRIMARY KEY (uni_id);
 
 
 --
 -- TOC entry 2933 (class 2606 OID 17296)
--- Name: codefile codefile_submissionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: code_file codefile_submissionid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.codefile
-    ADD CONSTRAINT codefile_submissionid_fkey FOREIGN KEY (submissionid) REFERENCES public.submission(submissionid);
+ALTER TABLE ONLY public.code_file
+    ADD CONSTRAINT codefile_submissionid_fkey FOREIGN KEY (submission_id) REFERENCES public.submission(submission_id);
 
 
 --
@@ -504,7 +504,7 @@ ALTER TABLE ONLY public.codefile
 --
 
 ALTER TABLE ONLY public.logs
-    ADD CONSTRAINT logs_runid_fkey FOREIGN KEY (runid) REFERENCES public.submission(submissionid);
+    ADD CONSTRAINT logs_runid_fkey FOREIGN KEY (run_id) REFERENCES public.submission(submission_id);
 
 
 --
@@ -522,7 +522,7 @@ ALTER TABLE ONLY public.run
 --
 
 ALTER TABLE ONLY public.run
-    ADD CONSTRAINT run_submissionid_fkey FOREIGN KEY (submissionid) REFERENCES public.submission(submissionid);
+    ADD CONSTRAINT run_submissionid_fkey FOREIGN KEY (submission_id) REFERENCES public.submission(submission_id);
 
 
 --
@@ -531,7 +531,7 @@ ALTER TABLE ONLY public.run
 --
 
 ALTER TABLE ONLY public.submission
-    ADD CONSTRAINT submission_teamid_fkey FOREIGN KEY (teamid) REFERENCES public.team(teamid);
+    ADD CONSTRAINT submission_teamid_fkey FOREIGN KEY (team_id) REFERENCES public.team(team_id);
 
 
 --
@@ -540,7 +540,7 @@ ALTER TABLE ONLY public.submission
 --
 
 ALTER TABLE ONLY public.team
-    ADD CONSTRAINT team_teamtypeid_fkey FOREIGN KEY (teamtypeid) REFERENCES public.teamtype(teamtypeid);
+    ADD CONSTRAINT team_teamtypeid_fkey FOREIGN KEY (team_type_id) REFERENCES public.team_type(team_type_id);
 
 
 --
@@ -549,10 +549,10 @@ ALTER TABLE ONLY public.team
 --
 
 ALTER TABLE ONLY public.team
-    ADD CONSTRAINT team_uniid_fkey FOREIGN KEY (uniid) REFERENCES public.university(uniid);
+    ADD CONSTRAINT team_uniid_fkey FOREIGN KEY (uni_id) REFERENCES public.university(uni_id);
 
 
--- Completed on 2021-10-17 18:29:38
+-- Completed on 2021-10-17 19:02:13
 
 --
 -- PostgreSQL database dump complete

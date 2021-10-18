@@ -2,7 +2,7 @@ import asyncio
 import os
 
 #from game.config import CLIENT_DIRECTORY, CLIENT_KEYWORD
-from .client_utils import ClientUtils
+from client_utils import ClientUtils
 
 CLIENT_DIRECTORY = "./"
 CLIENT_KEYWORD = "client"
@@ -63,9 +63,9 @@ class Client:
         print("Select a university (id)")
         self.utils.to_table(unis)
 
-        uniid = int(input())
+        uni_id = int(input())
 
-        if uniid not in map(lambda x : x['uniid'] ,unis):
+        if uni_id not in map(lambda x : x['uni_id'] ,unis):
             print("Not a valid uni id")
             return
 
@@ -76,11 +76,11 @@ class Client:
 
         team_type = int(input())
 
-        if team_type not in map(lambda x : x['teamtypeid'] ,team_types):
+        if team_type not in map(lambda x : x['team_type_id'] ,team_types):
             print("Not a valid team type")
             return
 
-        response = self.utils.register({"type": team_type, "uni" : uniid, "name" : teamname})
+        response = self.utils.register({"type": team_type, "uni" : uni_id, "name" : teamname})
 
         if not response.ok:
             print('Teamname contains illegal characters or is already taken.')
