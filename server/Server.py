@@ -4,8 +4,10 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 from flask import request
 from requests.models import HTTPError
+import uuid
 
 app = Flask(__name__)
+app.config['JSON_SORT_KEYS'] = False
 
 conn = psycopg2.connect(
     host="localhost",
@@ -35,6 +37,29 @@ def get_teams():
     cur = conn.cursor(cursor_factory=RealDictCursor)
     cur.execute("SELECT (get_teams()).*")
     return jsonify(cur.fetchall())
+
+
+@app.route("/api/get_eligible_leaderboard", methods = ['get'])
+def get_eligible_leaderboard():
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    cur.execute("SELECT (get_eligible_leaderboard()).*")
+    return jsonify(cur.fetchall())
+
+@app.route("/api/get_entire_leaderboard", methods = ['get'])
+def get_entire_leaderboard():
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    cur.execute("SELECT (get_entire_leaderboard()).*")
+    return jsonify(cur.fetchall())
+
+@app.route("/api/get_submission_stats", methods = ['post'])
+def get_stats():
+    vid = request.json["vid"]
+    cur = conn.cursor()
+    cur.execute("SELECT (get_latest_submission(%s)).*", (vid,))
+    res = cur.fetchone()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    cur.execute("SELECT (get_stats_for_submission(%s, %s)).*", res)
+    return jsonify({"data": cur.fetchall(), "sub_id" : res[0], "run_group_id" : res[1]})
 
 @app.route("/api/register", methods = ['POST'])
 def insert_team():

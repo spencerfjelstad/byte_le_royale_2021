@@ -28,9 +28,44 @@ class ClientUtils:
         resp = requests.post(self.IP + "submit", json= data )
         return resp
 
+    def get_eligible_leaderboard(self):
+        resp = requests.get(self.IP + "get_eligible_leaderboard")
+        return json.loads(resp.content)
+
+    def get_submission_stats(self, vid):
+        resp = requests.post(self.IP + "get_submission_stats", json= {"vid": vid})
+        return json.loads(resp.content)
+
+    def get_longest_cell_in_cols(self, json, json_atribs):
+        col_longest_length = {}
+        for key in json_atribs:
+            col_longest_length[key] = (len(key))
+        for col in json_atribs:
+            for row in json:
+                if len(str(row[col])) > col_longest_length[col]:
+                    col_longest_length[col] = len(row[col])
+        return col_longest_length
+
+    def get_seperator_line(self, col_longest_length, padding):
+        rtn = ""
+        for key in col_longest_length:
+            rtn += "+" + ("-" * (col_longest_length[key] + padding))
+        return rtn + "+"
+
     def to_table(self,json):
+        padding = 4
         json_atribs = json[0].keys()
-        row_format ="{:>20}" * (len(json_atribs))
+        col_longest_length = self.get_longest_cell_in_cols(json, json_atribs)
+        line_seperator = self.get_seperator_line(col_longest_length, padding)
+        row_format = ""
+        for key in json_atribs:
+            row_format += "|{:^" + str(col_longest_length[key] + padding) + "}"
+        row_format += "|"
+        print(line_seperator)
         print(row_format.format(*json_atribs))
         for row in json:
+            print(line_seperator)
             print(row_format.format(*row.values()))
+        print(line_seperator)
+
+

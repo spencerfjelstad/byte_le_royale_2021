@@ -30,7 +30,7 @@ class client_runner:
     def external_runner(self):
         clients = self.fetch_clients()
         self.group_id = self.insert_new_group_run()
-        for i in range(1):
+        for i in range(5):
             res = Parallel(n_jobs = 1, backend="threading")(map(delayed(self.internal_runner), clients))
 
 

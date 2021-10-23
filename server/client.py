@@ -37,13 +37,13 @@ class Client:
         await asyncio.sleep(0.1)
 
         if command in self.utils.REGISTER_COMMANDS:
-            await self.register()
+            self.register()
         elif command in self.utils.SUBMIT_COMMANDS:
-            await self.submit()
+            self.submit()
         elif command in self.utils.VIEW_STATS_COMMANDS:
-            await self.get_stats()
+            self.get_submission_stats()
         elif command in self.utils.LEADERBOARD_COMMANDS:
-            await self.get_leaderboard()
+            self.get_eligible_leaderboard()
 
     async def register(self):
         # Check if vID already exists and cancel out
@@ -65,7 +65,7 @@ class Client:
 
         uni_id = int(input())
 
-        if uni_id not in map(lambda x : x['uni_id'] ,unis):
+        if uni_id not in map(lambda x: x['uni_id'], unis):
             print("Not a valid uni id")
             return
 
@@ -76,11 +76,12 @@ class Client:
 
         team_type = int(input())
 
-        if team_type not in map(lambda x : x['team_type_id'] ,team_types):
+        if team_type not in map(lambda x: x['team_type_id'], team_types):
             print("Not a valid team type")
             return
 
-        response = self.utils.register({"type": team_type, "uni" : uni_id, "name" : teamname})
+        response = self.utils.register(
+            {"type": team_type, "uni": uni_id, "name": teamname})
 
         if not response.ok:
             print('Teamname contains illegal characters or is already taken.')
@@ -100,10 +101,11 @@ class Client:
             f.write(v_id.decode('UTF-8'))
 
         print("Registration successful.")
-        print("You have been given an ID file in your Byte-le folder. Don't move or lose it!")
+        print(
+            "You have been given an ID file in your Byte-le folder. Don't move or lose it!")
         print("You can give a copy to your teammates so they can submit and view stats.")
 
-    async def submit(self):
+    def submit(self):
 
         if not self.verify():
             print('Cannot submit at this time.')
@@ -125,7 +127,8 @@ class Client:
                 file = filename
                 break
         else:
-            file = input('Could not find file: please manually type file name: ')
+            file = input(
+                'Could not find file: please manually type file name: ')
 
         if not os.path.isfile(CLIENT_DIRECTORY + file):
             print('File not found.')
@@ -139,27 +142,21 @@ class Client:
 
         print('File sent successfully.')
 
-    async def get_stats(self):
-        cont = await self.verify()
-
-        if cont == 'False':
-            print('Verification failure.')
+    def get_submission_stats(self):
+        res = self.utils.get_submission_stats(self.vid)
+        print("Current Submission stats for submission {0} in run group {1}".format(res["sub_id"], res["run_group_id"]))
+        self.utils.to_table(res["data"])
 
         # Receive stats
-        #stats = await self.reader.read(BUFFER_SIZE)
+        # stats = await self.reader.read(BUFFER_SIZE)
         #stats = stats.decode()
-        #print(stats)
+        # print(stats)
 
-    async def get_leaderboard(self):
-        cont = await self.verify()
+    def get_eligible_leaderboard(self):
+        leaders = self.utils.get_eligible_leaderboard()
 
-        if cont == 'False':
-            print('Verification failure.')
-
-        # Receive leaderboard
-        #lb = await self.reader.read(BUFFER_SIZE)
-        #lb = lb.decode()
-        #print(lb)
+        print("The following are the leaders from the most recent run")
+        self.utils.to_table(leaders)
 
     def verify(self):
         # Check vID for uuid
@@ -167,7 +164,7 @@ class Client:
             print("Cannot find vID, please register first.")
             return False
         return True
-        
+
 
 if __name__ == '__main__':
     cli = Client()
