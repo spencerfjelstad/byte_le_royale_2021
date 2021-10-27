@@ -61,6 +61,14 @@ def get_stats():
     cur.execute("SELECT (get_stats_for_submission(%s, %s)).*", res)
     return jsonify({"data": cur.fetchall(), "sub_id" : res[0], "run_group_id" : res[1]})
 
+@app.route("/api/get_team_score_over_time", methods = ['post'])
+def get_team_score_over_time():
+    vid = request.json["vid"]
+    cur = conn.cursor()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    cur.execute("SELECT (get_team_score_over_time(%s)).*", (vid,))
+    return jsonify(cur.fetchall())
+
 @app.route("/api/register", methods = ['POST'])
 def insert_team():
     teamtype = request.form.get("type")

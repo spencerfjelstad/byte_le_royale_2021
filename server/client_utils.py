@@ -1,16 +1,31 @@
 import requests
 import json
 
+
 class ClientUtils:
     def __init__(self):
         self.IP = 'http://127.0.0.1:5000/api/'
         self.PORT = 5007
 
-        self.REGISTER_COMMANDS = ['register', 'r']
-        self.SUBMIT_COMMANDS = ['submit', 's']
-        self.VIEW_STATS_COMMANDS = ['view stats', 'view', 'v']
-        self.LEADERBOARD_COMMANDS = ['leaderboard', 'l']
-
+        self.commands = {
+            'register': ['register', 'r'],
+            'submit': ['submit', 's'],
+            'help' : ['help', 'h'],
+            'view': {
+                'c': ['view stats', 'view', 'v'],
+                'f': {
+                    
+                }
+            },
+            'leaderboard': {
+                'c': ['leaderboard', 'l'],
+                'f': {
+                    'a': ['all', 'a'],
+                    'e': ['elligible', 'e'],
+                    'o': ['score_over_time', 'over', 'o']
+                }
+            }
+        }
     def get_team_types(self):
         resp = requests.get(self.IP + "get_team_types")
         return json.loads(resp.content)
@@ -24,16 +39,32 @@ class ClientUtils:
         return resp
 
     def submit_file(self, file, vid):
-        data = {"file" : file, "vid" : vid}
-        resp = requests.post(self.IP + "submit", json= data )
+        data = {"file": file, "vid": vid}
+        resp = requests.post(self.IP + "submit", json=data)
         return resp
 
     def get_eligible_leaderboard(self):
         resp = requests.get(self.IP + "get_eligible_leaderboard")
-        return json.loads(resp.content)
+        jsn = json.loads(resp.content)
+        print("The following is the leaderboard for eligible contestants")
+        self.to_table(jsn)
+
+    def get_entire_leaderboard(self):
+        resp = requests.get(self.IP + "get_entire_leaderboard")
+        jsn = json.loads(resp.content)
+        print("The following is the leaderboard for all contestants")
+        self.to_table(jsn)
+
+    def get_team_score_over_time(self, vid):
+        resp = requests.post(
+            self.IP + "get_team_score_over_time", json={"vid": vid})
+        jsn = json.loads(resp.content)
+        print("The following is your team's performance in each group run")
+        self.to_table(jsn)
 
     def get_submission_stats(self, vid):
-        resp = requests.post(self.IP + "get_submission_stats", json= {"vid": vid})
+        resp = requests.post(
+            self.IP + "get_submission_stats", json={"vid": vid})
         return json.loads(resp.content)
 
     def get_longest_cell_in_cols(self, json, json_atribs):
@@ -52,7 +83,7 @@ class ClientUtils:
             rtn += "+" + ("-" * (col_longest_length[key] + padding))
         return rtn + "+"
 
-    def to_table(self,json):
+    def to_table(self, json):
         padding = 4
         json_atribs = json[0].keys()
         col_longest_length = self.get_longest_cell_in_cols(json, json_atribs)
@@ -67,5 +98,3 @@ class ClientUtils:
             print(line_seperator)
             print(row_format.format(*row.values()))
         print(line_seperator)
-
-

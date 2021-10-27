@@ -23,29 +23,39 @@ class Client:
     # Determines what action the client wants to do
     async def handle_client(self):
         out = f'Select an action:\n'
-        out += f'Register: {self.utils.REGISTER_COMMANDS}\n'
-        out += f'Submit client: {self.utils.SUBMIT_COMMANDS}\n'
-        out += f'View stats: {self.utils.VIEW_STATS_COMMANDS}\n'
-        out += f'Check leaderboard: {self.utils.LEADERBOARD_COMMANDS}\n'
+        out += f'Register: {self.utils.commands["register"]}\n'
+        out += f'Submit client: {self.utils.commands["submit"]}\n'
+        out += f'View stats: {self.utils.commands["view"]["c"]}\n'
+        out += f'Check leaderboard: {self.utils.commands["leaderboard"]["c"]}\n'
+        out += f'Help: a command followed by {self.utils.commands["help"]}\n'
         print(out)
         command = input('Enter: ')
+        print()
 
-        if command not in self.utils.REGISTER_COMMANDS + self.utils.SUBMIT_COMMANDS + self.utils.VIEW_STATS_COMMANDS + self.utils.LEADERBOARD_COMMANDS:
+        flag = command.split()[-1]
+        command = command.split()[0]
+
+        if command not in self.utils.commands["register"] + self.utils.commands["submit"] + self.utils.commands['view']['c'] + self.utils.commands['leaderboard']['c']:
             print('Not a recognized command.')
             return
 
         await asyncio.sleep(0.1)
 
-        if command in self.utils.REGISTER_COMMANDS:
+        if command in self.utils.commands['register']:
             self.register()
-        elif command in self.utils.SUBMIT_COMMANDS:
+        elif command in self.utils.commands['submit']:
             self.submit()
-        elif command in self.utils.VIEW_STATS_COMMANDS:
+        elif command in self.utils.commands['view']['c']:
             self.get_submission_stats()
-        elif command in self.utils.LEADERBOARD_COMMANDS:
-            self.get_eligible_leaderboard()
+        elif command in self.utils.commands['leaderboard']['c']:
+            if flag in self.utils.commands['leaderboard']['f']['a']:
+                self.utils.get_entire_leaderboard()
+            elif flag in self.utils.commands['leaderboard']['f']['o']:
+                self.utils.get_team_score_over_time(self.vid)
+            else:
+                self.utils.get_eligible_leaderboard()
 
-    async def register(self):
+    def register(self):
         # Check if vID already exists and cancel out
         if os.path.isfile('vID'):
             print('You have already registered.')
@@ -151,12 +161,6 @@ class Client:
         # stats = await self.reader.read(BUFFER_SIZE)
         #stats = stats.decode()
         # print(stats)
-
-    def get_eligible_leaderboard(self):
-        leaders = self.utils.get_eligible_leaderboard()
-
-        print("The following are the leaders from the most recent run")
-        self.utils.to_table(leaders)
 
     def verify(self):
         # Check vID for uuid

@@ -77,7 +77,7 @@ class client_runner:
                 error = results['Error']
 
                 
-            #shutil.rmtree(end_path)
+            shutil.rmtree(end_path)
 
             #self.current_running.insert(0, number)
             f.close()
