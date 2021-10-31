@@ -1,5 +1,5 @@
 import sys
-from server.client import Client
+from server.client.client import Client
 from game.engine import Engine
 from game.utils.generate_game import generate
 import game.config
