@@ -12,17 +12,23 @@ import random
 class client_runner:
 
     def __init__(self):
-        self.temp = ""
+
+        # postgress connection
         self.conn = psycopg2.connect(
         host="localhost",
         database="ByteLeRoyaleDB",
         user="postgres",
         password="password")
         self.loop = asyncio.get_event_loop()
+
+        # The group run ID. will be set by insert_new_group_run
         self.group_id = 0
 
         self.NUMBER_OF_RUNS_FOR_CLIENT = 5
+
+        # Maps a seed_index to a database seed_id
         self.index_to_seed_id = {}
+
         #self.loop.run_in_executor(None, self.await_input)
         #self.loop.call_later(5, self.external_runner())
         # try:
@@ -50,9 +56,10 @@ class client_runner:
                 fltext = fl.readlines()
             self.index_to_seed_id[index] = self.insert_seed_file(fltext)
 
-
-        # run each client 5 times, then run them in paralell using their index as a unique identifier
-        clients = clients * self.NUMBER_OF_RUNS_FOR_CLIENT
+        # repeat the clients list by the number of times defined in the constant
+        clients = clients * (self.NUMBER_OF_RUNS_FOR_CLIENT + 1)
+ 
+        #then run them in paralell using their index as a unique identifier
         res = Parallel(n_jobs = 5, backend="threading")(map(delayed(self.internal_runner), clients, [i for i in range(len(clients))]))
         shutil.rmtree("server/temp/seeds")
 
@@ -62,21 +69,21 @@ class client_runner:
         print(index)
         try:
             # Run game
-            #self.log(f'Running client: {client}')
+            # Create a folder for this client and seed
             end_path = f'server/temp/{index}'
             if not os.path.exists(end_path):
                 os.mkdir(end_path)
             
             shutil.copy('launcher.pyz', end_path)
 
+            # Write the client into the folder
             with open(f'{end_path}/client_{index}.py', 'w') as f:
                 f.write(row['file_text'])
 
+            # Determine what seed this run needs based on it's serial index
             seed_index = int(index / self.NUMBER_OF_RUNS_FOR_CLIENT)
 
-            
-            shutil.copy(f'server/temp/seeds/{seed_index}/logs/game_map.json', f'{end_path}/game_map.json')
-
+            # Copy the seed into the run folder
             if os.path.exists(f"server/temp/seeds/{seed_index}/logs/game_map.json"):
                 os.mkdir(f"{end_path}/logs")
                 shutil.copyfile(f"server/temp/seeds/{seed_index}/logs/game_map.json", f"{end_path}/logs/game_map.json")
@@ -105,12 +112,19 @@ class client_runner:
             self.insert_run(row["submission_id"], score, self.group_id, error, self.index_to_seed_id[seed_index])
 
     def fetch_clients(self):
+        '''
+        Returns the latest clients for every team
+        '''
         cur = self.conn.cursor(cursor_factory= RealDictCursor)
         cur.execute("SELECT * FROM fetch_latest_clients()")
         return cur.fetchall()
 
     def run_runner(self, end_path, runner):
-        # Copy and run proper file
+        '''
+        runs a script in the runner folder. 
+        end path is where the runner is located
+        runner is the name of the script (no extension) 
+        '''
         f = open(os.devnull, 'w')
         if platform.system() == 'Linux':
             shutil.copy( runner + '.sh', f"{end_path}/runner.sh")
@@ -123,18 +137,28 @@ class client_runner:
             stdout, stderr = p.communicate()
 
     def insert_new_group_run(self):
+        '''
+        Inserts a new group run. Relates all the runs in this process together
+        '''
         cur = self.conn.cursor(cursor_factory= RealDictCursor)
         cur.execute("SELECT insert_group_run()")
         self.conn.commit()
         return cur.fetchall()[0]["insert_group_run"]
 
     def insert_seed_file(self, seed):
+        '''
+        inserts the seed file into the database. 
+        Returns it's seed_id
+        '''
         cur = self.conn.cursor(cursor_factory= RealDictCursor)
         cur.execute("SELECT insert_seed(%s)", seed)
         self.conn.commit()
         return cur.fetchall()[0]["insert_seed"]
 
     def insert_run(self, subid, score, groupid, error, seed_id):
+        '''
+        Inserts a run into the DB
+        '''
         cur = self.conn.cursor()
         cur.execute("CALL insert_run(%s,%s,%s, %s, %s)", (subid, score, groupid, error, seed_id))
         self.conn.commit()
