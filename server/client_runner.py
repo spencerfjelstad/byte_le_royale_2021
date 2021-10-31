@@ -22,6 +22,7 @@ class client_runner:
         self.group_id = 0
 
         self.NUMBER_OF_RUNS_FOR_CLIENT = 5
+        self.index_to_seed_id = {}
         #self.loop.run_in_executor(None, self.await_input)
         #self.loop.call_later(5, self.external_runner())
         # try:
@@ -44,11 +45,16 @@ class client_runner:
             os.mkdir(path)
             shutil.copy('launcher.pyz', path)
             self.run_runner(path, "server/runners/generator")
+            fltext = ""
+            with open(f'{path}/logs/game_map.json') as fl:
+                fltext = fl.readlines()
+            self.index_to_seed_id[index] = self.insert_seed_file(fltext)
+
 
         # run each client 5 times, then run them in paralell using their index as a unique identifier
-        clients = clients 
+        clients = clients * self.NUMBER_OF_RUNS_FOR_CLIENT
         res = Parallel(n_jobs = 5, backend="threading")(map(delayed(self.internal_runner), clients, [i for i in range(len(clients))]))
-
+        shutil.rmtree("server/temp/seeds")
 
     def internal_runner(self, row, index):
         score = 0
@@ -66,10 +72,14 @@ class client_runner:
             with open(f'{end_path}/client_{index}.py', 'w') as f:
                 f.write(row['file_text'])
 
-            seed_index = int(row / self.NUMBER_OF_RUNS_FOR_CLIENT)
+            seed_index = int(index / self.NUMBER_OF_RUNS_FOR_CLIENT)
 
-            if os.path.exists(f"server/temp/seeds/{seed_index}"):
-                shutil.copyfile(f"server/temp/seeds/{seed_index}", f"end_path/game_map.json")
+            
+            shutil.copy(f'server/temp/seeds/{seed_index}/logs/game_map.json', f'{end_path}/game_map.json')
+
+            if os.path.exists(f"server/temp/seeds/{seed_index}/logs/game_map.json"):
+                os.mkdir(f"{end_path}/logs")
+                shutil.copyfile(f"server/temp/seeds/{seed_index}/logs/game_map.json", f"{end_path}/logs/game_map.json")
 
             res = self.run_runner(end_path, "server/runners/runner")
 
@@ -80,9 +90,6 @@ class client_runner:
                     results = json.load(f)
                 score = results['player']['truck']['renown'] 
 
-            if os.path.exists(end_path + '/logs/game_map.json'):
-                with open(end_path + '/logs/game_map.json', 'r') as f:
-                    seed = str(f.readlines())
             # Save best log files? doesn't seem necessary (yet)
 
             if 'Error' in results and results['Error'] is not None:
@@ -90,12 +97,12 @@ class client_runner:
                 error = results['Error']
 
                 
-            #shutil.rmtree(end_path)
+            shutil.rmtree(end_path)
 
             #self.current_running.insert(0, number)
             f.close()
         finally:
-            self.insert_run(row["submission_id"], score, self.group_id, error, seed)
+            self.insert_run(row["submission_id"], score, self.group_id, error, self.index_to_seed_id[seed_index])
 
     def fetch_clients(self):
         cur = self.conn.cursor(cursor_factory= RealDictCursor)
@@ -121,9 +128,15 @@ class client_runner:
         self.conn.commit()
         return cur.fetchall()[0]["insert_group_run"]
 
-    def insert_run(self, subid, score, groupid, error, seed):
+    def insert_seed_file(self, seed):
+        cur = self.conn.cursor(cursor_factory= RealDictCursor)
+        cur.execute("SELECT insert_seed(%s)", seed)
+        self.conn.commit()
+        return cur.fetchall()[0]["insert_seed"]
+
+    def insert_run(self, subid, score, groupid, error, seed_id):
         cur = self.conn.cursor()
-        cur.execute("CALL insert_run(%s,%s,%s, %s, %s)", (subid, score, groupid, error, seed))
+        cur.execute("CALL insert_run(%s,%s,%s, %s, %s)", (subid, score, groupid, error, seed_id))
         self.conn.commit()
 
     def close_server(self):
