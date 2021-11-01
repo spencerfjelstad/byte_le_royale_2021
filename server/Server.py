@@ -69,6 +69,42 @@ def get_team_score_over_time():
     cur.execute("SELECT (get_team_score_over_time(%s)).*", (vid,))
     return jsonify(cur.fetchall())
 
+@app.route("/api/get_submissions_for_team", methods = ['post'])
+def get_submissions_for_team():
+    vid = request.json["vid"]
+    cur = conn.cursor()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    cur.execute("SELECT (get_submissions_for_team(%s)).*", (vid,))
+    return jsonify(cur.fetchall())
+
+@app.route("/api/get_file_from_submission", methods = ['post'])
+def get_file_from_submission():
+    vid = request.json["vid"]
+    subid = request.json["submissionid"]
+    cur = conn.cursor()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    cur.execute("SELECT get_file_from_submission(%s, %s)", (vid,subid))
+    return cur.fetchone()["get_file_from_submission"]
+
+@app.route("/api/get_runs_for_submission", methods = ['post'])
+def get_runs_for_submission():
+    vid = request.json["vid"]
+    subid = request.json["submissionid"]
+    cur = conn.cursor()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    cur.execute("SELECT (get_runs_for_submission(%s, %s)).*", (vid,subid))
+    return jsonify(cur.fetchall())
+
+@app.route("/api/get_group_runs", methods = ['post'])
+def get_runs_for_submission():
+    vid = request.json["vid"]
+    subid = request.json["submissionid"]
+    cur = conn.cursor()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    cur.execute("SELECT (get_runs_for_submission(%s, %s)).*", (vid,subid))
+    return jsonify(cur.fetchall())
+
+
 @app.route("/api/register", methods = ['POST'])
 def insert_team():
     teamtype = request.form.get("type")
