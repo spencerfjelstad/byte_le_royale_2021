@@ -49,11 +49,11 @@ class Client:
             self.get_submission_stats()
         elif command in self.utils.commands['leaderboard']['c']:
             if flag in self.utils.commands['leaderboard']['f']['a']:
-                self.utils.get_entire_leaderboard()
+                self.utils.get_leaderboard(True, -1)
             elif flag in self.utils.commands['leaderboard']['f']['o']:
                 self.utils.get_team_score_over_time(self.vid)
             else:
-                self.utils.get_eligible_leaderboard()
+                self.utils.get_leaderboard(False, -1)
 
     def register(self):
         # Check if vID already exists and cancel out

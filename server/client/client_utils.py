@@ -43,16 +43,11 @@ class ClientUtils:
         resp = requests.post(self.IP + "submit", json=data)
         return resp
 
-    def get_eligible_leaderboard(self):
-        resp = requests.get(self.IP + "get_eligible_leaderboard")
+    def get_leaderboard(self, include_inelligible, sub_id):
+        data = {"include_inelligible": include_inelligible, "sub_id": sub_id}
+        resp = requests.post(self.IP + "get_leaderboard", json=data)
         jsn = json.loads(resp.content)
         print("The following is the leaderboard for eligible contestants")
-        self.to_table(jsn)
-
-    def get_entire_leaderboard(self):
-        resp = requests.get(self.IP + "get_entire_leaderboard")
-        jsn = json.loads(resp.content)
-        print("The following is the leaderboard for all contestants")
         self.to_table(jsn)
 
     def get_team_score_over_time(self, vid):

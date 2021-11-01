@@ -39,17 +39,14 @@ def get_teams():
     return jsonify(cur.fetchall())
 
 
-@app.route("/api/get_eligible_leaderboard", methods = ['get'])
-def get_eligible_leaderboard():
+@app.route("/api/get_leaderboard", methods = ['post'])
+def get_leaderboard():
+    ell = request.json["include_inelligible"]
+    sub_id = request.json["sub_id"]
     cur = conn.cursor(cursor_factory=RealDictCursor)
-    cur.execute("SELECT (get_eligible_leaderboard()).*")
+    cur.execute("SELECT (get_leaderboard(%s, %s)).*", (ell, sub_id))
     return jsonify(cur.fetchall())
 
-@app.route("/api/get_entire_leaderboard", methods = ['get'])
-def get_entire_leaderboard():
-    cur = conn.cursor(cursor_factory=RealDictCursor)
-    cur.execute("SELECT (get_entire_leaderboard()).*")
-    return jsonify(cur.fetchall())
 
 @app.route("/api/get_submission_stats", methods = ['post'])
 def get_stats():
@@ -96,7 +93,7 @@ def get_runs_for_submission():
     return jsonify(cur.fetchall())
 
 @app.route("/api/get_group_runs", methods = ['post'])
-def get_runs_for_submission():
+def get_group_runs():
     vid = request.json["vid"]
     subid = request.json["submissionid"]
     cur = conn.cursor()
