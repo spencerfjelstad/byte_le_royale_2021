@@ -29,14 +29,23 @@ if __name__ == '__main__':
     run_subpar.add_argument('-quiet', '-q', action='store_true', default=False,
                             dest='q_bool', help='Runs your AI... quietly :)')
 
-     # Scrimmage Subparser
-    scrim_subpar = spar.add_parser('scrimmage', aliases=['s'], help='Boot client for scrimmage server')
-    
     # Visualizer Subparser
     vis_subpar = spar.add_parser('visualizer', aliases=['v'], help='Visualizes last run game')
 
     # Updating Subparser
     upd_subpar = spar.add_parser('update', aliases=['u'], help='Updates your game to match the newest version if possible')
+
+    # Client parser
+    client_parser = spar.add_parser("scrimmage", aliases= ['s'], help='run the client for the byte-le royale server')
+    client_parser.add_argument("register", help='Create a new team and return a vID', default=False, action='store_true')
+    client_parser.add_argument("submit", help='Submit a client for grading', default=False, action='store_true')
+    client_parser.add_argument("stats", help='View stats relating to your team',default=False,  action='store_true')
+    
+    # Leaderboard subparser group
+    leaderboard_group = client_parser.add_subparsers(title="leaderboard", dest='leaderboard')
+    leaderboard = leaderboard_group.add_parser("leaderboard", aliases= ['l'],help='Commands relating to the leaderboard')
+    leaderboard.add_argument("-include_alumni",  help='Include alumni in the leaderboard',default=False,  action='store_true')
+    leaderboard.add_argument("-over_time",  help='See how you have scored over time', default=False,  action='store_true')
 
     # Parse Command Line
     par_args = par.parse_args()
@@ -66,7 +75,7 @@ if __name__ == '__main__':
 
      # Boot up the scrimmage server client
     elif action in ['server', 's', 'scrimmage']:
-        cl = Client()
+        cl = Client(par_args)
 
 
     elif action in ['visualizer', 'v']:

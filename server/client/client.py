@@ -1,15 +1,14 @@
-import asyncio
 import os
-
 #from game.config import CLIENT_DIRECTORY, CLIENT_KEYWORD
 from server.client.client_utils import ClientUtils
+import argparse
 
 CLIENT_DIRECTORY = "./"
 CLIENT_KEYWORD = "client"
 
 
 class Client:
-    def __init__(self):
+    def __init__(self, args):
 
         # If vID exists, read it
         if os.path.isfile('vID'):
@@ -17,40 +16,21 @@ class Client:
                 self.vid = f.read()
 
         self.utils = ClientUtils()
-        self.loop = asyncio.get_event_loop()
-        self.loop.run_until_complete(self.handle_client())
+        self.handle_client(args)
+
 
     # Determines what action the client wants to do
-    async def handle_client(self):
-        out = f'Select an action:\n'
-        out += f'Register: {self.utils.commands["register"]}\n'
-        out += f'Submit client: {self.utils.commands["submit"]}\n'
-        out += f'View stats: {self.utils.commands["view"]["c"]}\n'
-        out += f'Check leaderboard: {self.utils.commands["leaderboard"]["c"]}\n'
-        out += f'Help: a command followed by {self.utils.commands["help"]}\n'
-        print(out)
-        command = input('Enter: ')
-        print()
-
-        flag = command.split()[-1]
-        command = command.split()[0]
-
-        if command not in self.utils.commands["register"] + self.utils.commands["submit"] + self.utils.commands['view']['c'] + self.utils.commands['leaderboard']['c']:
-            print('Not a recognized command.')
-            return
-
-        await asyncio.sleep(0.1)
-
-        if command in self.utils.commands['register']:
+    def handle_client(self, args):
+        if args.register:
             self.register()
-        elif command in self.utils.commands['submit']:
+        elif args.submit:
             self.submit()
-        elif command in self.utils.commands['view']['c']:
+        elif args.stats:
             self.get_submission_stats()
-        elif command in self.utils.commands['leaderboard']['c']:
-            if flag in self.utils.commands['leaderboard']['f']['a']:
+        elif args.leaderboard:
+            if args.include_alumni:
                 self.utils.get_leaderboard(True, -1)
-            elif flag in self.utils.commands['leaderboard']['f']['o']:
+            elif args.over_time:
                 self.utils.get_team_score_over_time(self.vid)
             else:
                 self.utils.get_leaderboard(False, -1)
@@ -168,7 +148,3 @@ class Client:
             print("Cannot find vID, please register first.")
             return False
         return True
-
-
-if __name__ == '__main__':
-    cli = Client()
