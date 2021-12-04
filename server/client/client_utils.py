@@ -7,25 +7,6 @@ class ClientUtils:
         self.IP = 'http://127.0.0.1:5000/api/'
         self.PORT = 5007
 
-        self.commands = {
-            'register': ['register', 'r'],
-            'submit': ['submit', 's'],
-            'help' : ['help', 'h'],
-            'view': {
-                'c': ['view stats', 'view', 'v'],
-                'f': {
-                    
-                }
-            },
-            'leaderboard': {
-                'c': ['leaderboard', 'l'],
-                'f': {
-                    'a': ['all', 'a'],
-                    'e': ['elligible', 'e'],
-                    'o': ['score_over_time', 'over', 'o']
-                }
-            }
-        }
     def get_team_types(self):
         resp = requests.get(self.IP + "get_team_types")
         return json.loads(resp.content)
@@ -38,6 +19,12 @@ class ClientUtils:
         resp = requests.post(self.IP + "register", reg_data)
         return resp
 
+    def submit_file(self, file, vid):
+        data = {"file": file, "vid": vid}
+        resp = requests.post(self.IP + "submit", json=data)
+        return resp
+
+        
     def submit_file(self, file, vid):
         data = {"file": file, "vid": vid}
         resp = requests.post(self.IP + "submit", json=data)

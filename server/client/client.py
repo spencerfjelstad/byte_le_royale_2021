@@ -25,9 +25,9 @@ class Client:
             self.register()
         elif args.submit:
             self.submit()
-        elif args.stats:
+        elif args.subparse == 'stats':
             self.get_submission_stats()
-        elif args.leaderboard:
+        elif args.subparse == 'leaderboard':
             if args.include_alumni:
                 self.utils.get_leaderboard(True, -1)
             elif args.over_time:

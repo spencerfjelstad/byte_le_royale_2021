@@ -36,16 +36,22 @@ if __name__ == '__main__':
     upd_subpar = spar.add_parser('update', aliases=['u'], help='Updates your game to match the newest version if possible')
 
     # Client parser
-    client_parser = spar.add_parser("scrimmage", aliases= ['s'], help='run the client for the byte-le royale server')
-    client_parser.add_argument("register", help='Create a new team and return a vID', default=False, action='store_true')
-    client_parser.add_argument("submit", help='Submit a client for grading', default=False, action='store_true')
-    client_parser.add_argument("stats", help='View stats relating to your team',default=False,  action='store_true')
-    
-    # Leaderboard subparser group
-    leaderboard_group = client_parser.add_subparsers(title="leaderboard", dest='leaderboard')
-    leaderboard = leaderboard_group.add_parser("leaderboard", aliases= ['l'],help='Commands relating to the leaderboard')
+    client_parser = spar.add_parser("client", aliases= ['s', 'c'], help='run the client for the byte-le royale server')
+
+    # subparser group
+    client_sub_group = client_parser.add_subparsers(title="client_subparsers", dest='subparse')
+    leaderboard = client_sub_group.add_parser("leaderboard", aliases= ['l'],help='Commands relating to the leaderboard')
     leaderboard.add_argument("-include_alumni",  help='Include alumni in the leaderboard',default=False,  action='store_true')
     leaderboard.add_argument("-over_time",  help='See how you have scored over time', default=False,  action='store_true')
+    
+    # Stats subgroup
+    stats = client_sub_group.add_parser("stats", aliases= ['s'], help='view stats for your team')
+    leaderboard.add_argument("-latest_group_submissions",  help='returns the latest group submissions for your client', default=False,  action='store_true')
+    stats.add_argument('-download_submission_codefile', type=int)
+    
+
+    client_parser.add_argument("-register", help='Create a new team and return a vID', default=False, action='store_true')
+    client_parser.add_argument("-submit", help='Submit a client for grading', default=False, action='store_true')
 
     # Parse Command Line
     par_args = par.parse_args()
@@ -74,7 +80,7 @@ if __name__ == '__main__':
         engine.loop()
 
      # Boot up the scrimmage server client
-    elif action in ['server', 's', 'scrimmage']:
+    elif action in ['client', 'c', 'scrimmage', 's']:
         cl = Client(par_args)
 
 
