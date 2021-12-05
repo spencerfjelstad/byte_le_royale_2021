@@ -4,8 +4,8 @@ import json
 
 class ClientUtils:
     def __init__(self):
-        self.IP = 'http://127.0.0.1:5000/api/'
-        self.PORT = 5007
+        self.IP = 'http://134.129.91.223:8000/api/'
+        self.PORT = 8000
 
     def get_team_types(self):
         resp = requests.get(self.IP + "get_team_types")
@@ -66,17 +66,20 @@ class ClientUtils:
         return rtn + "+"
 
     def to_table(self, json):
-        padding = 4
-        json_atribs = json[0].keys()
-        col_longest_length = self.get_longest_cell_in_cols(json, json_atribs)
-        line_seperator = self.get_seperator_line(col_longest_length, padding)
-        row_format = ""
-        for key in json_atribs:
-            row_format += "|{:^" + str(col_longest_length[key] + padding) + "}"
-        row_format += "|"
-        print(line_seperator)
-        print(row_format.format(*json_atribs))
-        for row in json:
+        try:
+            padding = 4
+            json_atribs = json[0].keys()
+            col_longest_length = self.get_longest_cell_in_cols(json, json_atribs)
+            line_seperator = self.get_seperator_line(col_longest_length, padding)
+            row_format = ""
+            for key in json_atribs:
+                row_format += "|{:^" + str(col_longest_length[key] + padding) + "}"
+            row_format += "|"
             print(line_seperator)
-            print(row_format.format(*row.values()))
-        print(line_seperator)
+            print(row_format.format(*json_atribs))
+            for row in json:
+                print(line_seperator)
+                print(row_format.format(*row.values()))
+            print(line_seperator)
+        except:
+            print("Something went wrong. Maybe there isn't data for what you're looking for")

@@ -1,0 +1,1 @@
+server can be hosted with the command 'gunicorn -b 134.129.91.223:8000 Server:app' for production 

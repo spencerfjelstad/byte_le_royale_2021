@@ -4,16 +4,21 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 from flask import request
 from requests.models import HTTPError
-import uuid
+import uuid, json
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
 
+db_conn = {}
+with open('./conn_info.json') as fl:
+    db_conn = json.load(fl)
+
 conn = psycopg2.connect(
     host="localhost",
-    database="ByteLeRoyaleDB",
-    user="postgres",
-    password="password")
+    database = db_conn["database"],
+    user= db_conn["user"],
+    password=db_conn["password"]
+)
 
 @app.route("/")
 def hello_world():

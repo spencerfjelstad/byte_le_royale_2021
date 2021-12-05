@@ -1,7 +1,9 @@
 set echo off
 rm -f *.pyz
 cp -r ./game ./wrapper/game
-cp -r  ./scrimmage ./wrapper/scrimmage
+mkdir ./wrapper/server/
+cp -r  ./server/client ./wrapper/server/client
 python3 -m zipapp  ./wrapper -o ./launcher.pyz -c
 rm -rf ./wrapper/game
-rm -rf ./wrapper/scrimmage
+rm -rf ./wrapper/server/client
+rm -rf ./wrapper/server
