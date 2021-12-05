@@ -46,8 +46,8 @@ if __name__ == '__main__':
     
     # Stats subgroup
     stats = client_sub_group.add_parser("stats", aliases= ['s'], help='view stats for your team')
-    leaderboard.add_argument("-latest_group_submissions",  help='returns the latest group submissions for your client', default=False,  action='store_true')
-    stats.add_argument('-download_submission_codefile', type=int)
+    #stats.add_argument("-latest_group_submissions",  help='returns the latest group submissions for your client', default=False,  action='store_true')
+    #stats.add_argument('-download_submission_codefile', type=int)
     
 
     client_parser.add_argument("-register", help='Create a new team and return a vID', default=False, action='store_true')

@@ -25,9 +25,9 @@ class Client:
             self.register()
         elif args.submit:
             self.submit()
-        elif args.subparse == 'stats':
+        elif args.subparse.lower() == 'stats' or args.subparse.lower() == 's':
             self.get_submission_stats()
-        elif args.subparse == 'leaderboard':
+        elif args.subparse.lower() == 'leaderboard' or args.subparse.lower() == "l":
             if args.include_alumni:
                 self.utils.get_leaderboard(True, -1)
             elif args.over_time:
@@ -136,11 +136,6 @@ class Client:
         res = self.utils.get_submission_stats(self.vid)
         print("Current Submission stats for submission {0} in run group {1}".format(res["sub_id"], res["run_group_id"]))
         self.utils.to_table(res["data"])
-
-        # Receive stats
-        # stats = await self.reader.read(BUFFER_SIZE)
-        #stats = stats.decode()
-        # print(stats)
 
     def verify(self):
         # Check vID for uuid

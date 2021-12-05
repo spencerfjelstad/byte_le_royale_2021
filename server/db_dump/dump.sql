@@ -5,7 +5,7 @@
 -- Dumped from database version 13.4
 -- Dumped by pg_dump version 13.4
 
--- Started on 2021-11-01 18:55:34
+-- Started on 2021-12-04 18:00:44
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -920,7 +920,7 @@ ALTER TABLE ONLY public.team
     ADD CONSTRAINT team_uniid_fkey FOREIGN KEY (uni_id) REFERENCES public.university(uni_id);
 
 
--- Completed on 2021-11-01 18:55:35
+-- Completed on 2021-12-04 18:00:45
 
 --
 -- PostgreSQL database dump complete
