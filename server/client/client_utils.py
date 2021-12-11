@@ -9,30 +9,36 @@ class ClientUtils:
 
     def get_team_types(self):
         resp = requests.get(self.IP + "get_team_types")
+        resp.raise_for_status()
         return json.loads(resp.content)
 
     def get_unis(self):
         resp = requests.get(self.IP + "get_unis")
+        resp.raise_for_status()
         return json.loads(resp.content)
 
     def register(self, reg_data):
         resp = requests.post(self.IP + "register", reg_data)
+        resp.raise_for_status()
         return resp
 
     def submit_file(self, file, vid):
         data = {"file": file, "vid": vid}
         resp = requests.post(self.IP + "submit", json=data)
+        resp.raise_for_status()
         return resp
 
         
     def submit_file(self, file, vid):
         data = {"file": file, "vid": vid}
         resp = requests.post(self.IP + "submit", json=data)
+        resp.raise_for_status()
         return resp
 
     def get_leaderboard(self, include_inelligible, sub_id):
         data = {"include_inelligible": include_inelligible, "sub_id": sub_id}
         resp = requests.post(self.IP + "get_leaderboard", json=data)
+        resp.raise_for_status()
         jsn = json.loads(resp.content)
         print("The following is the leaderboard for eligible contestants")
         self.to_table(jsn)
@@ -40,6 +46,7 @@ class ClientUtils:
     def get_team_score_over_time(self, vid):
         resp = requests.post(
             self.IP + "get_team_score_over_time", json={"vid": vid})
+        resp.raise_for_status()
         jsn = json.loads(resp.content)
         print("The following is your team's performance in each group run")
         self.to_table(jsn)
@@ -47,6 +54,7 @@ class ClientUtils:
     def get_submission_stats(self, vid):
         resp = requests.post(
             self.IP + "get_submission_stats", json={"vid": vid})
+        resp.raise_for_status()
         return json.loads(resp.content)
 
     def get_longest_cell_in_cols(self, json, json_atribs):
