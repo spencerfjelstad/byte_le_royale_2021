@@ -8,17 +8,22 @@ from psycopg2.extras import RealDictCursor
 from joblib import Parallel, delayed
 import asyncio
 import random
+import time
 
 class client_runner:
 
     def __init__(self):
 
-        # postgress connection
+        db_conn = {}
+        with open('./server/conn_info.json') as fl:
+            db_conn = json.load(fl)
+
         self.conn = psycopg2.connect(
-        host="localhost",
-        database="ByteLeRoyaleDB",
-        user="postgres",
-        password="password")
+            host="localhost",
+            database=db_conn["database"],
+            user=db_conn["user"],
+            password=db_conn["password"]
+        )
         self.loop = asyncio.get_event_loop()
 
         # The group run ID. will be set by insert_new_group_run
@@ -26,15 +31,20 @@ class client_runner:
 
         self.NUMBER_OF_RUNS_FOR_CLIENT = 5
 
+        self.SLEEP_TIME_SECONDS_BETWEEN_RUNS = 150
+
         # Maps a seed_index to a database seed_id
         self.index_to_seed_id = {}
 
-        #self.loop.run_in_executor(None, self.await_input)
-        #self.loop.call_later(5, self.external_runner())
-        # try:
-        #     self.loop.run_forever()
-        # except KeyboardInterrupt:
-        #     self.close_server()
+        # self.loop.run_in_executor(None, self.await_input)
+        # self.loop.call_later(5, self.external_runner())
+        try:
+            while True:
+                self.external_runner()
+                print(f"Sleeping for {self.SLEEP_TIME_SECONDS_BETWEEN_RUNS} seconds")
+                time.sleep(150)
+        except KeyboardInterrupt:
+            self.close_server()
 
 
     def external_runner(self):
@@ -66,7 +76,7 @@ class client_runner:
     def internal_runner(self, row, index):
         score = 0
         error = ""
-        print(index)
+        print("running run {0} for submission {1}".format(index, row["submission_id"]))
         try:
             # Run game
             # Create a folder for this client and seed

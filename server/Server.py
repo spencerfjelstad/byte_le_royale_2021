@@ -6,6 +6,31 @@ from flask import request
 from requests.models import HTTPError
 import uuid
 import json
+from logging.config import dictConfig
+from flask.logging import logging
+
+dictConfig({
+    'version': 1,
+    'formatters': {'default': {
+        'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+    }},
+    'handlers': {'wsgi': {
+        'class': 'logging.StreamHandler',
+        'stream': 'ext://flask.logging.wsgi_errors_stream',
+        'formatter': 'default'
+    },
+        "file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "log_file.txt",
+            "maxBytes": 10000,
+            "backupCount": 10,
+            "delay": "True",
+    }},
+    'root': {
+        'level': 'INFO',
+        'handlers': ['wsgi', 'file']
+    }
+})
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
@@ -31,7 +56,8 @@ def hello_world():
 def get_unis():
     cur = conn.cursor(cursor_factory=RealDictCursor)
     cur.execute("SELECT (get_universities()).*")
-    if cur.arraysize == 0:
+    if cur.rowcount == 0:
+        app.logger.info('Error: No data to return for get_unis')
         return {"error": "No universities were found"}, 404
     else:
         return jsonify(cur.fetchall())
@@ -57,7 +83,8 @@ def get_leaderboard():
     sub_id = request.json["sub_id"]
     cur = conn.cursor(cursor_factory=RealDictCursor)
     cur.execute("SELECT (get_leaderboard(%s, %s)).*", (ell, sub_id))
-    if cur.arraysize == 0:
+    if cur.rowcount == 0:
+        app.logger.error('Error: No data to return for leaderboard')
         return {"error": "No submissions were found"}, 404
     else:
         return jsonify(cur.fetchall())
@@ -71,7 +98,9 @@ def get_stats():
     res = cur.fetchone()
     cur = conn.cursor(cursor_factory=RealDictCursor)
     cur.execute("SELECT (get_stats_for_submission(%s, %s)).*", res)
-    if cur.arraysize == 0:
+    if cur.rowcount == 0:
+        app.logger.error(
+            'Error: No data to return submissions_stats for %s', vid)
         return {"error": "No submissions were found"}, 404
     else:
         return jsonify({"data": cur.fetchall(), "sub_id": res[0], "run_group_id": res[1]})
@@ -83,7 +112,11 @@ def get_team_score_over_time():
     cur = conn.cursor()
     cur = conn.cursor(cursor_factory=RealDictCursor)
     cur.execute("SELECT (get_team_score_over_time(%s)).*", (vid,))
-    if cur.arraysize == 0:
+    app.logger.info(
+        'Returning get_team_score_over_time for %s at IP %s', vid, request.remote_addr)
+    if cur.rowcount == 0:
+        app.logger.error(
+            'Error: No data to return team_score_over_time for %s', vid)
         return {"error": "No submissions were found"}, 404
     else:
         return jsonify(cur.fetchall())
@@ -95,7 +128,9 @@ def get_submissions_for_team():
     cur = conn.cursor()
     cur = conn.cursor(cursor_factory=RealDictCursor)
     cur.execute("SELECT (get_submissions_for_team(%s)).*", (vid,))
-    if cur.arraysize == 0:
+    if cur.rowcount == 0:
+        app.logger.error(
+            'Error: No data to return for get_submissions_for_team for %s', vid)
         return {"error": "No submissions were found"}, 404
     else:
         return jsonify(cur.fetchall())
@@ -108,7 +143,11 @@ def get_file_from_submission():
     cur = conn.cursor()
     cur = conn.cursor(cursor_factory=RealDictCursor)
     cur.execute("SELECT get_file_from_submission(%s, %s)", (vid, subid))
-    if cur.arraysize == 0:
+    app.logger.info('Returning file for submissionid %s for team %s at IP %',
+                    subid, vid, request.remote_addr)
+    if cur.rowcount == 0:
+        app.logger.error(
+            'Error: No data to return for get_file_from_submission for %s', vid)
         return {"error": "No submissions were found"}, 404
     else:
         return cur.fetchone()["get_file_from_submission"]
@@ -121,7 +160,9 @@ def get_runs_for_submission():
     cur = conn.cursor()
     cur = conn.cursor(cursor_factory=RealDictCursor)
     cur.execute("SELECT (get_runs_for_submission(%s, %s)).*", (vid, subid))
-    if cur.arraysize == 0:
+    if cur.rowcount == 0:
+        app.logger.error(
+            'Error: No data to return for get_runs_for_submission for %s', vid)
         return {"error": "No submissions were found"}, 404
     else:
         return jsonify(cur.fetchall())
@@ -134,7 +175,7 @@ def get_group_runs():
     cur = conn.cursor()
     cur = conn.cursor(cursor_factory=RealDictCursor)
     cur.execute("SELECT (get_runs_for_submission(%s, %s)).*", (vid, subid))
-    if cur.arraysize == 0:
+    if cur.rowcount == 0:
         return {"error": "No group runs were found"}, 404
     else:
         return jsonify(cur.fetchall())
@@ -148,7 +189,8 @@ def insert_team():
     cur = conn.cursor()
     cur.execute("SELECT insert_team(%s, %s, %s)", (teamtype, name, uni))
     conn.commit()
-    if cur.arraysize == 0:
+    app.logger.info('Registered team at IP %s', request.remote_addr)
+    if cur.rowcount == 0:
         return {"error": "No submissions were found"}, 404
     else:
         return cur.fetchone()[0]
@@ -164,6 +206,8 @@ def submit_file():
     cur = conn.cursor()
     cur.execute("CALL submit_code_file(%s, %s)", (file, vid))
     conn.commit()
+    app.logger.info('Recieved submission from %s at IP %s',
+                    vid, request.remote_addr)
     return "True"
 
 
