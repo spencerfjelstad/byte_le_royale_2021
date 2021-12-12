@@ -21,23 +21,25 @@ class Client:
 
     # Determines what action the client wants to do
     def handle_client(self, args):
-        if args.register:
-            self.register()
-        elif args.submit:
-            self.submit()
-        elif args.subparse != None:
-            if args.subparse.lower() == 'stats' or args.subparse.lower() == 's':
-                breakpoint()
-                self.get_submission_stats()
-            elif args.subparse.lower() == 'leaderboard' or args.subparse.lower() == "l":
-                if args.include_alumni:
-                    self.utils.get_leaderboard(True, -1)
-                elif args.over_time:
-                    self.utils.get_team_score_over_time(self.vid)
-                else:
-                    self.utils.get_leaderboard(False, -1)
-        else:
-            print("The server command needs more information. Try 'python launcher.pyz s -h' for help")
+        try:
+            if args.register:
+                self.register()
+            elif args.submit:
+                self.submit()
+            elif args.subparse != None:
+                if args.subparse.lower() == 'stats' or args.subparse.lower() == 's':
+                    self.get_submission_stats()
+                elif args.subparse.lower() == 'leaderboard' or args.subparse.lower() == "l":
+                    if args.include_alumni:
+                        self.utils.get_leaderboard(True, -1)
+                    elif args.over_time:
+                        self.utils.get_team_score_over_time(self.vid)
+                    else:
+                        self.utils.get_leaderboard(False, -1)
+            else:
+                print("The server command needs more information. Try 'python launcher.pyz s -h' for help")
+        except Exception as e:
+            print(f"An error was returned by the server. This likely means that there isn't data for the requested resource yet")
 
     def register(self):
         # Check if vID already exists and cancel out
