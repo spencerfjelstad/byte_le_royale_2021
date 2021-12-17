@@ -70,8 +70,8 @@ A submission table, inserts occur every time a team uploads a code file through 
 This is where python code files are stored. (This is a valid way to do it, as Postgres will store it as a file anyway https://newbedev.com/are-there-performance-issues-storing-files-in-postgresql)
 
 #### group_run
-##### PK group_run_id int, start_run timestamp
-Group run is a table that groups runs together. 
+##### PK group_run_id int, start_run timestamp, launcher_version varchar(10)
+Group run is a table that groups runs together. The launcher version is useful for determining what version of a launcher a run ran on (duh)
 
 #### run
 ##### FK submission_id int, PK run_id int, score int, FK group_run_id int, run_time timestamp, FK seed_id int
@@ -102,6 +102,39 @@ To back up the database schema you've altered
 ## CLIENT RUNNER
 
 The client runner fetches programs from the database, runs them, and stores their results in the database. 
+
+If the client runner is interupted, the results will be removed from the database using a transaction.
+The transaction will be commited once the runner finishes the group run.
+
+If you get an error message like "TCP id already in use" run recover_and_end_transaction.py to rollback and end the transaction. Only one TCP transaction is allowed at a time, having two would be bad!
+
+(Note, by default no TCP transactions are allowed. This must be changed in postgresql.conf)
+
+## SET UP
+
+set up for the client runner is pretty simple
+
+1. Allow "executing files as a program" for all files in the runner folder
+2. Change database credentials
+3. Change line 121 so the game gets the correct score from the logs
+
+run the program! fix any errors that occur
+
+## UPDATING CLIENT RUNNER
+
+When you make changes to the game during the course of the competition, you must update the client runner!
+
+1. stop the client runner
+2. run python3 launcher.pyz update
+3. run ./build.sh or ./build.bat
+4. start the client runner
+
+That's it!
+
+(I'm sure I'll figure more to add here)
+
+
+## API
 
 
 

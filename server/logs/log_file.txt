@@ -1,0 +1,58 @@
+Failed to connect to DB: {e}
+Failed to connect to DB: connection to server at "localhost" (127.0.0.1), port 5432 failed: FATAL:  password authentication failed for user "bytele"
+connection to server at "localhost" (127.0.0.1), port 5432 failed: FATAL:  password authentication failed for user "bytele"
+
+Failed to connect to DB: connection to server at "localhost" (127.0.0.1), port 5432 failed: FATAL:  database "Byte-le-Royale-2021" does not exist
+
+Error: No data to return submissions_stats for d321745e-82b9-49cd-abc7-b91010b51d15
+Exception on /api/submit [POST]
+Traceback (most recent call last):
+  File "/home/acm/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/acm/.local/lib/python3.8/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/acm/.local/lib/python3.8/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/acm/.local/lib/python3.8/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/acm/Documents/code/byte_le_royale_2021/server/Server.py", line 211, in submit_file
+    cur.execute("CALL submit_code_file(%s, %s)", (file, vid))
+psycopg2.errors.ForeignKeyViolation: insert or update on table "submission" violates foreign key constraint "submission_teamid_fkey"
+DETAIL:  Key (team_id)=(d321745e-82b9-49cd-abc7-b91010b51d15) is not present in table "team".
+CONTEXT:  SQL statement "INSERT INTO SUBMISSION (team_id) VALUES (vid) RETURNING submission_id"
+PL/pgSQL function submit_code_file(character varying,uuid) line 5 at SQL statement
+
+Exception on /api/get_unis [GET]
+Traceback (most recent call last):
+  File "/home/acm/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/acm/.local/lib/python3.8/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/acm/.local/lib/python3.8/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/acm/.local/lib/python3.8/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/acm/Documents/code/byte_le_royale_2021/server/Server.py", line 62, in get_unis
+    cur.execute("SELECT (get_universities()).*")
+  File "/home/acm/.local/lib/python3.8/site-packages/psycopg2/extras.py", line 236, in execute
+    return super().execute(query, vars)
+psycopg2.errors.InFailedSqlTransaction: current transaction is aborted, commands ignored until end of transaction block
+
+Exception on /api/get_unis [GET]
+Traceback (most recent call last):
+  File "/home/acm/.local/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/acm/.local/lib/python3.8/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/acm/.local/lib/python3.8/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/acm/.local/lib/python3.8/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/acm/Documents/code/byte_le_royale_2021/server/Server.py", line 62, in get_unis
+    cur.execute("SELECT (get_universities()).*")
+  File "/home/acm/.local/lib/python3.8/site-packages/psycopg2/extras.py", line 236, in execute
+    return super().execute(query, vars)
+psycopg2.errors.InFailedSqlTransaction: current transaction is aborted, commands ignored until end of transaction block
+
+Registered team at IP 172.25.236.127
+Recieved submission from 3632b878-bf5e-4f86-be62-77da14181083 at IP 172.25.236.127

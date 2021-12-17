@@ -6,6 +6,7 @@ import game.config
 import argparse
 import subprocess
 import updater
+from version import v
 
 if __name__ == '__main__':
 
@@ -34,6 +35,9 @@ if __name__ == '__main__':
 
     # Updating Subparser
     upd_subpar = spar.add_parser('update', aliases=['u'], help='Updates your game to match the newest version if possible')
+    
+    #Version Subparser
+    upd_subpar = spar.add_parser('version', help='Prints the current version of the launcher')
 
     # Client parser
     client_parser = spar.add_parser("client", aliases= ['s', 'c'], help='run the client for the byte-le royale server')
@@ -98,6 +102,11 @@ if __name__ == '__main__':
     # Attempt to update the game
     elif action in ['update', 'u']:
         updater.update()
+
+    elif action in ['version', 'ver']:
+        print(v, end="")
+        
+
     
     # Print help if no arguments are passed
     if len(sys.argv) == 1:

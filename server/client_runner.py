@@ -1,4 +1,5 @@
 import os, shutil
+from typing import NewType
 import psycopg2
 import subprocess
 import json
@@ -7,7 +8,8 @@ import zipfile
 from psycopg2.extras import RealDictCursor
 from joblib import Parallel, delayed
 import asyncio
-import random
+
+from tqdm import std
 import time
 
 class client_runner:
@@ -33,17 +35,27 @@ class client_runner:
 
         self.SLEEP_TIME_SECONDS_BETWEEN_RUNS = 150
 
+        self.tpc_id = -1
+
         # Maps a seed_index to a database seed_id
         self.index_to_seed_id = {}
+        
+        self.version = self.get_version_number()
+
 
         # self.loop.run_in_executor(None, self.await_input)
         # self.loop.call_later(5, self.external_runner())
         try:
             while True:
+                self.tpc_id = self.conn.xid(1,"1","branch_qualifier")
+                self.conn.tpc_begin(self.tpc_id)
                 self.external_runner()
+                self.conn.tpc_prepare()
+                self.conn.tpc_commit()
                 print(f"Sleeping for {self.SLEEP_TIME_SECONDS_BETWEEN_RUNS} seconds")
                 time.sleep(150)
-        except KeyboardInterrupt:
+        except (KeyboardInterrupt, Exception) as e:
+            print("Ending server due to {0}".format(e))
             self.close_server()
 
 
@@ -101,11 +113,12 @@ class client_runner:
             res = self.run_runner(end_path, "server/runners/runner")
 
             results = dict()
-            seed = ""
             if os.path.exists(end_path + '/logs/results.json'):
                 with open(end_path + '/logs/results.json', 'r') as f:
                     results = json.load(f)
-                score = results['player']['truck']['renown'] 
+            
+            # CHANGE THIS LINE TO GET CORRECT SCORE FOR GAME
+            score = results['player']['truck']['renown']
 
             # Save best log files? doesn't seem necessary (yet)
 
@@ -140,19 +153,39 @@ class client_runner:
             shutil.copy( runner + '.sh', f"{end_path}/runner.sh")
             p = subprocess.Popen('bash runner.sh', stdout=f, cwd=end_path, shell=True)
             stdout, stderr = p.communicate()
+            return stdout
         else:
             #server/runner.bat
             shutil.copy(runner + '.bat', f"{end_path}/runner.bat")
             p = subprocess.Popen('runner.bat', stdout=f, cwd=end_path, shell=True)
             stdout, stderr = p.communicate()
+            return stdout
+
+
+    def get_version_number(self):
+        '''
+        runs a script in the runner folder. 
+        end path is where the runner is located
+        runner is the name of the script (no extension) 
+        '''
+        
+        stdout = ""
+        if platform.system() == 'Linux':
+            p = subprocess.Popen('server/runners/version.sh',stdout=subprocess.PIPE, shell=True)
+            stdout, stderr = p.communicate()
+        else:
+            p = subprocess.Popen('runner.bat', stdout=f, shell=True)
+            stdout, stderr = p.communicate()
+        return stdout.decode("utf-8") 
+
+            
 
     def insert_new_group_run(self):
         '''
         Inserts a new group run. Relates all the runs in this process together
         '''
         cur = self.conn.cursor(cursor_factory= RealDictCursor)
-        cur.execute("SELECT insert_group_run()")
-        self.conn.commit()
+        cur.execute("SELECT insert_group_run(%s)", (self.version,))
         return cur.fetchall()[0]["insert_group_run"]
 
     def insert_seed_file(self, seed):
@@ -162,7 +195,6 @@ class client_runner:
         '''
         cur = self.conn.cursor(cursor_factory= RealDictCursor)
         cur.execute("SELECT insert_seed(%s)", seed)
-        self.conn.commit()
         return cur.fetchall()[0]["insert_seed"]
 
     def insert_run(self, subid, score, groupid, error, seed_id):
@@ -171,11 +203,20 @@ class client_runner:
         '''
         cur = self.conn.cursor()
         cur.execute("CALL insert_run(%s,%s,%s, %s, %s)", (subid, score, groupid, error, seed_id))
-        self.conn.commit()
+
+    def start_transaction(self):
+        print("starting transaction")
+    
+    def commit_transaction(self):
+        print("committing transaction")
+
+    def rollback_transaction(self):
+        print("starting transaction")
 
     def close_server(self):
+        self.conn.tpc_prepare()
+        self.conn.tpc_rollback()
         self.loop_continue = False
-
         while True:
             try:
                 if os.path.exists('server/temp'):
@@ -190,9 +231,6 @@ class client_runner:
                 break
             except PermissionError:
                 continue
-
-        self.server.close()
-
         os._exit(0)
 
         

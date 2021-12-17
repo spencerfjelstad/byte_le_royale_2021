@@ -21,7 +21,7 @@ dictConfig({
     },
         "file": {
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": "log_file.txt",
+            "filename": "logs/log_file.txt",
             "maxBytes": 10000,
             "backupCount": 10,
             "delay": "True",
@@ -39,12 +39,16 @@ db_conn = {}
 with open('./conn_info.json') as fl:
     db_conn = json.load(fl)
 
-conn = psycopg2.connect(
-    host="localhost",
-    database=db_conn["database"],
-    user=db_conn["user"],
-    password=db_conn["password"]
-)
+try:
+    conn = psycopg2.connect(
+        host="localhost",
+        database=db_conn["database"],
+        user=db_conn["user"],
+        password=db_conn["password"]
+    )
+except Exception as e:
+    app.logger.error("Failed to connect to DB: %s", e)
+    raise e
 
 
 @app.route("/")
