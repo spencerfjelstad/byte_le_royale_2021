@@ -102,7 +102,6 @@ class Client:
         print("You can give a copy to your teammates so they can submit and view stats.")
 
     def submit(self):
-
         if not self.verify():
             print('Cannot submit at this time.')
             return
@@ -134,6 +133,7 @@ class Client:
         print('Submitting file.')
         with open(CLIENT_DIRECTORY + file) as fl:
             fil = "".join(fl.readlines())
+            breakpoint()
             self.utils.submit_file(fil, self.vid)
 
         print('File sent successfully.')

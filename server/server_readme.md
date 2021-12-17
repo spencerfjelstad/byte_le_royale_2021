@@ -29,9 +29,7 @@ Which will be covered in the following sections.
 
 #### PLEASE NOTE
 
-The Postgres SQL database has creation scripts to facilitate the simple creation of a new database. Submission Runner gathers the latest submissions from the submission and code tables, runs them against eachother
-
-You should first load the default creation script, then modify and back up into the script using the PGadmin backup tool
+The Postgres SQL database has creation scripts to facilitate the simple creation of a new database. 
 
 1. Create a new database using PGAdmin, 
     1. Log into PG Admin on ACM left Ubuntu. Password is available in the ACM credentials file on the google drive 
@@ -135,6 +133,27 @@ That's it!
 
 
 ## API
+
+The API is a python Flask API.
+
+### Run Locally
+To run the flask server locally for testing, First set the enviroment variable by running
+
+Linux: export FLASK_APP=Server
+
+Windows Powershell: $env:FLASK_APP = "Server"
+
+Then the command flask run --cert=adhoc
+
+### Run Production
+
+To run for production, you first need to create SSL certificates. On Ubuntu, run the following command in the certs folder
+
+openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 5
+
+Then to run the server on Gunicorn, run the command
+
+gunicorn --certfile certs/cert.pem --keyfile certs/key.pem -b 134.129.91.223:8000 Server:app -w 1 --threads 12
 
 
 

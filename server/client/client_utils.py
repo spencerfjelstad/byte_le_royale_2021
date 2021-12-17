@@ -1,43 +1,45 @@
 import requests
 import json
+import urllib3
 
 
 class ClientUtils:
     def __init__(self):
-        self.IP = 'http://134.129.91.223:8000/api/'
+        urllib3.disable_warnings()
+        self.IP = 'https://134.129.91.223:8000/api/'
         self.PORT = 8000
+        self.path_to_public = "server/certs/cert.pem"
 
     def get_team_types(self):
-        resp = requests.get(self.IP + "get_team_types")
+        resp = requests.get(self.IP + "get_team_types", verify=self.path_to_public)
         resp.raise_for_status()
         return json.loads(resp.content)
 
     def get_unis(self):
-        resp = requests.get(self.IP + "get_unis")
+        resp = requests.get(self.IP + "get_unis", verify=self.path_to_public)
         resp.raise_for_status()
         return json.loads(resp.content)
 
     def register(self, reg_data):
-        resp = requests.post(self.IP + "register", reg_data)
+        resp = requests.post(self.IP + "register", reg_data, verify=self.path_to_public)
         resp.raise_for_status()
         return resp
 
     def submit_file(self, file, vid):
         data = {"file": file, "vid": vid}
-        resp = requests.post(self.IP + "submit", json=data)
+        resp = requests.post(self.IP + "submit", json=data, verify=self.path_to_public)
         resp.raise_for_status()
         return resp
 
-        
     def submit_file(self, file, vid):
         data = {"file": file, "vid": vid}
-        resp = requests.post(self.IP + "submit", json=data)
+        resp = requests.post(self.IP + "submit", json=data, verify=self.path_to_public)
         resp.raise_for_status()
         return resp
 
     def get_leaderboard(self, include_inelligible, sub_id):
         data = {"include_inelligible": include_inelligible, "sub_id": sub_id}
-        resp = requests.post(self.IP + "get_leaderboard", json=data)
+        resp = requests.post(self.IP + "get_leaderboard", json=data, verify=self.path_to_public)
         resp.raise_for_status()
         jsn = json.loads(resp.content)
         print("The following is the leaderboard for eligible contestants")
@@ -45,7 +47,7 @@ class ClientUtils:
 
     def get_team_score_over_time(self, vid):
         resp = requests.post(
-            self.IP + "get_team_score_over_time", json={"vid": vid})
+            self.IP + "get_team_score_over_time", json={"vid": vid}, verify=self.path_to_public)
         resp.raise_for_status()
         jsn = json.loads(resp.content)
         print("The following is your team's performance in each group run")
@@ -53,7 +55,7 @@ class ClientUtils:
 
     def get_submission_stats(self, vid):
         resp = requests.post(
-            self.IP + "get_submission_stats", json={"vid": vid})
+            self.IP + "get_submission_stats", json={"vid": vid}, verify=self.path_to_public)
         resp.raise_for_status()
         return json.loads(resp.content)
 
@@ -77,11 +79,14 @@ class ClientUtils:
         try:
             padding = 4
             json_atribs = json[0].keys()
-            col_longest_length = self.get_longest_cell_in_cols(json, json_atribs)
-            line_seperator = self.get_seperator_line(col_longest_length, padding)
+            col_longest_length = self.get_longest_cell_in_cols(
+                json, json_atribs)
+            line_seperator = self.get_seperator_line(
+                col_longest_length, padding)
             row_format = ""
             for key in json_atribs:
-                row_format += "|{:^" + str(col_longest_length[key] + padding) + "}"
+                row_format += "|{:^" + \
+                    str(col_longest_length[key] + padding) + "}"
             row_format += "|"
             print(line_seperator)
             print(row_format.format(*json_atribs))
@@ -90,4 +95,5 @@ class ClientUtils:
                 print(row_format.format(*row.values()))
             print(line_seperator)
         except:
-            print("Something went wrong. Maybe there isn't data for what you're looking for")
+            print(
+                "Something went wrong. Maybe there isn't data for what you're looking for")
