@@ -51,168 +51,224 @@ except Exception as e:
     raise e
 
 
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
-
-
 @app.route("/api/get_unis", methods=['get'])
 def get_unis():
-    cur = conn.cursor(cursor_factory=RealDictCursor)
-    cur.execute("SELECT (get_universities()).*")
-    if cur.rowcount == 0:
-        app.logger.info('Error: No data to return for get_unis')
-        return {"error": "No universities were found"}, 404
-    else:
-        return jsonify(cur.fetchall())
+    try:
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT (get_universities()).*")
+        if cur.rowcount == 0:
+            app.logger.info('Error: No data to return for get_unis')
+            return {"error": "No universities were found"}, 404
+        else:
+            return jsonify(cur.fetchall())
+    except Exception as e:
+        app.logger.error("Exception in get_unis: %s", e)
+        conn.reset()
+        return 404
 
 
 @app.route("/api/get_team_types", methods=['get'])
 def get_team_types():
-    cur = conn.cursor(cursor_factory=RealDictCursor)
-    cur.execute("SELECT (get_team_types()).*")
-    return jsonify(cur.fetchall())
+    try:
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT (get_team_types()).*")
+        return jsonify(cur.fetchall())
+    except Exception as e:
+        app.logger.error("Exception in get_team_types: %s", e)
+        conn.reset()
+        return 404
 
 
 @app.route("/api/get_teams", methods=['get'])
 def get_teams():
-    cur = conn.cursor(cursor_factory=RealDictCursor)
-    cur.execute("SELECT (get_teams()).*")
-    return jsonify(cur.fetchall())
+    try:
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT (get_teams()).*")
+        return jsonify(cur.fetchall())
+    except Exception as e:
+        app.logger.error("Exception in get_teams: %s", e)
+        conn.reset()
+        return 404
 
 
 @app.route("/api/get_leaderboard", methods=['post'])
 def get_leaderboard():
-    ell = request.json["include_inelligible"]
-    sub_id = request.json["sub_id"]
-    cur = conn.cursor(cursor_factory=RealDictCursor)
-    cur.execute("SELECT (get_leaderboard(%s, %s)).*", (ell, sub_id))
-    if cur.rowcount == 0:
-        app.logger.error('Error: No data to return for leaderboard')
-        return {"error": "No submissions were found"}, 404
-    else:
-        return jsonify(cur.fetchall())
+    try:
+        ell = request.json["include_inelligible"]
+        sub_id = request.json["sub_id"]
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT (get_leaderboard(%s, %s)).*", (ell, sub_id))
+        if cur.rowcount == 0:
+            app.logger.error('Error: No data to return for leaderboard')
+            return {"error": "No submissions were found"}, 404
+        else:
+            return jsonify(cur.fetchall())
+    except Exception as e:
+        app.logger.error("Exception in get_leaderboard: %s", e)
+        conn.reset()
+        return 404
+        
 
 
 @app.route("/api/get_submission_stats", methods=['post'])
 def get_stats():
-    vid = request.json["vid"]
-    cur = conn.cursor()
-    cur.execute("SELECT (get_latest_submission(%s)).*", (vid,))
-    res = cur.fetchone()
-    cur = conn.cursor(cursor_factory=RealDictCursor)
-    cur.execute("SELECT (get_stats_for_submission(%s, %s)).*", res)
-    if cur.rowcount == 0:
-        app.logger.error(
-            'Error: No data to return submissions_stats for %s', vid)
-        return {"error": "No submissions were found"}, 404
-    else:
-        return jsonify({"data": cur.fetchall(), "sub_id": res[0], "run_group_id": res[1]})
+    try:
+        vid = request.json["vid"]
+        cur = conn.cursor()
+        cur.execute("SELECT (get_latest_submission(%s)).*", (vid,))
+        res = cur.fetchone()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT (get_stats_for_submission(%s, %s)).*", res)
+        if cur.rowcount == 0:
+            app.logger.error(
+                'Error: No data to return submissions_stats for %s', vid)
+            return {"error": "No submissions were found"}, 404
+        else:
+            return jsonify({"data": cur.fetchall(), "sub_id": res[0], "run_group_id": res[1]})
+    except Exception as e:
+        app.logger.error("Exception in get_submission_stats: %s", e)
+        conn.reset()
+        return 404
 
 
 @app.route("/api/get_team_score_over_time", methods=['post'])
 def get_team_score_over_time():
-    vid = request.json["vid"]
-    cur = conn.cursor()
-    cur = conn.cursor(cursor_factory=RealDictCursor)
-    cur.execute("SELECT (get_team_score_over_time(%s)).*", (vid,))
-    app.logger.info(
-        'Returning get_team_score_over_time for %s at IP %s', vid, request.remote_addr)
-    if cur.rowcount == 0:
-        app.logger.error(
-            'Error: No data to return team_score_over_time for %s', vid)
-        return {"error": "No submissions were found"}, 404
-    else:
-        return jsonify(cur.fetchall())
+    try:
+        vid = request.json["vid"]
+        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT (get_team_score_over_time(%s)).*", (vid,))
+        app.logger.info(
+            'Returning get_team_score_over_time for %s at IP %s', vid, request.remote_addr)
+        if cur.rowcount == 0:
+            app.logger.error(
+                'Error: No data to return team_score_over_time for %s', vid)
+            return {"error": "No submissions were found"}, 404
+        else:
+            return jsonify(cur.fetchall())
+    except Exception as e:
+        app.logger.error("Exception in get_leaderboard: %s", e)
+        conn.reset()
+        return 404
 
 
 @app.route("/api/get_submissions_for_team", methods=['post'])
 def get_submissions_for_team():
-    vid = request.json["vid"]
-    cur = conn.cursor()
-    cur = conn.cursor(cursor_factory=RealDictCursor)
-    cur.execute("SELECT (get_submissions_for_team(%s)).*", (vid,))
-    if cur.rowcount == 0:
-        app.logger.error(
-            'Error: No data to return for get_submissions_for_team for %s', vid)
-        return {"error": "No submissions were found"}, 404
-    else:
-        return jsonify(cur.fetchall())
+    try:
+        vid = request.json["vid"]
+        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT (get_submissions_for_team(%s)).*", (vid,))
+        if cur.rowcount == 0:
+            app.logger.error(
+                'Error: No data to return for get_submissions_for_team for %s', vid)
+            return {"error": "No submissions were found"}, 404
+        else:
+            return jsonify(cur.fetchall())
+    except Exception as e:
+        app.logger.error("Exception in get_submissions_for_team: %s", e)
+        conn.reset()
+        return 404
 
 
 @app.route("/api/get_file_from_submission", methods=['post'])
 def get_file_from_submission():
-    vid = request.json["vid"]
-    subid = request.json["submissionid"]
-    cur = conn.cursor()
-    cur = conn.cursor(cursor_factory=RealDictCursor)
-    cur.execute("SELECT get_file_from_submission(%s, %s)", (vid, subid))
-    app.logger.info('Returning file for submissionid %s for team %s at IP %',
-                    subid, vid, request.remote_addr)
-    if cur.rowcount == 0:
-        app.logger.error(
-            'Error: No data to return for get_file_from_submission for %s', vid)
-        return {"error": "No submissions were found"}, 404
-    else:
-        return cur.fetchone()["get_file_from_submission"]
+    try:
+        vid = request.json["vid"]
+        subid = request.json["submissionid"]
+        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT get_file_from_submission(%s, %s)", (vid, subid))
+        app.logger.info('Returning file for submissionid %s for team %s at IP %',
+                        subid, vid, request.remote_addr)
+        if cur.rowcount == 0:
+            app.logger.error(
+                'Error: No data to return for get_file_from_submission for %s', vid)
+            return {"error": "No submissions were found"}, 404
+        else:
+            return cur.fetchone()["get_file_from_submission"]
+    except Exception as e:
+        app.logger.error("Exception in get_file_for_submission: %s", e)
+        conn.reset()
+        return 404
 
 
 @app.route("/api/get_runs_for_submission", methods=['post'])
 def get_runs_for_submission():
-    vid = request.json["vid"]
-    subid = request.json["submissionid"]
-    cur = conn.cursor()
-    cur = conn.cursor(cursor_factory=RealDictCursor)
-    cur.execute("SELECT (get_runs_for_submission(%s, %s)).*", (vid, subid))
-    if cur.rowcount == 0:
-        app.logger.error(
-            'Error: No data to return for get_runs_for_submission for %s', vid)
-        return {"error": "No submissions were found"}, 404
-    else:
-        return jsonify(cur.fetchall())
+    try:
+        vid = request.json["vid"]
+        subid = request.json["submissionid"]
+        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT (get_runs_for_submission(%s, %s)).*", (vid, subid))
+        if cur.rowcount == 0:
+            app.logger.error(
+                'Error: No data to return for get_runs_for_submission for %s', vid)
+            return {"error": "No submissions were found"}, 404
+        else:
+            return jsonify(cur.fetchall())
+    except Exception as e:
+        app.logger.error("Exception in get_runs_for_submission: %s", e)
+        conn.reset()
+        return 404
 
 
 @app.route("/api/get_group_runs", methods=['post'])
 def get_group_runs():
-    vid = request.json["vid"]
-    subid = request.json["submissionid"]
-    cur = conn.cursor()
-    cur = conn.cursor(cursor_factory=RealDictCursor)
-    cur.execute("SELECT (get_runs_for_submission(%s, %s)).*", (vid, subid))
-    if cur.rowcount == 0:
-        return {"error": "No group runs were found"}, 404
-    else:
-        return jsonify(cur.fetchall())
+    try:
+        vid = request.json["vid"]
+        subid = request.json["submissionid"]
+        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT (get_runs_for_submission(%s, %s)).*", (vid, subid))
+        if cur.rowcount == 0:
+            return {"error": "No group runs were found"}, 404
+        else:
+            return jsonify(cur.fetchall())
+    except Exception as e:
+        app.logger.error("Exception in get_group_runs: %s", e)
+        conn.reset()
+        return 404
 
 
 @app.route("/api/register", methods=['POST'])
 def insert_team():
-    teamtype = request.form.get("type")
-    name = request.form.get("name")
-    uni = request.form.get("uni")
-    cur = conn.cursor()
-    cur.execute("SELECT insert_team(%s, %s, %s)", (teamtype, name, uni))
-    conn.commit()
-    app.logger.info('Registered team at IP %s', request.remote_addr)
-    if cur.rowcount == 0:
-        return {"error": "No submissions were found"}, 404
-    else:
-        return cur.fetchone()[0]
+    try:
+        teamtype = request.form.get("type")
+        name = request.form.get("name")
+        uni = request.form.get("uni")
+        cur = conn.cursor()
+        cur.execute("SELECT insert_team(%s, %s, %s)", (teamtype, name, uni))
+        conn.commit()
+        app.logger.info('Registered team at IP %s', request.remote_addr)
+        if cur.rowcount == 0:
+            return {"error": "No submissions were found"}, 404
+        else:
+            return cur.fetchone()[0]
+    except Exception as e:
+        app.logger.error("Exception in register: %s", e)
+        conn.reset()
+        return 404
 
 
 @app.route("/api/submit", methods=['POST'])
 def submit_file():
-    file = request.json["file"]
-    vid = request.json["vid"]
-    bad_words = check_illegal_keywords(file)
-    if bad_words:
-        return HTTPError("Contained illegal keywords {0}".format(bad_words))
-    cur = conn.cursor()
-    cur.execute("CALL submit_code_file(%s, %s)", (file, vid))
-    conn.commit()
-    app.logger.info('Recieved submission from %s at IP %s',
-                    vid, request.remote_addr)
-    return "True"
+    try:
+        file = request.json["file"]
+        vid = request.json["vid"]
+        bad_words = check_illegal_keywords(file)
+        if bad_words:
+            return HTTPError("Contained illegal keywords {0}".format(bad_words))
+        cur = conn.cursor()
+        cur.execute("CALL submit_code_file(%s, %s)", (file, vid))
+        conn.commit()
+        app.logger.info('Recieved submission from %s at IP %s',
+                        vid, request.remote_addr)
+        return "True"
+    except Exception as e:
+        app.logger.error("Exception in get_leaderboard: %s", e)
+        conn.reset()
+        return 404
 
 
 def check_illegal_keywords(file):

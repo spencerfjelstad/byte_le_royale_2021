@@ -40,6 +40,7 @@ class Client:
                 print("The server command needs more information. Try 'python launcher.pyz s -h' for help")
         except Exception as e:
             print(f"An error was returned by the server. This likely means that there isn't data for the requested resource yet")
+            print(f"e")
 
     def register(self):
         # Check if vID already exists and cancel out
@@ -133,7 +134,6 @@ class Client:
         print('Submitting file.')
         with open(CLIENT_DIRECTORY + file) as fl:
             fil = "".join(fl.readlines())
-            breakpoint()
             self.utils.submit_file(fil, self.vid)
 
         print('File sent successfully.')
