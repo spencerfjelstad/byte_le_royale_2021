@@ -8,6 +8,8 @@ import uuid
 import json
 from logging.config import dictConfig
 from flask.logging import logging
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 dictConfig({
     'version': 1,
@@ -34,6 +36,12 @@ dictConfig({
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
+
+limiter = Limiter(
+    app,
+    key_func=get_remote_address,
+    default_limits=["1 per second"]
+)
 
 db_conn = {}
 with open('./conn_info.json') as fl:
@@ -107,12 +115,13 @@ def get_leaderboard():
         app.logger.error("Exception in get_leaderboard: %s", e)
         conn.reset()
         return 404
-        
 
 
 @app.route("/api/get_submission_stats", methods=['post'])
+@limiter.limit("5/minute", override_defaults=True)
 def get_stats():
     try:
+        breakpoint()
         vid = request.json["vid"]
         cur = conn.cursor()
         cur.execute("SELECT (get_latest_submission(%s)).*", (vid,))
@@ -132,6 +141,7 @@ def get_stats():
 
 
 @app.route("/api/get_team_score_over_time", methods=['post'])
+@limiter.limit("5/minute", override_defaults=True)
 def get_team_score_over_time():
     try:
         vid = request.json["vid"]
@@ -153,6 +163,7 @@ def get_team_score_over_time():
 
 
 @app.route("/api/get_submissions_for_team", methods=['post'])
+@limiter.limit("5/minute", override_defaults=True)
 def get_submissions_for_team():
     try:
         vid = request.json["vid"]
@@ -172,6 +183,7 @@ def get_submissions_for_team():
 
 
 @app.route("/api/get_file_from_submission", methods=['post'])
+@limiter.limit("5/minute", override_defaults=True)
 def get_file_from_submission():
     try:
         vid = request.json["vid"]
@@ -194,6 +206,7 @@ def get_file_from_submission():
 
 
 @app.route("/api/get_runs_for_submission", methods=['post'])
+@limiter.limit("5/minute", override_defaults=True)
 def get_runs_for_submission():
     try:
         vid = request.json["vid"]
@@ -214,6 +227,7 @@ def get_runs_for_submission():
 
 
 @app.route("/api/get_group_runs", methods=['post'])
+@limiter.limit("5/minute", override_defaults=True)
 def get_group_runs():
     try:
         vid = request.json["vid"]
@@ -252,6 +266,7 @@ def insert_team():
 
 
 @app.route("/api/submit", methods=['POST'])
+@limiter.limit("1/minute", override_defaults=True)
 def submit_file():
     try:
         file = request.json["file"]
@@ -262,13 +277,12 @@ def submit_file():
         cur = conn.cursor()
         cur.execute("CALL submit_code_file(%s, %s)", (file, vid))
         conn.commit()
-        app.logger.info('Recieved submission from %s at IP %s',
-                        vid, request.remote_addr)
+        app.logger.info('Recieved submission from %s at IP %s',vid, request.remote_addr)
         return "True"
     except Exception as e:
-        app.logger.error("Exception in get_leaderboard: %s", e)
+        app.logger.error("Exception in submit: %s", e)
         conn.reset()
-        return 404
+        return 404, "False"
 
 
 def check_illegal_keywords(file):

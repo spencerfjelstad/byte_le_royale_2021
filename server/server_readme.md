@@ -34,13 +34,11 @@ The Postgres SQL database has creation scripts to facilitate the simple creation
 1. Create a new database using PGAdmin, 
     1. Log into PG Admin on ACM left Ubuntu. Password is available in the ACM credentials file on the google drive 
     2. create a database under the byte-le-royale group.
-    3. be sure to select set tablespace = dbspace. dbspace is the 4tb partition. If this isn't available, see https://stackoverflow.com/questions/9876132/postgresql-creating-database-in-a-specified-location/9876229
+    3. be sure to select set tablespace = fourtb. fourtb is the 4 terrabyte partition. If this isn't available, see https://stackoverflow.com/questions/9876132/postgresql-creating-database-in-a-specified-location/9876229
+    4. If you've really screwed up, you can reformat the 4tb disk, set it to auto-mount in the disks application, and then recreate the DB space
 2. copy, paste and run the dump.sql file in the query tool. This will create all of the tables and stored procedures
 3. copy, paste and run the small_data_insert.sql file, this will insert basic data you need.
-4. Modify the database schema as needed.
-    1. You will likely need to change the run table, as this has the scoring information which changes from game to game
-        1. To see a PvE score based example, see byte-le-royale 2021 branch server
-        2. To see a PvP place based example, see byte-le-royale 2022 main branch
+4. Modify the database schema as needed.dbspace
     2. The stored procedures / functions will also need to change. Notably insert_run, get_leaderboard, get_stats_for_submission, get_team_score_over_time
 
 ### Overview of tables
