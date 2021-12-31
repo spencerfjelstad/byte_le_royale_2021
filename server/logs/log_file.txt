@@ -26,3 +26,15 @@ ORDER BY group_run.start_run DESC
 CONTEXT:  PL/pgSQL function get_team_score_over_time(uuid) line 4 at RETURN QUERY
 
 Returning get_team_score_over_time for d1965e2c-8614-4019-a37e-b190b03abf6c at IP 134.129.91.223
+Exception in get_submission_stats: function get_stats_for_submission(integer, integer) does not exist
+LINE 1: SELECT (get_stats_for_submission(6, 1)).*
+                ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+
+Exception in get_submission_stats: list indices must be integers or slices, not str
+Error: No data to return submissions_stats for d1965e2c-8614-4019-a37e-b190b03abf6c
+Exception in get_submission_stats: 
+Exception in get_submission_stats: 
+Exception in get_submission_stats: tuple index out of range
+Exception in get_submission_stats: 
+Exception in get_submission_stats: 

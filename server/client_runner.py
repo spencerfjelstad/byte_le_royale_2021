@@ -79,7 +79,7 @@ class client_runner:
             self.index_to_seed_id[index] = self.insert_seed_file(fltext)
 
         # repeat the clients list by the number of times defined in the constant
-        clients = clients * (self.NUMBER_OF_RUNS_FOR_CLIENT + 1)
+        clients = clients * (self.NUMBER_OF_RUNS_FOR_CLIENT)
  
         #then run them in paralell using their index as a unique identifier
         res = Parallel(n_jobs = 5, backend="threading")(map(delayed(self.internal_runner), clients, [i for i in range(len(clients))]))
@@ -132,6 +132,7 @@ class client_runner:
             #self.current_running.insert(0, number)
             f.close()
         finally:
+            breakpoint()
             self.insert_run(row["submission_id"], score, self.group_id, error, self.index_to_seed_id[seed_index])
 
     def fetch_clients(self):
@@ -185,7 +186,7 @@ class client_runner:
         Inserts a new group run. Relates all the runs in this process together
         '''
         cur = self.conn.cursor(cursor_factory= RealDictCursor)
-        cur.execute("SELECT insert_group_run(%s)", (self.version,))
+        cur.execute("SELECT insert_group_run(%s, %s)", (self.version, self.NUMBER_OF_RUNS_FOR_CLIENT))
         return cur.fetchall()[0]["insert_group_run"]
 
     def insert_seed_file(self, seed):

@@ -12,6 +12,7 @@ from flask.logging import logging
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from werkzeug.exceptions import BadRequest, HTTPException
+import math
 
 # Config for loggers
 dictConfig({
@@ -151,8 +152,6 @@ def insert_team():
         if isinstance(e, HTTPException):
             raise e
         app.logger.error("Exception in register: %s", e)
-        conn.reset()
-        abort(500, description = str(e))
 
 
 @app.route("/api/submit", methods=['POST'])
@@ -197,13 +196,14 @@ def get_stats():
         cur.execute("SELECT (get_latest_submission(%s)).*", (vid,))
         res = cur.fetchone()
         cur = conn.cursor(cursor_factory=RealDictCursor)
-        cur.execute("SELECT (get_runs_for_submission(%s, %s)).*", res)
+        cur.execute("SELECT (get_runs_for_submission(%s, %s)).*", res[:2])
         if cur.rowcount == 0:
             app.logger.error(
                 'Error: No data to return submissions_stats for %s', vid)
-            return abort(404, description = "No submissions for this Vid were found")
+            abort(404, description = "No submissions for this Vid were found")
         else:
-            return jsonify({"data": cur.fetchall(), "sub_id": res[0], "run_group_id": res[1]})
+            runs = cur.fetchall()
+            return jsonify({"data": runs, "sub_id": res[0], "run_group_id": res[1], "runs_per_client" : res[2]})
     except Exception as e:
         if isinstance(e, HTTPException):
             raise e
