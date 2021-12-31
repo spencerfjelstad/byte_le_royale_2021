@@ -1,7 +1,10 @@
 import os
+
+from requests.models import HTTPError
 #from game.config import CLIENT_DIRECTORY, CLIENT_KEYWORD
 from server.client.client_utils import ClientUtils
 import argparse
+import json
 
 CLIENT_DIRECTORY = "./"
 CLIENT_KEYWORD = "client"
@@ -38,9 +41,8 @@ class Client:
                         self.utils.get_leaderboard(False, -1)
             else:
                 print("The server command needs more information. Try 'python launcher.pyz s -h' for help")
-        except Exception as e:
-            print(f"An error was returned by the server. This likely means that there isn't data for the requested resource yet")
-            print(f"e")
+        except HTTPError as e:
+            print(f"Error: {json.loads(e.response._content)['error']}")
 
     def register(self):
         # Check if vID already exists and cancel out
@@ -104,7 +106,7 @@ class Client:
 
     def submit(self):
         if not self.verify():
-            print('Cannot submit at this time.')
+            print('You need to register first.')
             return
 
         # Check and verify client file
