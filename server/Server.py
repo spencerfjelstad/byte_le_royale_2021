@@ -219,11 +219,35 @@ def get_file_from_submission():
                 'Error: No data to return for get_file_from_submission for %s', vid)
             return abort(404, description = "No data to return for get_file_from_submission for this Vid")
         else:
-            return cur.fetchone()["get_file_from_submission"]
+            return jsonify(cur.fetchone()["get_file_from_submission"])
     except Exception as e:
         if isinstance(e, HTTPException):
             raise e
         app.logger.error("Exception in get_file_for_submission: %s", e)
+        conn.reset()
+        abort(500, description = str(e))
+
+@app.route("/api/get_seed_from_run", methods=['post'])
+@limiter.limit("5/minute", override_defaults=True)
+def get_seed_from_run():
+    try:
+        vid = request.json["vid"]
+        runid = request.json["runid"]
+        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT get_seed_for_run(%s, %s)", (vid, runid))
+        app.logger.info('Returning seed for runid %s for team %s at IP %s',
+                        runid, vid, request.remote_addr)
+        if cur.rowcount == 0:
+            app.logger.error(
+                'Error: No data to return for get_seed_from_run for %s', vid)
+            return abort(404, description = "No data to return for get_seed_from_run")
+        else:
+            return jsonify(cur.fetchone()["get_seed_for_run"])
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        app.logger.error("Exception in get_seed_from_run: %s", str(e))
         conn.reset()
         abort(500, description = str(e))
 

@@ -1,7 +1,7 @@
 import requests
 import json
 import urllib3
-
+import os
 
 class ClientUtils:
     def __init__(self):
@@ -58,6 +58,19 @@ class ClientUtils:
             self.IP + "get_submission_stats", json={"vid": vid}, verify=self.path_to_public)
         resp.raise_for_status()
         return json.loads(resp.content)
+
+    def get_seed_for_run(self, vid, runid):
+        resp = requests.post(
+            self.IP + "get_seed_from_run", json={"vid": vid, "runid" : runid}, verify=self.path_to_public)
+        resp.raise_for_status()
+        jsn = json.loads(resp.content)
+        if jsn is None:
+            print("Bad Vid and RunID combination (probably)")
+        else:
+            with open(f"./seed_for_run_{runid}.json", "w") as fl:
+                fl.write(jsn)
+                print(f"Seed for run {runid} has been written to the file {os.path.realpath(fl.name)}")
+        
 
     def get_longest_cell_in_cols(self, json, json_atribs):
         col_longest_length = {}

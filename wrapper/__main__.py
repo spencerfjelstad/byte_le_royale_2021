@@ -52,6 +52,9 @@ if __name__ == '__main__':
     stats = client_sub_group.add_parser("stats", aliases= ['s'], help='view stats for your team')
     #stats.add_argument("-latest_group_submissions",  help='returns the latest group submissions for your client', default=False,  action='store_true')
     #stats.add_argument('-download_submission_codefile', type=int)
+
+    seed = client_sub_group.add_parser("get_seed", aliases = ['gs'], help = 'download a seed that a run used on the server')
+    seed.add_argument("-run_id", help="The run ID you want to download the seed for", type=int, default=-1)
     
 
     client_parser.add_argument("-register", help='Create a new team and return a vID', default=False, action='store_true')

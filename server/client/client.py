@@ -32,6 +32,8 @@ class Client:
             elif args.subparse != None:
                 if args.subparse.lower() == 'stats' or args.subparse.lower() == 's':
                     self.get_submission_stats()
+                elif args.subparse.lower() == 'get_seed' or args.subparse.lower() == 'gs':
+                    self.utils.get_seed_for_run(self.vid, args.run_id)
                 elif args.subparse.lower() == 'leaderboard' or args.subparse.lower() == "l":
                     if args.include_alumni:
                         self.utils.get_leaderboard(True, -1)
