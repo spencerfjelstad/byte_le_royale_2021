@@ -133,6 +133,61 @@ def get_leaderboard():
         abort(500, description = str(e))
 
 
+@app.route("/api/register", methods=['POST'])
+def insert_team():
+    try:
+        teamtype = request.form.get("type")
+        name = request.form.get("name")
+        uni = request.form.get("uni")
+        cur = conn.cursor()
+        cur.execute("SELECT insert_team(%s, %s, %s)", (teamtype, name, uni))
+        conn.commit()
+        app.logger.info('Registered team at IP %s', request.remote_addr)
+        if cur.rowcount == 0:
+            return abort(404, description = "Failed to register")
+        else:
+            return cur.fetchone()[0]
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        app.logger.error("Exception in register: %s", e)
+        conn.reset()
+        abort(500, description = str(e))
+
+
+@app.route("/api/submit", methods=['POST'])
+@limiter.limit("1/minute", override_defaults=True)
+def submit_file():
+    try:
+        file = request.json["file"]
+        vid = request.json["vid"]
+        bad_words = check_illegal_keywords(file)
+        if len(file) > MAX_FILE_CHARACTER_COUNT:
+            return {"error": "Files can be a maximum of {} characters and this file is {} characters long".format(MAX_FILE_CHARACTER_COUNT, len(file))}, 404
+        if bad_words:
+            return {"error": "Contained illegal keywords {0}".format(bad_words)}, 404
+        cur = conn.cursor()
+        cur.execute("CALL submit_code_file(%s, %s)", (file, vid))
+        conn.commit()
+        app.logger.info('Recieved submission from %s at IP %s',vid, request.remote_addr)
+        return "True"
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        app.logger.error("Exception in submit: %s", e)
+        conn.reset()
+        abort(500, description = str(e))
+
+
+def check_illegal_keywords(file):
+    '''This should be expanded on, made better'''
+    bad_words_list = ['open', 'os', 'import']
+    rtn_bad_words = []
+    for bad_word in rtn_bad_words:
+        if bad_word in file:
+            rtn_bad_words.append(bad_word)
+
+
 @app.route("/api/get_submission_stats", methods=['post'])
 @limiter.limit("5/minute", override_defaults=True)
 def get_stats():
@@ -202,6 +257,69 @@ def get_submissions_for_team():
         conn.reset()
         abort(500, description = str(e))
 
+@app.route("/api/get_group_runs", methods=['post'])
+@limiter.limit("5/minute", override_defaults=True)
+def get_group_runs():
+    try:
+        vid = request.json["vid"]
+        subid = request.json["submissionid"]
+        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT (get_runs_for_submission(%s, %s)).*", (vid, subid))
+        if cur.rowcount == 0:
+            return abort(404, description = "No group runs were found")
+        else:
+            return jsonify(cur.fetchall())
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        app.logger.error("Exception in get_group_runs: %s", e)
+        conn.reset()
+        abort(500, description = str(e))
+
+@app.route("/api/get_team_runs_for_group_run", methods=['post'])
+@limiter.limit("5/minute", override_defaults=True)
+def get_team_runs_for_group_run():
+    try:
+        vid = request.json["vid"]
+        groupid = request.json["groupid"]
+        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT (get_team_runs_for_group_run(%s, %s)).*", (vid, groupid))
+        if cur.rowcount == 0:
+            return abort(404, description = "No group runs were found")
+        else:
+            return jsonify(cur.fetchall())
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        app.logger.error("Exception in get_group_runs: %s", e)
+        conn.reset()
+        abort(500, description = str(e))
+
+
+@app.route("/api/get_runs_for_submission", methods=['post'])
+@limiter.limit("5/minute", override_defaults=True)
+def get_runs_for_submission():
+    try:
+        vid = request.json["vid"]
+        subid = request.json["submissionid"]
+        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT (get_runs_for_submission(%s, %s)).*", (vid, subid))
+        if cur.rowcount == 0:
+            app.logger.error(
+                'Error: No data to return for get_runs_for_submission for %s', vid)
+            raise abort(404, description = "No submissions were found")
+        else:
+            return jsonify(cur.fetchall())
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        app.logger.error("Exception in get_runs_for_submission: %s", e)
+        conn.reset()
+        abort(500, description = str(e))
+
 
 @app.route("/api/get_file_from_submission", methods=['post'])
 @limiter.limit("5/minute", override_defaults=True)
@@ -250,104 +368,3 @@ def get_seed_from_run():
         app.logger.error("Exception in get_seed_from_run: %s", str(e))
         conn.reset()
         abort(500, description = str(e))
-
-
-@app.route("/api/get_runs_for_submission", methods=['post'])
-@limiter.limit("5/minute", override_defaults=True)
-def get_runs_for_submission():
-    try:
-        vid = request.json["vid"]
-        subid = request.json["submissionid"]
-        cur = conn.cursor()
-        cur = conn.cursor(cursor_factory=RealDictCursor)
-        cur.execute("SELECT (get_runs_for_submission(%s, %s)).*", (vid, subid))
-        if cur.rowcount == 0:
-            app.logger.error(
-                'Error: No data to return for get_runs_for_submission for %s', vid)
-            raise abort(404, description = "No submissions were found")
-        else:
-            return jsonify(cur.fetchall())
-    except Exception as e:
-        if isinstance(e, HTTPException):
-            raise e
-        app.logger.error("Exception in get_runs_for_submission: %s", e)
-        conn.reset()
-        abort(500, description = str(e))
-
-
-@app.route("/api/get_group_runs", methods=['post'])
-@limiter.limit("5/minute", override_defaults=True)
-def get_group_runs():
-    try:
-        vid = request.json["vid"]
-        subid = request.json["submissionid"]
-        cur = conn.cursor()
-        cur = conn.cursor(cursor_factory=RealDictCursor)
-        cur.execute("SELECT (get_runs_for_submission(%s, %s)).*", (vid, subid))
-        if cur.rowcount == 0:
-            return abort(404, description = "No group runs were found")
-        else:
-            return jsonify(cur.fetchall())
-    except Exception as e:
-        if isinstance(e, HTTPException):
-            raise e
-        app.logger.error("Exception in get_group_runs: %s", e)
-        conn.reset()
-        abort(500, description = str(e))
-
-
-@app.route("/api/register", methods=['POST'])
-def insert_team():
-    try:
-        teamtype = request.form.get("type")
-        name = request.form.get("name")
-        uni = request.form.get("uni")
-        cur = conn.cursor()
-        cur.execute("SELECT insert_team(%s, %s, %s)", (teamtype, name, uni))
-        conn.commit()
-        app.logger.info('Registered team at IP %s', request.remote_addr)
-        if cur.rowcount == 0:
-            return abort(404, description = "Failed to register")
-        else:
-            return cur.fetchone()[0]
-    except Exception as e:
-        if isinstance(e, HTTPException):
-            raise e
-        app.logger.error("Exception in register: %s", e)
-        conn.reset()
-        abort(500, description = str(e))
-
-
-@app.route("/api/submit", methods=['POST'])
-@limiter.limit("1/minute", override_defaults=True)
-def submit_file():
-    try:
-        file = request.json["file"]
-        vid = request.json["vid"]
-        bad_words = check_illegal_keywords(file)
-        if len(file) > MAX_FILE_CHARACTER_COUNT:
-            return {"error": "Files can be a maximum of {} characters and this file is {} characters long".format(MAX_FILE_CHARACTER_COUNT, len(file))}, 404
-        if bad_words:
-            return {"error": "Contained illegal keywords {0}".format(bad_words)}, 404
-        cur = conn.cursor()
-        cur.execute("CALL submit_code_file(%s, %s)", (file, vid))
-        conn.commit()
-        app.logger.info('Recieved submission from %s at IP %s',vid, request.remote_addr)
-        return "True"
-    except Exception as e:
-        if isinstance(e, HTTPException):
-            raise e
-        app.logger.error("Exception in submit: %s", e)
-        conn.reset()
-        abort(500, description = str(e))
-
-
-def check_illegal_keywords(file):
-    '''This should be expanded on, made better'''
-    bad_words_list = ['open', 'os', 'import']
-    rtn_bad_words = []
-    for bad_word in rtn_bad_words:
-        if bad_word in file:
-            rtn_bad_words.append(bad_word)
-
-

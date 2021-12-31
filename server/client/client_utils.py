@@ -59,6 +59,30 @@ class ClientUtils:
         resp.raise_for_status()
         return json.loads(resp.content)
 
+    
+    def get_runs_for_submission(self, vid, subid):
+        resp = requests.post(
+            self.IP + "get_runs_for_submission", json={"vid": vid, "submissionid": subid}, verify=self.path_to_public)
+        resp.raise_for_status()
+        jsn = json.loads(resp.content)
+        self.to_table(jsn)
+
+    
+    def get_team_runs_for_group_run(self, vid, groupid):
+        resp = requests.post(
+            self.IP + "get_team_runs_for_group_run", json={"vid": vid, "groupid": groupid}, verify=self.path_to_public)
+        resp.raise_for_status()
+        jsn = json.loads(resp.content)
+        self.to_table(jsn)
+
+    def get_submissions(self, vid):
+        resp = requests.post(
+            self.IP + "get_submissions_for_team", json={"vid": vid}, verify=self.path_to_public)
+        resp.raise_for_status()
+        jsn = json.loads(resp.content)
+        self.to_table(jsn)
+
+
     def get_seed_for_run(self, vid, runid):
         resp = requests.post(
             self.IP + "get_seed_from_run", json={"vid": vid, "runid" : runid}, verify=self.path_to_public)

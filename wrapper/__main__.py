@@ -50,6 +50,10 @@ if __name__ == '__main__':
     
     # Stats subgroup
     stats = client_sub_group.add_parser("stats", aliases= ['s'], help='view stats for your team')
+    stats.add_argument("-current_run",  help='Get the status for the current group run (default if no flag given)', default=False,  action='store_true')
+    stats.add_argument("-runs_for_group_run",  help='pass the group_run id you want to get run ids for', type=int, default=-1)
+    stats.add_argument("-runs_for_submission",  help='pass the submission_id you want to get run ids for',type=int, default=-1)
+    stats.add_argument("-get_submissions",  help='get the submission ids for your team', default=False,  action='store_true')
     #stats.add_argument("-latest_group_submissions",  help='returns the latest group submissions for your client', default=False,  action='store_true')
     #stats.add_argument('-download_submission_codefile', type=int)
 

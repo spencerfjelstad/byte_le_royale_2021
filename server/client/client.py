@@ -31,7 +31,14 @@ class Client:
                 self.submit()
             elif args.subparse != None:
                 if args.subparse.lower() == 'stats' or args.subparse.lower() == 's':
-                    self.get_submission_stats()
+                    if args.runs_for_group_run != -1:
+                        self.utils.get_team_runs_for_group_run(self.vid, args.runs_for_group_run)
+                    elif args.runs_for_submission != -1:
+                        self.utils.get_runs_for_submission(self.vid, args.runs_for_submission)
+                    elif args.get_submissions:
+                        self.utils.get_submissions(self.vid)
+                    else:
+                        self.get_submission_stats()
                 elif args.subparse.lower() == 'get_seed' or args.subparse.lower() == 'gs':
                     self.utils.get_seed_for_run(self.vid, args.run_id)
                 elif args.subparse.lower() == 'leaderboard' or args.subparse.lower() == "l":
