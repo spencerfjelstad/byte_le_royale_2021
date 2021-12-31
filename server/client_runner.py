@@ -47,12 +47,9 @@ class client_runner:
         # self.loop.call_later(5, self.external_runner())
         try:
             while True:
-                self.tpc_id = self.conn.xid(1,"1","branch_qualifier")
-                self.conn.tpc_begin(self.tpc_id)
                 self.external_runner()
-                self.conn.tpc_prepare()
-                self.conn.tpc_commit()
                 print(f"Sleeping for {self.SLEEP_TIME_SECONDS_BETWEEN_RUNS} seconds")
+                self.group_id = -1
                 time.sleep(150)
         except (KeyboardInterrupt, Exception) as e:
             print("Ending server due to {0}".format(e))
@@ -132,7 +129,6 @@ class client_runner:
             #self.current_running.insert(0, number)
             f.close()
         finally:
-            breakpoint()
             self.insert_run(row["submission_id"], score, self.group_id, error, self.index_to_seed_id[seed_index])
 
     def fetch_clients(self):
@@ -175,7 +171,7 @@ class client_runner:
             p = subprocess.Popen('server/runners/version.sh',stdout=subprocess.PIPE, shell=True)
             stdout, stderr = p.communicate()
         else:
-            p = subprocess.Popen('runner.bat', stdout=f, shell=True)
+            p = subprocess.Popen('runner.bat', stdout=subprocess.PIPE, shell=True)
             stdout, stderr = p.communicate()
         return stdout.decode("utf-8") 
 
@@ -187,6 +183,7 @@ class client_runner:
         '''
         cur = self.conn.cursor(cursor_factory= RealDictCursor)
         cur.execute("SELECT insert_group_run(%s, %s)", (self.version, self.NUMBER_OF_RUNS_FOR_CLIENT))
+        self.conn.commit()
         return cur.fetchall()[0]["insert_group_run"]
 
     def insert_seed_file(self, seed):
@@ -195,7 +192,8 @@ class client_runner:
         Returns it's seed_id
         '''
         cur = self.conn.cursor(cursor_factory= RealDictCursor)
-        cur.execute("SELECT insert_seed(%s)", seed)
+        cur.execute("SELECT insert_seed(%s, %s)", (str(seed), self.group_id))
+        self.conn.commit()
         return cur.fetchall()[0]["insert_seed"]
 
     def insert_run(self, subid, score, groupid, error, seed_id):
@@ -204,20 +202,22 @@ class client_runner:
         '''
         cur = self.conn.cursor()
         cur.execute("CALL insert_run(%s,%s,%s, %s, %s)", (subid, score, groupid, error, seed_id))
+        self.conn.commit()
 
-    def start_transaction(self):
-        print("starting transaction")
     
-    def commit_transaction(self):
-        print("committing transaction")
-
-    def rollback_transaction(self):
-        print("starting transaction")
+    def delete_group_run_cascade(self, groupid):
+        '''
+        Inserts a run into the DB
+        '''
+        cur = self.conn.cursor()
+        print(f"DELETING GROUP RUN {groupid}")
+        cur.execute("SELECT delete_group_run_and_foriegn_keys_cascade(%s)", (groupid,))
+        self.conn.commit()
 
     def close_server(self):
-        self.conn.tpc_prepare()
-        self.conn.tpc_rollback()
         self.loop_continue = False
+        self.conn.reset()
+        self.delete_group_run_cascade(self.group_id)
         while True:
             try:
                 if os.path.exists('server/temp'):

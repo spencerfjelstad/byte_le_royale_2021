@@ -41,6 +41,11 @@ The Postgres SQL database has creation scripts to facilitate the simple creation
 4. Modify the database schema as needed.dbspace
     2. The stored procedures / functions will also need to change. Notably insert_run, get_leaderboard, get_stats_for_submission, get_team_score_over_time
 
+#### ALSO NOTE
+
+1. All foriegn keys in the database have a cascading delete effect. That means when you delete a row (like a group_run row) then all rows that reference it will be deleted (run) and then in turn those rows will have a cascading delete effect (logs, errors, seed). This is to help remove invalid data, as the client_runner will delete any group runs that fail to complete.
+2. PGadmin is very useful, Use It!
+
 ### Overview of tables
 
 Please note that Postgres has a ERD diagram tool. Right click the database -> Generate ERD. This will be helpful!
