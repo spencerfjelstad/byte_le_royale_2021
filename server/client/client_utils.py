@@ -94,6 +94,17 @@ class ClientUtils:
             with open(f"./seed_for_run_{runid}.json", "w") as fl:
                 fl.write(jsn)
                 print(f"Seed for run {runid} has been written to the file {os.path.realpath(fl.name)}")
+
+    def determine_stats(self, data):
+        max_score = -1
+        sum = 0
+        for row in data:
+            sum += row['score']
+            if row['score'] > max_score:
+                max_score = row['score']
+        print(f"Your max score was {max_score}")
+        print(f"Your average score was {sum / len(data)}")
+
         
 
     def get_longest_cell_in_cols(self, json, json_atribs):

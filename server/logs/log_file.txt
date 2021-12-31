@@ -42,3 +42,56 @@ ratelimit 5 per 1 minute (134.129.91.223) exceeded at endpoint: get_stats
 ratelimit 5 per 1 minute (134.129.91.223) exceeded at endpoint: get_stats
 ratelimit 5 per 1 minute (134.129.91.223) exceeded at endpoint: get_stats
 ratelimit 5 per 1 minute (134.129.91.223) exceeded at endpoint: get_stats
+Exception in get_submission_stats: can't adapt type 'dict'
+Returning get_team_score_over_time for d1965e2c-8614-4019-a37e-b190b03abf6c at IP 134.129.91.223
+Returning get_team_score_over_time for d1965e2c-8614-4019-a37e-b190b03abf6c at IP 134.129.91.223
+Returning get_team_score_over_time for d1965e2c-8614-4019-a37e-b190b03abf6c at IP 134.129.91.223
+Returning get_team_score_over_time for d1965e2c-8614-4019-a37e-b190b03abf6c at IP 134.129.91.223
+Returning get_team_score_over_time for d1965e2c-8614-4019-a37e-b190b03abf6c at IP 134.129.91.223
+Exception in get_leaderboard: structure of query does not match function result type
+DETAIL:  Returned type timestamp without time zone does not match expected type timestamp with time zone in column 4.
+CONTEXT:  SQL statement "SELECT
+	run.group_run_id,
+    team.team_name,
+    university.uni_name,
+    timezone('CST',submission.submit_time) at time zone 'CST',
+    ROUND(AVG(run.score), 3) as Average_Score,
+    ROUND(stddev_pop(run.score), 3) as Standard_Deviation, 
+	group_run.launcher_version
+FROM
+    run
+    JOIN submission ON run.submission_id = submission.submission_id
+    JOIN team on submission.team_id = team.team_id
+    JOIN team_type on team.team_type_id = team_type.team_type_id
+    JOIN university on team.uni_id = university.uni_id
+	JOIN group_run on run.group_run_id = group_run.group_run_id
+WHERE
+    (
+        team_type.eligible
+        OR include_inelligible
+    )
+    AND (
+        -- If grouprun is negative, select most recent grouprun
+        run.group_run_id in (
+            SELECT
+                MAX(group_run.group_run_id)
+            FROM
+                group_run
+        )
+        AND grouprun < 0
+    )
+    OR (
+        -- Otherwise, select the specified grouprunF
+        run.group_run_id = grouprun
+        AND grouprun > 0
+    ) -- If include_inelligible is true, all teams are included. Else, the team must be elligible
+GROUP BY
+    team.team_name,
+    university.uni_name,
+    submission.submit_time,
+	run.group_run_id,
+	group_run.launcher_version
+ORDER BY
+    Average_Score DESC"
+PL/pgSQL function get_leaderboard(boolean,integer) line 7 at RETURN QUERY
+

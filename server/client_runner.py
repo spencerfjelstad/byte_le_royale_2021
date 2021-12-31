@@ -31,7 +31,9 @@ class client_runner:
         # The group run ID. will be set by insert_new_group_run
         self.group_id = 0
 
-        self.NUMBER_OF_RUNS_FOR_CLIENT = 5
+        self.NUMBER_OF_RUNS_FOR_CLIENT = 15
+
+        self.number_of_clients = -1
 
         self.SLEEP_TIME_SECONDS_BETWEEN_RUNS = 150
 
@@ -58,6 +60,7 @@ class client_runner:
 
     def external_runner(self):
         clients = self.fetch_clients()
+        self.number_of_clients = len(clients)
         self.group_id = self.insert_new_group_run()
 
         if not os.path.exists(f'server/temp'):
@@ -74,18 +77,17 @@ class client_runner:
             with open(f'{path}/logs/game_map.json') as fl:
                 fltext = fl.readlines()
             self.index_to_seed_id[index] = self.insert_seed_file(fltext)
-
         # repeat the clients list by the number of times defined in the constant
         clients = clients * (self.NUMBER_OF_RUNS_FOR_CLIENT)
  
         #then run them in paralell using their index as a unique identifier
-        res = Parallel(n_jobs = 5, backend="threading")(map(delayed(self.internal_runner), clients, [i for i in range(len(clients))]))
+        res = Parallel(n_jobs = 6, backend="threading")(map(delayed(self.internal_runner), clients, [i for i in range(len(clients))]))
         shutil.rmtree("server/temp/seeds")
 
     def internal_runner(self, row, index):
         score = 0
         error = ""
-        print("running run {0} for submission {1}".format(index, row["submission_id"]))
+
         try:
             # Run game
             # Create a folder for this client and seed
@@ -100,7 +102,8 @@ class client_runner:
                 f.write(row['file_text'])
 
             # Determine what seed this run needs based on it's serial index
-            seed_index = int(index / self.NUMBER_OF_RUNS_FOR_CLIENT)
+            seed_index = int(index / self.number_of_clients)
+            print("running run {0} for submission {1} using seed index {2}".format(index, row["submission_id"], seed_index))
 
             # Copy the seed into the run folder
             if os.path.exists(f"server/temp/seeds/{seed_index}/logs/game_map.json"):
