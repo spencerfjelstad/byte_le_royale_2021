@@ -197,7 +197,7 @@ def get_stats():
         cur.execute("SELECT (get_latest_submission(%s)).*", (vid,))
         res = cur.fetchone()
         cur = conn.cursor(cursor_factory=RealDictCursor)
-        cur.execute("SELECT (get_stats_for_submission(%s, %s)).*", res)
+        cur.execute("SELECT (get_runs_for_submission(%s, %s)).*", res)
         if cur.rowcount == 0:
             app.logger.error(
                 'Error: No data to return submissions_stats for %s', vid)
