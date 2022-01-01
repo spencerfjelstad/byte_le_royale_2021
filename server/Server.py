@@ -68,9 +68,12 @@ except Exception as e:
     raise e
 
 # Turns abortions into json string (haha)
+
+
 @app.errorhandler(HTTPException)
 def handle_exception(e):
     return jsonify(error=str(e)), 404
+
 
 @app.route("/api/get_unis", methods=['get'])
 def get_unis():
@@ -79,7 +82,7 @@ def get_unis():
         cur.execute("SELECT (get_universities()).*")
         if cur.rowcount == 0:
             app.logger.info('Error: No data to return for get_unis')
-            return abort(500, description = "No universities were found")
+            return abort(500, description="No universities were found")
         else:
             return jsonify(cur.fetchall())
     except Exception as e:
@@ -87,7 +90,7 @@ def get_unis():
             raise e
         app.logger.error("Exception in get_unis: %s", e)
         conn.reset()
-        abort(500, description = str(e))
+        abort(500, description=str(e))
 
 
 @app.route("/api/get_team_types", methods=['get'])
@@ -99,7 +102,7 @@ def get_team_types():
     except Exception as e:
         app.logger.error("Exception in get_team_types: %s", e)
         conn.reset()
-        abort(500, description = str(e))
+        abort(500, description=str(e))
 
 
 @app.route("/api/get_teams", methods=['get'])
@@ -111,7 +114,7 @@ def get_teams():
     except Exception as e:
         app.logger.error("Exception in get_teams: %s", e)
         conn.reset()
-        abort(500, description = str(e))
+        abort(500, description=str(e))
 
 
 @app.route("/api/get_leaderboard", methods=['post'])
@@ -131,7 +134,7 @@ def get_leaderboard():
             raise e
         app.logger.error("Exception in get_leaderboard: %s", e)
         conn.reset()
-        abort(500, description = str(e))
+        abort(500, description=str(e))
 
 
 @app.route("/api/register", methods=['POST'])
@@ -145,7 +148,7 @@ def insert_team():
         conn.commit()
         app.logger.info('Registered team at IP %s', request.remote_addr)
         if cur.rowcount == 0:
-            return abort(404, description = "Failed to register")
+            return abort(404, description="Failed to register")
         else:
             return cur.fetchone()[0]
     except Exception as e:
@@ -162,20 +165,22 @@ def submit_file():
         vid = request.json["vid"]
         bad_words = check_illegal_keywords(file)
         if len(file) > MAX_FILE_CHARACTER_COUNT:
-            return {"error": "Files can be a maximum of {} characters and this file is {} characters long".format(MAX_FILE_CHARACTER_COUNT, len(file))}, 404
+            abort(404, description="""Files can be a maximum of {} characters and this file is {} characters long. \n 
+                                    (This limit is arbitrary, and can be changed by yelling at the devs""")
         if bad_words:
-            return {"error": "Contained illegal keywords {0}".format(bad_words)}, 404
+            abort(404 , description = "Contained illegal keywords {0}".format(bad_words))
         cur = conn.cursor()
         cur.execute("CALL submit_code_file(%s, %s)", (file, vid))
         conn.commit()
-        app.logger.info('Recieved submission from %s at IP %s',vid, request.remote_addr)
+        app.logger.info('Recieved submission from %s at IP %s',
+                        vid, request.remote_addr)
         return "True"
     except Exception as e:
         if isinstance(e, HTTPException):
             raise e
         app.logger.error("Exception in submit: %s", e)
         conn.reset()
-        abort(500, description = str(e))
+        abort(500, description=str(e))
 
 
 def check_illegal_keywords(file):
@@ -187,8 +192,8 @@ def check_illegal_keywords(file):
             rtn_bad_words.append(bad_word)
 
 
-@app.route("/api/get_submission_stats", methods=['post'])
-@limiter.limit("5/minute", override_defaults=True)
+@ app.route("/api/get_submission_stats", methods=['post'])
+@ limiter.limit("5/minute", override_defaults=True)
 def get_stats():
     try:
         vid = request.json["vid"]
@@ -200,20 +205,20 @@ def get_stats():
         if cur.rowcount == 0:
             app.logger.error(
                 'Error: No data to return submissions_stats for %s', vid)
-            abort(404, description = "No submissions for this Vid were found")
+            abort(404, description="No submissions for this Vid were found")
         else:
             runs = cur.fetchall()
-            return jsonify({"data": runs, "sub_id": res[0], "run_group_id": res[1], "runs_per_client" : res[2]})
+            return jsonify({"data": runs, "sub_id": res[0], "run_group_id": res[1], "runs_per_client": res[2]})
     except Exception as e:
         if isinstance(e, HTTPException):
             raise e
         app.logger.error("Exception in get_submission_stats: %s", e)
         conn.reset()
-        abort(500, description = str(e))
+        abort(500, description=str(e))
 
 
-@app.route("/api/get_team_score_over_time", methods=['post'])
-@limiter.limit("5/minute", override_defaults=True)
+@ app.route("/api/get_team_score_over_time", methods=['post'])
+@ limiter.limit("5/minute", override_defaults=True)
 def get_team_score_over_time():
     try:
         vid = request.json["vid"]
@@ -225,7 +230,7 @@ def get_team_score_over_time():
         if cur.rowcount == 0:
             app.logger.error(
                 'Error: No data to return team_score_over_time for %s', vid)
-            return abort(404, description = "No data to return team_score_over_time for this Vid")
+            return abort(404, description="No data to return team_score_over_time for this Vid")
         else:
             return jsonify(cur.fetchall())
     except Exception as e:
@@ -233,11 +238,11 @@ def get_team_score_over_time():
             raise e
         app.logger.error("Exception in get_leaderboard: %s", e)
         conn.reset()
-        abort(500, description = str(e))
+        abort(500, description=str(e))
 
 
-@app.route("/api/get_submissions_for_team", methods=['post'])
-@limiter.limit("5/minute", override_defaults=True)
+@ app.route("/api/get_submissions_for_team", methods=['post'])
+@ limiter.limit("5/minute", override_defaults=True)
 def get_submissions_for_team():
     try:
         vid = request.json["vid"]
@@ -247,7 +252,8 @@ def get_submissions_for_team():
         if cur.rowcount == 0:
             app.logger.error(
                 'Error: No data to return for get_submissions_for_team for %s', vid)
-            abort(404, description = "No data to return for get_submissions_for_team for this Vid")
+            abort(
+                404, description="No data to return for get_submissions_for_team for this Vid")
         else:
             return jsonify(cur.fetchall())
     except Exception as e:
@@ -255,10 +261,11 @@ def get_submissions_for_team():
             raise e
         app.logger.error("Exception in get_submissions_for_team: %s", e)
         conn.reset()
-        abort(500, description = str(e))
+        abort(500, description=str(e))
 
-@app.route("/api/get_group_runs", methods=['post'])
-@limiter.limit("5/minute", override_defaults=True)
+
+@ app.route("/api/get_group_runs", methods=['post'])
+@ limiter.limit("5/minute", override_defaults=True)
 def get_group_runs():
     try:
         vid = request.json["vid"]
@@ -267,7 +274,7 @@ def get_group_runs():
         cur = conn.cursor(cursor_factory=RealDictCursor)
         cur.execute("SELECT (get_runs_for_submission(%s, %s)).*", (vid, subid))
         if cur.rowcount == 0:
-            return abort(404, description = "No group runs were found")
+            return abort(404, description="No group runs were found")
         else:
             return jsonify(cur.fetchall())
     except Exception as e:
@@ -275,19 +282,21 @@ def get_group_runs():
             raise e
         app.logger.error("Exception in get_group_runs: %s", e)
         conn.reset()
-        abort(500, description = str(e))
+        abort(500, description=str(e))
 
-@app.route("/api/get_team_runs_for_group_run", methods=['post'])
-@limiter.limit("5/minute", override_defaults=True)
+
+@ app.route("/api/get_team_runs_for_group_run", methods=['post'])
+@ limiter.limit("5/minute", override_defaults=True)
 def get_team_runs_for_group_run():
     try:
         vid = request.json["vid"]
         groupid = request.json["groupid"]
         cur = conn.cursor()
         cur = conn.cursor(cursor_factory=RealDictCursor)
-        cur.execute("SELECT (get_team_runs_for_group_run(%s, %s)).*", (vid, groupid))
+        cur.execute(
+            "SELECT (get_team_runs_for_group_run(%s, %s)).*", (vid, groupid))
         if cur.rowcount == 0:
-            return abort(404, description = "No group runs were found")
+            return abort(404, description="No group runs were found")
         else:
             return jsonify(cur.fetchall())
     except Exception as e:
@@ -295,11 +304,11 @@ def get_team_runs_for_group_run():
             raise e
         app.logger.error("Exception in get_group_runs: %s", e)
         conn.reset()
-        abort(500, description = str(e))
+        abort(500, description=str(e))
 
 
-@app.route("/api/get_runs_for_submission", methods=['post'])
-@limiter.limit("5/minute", override_defaults=True)
+@ app.route("/api/get_runs_for_submission", methods=['post'])
+@ limiter.limit("5/minute", override_defaults=True)
 def get_runs_for_submission():
     try:
         vid = request.json["vid"]
@@ -310,7 +319,7 @@ def get_runs_for_submission():
         if cur.rowcount == 0:
             app.logger.error(
                 'Error: No data to return for get_runs_for_submission for %s', vid)
-            raise abort(404, description = "No submissions were found")
+            raise abort(404, description="No submissions were found")
         else:
             return jsonify(cur.fetchall())
     except Exception as e:
@@ -318,11 +327,11 @@ def get_runs_for_submission():
             raise e
         app.logger.error("Exception in get_runs_for_submission: %s", e)
         conn.reset()
-        abort(500, description = str(e))
+        abort(500, description=str(e))
 
 
-@app.route("/api/get_file_from_submission", methods=['post'])
-@limiter.limit("5/minute", override_defaults=True)
+@ app.route("/api/get_file_from_submission", methods=['post'])
+@ limiter.limit("5/minute", override_defaults=True)
 def get_file_from_submission():
     try:
         vid = request.json["vid"]
@@ -335,7 +344,7 @@ def get_file_from_submission():
         if cur.rowcount == 0:
             app.logger.error(
                 'Error: No data to return for get_file_from_submission for %s', vid)
-            return abort(404, description = "No data to return for get_file_from_submission for this Vid")
+            return abort(404, description="No data to return for get_file_from_submission for this Vid")
         else:
             return jsonify(cur.fetchone()["get_file_from_submission"])
     except Exception as e:
@@ -343,10 +352,11 @@ def get_file_from_submission():
             raise e
         app.logger.error("Exception in get_file_for_submission: %s", e)
         conn.reset()
-        abort(500, description = str(e))
+        abort(500, description=str(e))
 
-@app.route("/api/get_seed_from_run", methods=['post'])
-@limiter.limit("5/minute", override_defaults=True)
+
+@ app.route("/api/get_seed_from_run", methods=['post'])
+@ limiter.limit("5/minute", override_defaults=True)
 def get_seed_from_run():
     try:
         vid = request.json["vid"]
@@ -359,7 +369,7 @@ def get_seed_from_run():
         if cur.rowcount == 0:
             app.logger.error(
                 'Error: No data to return for get_seed_from_run for %s', vid)
-            return abort(404, description = "No data to return for get_seed_from_run")
+            return abort(404, description="No data to return for get_seed_from_run")
         else:
             return jsonify(cur.fetchone()["get_seed_for_run"])
     except Exception as e:
@@ -367,5 +377,4 @@ def get_seed_from_run():
             raise e
         app.logger.error("Exception in get_seed_from_run: %s", str(e))
         conn.reset()
-        abort(500, description = str(e))
-
+        abort(500, description=str(e))
