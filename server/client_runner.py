@@ -44,17 +44,23 @@ class client_runner:
         
         self.version = self.get_version_number()
 
+        self.best_run_for_client = {}
+
 
         # self.loop.run_in_executor(None, self.await_input)
         # self.loop.call_later(5, self.external_runner())
         try:
             while True:
+                if os.path.exists(f'server/temp'):
+                    shutil.rmtree(f'server/temp')
                 self.external_runner()
+                self.read_best_logs_and_insert()
                 print(f"Sleeping for {self.SLEEP_TIME_SECONDS_BETWEEN_RUNS} seconds")
                 self.group_id = -1
                 time.sleep(150)
         except (KeyboardInterrupt, Exception) as e:
             print("Ending server due to {0}".format(e))
+        finally:
             self.close_server()
 
 
@@ -126,13 +132,21 @@ class client_runner:
                 print("Run had error")
                 error = results['Error']
 
-                
-            shutil.rmtree(end_path)
-
             #self.current_running.insert(0, number)
             f.close()
         finally:
-            self.insert_run(row["submission_id"], score, self.group_id, error, self.index_to_seed_id[seed_index])
+            run_id = self.insert_run(row["submission_id"], score, self.group_id, error, self.index_to_seed_id[seed_index])
+            # Update information in best run dict
+            if row["submission_id"] in self.best_run_for_client:
+                if self.best_run_for_client[row["submission_id"]]["score"] < score:
+                    self.best_run_for_client[row["submission_id"]]["score"] = score
+                    self.best_run_for_client[row["submission_id"]]["log_path"] = end_path + "/logs"
+                    self.best_run_for_client[row["submission_id"]]["run_id"] = run_id
+            else:
+                self.best_run_for_client[row["submission_id"]] = {}
+                self.best_run_for_client[row["submission_id"]]["score"] = score
+                self.best_run_for_client[row["submission_id"]]["log_path"] = end_path + "/logs"
+                self.best_run_for_client[row["submission_id"]]["run_id"] = run_id
 
     def fetch_clients(self):
         '''
@@ -204,8 +218,10 @@ class client_runner:
         Inserts a run into the DB
         '''
         cur = self.conn.cursor()
-        cur.execute("CALL insert_run(%s,%s,%s, %s, %s)", (subid, score, groupid, error, seed_id))
+        cur.execute("SELECT insert_run(%s,%s,%s, %s, %s)", (subid, score, groupid, error, seed_id))
+        run_id = cur.fetchone()[0]
         self.conn.commit()
+        return run_id
 
     
     def delete_group_run_cascade(self, groupid):
@@ -216,11 +232,33 @@ class client_runner:
         print(f"DELETING GROUP RUN {groupid}")
         cur.execute("SELECT delete_group_run_and_foriegn_keys_cascade(%s)", (groupid,))
         self.conn.commit()
+    
+    def read_best_logs_and_insert(self):
+        for submission_id in self.best_run_for_client:
+            path = self.best_run_for_client[submission_id]["log_path"]
+            concatenated_logs = ""
+            for file in os.listdir(path):
+                with open(f"{path}/{file}") as fl:
+                    concatenated_logs += fl.read()
+            self.insert_log(concatenated_logs, self.best_run_for_client[submission_id]["run_id"])
+
+    def insert_log(self, log, run_id):
+        '''
+        inserts the seed file into the database. 
+        Returns it's seed_id
+        '''
+        cur = self.conn.cursor(cursor_factory= RealDictCursor)
+        cur.execute("SELECT insert_log(%s, %s, %s)", (str(log), run_id, self.group_id))
+        self.conn.commit()
+
 
     def close_server(self):
         self.loop_continue = False
         self.conn.reset()
-        self.delete_group_run_cascade(self.group_id)
+        if self.group_id != -1:
+            self.delete_group_run_cascade(self.group_id)
+        else:
+            print("Not deleting any group runs")
         while True:
             try:
                 if os.path.exists('server/temp'):
