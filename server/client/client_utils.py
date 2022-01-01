@@ -93,7 +93,9 @@ class ClientUtils:
         else:
             with open(f"./seed_for_run_{runid}.json", "w") as fl:
                 fl.write(jsn)
-                print(f"Seed for run {runid} has been written to the file {os.path.realpath(fl.name)}")
+            with open(f"./logs/game_map.json", "w") as fl:
+                fl.write(jsn)
+            print(f"Seed for run {runid} has been written to game_map.json. A copy has also been made at {os.path.realpath(fl.name)}")
 
     def determine_stats(self, data):
         max_score = -1
