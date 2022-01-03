@@ -8,9 +8,15 @@ import zipfile
 from psycopg2.extras import RealDictCursor
 from joblib import Parallel, delayed
 import asyncio
+import logging
+import sys
 
 from tqdm import std
 import time
+
+# Config for loggers
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
 
 class client_runner:
 
@@ -31,11 +37,11 @@ class client_runner:
         # The group run ID. will be set by insert_new_group_run
         self.group_id = 0
 
-        self.NUMBER_OF_RUNS_FOR_CLIENT = 15
+        self.NUMBER_OF_RUNS_FOR_CLIENT = 3
 
         self.number_of_clients = -1
 
-        self.SLEEP_TIME_SECONDS_BETWEEN_RUNS = 150
+        self.SLEEP_TIME_SECONDS_BETWEEN_RUNS = 50
 
         self.tpc_id = -1
 
@@ -46,20 +52,23 @@ class client_runner:
 
         self.best_run_for_client = {}
 
+        self.runner_temp_dir = 'server/runner_temp'
+        self.seed_path = f"{self.runner_temp_dir}/seeds"
+
 
         # self.loop.run_in_executor(None, self.await_input)
         # self.loop.call_later(5, self.external_runner())
         try:
             while True:
-                if os.path.exists(f'server/temp'):
-                    shutil.rmtree(f'server/temp')
+                self.best_run_for_client = {}
+                self.delete_runner_temp()
                 self.external_runner()
                 self.read_best_logs_and_insert()
-                print(f"Sleeping for {self.SLEEP_TIME_SECONDS_BETWEEN_RUNS} seconds")
+                logging.warning(f"Sleeping for {self.SLEEP_TIME_SECONDS_BETWEEN_RUNS} seconds")
                 self.group_id = -1
                 time.sleep(150)
         except (KeyboardInterrupt, Exception) as e:
-            print("Ending server due to {0}".format(e))
+            logging.warning("Ending server due to {0}".format(e))
         finally:
             self.close_server()
 
@@ -69,13 +78,14 @@ class client_runner:
         self.number_of_clients = len(clients)
         self.group_id = self.insert_new_group_run()
 
-        if not os.path.exists(f'server/temp'):
-            os.mkdir(f'server/temp')
-        if not os.path.exists(f'server/temp/seeds'):
-            os.mkdir(f'server/temp/seeds')
+        if not os.path.exists(self.runner_temp_dir):
+            os.mkdir(self.runner_temp_dir)
+
+        if not os.path.exists(self.seed_path ):
+            os.mkdir(self.seed_path )
 
         for index in range(self.NUMBER_OF_RUNS_FOR_CLIENT):
-            path = f'server/temp/seeds/{index}'
+            path = f'{self.seed_path }/{index}'
             os.mkdir(path)
             shutil.copy('launcher.pyz', path)
             self.run_runner(path, "server/runners/generator")
@@ -88,7 +98,6 @@ class client_runner:
  
         #then run them in paralell using their index as a unique identifier
         res = Parallel(n_jobs = 6, backend="threading")(map(delayed(self.internal_runner), clients, [i for i in range(len(clients))]))
-        shutil.rmtree("server/temp/seeds")
 
     def internal_runner(self, row, index):
         score = 0
@@ -97,7 +106,7 @@ class client_runner:
         try:
             # Run game
             # Create a folder for this client and seed
-            end_path = f'server/temp/{index}'
+            end_path = f'{self.runner_temp_dir}/{index}'
             if not os.path.exists(end_path):
                 os.mkdir(end_path)
             
@@ -109,12 +118,12 @@ class client_runner:
 
             # Determine what seed this run needs based on it's serial index
             seed_index = int(index / self.number_of_clients)
-            print("running run {0} for submission {1} using seed index {2}".format(index, row["submission_id"], seed_index))
+            logging.warning("running run {0} for submission {1} using seed index {2}".format(index, row["submission_id"], seed_index))
 
             # Copy the seed into the run folder
-            if os.path.exists(f"server/temp/seeds/{seed_index}/logs/game_map.json"):
+            if os.path.exists(f"{self.seed_path}/{seed_index}/logs/game_map.json"):
                 os.mkdir(f"{end_path}/logs")
-                shutil.copyfile(f"server/temp/seeds/{seed_index}/logs/game_map.json", f"{end_path}/logs/game_map.json")
+                shutil.copyfile(f"{self.seed_path}/{seed_index}/logs/game_map.json", f"{end_path}/logs/game_map.json")
 
             res = self.run_runner(end_path, "server/runners/runner")
 
@@ -129,7 +138,7 @@ class client_runner:
             # Save best log files? doesn't seem necessary (yet)
 
             if 'Error' in results and results['Error'] is not None:
-                print("Run had error")
+                logging.warning("Run had error")
                 error = results['Error']
 
             #self.current_running.insert(0, number)
@@ -229,18 +238,21 @@ class client_runner:
         Inserts a run into the DB
         '''
         cur = self.conn.cursor()
-        print(f"DELETING GROUP RUN {groupid}")
+        logging.warning(f"DELETING GROUP RUN {groupid}")
         cur.execute("SELECT delete_group_run_and_foriegn_keys_cascade(%s)", (groupid,))
         self.conn.commit()
     
     def read_best_logs_and_insert(self):
         for submission_id in self.best_run_for_client:
             path = self.best_run_for_client[submission_id]["log_path"]
-            concatenated_logs = ""
+            dict_logs = {}
             for file in os.listdir(path):
                 with open(f"{path}/{file}") as fl:
-                    concatenated_logs += fl.read()
-            self.insert_log(concatenated_logs, self.best_run_for_client[submission_id]["run_id"])
+                    # It would probably be better to store each file in it's own row
+                    # But I'm lazy and I'm just going to denote the split with the delimiter below
+                    dict_logs[file]= fl.read()
+            
+            self.insert_log(json.dumps(dict_logs), self.best_run_for_client[submission_id]["run_id"])
 
     def insert_log(self, log, run_id):
         '''
@@ -258,23 +270,19 @@ class client_runner:
         if self.group_id != -1:
             self.delete_group_run_cascade(self.group_id)
         else:
-            print("Not deleting any group runs")
-        while True:
-            try:
-                if os.path.exists('server/temp'):
-                    shutil.rmtree('server/temp')
-                break
-            except PermissionError:
-                continue
-        while True:
-            try:
-                if os.path.exists('server/vis_temp'):
-                    shutil.rmtree('server/vis_temp')
-                break
-            except PermissionError:
-                continue
+            logging.warning("Not deleting any group runs")
+        self.delete_runner_temp()
+
         os._exit(0)
 
+    def delete_runner_temp(self):
+        while True:
+            try:
+                if os.path.exists(self.runner_temp_dir):
+                    shutil.rmtree(self.runner_temp_dir)
+                break
+            except PermissionError:
+                continue
         
 if __name__ == "__main__":
     client_runner().external_runner()
