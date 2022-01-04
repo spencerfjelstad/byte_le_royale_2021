@@ -153,6 +153,8 @@ def insert_team():
         if isinstance(e, HTTPException):
             raise e
         app.logger.error("Exception in register: %s", e)
+        conn.reset()
+        abort(500, description = str(e))
 
 
 @app.route("/api/submit", methods=['POST'])
@@ -196,8 +198,12 @@ def get_stats():
         cur = conn.cursor()
         cur.execute("SELECT (get_latest_submission(%s)).*", (vid,))
         res = cur.fetchone()
+        if res is None:
+            app.logger.error(
+                'Error: no submission made for VID %s yet', vid)
+            abort(404, description = "No submissions for this Vid were found") 
         cur = conn.cursor(cursor_factory=RealDictCursor)
-        cur.execute("SELECT (get_runs_for_submission(%s, %s)).*", res[:2])
+        cur.execute("SELECT (get_runs_for_submission_and_group(%s, %s)).*", res[:2])
         if cur.rowcount == 0:
             app.logger.error(
                 'Error: No data to return submissions_stats for %s', vid)
@@ -331,8 +337,7 @@ def get_file_from_submission():
         cur = conn.cursor()
         cur = conn.cursor(cursor_factory=RealDictCursor)
         cur.execute("SELECT get_file_from_submission(%s, %s)", (vid, subid))
-        app.logger.info('Returning file for submissionid %s for team %s at IP %',
-                        subid, vid, request.remote_addr)
+        app.logger.info('Returning file for submissionid %s for team %s at IP %s',subid, vid, request.remote_addr)
         if cur.rowcount == 0:
             app.logger.error(
                 'Error: No data to return for get_file_from_submission for %s', vid)

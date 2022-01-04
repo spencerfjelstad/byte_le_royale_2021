@@ -6,7 +6,7 @@ import json
 import platform
 import zipfile
 from psycopg2.extras import RealDictCursor
-from joblib import Parallel, delayed
+from joblib import Parallel, delayed, logger
 import asyncio
 import logging
 import sys
@@ -41,7 +41,7 @@ class client_runner:
 
         self.number_of_clients = -1
 
-        self.SLEEP_TIME_SECONDS_BETWEEN_RUNS = 50
+        self.SLEEP_TIME_SECONDS_BETWEEN_RUNS = 150
 
         self.tpc_id = -1
 
@@ -61,9 +61,9 @@ class client_runner:
         try:
             while True:
                 self.best_run_for_client = {}
-                self.delete_runner_temp()
                 self.external_runner()
                 self.read_best_logs_and_insert()
+                self.delete_runner_temp()
                 logging.warning(f"Sleeping for {self.SLEEP_TIME_SECONDS_BETWEEN_RUNS} seconds")
                 self.group_id = -1
                 time.sleep(150)
@@ -133,13 +133,14 @@ class client_runner:
                     results = json.load(f)
             
             # CHANGE THIS LINE TO GET CORRECT SCORE FOR GAME
+            score = 0
             score = results['player']['truck']['renown']
 
             # Save best log files? doesn't seem necessary (yet)
-
-            if 'Error' in results and results['Error'] is not None:
+    
+            if 'error' in results['player'] and results['player']['error'] is not None:
                 logging.warning("Run had error")
-                error = results['Error']
+                error = results['player']['error']
 
             #self.current_running.insert(0, number)
             f.close()
