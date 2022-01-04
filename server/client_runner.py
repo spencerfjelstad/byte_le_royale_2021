@@ -89,10 +89,10 @@ class client_runner:
             os.mkdir(path)
             shutil.copy('launcher.pyz', path)
             self.run_runner(path, "server/runners/generator")
-            fltext = ""
+            fldict = ""
             with open(f'{path}/logs/game_map.json') as fl:
-                fltext = fl.readlines()
-            self.index_to_seed_id[index] = self.insert_seed_file(fltext)
+                fldict = "".join(fl.readlines())
+            self.index_to_seed_id[index] = self.insert_seed_file(fldict)
         # repeat the clients list by the number of times defined in the constant
         clients = clients * (self.NUMBER_OF_RUNS_FOR_CLIENT)
  
@@ -219,7 +219,7 @@ class client_runner:
         Returns it's seed_id
         '''
         cur = self.conn.cursor(cursor_factory= RealDictCursor)
-        cur.execute("SELECT insert_seed(%s, %s)", (str(seed), self.group_id))
+        cur.execute("SELECT insert_seed(%s, %s)", (seed, self.group_id))
         self.conn.commit()
         return cur.fetchall()[0]["insert_seed"]
 

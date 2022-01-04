@@ -1,4 +1,3 @@
-from os import abort
 from flask import Flask, abort, jsonify
 from flask.wrappers import Request
 import psycopg2
@@ -119,9 +118,9 @@ def get_teams():
 def get_leaderboard():
     try:
         ell = request.json["include_inelligible"]
-        sub_id = request.json["sub_id"]
+        group_id = request.json["group_id"]
         cur = conn.cursor(cursor_factory=RealDictCursor)
-        cur.execute("SELECT (get_leaderboard(%s, %s)).*", (ell, sub_id))
+        cur.execute("SELECT (get_leaderboard(%s, %s)).*", (ell, group_id))
         if cur.rowcount == 0:
             app.logger.error('Error: No data to return for leaderboard')
             abort(400, description="No data to return for leaderboard yet")
@@ -165,9 +164,9 @@ def submit_file():
         vid = request.json["vid"]
         bad_words = check_illegal_keywords(file)
         if len(file) > MAX_FILE_CHARACTER_COUNT:
-            return {"error": "Files can be a maximum of {} characters and this file is {} characters long".format(MAX_FILE_CHARACTER_COUNT, len(file))}, 404
+            abort(404, description = "Files can be a maximum of {} characters and this file is {} characters long".format(MAX_FILE_CHARACTER_COUNT, len(file)))
         if bad_words:
-            return {"error": "Contained illegal keywords {0}".format(bad_words)}, 404
+            abort(404, description = "Contained illegal keywords {0}".format(bad_words))
         cur = conn.cursor()
         cur.execute("CALL submit_code_file(%s, %s)", (file, vid))
         conn.commit()
@@ -356,7 +355,6 @@ def get_seed_from_run():
     try:
         vid = request.json["vid"]
         runid = request.json["runid"]
-        cur = conn.cursor()
         cur = conn.cursor(cursor_factory=RealDictCursor)
         cur.execute("SELECT get_seed_for_run(%s, %s)", (vid, runid))
         app.logger.info('Returning seed for runid %s for team %s at IP %s',
@@ -366,7 +364,8 @@ def get_seed_from_run():
                 'Error: No data to return for get_seed_from_run for %s', vid)
             return abort(404, description = "No data to return for get_seed_from_run")
         else:
-            return jsonify(cur.fetchone()["get_seed_for_run"])
+            res = cur.fetchone()["get_seed_for_run"]
+            return res
     except Exception as e:
         if isinstance(e, HTTPException):
             raise e

@@ -37,12 +37,15 @@ class ClientUtils:
         resp.raise_for_status()
         return resp
 
-    def get_leaderboard(self, include_inelligible, sub_id):
-        data = {"include_inelligible": include_inelligible, "sub_id": sub_id}
+    def get_leaderboard(self, include_inelligible, group_id):
+        data = {"include_inelligible": include_inelligible, "group_id": group_id}
         resp = requests.post(self.IP + "get_leaderboard", json=data, verify=self.path_to_public)
         resp.raise_for_status()
         jsn = json.loads(resp.content)
-        print("The following is the leaderboard for eligible contestants")
+        if not include_inelligible:
+            print("The following is the leaderboard for eligible contestants")
+        else:
+            print("The following is the leaderboard for all contestants")
         self.to_table(jsn)
 
     def get_team_score_over_time(self, vid):
@@ -94,14 +97,15 @@ class ClientUtils:
         resp = requests.post(
             self.IP + "get_seed_from_run", json={"vid": vid, "runid" : runid}, verify=self.path_to_public)
         resp.raise_for_status()
-        jsn = json.loads(resp.content)
-        if jsn is None:
+        if resp.content is None:
             print("Bad Vid and RunID combination (probably)")
         else:
+            content = resp.content.decode("utf-8") 
+            breakpoint()
             with open(f"./seed_for_run_{runid}.json", "w") as fl:
-                fl.write(jsn)
+                fl.write(content)
             with open(f"./logs/game_map.json", "w") as fl:
-                fl.write(jsn)
+                fl.write(content)
             print(f"Seed for run {runid} has been written to game_map.json. A copy has also been made at {os.path.realpath(fl.name)}")
 
     def determine_stats(self, data):

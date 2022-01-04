@@ -44,12 +44,10 @@ class Client:
                 elif args.subparse.lower() == 'get_seed' or args.subparse.lower() == 'gs':
                     self.utils.get_seed_for_run(self.vid, args.run_id)
                 elif args.subparse.lower() == 'leaderboard' or args.subparse.lower() == "l":
-                    if args.include_alumni:
-                        self.utils.get_leaderboard(True, -1)
-                    elif args.over_time:
+                    if args.over_time:
                         self.utils.get_team_score_over_time(self.vid)
                     else:
-                        self.utils.get_leaderboard(False, -1)
+                        self.utils.get_leaderboard(args.include_alumni, args.group_id)
             else:
                 print("The server command needs more information. Try 'python launcher.pyz s -h' for help")
         except HTTPError as e:

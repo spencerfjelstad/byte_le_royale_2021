@@ -47,7 +47,8 @@ if __name__ == '__main__':
     leaderboard = client_sub_group.add_parser("leaderboard", aliases= ['l'],help='Commands relating to the leaderboard')
     leaderboard.add_argument("-include_alumni",  help='Include alumni in the leaderboard',default=False,  action='store_true')
     leaderboard.add_argument("-over_time",  help='See how you have scored over time', default=False,  action='store_true')
-    
+    leaderboard.add_argument("-group_id",  help='pass the submission_id you want to get run ids for. -1 is the most recent submission (and default)',type=int, default=-1)
+
     # Stats subgroup
     stats = client_sub_group.add_parser("stats", aliases= ['s'], help='view stats for your team')
     stats.add_argument("-current_run",  help='Get the status for the current group run (default if no flag given)', default=False,  action='store_true')
