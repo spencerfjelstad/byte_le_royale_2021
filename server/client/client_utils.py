@@ -75,6 +75,13 @@ class ClientUtils:
         jsn = json.loads(resp.content)
         self.to_table(jsn)
 
+    def get_group_runs(self, vid):
+        resp = requests.post(
+            self.IP + "get_group_runs", json={"vid": vid}, verify=self.path_to_public)
+        resp.raise_for_status()
+        jsn = json.loads(resp.content)
+        self.to_table(jsn)
+
     def get_submissions(self, vid):
         resp = requests.post(
             self.IP + "get_submissions_for_team", json={"vid": vid}, verify=self.path_to_public)

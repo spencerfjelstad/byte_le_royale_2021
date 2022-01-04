@@ -37,6 +37,8 @@ class Client:
                         self.utils.get_runs_for_submission(self.vid, args.runs_for_submission)
                     elif args.get_submissions:
                         self.utils.get_submissions(self.vid)
+                    elif args.get_group_runs:
+                        self.utils.get_group_runs(self.vid)
                     else:
                         self.get_submission_stats()
                 elif args.subparse.lower() == 'get_seed' or args.subparse.lower() == 'gs':

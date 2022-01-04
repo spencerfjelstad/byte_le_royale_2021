@@ -269,10 +269,9 @@ def get_submissions_for_team():
 def get_group_runs():
     try:
         vid = request.json["vid"]
-        subid = request.json["submissionid"]
         cur = conn.cursor()
         cur = conn.cursor(cursor_factory=RealDictCursor)
-        cur.execute("SELECT (get_runs_for_submission(%s, %s)).*", (vid, subid))
+        cur.execute("SELECT (get_group_runs(%s)).*", (vid,))
         if cur.rowcount == 0:
             return abort(404, description = "No group runs were found")
         else:

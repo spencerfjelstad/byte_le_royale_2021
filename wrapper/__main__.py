@@ -54,6 +54,7 @@ if __name__ == '__main__':
     stats.add_argument("-runs_for_group_run",  help='pass the group_run id you want to get run ids for', type=int, default=-1)
     stats.add_argument("-runs_for_submission",  help='pass the submission_id you want to get run ids for',type=int, default=-1)
     stats.add_argument("-get_submissions",  help='get the submission ids for your team', default=False,  action='store_true')
+    stats.add_argument("-get_group_runs",  help='get the group runs your team has been in', default=False,  action='store_true')
     #stats.add_argument("-latest_group_submissions",  help='returns the latest group submissions for your client', default=False,  action='store_true')
     #stats.add_argument('-download_submission_codefile', type=int)
 
